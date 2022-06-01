@@ -1,0 +1,15 @@
+servers=		Chicago.IL.US.Undernet.org	\
+				Pittsburgh.PA.US.Undernet.org Rochester.MI.US.Undernet.org \
+				SanJose.CA.US.Undernet.org Manhattan.KS.US.Undernet.Org \
+				Phoenix.AZ.US.Undernet.org washington.dc.us.undernet.org
+tcpport=    6667
+nicks=      Huey Dewie Lewie Screwie
+userinfo=	You're asking me??
+channels=   #chatzone #30plus #35plus #41plus
+kickmessage= Life's a beach, and now your Kicked!!!
+quitmessage= Th Th That's all folks!!!
+
+kicked_other_response= The Bot did it
+kicked_you_response= Hey, Stop that!!!!!
+dcc_send_response= To send me something, email it to: Huey@dewie.screwie.com
+

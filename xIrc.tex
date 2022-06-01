@@ -1,0 +1,1319 @@
+\documentclass[titlepage]{article}
+%\usepackage[dvips]{graphics}
+\title{xIrc User Reference\\
+Version 2.2}
+\author{Joe Croft \\
+joe@croftj.net \\
+http://www.croftj.net/$\sim$xirc }
+\begin{document}
+\setcounter{tocdepth}{2}
+\input{font}
+\maketitle
+\tableofcontents
+\pagebreak[4]
+\section{Introduction}
+xIrc is, as the name implies, an IRC Client program that runs under X.
+It is written in C++ and the binary for it provided was compiled using
+gcc  2.7.2  and  qt-1.31  using  the  ELF  libraries.  See the INSTALL
+document  provided  for  details  on building it if you need or desire
+too, have no fear, it's reasonably easy to build.
+
+I would appreciate any help
+offered  in  finding any bugs that may crop up. This will be mostly in
+the  form  of  turning on the various debug flags I have embedded then
+mailing  me the output. Also, any suggestions for additions or changes
+to  it's  look  and  feel will be appreciated. I cannot guarantee that
+they will be implemented, but all will be taken into consideration.
+
+Also, if you know of servers not in my .servers file or any corrections for
+those that are, please mail me the changes for them and I will place them
+in the file for future releases.
+
+Note the email address change. The old address is still there but...
+
+\subsection{Features}
+
+\begin{itemize}
+\item mIrc / CTCP2 Color support
+\item CTCP2 Color and Text Attribute Support
+\item Individual Windows for each channel you are joined to or each 
+private conversation.
+\item Nick Lists for the channels that allow you to various things on 
+the folks listed in them.
+\item Initiate and respond to DCC chat requests.
+\item Initiate and accept DCC File transfers
+\item Aliases that allow multiple words to be represented by a symbol.
+Similar to the IRC-II set command.
+\item Subset of similar commands and formats to IRC-II though many have
+been simplified.
+\item Auto responses to people getting kicked from a channel or for 
+you being kicked from a channel.
+\item Auto re-join if you've been kicked from a channel.
+\item Simplified Banning w/ optional kick
+\item Use of X-Resources for the configuration of fonts, colors and a
+few other things.
+\item Cut and Paste functionality at least for the input fields
+few other things.
+\item Member arrival notification either by nick or by address mask
+\item Member ignore lists.
+\end{itemize}
+
+\subsection{Future Dreams and Wishes}
+\begin{itemize}
+\item Command line histories
+\item Cut and Paste functionality for the chat windows in general.
+\item Script language based on the one provided by IRC-II.
+\item Having responses to CTCP Requests routed to the window in which they 
+originated like the other commands such as \emph{WHO}, \emph{WHOIS}, etc.
+\item Anything else that you or I may think of that sounds handy, 
+nifty or just plain fun to have.
+\end{itemize}
+
+\subsection{Known Bugs}
+In the notification and ignore tables, bot the address and nick fields 
+must have something in them otherwise the program may crash.
+
+Also in the notification and ignore tables, new entries are not recognized 
+until the table is saved then reloaded.
+
+\subsection{Credits}
+Troll Tech, the writers of the 'qt' class library used to make the
+X-Windows programming of this much easier.
+
+The many folks who have given me ideas and inspirations for improving
+xIrc.
+
+While I am at it, I would like to  make  an  unsolicited  plug  for
+the folks who wrote the GUI class library I used, qt. This library was
+developed by the good folks at Troll Tech. Not only have they seen fit
+to provide the class library to us Linux folks for free, but they have
+also been invaluable in helping me making my program more
+bullet-proof. The library has a nice Motif like look and feel to it
+while it runs considerably lighter then Motif ever could and it
+greatly simplifies the writing of XWindows applications. They can be
+reached at info@troll.no and the URL to their home-page is
+http://www.troll.no/.
+
+Any of you programmers out there might want to check it out if you are
+planning to do any X-Windows apps in the near future. Though it is not
+free fro most platforms, nor for use in commercial pursuits, it is free
+to the Linux community for non-commercial use. I have found it provides
+a nice interface the greatly simplifies the creation of windows and
+such.
+
+\section{Installation and Compilation} \subsection{Installation}
+ 
+xIrc is dynamically linked, you need to install the qt library from Troll 
+Tech.  Please read their documentation closely so that you get the right 
+version (currently 1.31)!  If you are not recompiling my program you need 
+the latest version compiled for gcc-2.72 (This is the 'standard' release).  
+Otherwise you need to select the version for the version of compiler you 
+are using.  It sounds intimidating but if you read the docs supplied with 
+qt carefully, it's not hard!  
+
+Next, copy the file xIrc.ppm to where you want it to reside. xIrc will
+look in the directories /usr/local/lib/xIrc, ./, and your home directory by
+default for this file. If you choose another home for it, you will
+have to place an entry, PixMapPath, in one of the resource files
+telling xIrc where too look. See the section X-Resources.
+
+Move and rename the the file servers.dat to /usr/local/lib/xIrc/.servers.
+If you want to keep it elsewhere, The entry \emph{*Servers.Path} and
+\emph{*Servers.Filename} will need to be changed in the resources file.
+
+If you are using fvwm window manager, I have supplied xIrc.xpm for the
+button's icon. I'll leave it to you to investigate setting up .fvwmrc
+to put all this to use.
+
+\subsection{Re-compilation}
+Change to the xIrc-X.YY directory. Edit the
+entries QTINCDIR, QTLIBDIR to point to where the Qt include files and Qt libraries reside
+Then run \textit{make
+depend} then \textit{make}. This too can be done on a single line as
+\textit{make depend; make}. After this completes, follow the
+installation notes for putting it and it's icon in their proper homes.
+
+These files should compile w/ no errors or warnings. If they get
+either, I don't know what to tell you. I would suspect an older
+version of compiler or something. You can always email me and I'll
+help you as I can.
+
+\section{Usage}
+xIrc does not have any command line switches of it's own. The QT library
+may define a few of its own to change its look and feel, though I'm not sure
+what all are available.
+
+\subsection{Connecting to a Server}
+Upon starting, a dialog asking to choose your nick will be displayed as
+well as the main window. A default set of nicks are given. After selecting
+a nick, which you must do, a table of servers will be presented. Select
+your server of choice by double clicking the mouse on it. If your favorite
+server is not in the list, you may add it by selecting the \emph{New} entry
+under the \emph{Server} menu.
+
+A small dialog will be displayed allowing you to change port numbers of
+manually type in a different server name. Once you are done, click on the
+\emph{Connect} button.
+
+At this point, xIrc will attempt to connect to the selected server. After
+it connects, any welcoming messages and the Message of the day will be
+displayed on the screen.
+
+\subsection{Entering a Channel}
+To enter into a channel, select the \emph{Open Channel} entry in the
+\emph{File} menu. You will be presented with a list of channels to enter and or
+people to chat with. Either select a name from the list or type it in in
+the edit field and press either \emph{OK} or \emph{Join} buttons. If you
+want to see who a person is or who is on a channel, press the {Names/Whois}
+button.
+
+Once a channel is entered a new window will be displayed for that channel.
+At this point any of the commands listed below may be entered or any
+non-command will be sent to the channel or person.
+
+If a channel was entered, a list of the members will be displayed for the
+channel. If you find the list irritating as I do, you can press the
+\emph{Nick List} button at the top of the channel window, it will toggle
+the display of the member list for the channel.
+
+\subsection{DCC Chat}
+\subsubsection{Initiating a DCC Chat Connection}
+A DCC chat is initiated by either opening the \emph{Channels \& People}
+dialog by selecting the \emph{Open Channel} entry of the \emph{File} menu,
+selecting the person or entering in their nick followed by pressing the
+\emph{DCC Chat} button. Or by double clicking on the nick which will open
+the \emph{Nick Action} dialog and pressing the \emph{DCC Chat} button. In
+either case, a DCC Chat request will be sent to the nick, and a window will
+be opened for the conversation. When the other end connects, a small
+message will be displayed in the message window and you may be begin
+chatting with them.
+
+\subsubsection{Accepting a DCC Chat Request}
+When a DCC Chat request comes in, a message box will be displayed
+indicating who wants to chat with you. At this point you may either choose
+to connect to them or open a window to chat privately with them. 
+
+\subsection{Ignoring People}
+Once in a while, jerks do enter in the scene and it is nice to be able to
+ignore them. This may be done in one of two ways. Either double click on
+their nick and when the \emph{Nick Action} dialog is presented, press
+ignore. This will do a \emph{/who} command on them and build an appropriate
+address filter for the person and present you with a dialog showing the
+results. Press the \emph{OK} button to add the entry to the list.
+
+The second means is to enter the name in manually. Select the \emph{Ignore
+List} entry in the \emph{Lists} menu of the main window. This will display
+the \emph{Ignore List}. You may at this point double click on an empty row
+or select the \emph{New} entry under the \emph{Nick} menu of the table.
+This will open an dialog allowing you to enter in the nick and or address mask
+of the person.
+
+Any message you enter in will be sent to the person each time xIrc receives
+a message from them. This includes messages from them to a channel you are
+in.
+
+\subsection{Notifications}
+The mechanics of setting up notifications of peoples comings and goings are
+identical to that of the \emph{Ignore} lists. The only difference is the
+use of the message field. It will be sent to the person whenever they first
+detected to be online. Kind of an auto-greets message.
+
+\subsubsection{By Nick or by Address}
+Both ignores and notifications allow you to select whether they are by nick
+or by address. Pressing the \emph{By Addr} button indicates that it should
+be done by address. Otherwise, they are done by nick.
+
+
+
+\section{Windows, Dialogs and Buttons}
+
+There are several windows that may or may not be present at anytime
+through a session. Th following is a brief description of most of
+them.
+
+\subsection{Main Window}
+This window is primarily used for dealing with the server. If a
+message window, for either a channel or an individual, cannot be found
+for a message, it will be displayed in this window.
+\subsubsection{Menus}
+Enough actions have been added that I finally had to replace the buttons
+with menus. 
+\begin{description}
+\item[File] Server and Channel related functions
+\begin{description}
+\item[Connect Server] Opens the Server Select Dialog (\ref{Server Select})
+allowing you to connect to or disconnect from a server.
+\item[Open Channel] Opens a dialog (\ref{Channel Select}) for joining a
+channel a channel or starting up a chat with an individual.
+\item[Quit] Opens up a dialog allowing you to select an exiting statement
+then exits the program
+\end{description}
+
+\item[Nick] Nick related functions
+\begin{description}
+\item[Show Folks Online] Toggles the visibility of the \emph{Folks Online}
+list (\ref{Folks Online}).
+\item[Actions] Opens the 'Nick Action' dialog (\ref{Nick Action}). 
+\item[Change Nick] Opens a dialog for changing your nick. If you select
+this, you will be forced to enter in a nick.
+\end{description}
+
+\item[Lists] List Access / Maintenance
+\begin{description}
+\item[Server List] Same as the Connect Server menu item under the File
+menu.(\ref{Server Select})
+\item[Ignore List] Allow the editing and removing of existing, and the
+entry of new members on the ignore list (\ref{Ignore List}). 
+\item[Notify List] Allow the editing and removing of existing, and the
+entry of new members on the notification list (\ref{Notify List}). 
+\end{description}
+\end{description}
+
+\subsection{Message Window}
+This Window is the window used for talking to individuals and
+channels. There can be many such windows open at any given time. The
+only real differences in the windows for chatting on a channel and
+those for chatting to individuals is their initial size when they are
+created. The windows for talking on a channel are created with about
+twice as many lines.
+
+Also found in this window is an edit field for entering commands and
+messages to send. The commands and instructions on what can be entered
+within this field will be explained in later sections.
+
+To simplify actions on other's, double clicking on a nick in message 
+window will open the \emph{Nick Actions} (\ref{Nick Action}) dialog box 
+placing both the nick
+and channel name, if any, into it for you. At that point, any 
+number of actions are available to you.
+ 
+\subsubsection{Buttons}
+\begin{description}
+\item[Close] Pressing this button parts (leaves) the the channel and
+closes the window. In the case of a window for speaking to an
+individual, the window is merely closed.
+\item[Ping] Pressing this button send a CTCP Ping command to the
+individual or channel.
+\item[Nick Actions] Pressing this button opens the same dialog box as
+the \textit{Nick Actions} button of the Main window.
+\item[Nick List] This button is only present on the Message Windows
+for channels. Pressing it either hides or shows a dialog box with the
+names of the members currently on the channel.
+\item[Clear Line] Pressing this button erases any text currently
+present in the edit field.
+\item[Show Colors] Pressing this button displays the current colors and the digit used
+to change to that color.
+\end{description}
+
+Three Check Boxes have been added to this window. Checking them does as follows.
+
+\begin{description}
+\item[mIrc Colors] mIrc color coding is used when this box is checked. Otherwise the
+forthcoming CTCP2 color coding is used.
+\item[Ctcp2] When this button is checked, CTCP2 text attribute coding is used for underline,
+inverse, bold etc. Otherwise, CTCP1 coding is used.
+\item[Beep on Message] When this box is checked, any message to the window will cause it
+to beep.
+\end{description}
+
+\subsection{DCC Chat Window}
+This window is for chatting to another person via the CTCP DCC Chat
+mechanism. It has the \textit{Close} and the \textit{Clear Line}
+buttons. These buttons have the same functionality as the same buttons
+on the \textit{Message Window}
+
+\subsection{Server Selection Dialog}\label{Server Select}
+This Dialog Box is for establishing and dissolving connections with the Irc
+servers and manipulating the entries for the servers in the servers file.
+
+The scrollbar, up/down arrow keys, page-up page-down keys, and the home \&
+end keys can be used for traversing the list. Pressing the Enter key is
+equivalent to pressing the \emph{Connect} button unless a change has been
+made to the server selection masks.
+
+The servers shown in the list can be limited by entering appropriate masks
+into the editable fields at the top of the table. These masks are used in a
+wildcard mode as in file selections. Pressing the Enter key after modifying
+any of these fields will update the table to display The only those entries
+that match the masks.
+
+\subsubsection{Buttons}
+This dialog has 3 buttons, \emph{Connect}, \emph{Disconnect}, and \emph{Cancel}. 
+
+\begin{description}
+\item[Connect] This pressing this button opens the Connection Dialog which
+allows you to enter in a different server name or IP address and / or
+select the port in which to connect to.
+\item[Disconnect] Pressing this button disconnects the server.
+\item[Cancel] Pressing this button closes the dialog box without any
+action.
+\end{description}
+
+\subsubsection{Menu Bar}
+The menu bar has two items, \emph{File} and \emph{Server}. The \emph{File}
+menu has entries for manipulating the server file. The \emph{Server} menu
+has entries for manipulating individual entries in the table.
+
+These are the entries in the \emph{File} menu.
+\begin{description}
+\item[New] This menu entry clears the table of all entries
+\item[Load] This menu entry opens a file dialog to select and load a file
+of servers into the table.
+\item[Import] This menu entry is like \emph{Load} except that it imports
+server files in the format of mIrc's servers.ini files.
+\item[Save As] This menu item saves the table to a file.
+\item[Done] This menu item behaves as the \emph{Cancel} button.
+\end{description}
+
+These are the entries in the \emph{Server} menu.
+\begin{description}
+\item[Connect] This menu entry behaves as the \emph{Connect} button.
+\item[Disconnect] This menu entry behaves as the \emph{Disconnect} button.
+\item[Edit] This menu entry opens a \emph{Server Entry Edit} dialog box for
+editing an entries contents.
+\item[Delete] This menu item deletes an entry from the table.
+\end{description}
+
+\subsubsection{Server File format}
+The file format for the servers file is quite simplistic by nature. It is a
+colon delimited file with the following fields.
+
+\begin{description}
+\item[Group] Name of the group of servers the server belongs to.
+\item[Country] Name of the country or continent where the server is located.
+\item[State] Name of the state or country where the server is located.
+\item[City] Name of the city where the server is located.
+\item[Server] Domain name or IP number of the server.
+\item[Ports] Comma delimited list of ports that can be connected to.
+\end{description}
+
+An example of a valid entry is
+\begin{verbatim}
+BeyondIRC:US:MI:St.Louis:irc.primary.net:6660,6662,6664,6666,6668
+\end{verbatim}
+
+\subsection{Server Connection Dialog}
+This is a small dialog that gives the user an opportunity to change the
+server name and select the port to connect to the server before connecting
+to the server. This keeps one from being limited to only those servers and
+ports that are specified in the server list.
+
+There are two editable fields, one of which is a combo-box, the server
+field and the port field.
+
+There are also two buttons. The Connect button starts the connection, while
+the Cancel button closes the window without any further action.
+
+\subsection{Server Edit Dialog}
+This dialog allows for updating information in the Server Table. 
+
+\subsection{Nick List Dialog}
+This dialog box is created and maintained for each \textit{Message
+Window} opened for a channel. It holds the list of members of the
+channel and a series of buttons for various actions. If a nick is not
+present in the edit field, pressing a button will perform it's action
+on the currently highlighted entry in the list. Each button's action
+should be self evident by it's name but I'll explain them just in
+case.
+
+\subsubsection{Buttons}
+\begin{description}
+\item[Who is] Perform a \textit{/whois} command on the selected nick.
+\item[Chat] Opens the \textit{Channels / People} dialog box so a private
+chat or a DCC chat may be initiated with the selected member. The
+member's nick will be put in the edit field of the \textit{Channels / People}
+dialog box.
+\item[Ping] Send a CTCP Ping command to the selected nick.
+\item[Invite] Invite the selected nick (Uh, only makes sense if you
+entered a non-members nick in the edit field) to the channel.
+\item[Kick] Open the \textit{Kick Message} dialog box to kick a member
+from the channel. This only works if you are a channel operator.
+\item[Clear] Erases the contents of the edit field.
+\item[Close] Should close the window but I don't think it does anything at
+this point. *Sheepish Grin*
+\end{description}
+
+\subsection{Nick Actions Dialog}\label{Nick Action}
+One of my favorite dialog boxes. This dialog box allows you to do all
+sorts of things. On the buttons that require a channel to be entered,
+you will receive an error if the channel field is blank.
+
+Both the Nick and Channel fields will be filled in by double clicking
+on a word in a \textit{Message Window} or the \textit{Main Window}.
+This word selected will be placed in the nick field and the name of
+the window will be placed in the channel field.
+
+\subsubsection{Buttons}
+\begin{description}
+\item[Dcc Chat] Initiates a DCC Chat connection with the nick entered
+in the nick field and opens a corresponding \textit{DCC Chat Window}.
+\item[Priv Chat] Opens a \textit{Message Window} for the nick entered
+in the nick field.
+\item[File Send] Opens a file selection dialog for selecting the file to 
+send. After the file is selected, it will be sent.
+\item[User Info] Sends a CTCP UserInfo command to the nick entered.  
+\item[Whois] Sends a \textit{/whois} command for the nick entered.
+\item[WhoWas] Sends a \textit{/whowas} command for the nick entered.
+\item[Finger] Sends a CTCP Finger command to the nick entered.
+\item[Ban] This command sends a \textit{/who} command on the nick
+entered, then builds an appropriate ban string and bans that person
+from the channel specified.
+\item[Kick] Same as the \textit{Ban} button except it kicks the person
+from the channel once they are banned. You will be given a dialog box
+to enter an appropriate message to go with the kick also. This button
+is always good for livening up a slow channel.
+\item[Time] Sends a CTCP Time command to the nick entered.
+\item[Give Ops] Performs a \textit{/mode +o} command for the nick and
+channel entered.
+\item[Take Ops] Performs a \textit{/mode -o} command for the nick and
+channel entered.
+\item[Ping] Sends a CTCP Ping command to the nick entered.
+\item[Who] Sends a \textit{/who} command for the nick or list of names
+or whatever entered in the nick field. I found this to be the most
+useful for seeing in any of my buds are online by entering a list
+of domain name masks for each of them then pressing the button.
+\item[Notify] Opens an edit dialog with a template \emph{Nick} and
+\emph{Address Mask} for inclusion in the \emph{Notify} list. This command
+may respond a bit slow because it performs a \emph{/who} command on the
+nick to build its \emph{Address Mask}.
+\item[Ignore] Opens an edit dialog with a template \emph{Nick} and
+\emph{Address Mask} for inclusion in the \emph{Ignore} list. This command
+may respond a bit slow because it performs a \emph{/who} command on the
+nick to build its \emph{Address Mask}.
+\item[Close] Closes the dialog box.
+\end{description}
+
+\subsection{Channels / People Dialog}\label{Channel Select}
+This dialog box is for joining channels and initiating either private
+or DCC chats with individuals. In Either case, an appropriate
+\textit{Message Window} or \textit{DCC Chat Window} will be created.
+As with the other dialog boxes with combo lists in them, pressing a
+button will perform it's action on either the name in the edit field,
+or the highlighted entry in the list.
+
+\subsubsection{Buttons}
+\begin{description}
+\item[OK] This button either joins a channel or opens a
+\textit{Message Window} to the selected individual.
+\item[Join] Does the same as the \textit{OK} button.
+\item[DCC Chat] Initiates a DCC Chat session with an individual and
+opens a \textit{DCC Chat Window}.
+\item[Chat] Does the same as the \textit{OK} button.
+\item[Names/Whois] Sends either a \textit{/names} or \textit{/whois}
+command to the selected channel or individual.
+\item[Clear] Clears the edit field.
+\item[Close] Closes the dialog box.
+\end{description}
+
+\subsection{Nickname Dialog}
+This dialog lets you select or change your nick. As the others, it
+will either use the nick entered in the edit field, or the selected
+nick in the list. If the \textit{Auto Nick Selection} button is
+enabled, the next nick found in the list will be used if the nick you
+attempt to change to is in use. At this time, if you bring up this
+dialog box, you \textbf{MUST} exit with the \textit{OK} button.
+
+\subsection{Folks Online List}\label{Folks Online}
+This is a small dialog showing the people from the \emph{Notify List}
+(\ref{Notify List}) who are presently online. The nick that they are using
+and the address as specified in the list are displayed for each person.
+
+Double clicking the mouse on an entry in the list will pop up the
+\emph{Nick Action} dialog box (\ref{Nick Action}) with the nick shown.
+
+\subsection{Ignore / Notify List Maintenance Dialogs}
+The list maintenance dialogs for both the Ignore and Notify Lists are quite
+similar in their look and feel. Though a few names may differ, they a
+basically the same dialogs. They consist of a series of menus and a
+scrollable table with 4 columns.
+
+\subsubsection{Ignore List}\label{Ignore List}
+The ignore list is for ignoring incoming messages from individuals. When a
+message from an individual on the ignore list is received, an optional
+auto-reply message may be sent back if one is present in the \emph{Message}
+field for that person. 
+
+Currently, messages from ignored people are displayed in the main window.
+This will most likely change as I become more confident that it is working
+properly.
+
+The only short coming of the auto-reply is that it will be sent to the
+person when they chat on a channel you are currently on. Of course,
+depending on your nature, this could be a good thing (snicker).
+
+\subsubsection{Notify List}\label{Notify List}
+The \emph{Notify List} is to receive notification of a persons arrival or
+departure from Irc. Upon detecting a persons arrival, it will send an
+optional greeting to that person and also post a message to the \emph{Main
+Window} of their arrival. When a person has been detected as having
+departed, another message will be posted to the \emph{Main Window} stating
+so.
+
+Detecting people is done with the \emph{who} command using either their
+nick or the name of their provider. They both have potential problems. In
+the case of using their nick, the problem is (at least to me) obvious,
+anyone can use a given nick so a notification may or may not be true. In
+the case of using their hostname the problem is not so obvious. Doing a
+\emph{/who} on some hosts, there may be many people online from that host.
+\emph{xIrc} gleans out the desired person by their username, but if there
+are enough people on form a single hostname, you may get bumped because of
+the number of responses from the server. Yes, this is a real problem. if
+you want to see it happen, do a \emph{/who} with no name on a busy night.
+The list will be so long, chances are the server will knock you offline.
+
+\subsubsection{List Navigation and Manipulation}
+An entry is selected when its row appears to be sunken in respect to the
+other rows. Selecting a given row is a simple matter of using the up and
+down arrows or the page up and page down keys to select the next or
+previous item in the list. An item may also be clicked on with the mouse to
+select it.
+
+As well as using the menus described below to manipulate an item, the
+mouse may also be used. Double clicking on an item will cause an edit
+dialog to be opened for editing the contents. Double clicking on an
+unpopulated row will open a dialog for entering a new item.
+
+\subsubsection{Menus}
+\begin{description}
+\item{File}
+\begin{description}
+\item[New] Clears the list of all entries.
+\item[Load] Reads in an existing file appending it's items in to the
+list.
+\item[Save As] Saves the list to a file. The default filename given is that
+of the file that gets read on startup of the program.
+\item[Done] Closes the dialog.
+\end{description}
+
+\item{Nick}
+\begin{description}
+\item[Edit] Opens a dialog for editing the currently selected item in the
+list.
+\item[New] Opens a dialog with blank entries for appending a new item to
+the list.
+\item[Delete] Deletes the currently selected item from the list.
+\end{description}
+\end{description}
+
+\subsubsection{Fields}
+Each item in the list consists of 4 fields. Only the 3rd field differs
+between the notification and ignore lists and then only by it's label.
+
+\begin{description}
+\item[Nick] Nick of the user to be ignored or notified of.
+\item[Mask] Address Mask of the user to be ignored or notified of. The
+format of this field may be any string that makes for a valid /who query.
+In general, it will have a format of \emph{nick}@\emph{server}. because
+most people use dynamic IPs, the server will be prefixed with a *. As an
+example:
+
+\begin{quote}
+peteh@*.satelnet.org
+\end{quote}
+
+\item[Ignore/Notify] Checkboxes to enable / disable the item and to select
+if the user is to be detected by their nick or by their address mask.
+\item[Message] For the Ignore List, if a message is present, it will be
+sent to the user automatically in response to any message detected by them.
+This include any messages they send to a channel you happen to be on also.
+(Yes, I can be quite nasty, snicker).
+
+For the Notify List the message present in this field will be sent to the
+user on detection of their arrival. It will be sent only once on each
+arrival of the user.
+
+In either case, if this field of empty, no message will be sent.
+\end{description}
+
+%%
+%% Commands Chapter
+%%
+\section{Commands}
+Commands may be entered in the edit field of the \textit{Message
+Windows}. They are distinguished from messages by the line starting
+with a '/' character. All white space at the beginning of the line is
+skipped, therefore, if you want to 'fake' a command, you must put a
+period or some other non-white space character before the '/',
+otherwise the command will be invoked! The following commands are
+available (Maybe others if I forget to add them to this list as I
+release the code).
+
+\begin{description}
+\item[ALIAS \textit{tag} \textit{string}]
+   This  command  allows you to have simple macro replacements. Though
+   they  are very basic, they can be useful. Basically \textit{string} will
+   be  inserted  anywhere  \$\textit{tag} is  found  on  an entered
+   line. For example:
+\begin{quote}
+\begin{verbatim}
+/alias hugs *Big Hairy Hugs*
+/me gives so and so $hugs tightly
+\end{verbatim}
+\end{quote}
+   will result in an action of '*\textit{nick} gives so and so *Big Hairy Hug*
+   tightly'.
+\item[AWAY \textit{message}]
+   Sets  you  away.  The \textit{message} will be given to anyone who private
+   messages you.
+\item[AWAY] 
+   An away command with no message clears out the away message 
+   from the server.
+\item[FINGER \textit{nick}]
+   Sends a CTCP FINGER request to the nick.
+\item[INVITE \textit{nick}]
+   This invites a person to the channel associated with the window it is
+   typed  in  on. It is functional but useless on windows used to chat
+   with others privately
+\item[JOIN \textit{channel}]
+   One  of  the  commands  you  probably ought to leave alone. Use the
+   'Channel  /  People' Dialog instead. It will join you to
+   \textit{channel},
+   but  the  routing  of  messages  will not right and therefore won't
+   work!
+\item[KICK \textit{nick}]
+   Kicks  a  \textit{nick} from  a  channel. Once again, it's functional but
+   useless if used from a \textit{Message Window} not associated with a 
+   channel.
+\item[LINKS]
+   Lists the servers currently connected to your server. Don't ask me
+   how to interpret it, I don't know!
+\item[LIST]
+   Lists  channels topic and such. Works just like the LIST command in
+   IRC-II.
+\item[MAP]
+   Similar to the \textbf{/LINKS} command except that it gives a more
+   'graphical' look to how the servers are connected. Though I still
+   have to pretend I know what it is telling me.
+\item[ME]
+   Sends a CTCP ACTION message. In DCC Chat windows it will append the
+   action to the characters \texttt{<=}.
+\item[MODE \textit{modes}]
+   Sets  the  modes  for the channel the window is associated with to
+   \textit{modes}. It
+   works  just  like the MODE command in IRC-II except that the channel
+   name is derived from the window's name.
+\item[NAMES {[}\textit{channel}{]}]
+   Lists  the  members  on  a  channel.  If  channel is not given, the
+   channel name will be used. If I'm not mistaken, in the latter case,
+   no  results will be display, instead, they will be reflected in the
+   Nick Dialog for that channel.
+\item[NOTICE {[}\textit{nick}{]} \textit{string}]
+   Sends a NOTICE to the Nick or channel specified.
+\item[NICK]
+   Changes your nick
+\item[PART]
+   Like the JOIN command, it there, but it's best to leave it be!
+\item[PING]
+   Pings  the  Member or Channel given. If neither are given, the name
+   pinged is derived from the window's name.
+\item[PRIVMSG]
+    Sends a private message to the channel or member specified.
+\item[QUIT]
+   Closes  the  connection to the current server sending the optional
+   message if present.
+\item[TOPIC]
+   Set  or  displays  the  topic  for the channel associated with the
+   window.
+\item[WHO]
+   Does a who on the nick provided. Works like IRC-II.
+\item[WHOIS]
+   Does a whois on the nick provided. Works like IRC-II.
+\item[WHOWAS]
+   Does a whowas on the nick provided. Works like IRC-II.
+\item[VERSION]
+   Sends  a  CTCP Version message to the channel or nick provided. If
+   no name is given, the name of the window is used.
+\end{description}
+
+\section{Command Line Entry and Edit Fields}
+Because both the \textit{Message Windows} and the edit fields of the
+dialog boxes share a common widget for text entry, they have the same
+abilities when it comes to aliases and special character handling.
+Though it is not guaranteed that all of the special characters are
+appropriate or will even be acceptable in all of the dialog boxes.
+
+\subsection{Handling of Special Characters}
+Special characters may be entered using \textit{escape sequences}.
+These are with the character $\backslash$ followed by one or more
+characters. There are 5 flavors of escape sequences.
+
+\subsubsection{Escape Sequences, Text Attributes}
+These escape sequences specify various text attributes and colors to send. They
+are cumulative in that they remain on until explicitly turned off. All except the
+$\backslash$c escape sequence are toggles in that the first time it is encountered, the
+attribute is turned on while the second time it is turned off. In the case of the $\backslash$c
+escape sequence, it has a specific parameter to turn off the colors.
+
+Not all of these will work with the font selected for your window. Though they will still
+be sent out and hopefully be properly displayed on the receiver's end.
+
+\begin{description}
+\item[$\backslash$c\textit{colorspec}] This sequence will set the foreground 
+and background colors as specified. Both the foreground and background colors
+must be present in the sequence! See \textit{Text Attributes \& Color Specifications} 
+(Section \ref{textattr}).
+
+\item[$\backslash$b] This sequence will toggle the bold text attribute.
+\item[$\backslash$u] This sequence will toggle the underline text attribute. 
+\item[$\backslash$v] This sequence will toggle the invert attribute
+\item[$\backslash$s] This sequence will toggle the strikeoute attribute
+\item[$\backslash$n] This sequence will remove any previously set attributes
+including colors.
+\end{description}
+
+\subsubsection{Escape Sequences, Embedding Control characters}
+These escape sequences allow you to embed control characters into the 
+text stream.
+\begin{description}
+\item[$\backslash$\textit{number}] This will convert the decimal
+number \textit{number} to a single character. Ei. $\backslash$27 will
+send an ASCII \textit{Esc} character.
+\item[$\backslash$x\textit{hex number}] This will convert the hexadecimal
+number \textit{hex number} to a single character. Ei. $\backslash$1b will
+send an ASCII \textit{Esc} character.
+\item[$\backslash$0\textit{octal number}] This will convert the octal
+number \textit{octal number} to a single character. Ei. $\backslash$033 will
+send an ASCII \textit{Esc} character.
+\end{description}
+
+\subsection{Aliases}
+An alias may be used by entering \$\texttt{<tag>}. Where tag is either
+a name previously defined using the \textit{/ALIAS} command or the
+name of an environment variable. Tag must begin with a letter, and may
+consist of letters, numbers and the underscore after that. The regular
+expression for aliases is \texttt{\$[a-zA-Z\_]+[a-zA-Z0-9\_]*}. If an
+alias is found on the line but not defined it is replaced with
+"" (no quotes).
+
+At this point, it is not possible to to immediately follow a \$ with a
+letter such as \$A without it being interpreted as an alias. The
+upside to this is that you may put in \$456.34 without any special
+characters to pass on the \$.
+
+The names for alias are NOT case sensitive. \$fred is equivilent to
+\$Fred and \$FRED.
+
+\subsection{Command Lines}
+A command line is considered any line entered in the edit field of
+either a \textit{Message Window} or a \textit{DCC Chat Window} that
+starts with a /\textit{command}. Any leading white space on the line
+before the / will be skipped. If the command is not recognized it is
+quietly ignored.
+
+Any line that does not begin with a / is considered a message and is
+sent on to either the channel or the individual you are chatting with.
+
+In either case, you may imbed aliases and escape sequences as needed.
+
+\section{Text Attributes \& Color Specifications} \label{textattr}
+Currently Text Attributes are in a state of flux. There is the original
+CTCP1 specification, a preliminary CTCP2 specifiaction and now a more 
+finalized CTCP2 Specification. xIrc only handles the first and last of 
+the three.
+
+For colors there is the old mIrc way of encoding them (Blech!) and now
+the newer CTCP2 way. xIrc will support incomming and outgoing of either
+of the two formats.
+
+As far as I can tell, most clients currently use the CTCP1 encoding of the text
+attributes and the mIrc encoding of the colors. Therefore the default is to
+use these two means of encoding the text attributes and colors.
+
+In all cases, when sending commands, the format is the same. The means
+of encoding the attributes are controlled by check boxes on the message windows.
+For automated messages such as the Kick message, CTCP1 and mIrc color encodings 
+are used and at this time, there is now way to change that.
+
+\subsection{Color Specifications}
+
+To specify colors, use a $\backslash$c immediately followed by two hex digits.
+the first digit specifies the foreground color and the second specifies the background
+color. Sadly the digits are diferent depending on whether you are using mIrc colors or
+CTCP2 colors. All of the alpha-hex digits (A - F) may be in either upper or lower case.
+The color code for the two specifications are as follows.
+
+\subsubsection{mIrc Colors}
+\begin{quote}
+\begin{description}
+\item[0] White
+\item[1] Black
+\item[2] Navy Blue
+\item[3] Green
+\item[4] Red
+\item[5] Brown
+\item[6] Purple (Magenta)
+\item[7] Orange
+\item[8] Yellow
+\item[9] Lt. Green
+\item[A] teal (dark cyan)
+\item[B] Lt. Cyan
+\item[C] Lt. Blue
+\item[D] Pink (Lt. Magenta)
+\item[E] Grey
+\item[F] Lt. Grey
+\item[X] Turn off colors
+\end{description}
+\end{quote}
+
+In addition, a '.' may be used for the background color to specify that it should
+remain unchanged from what it currently is. The foreground color must always be
+specified as a hex digit 0 - F. 
+
+Ex. Entering in "$\backslash$cd1Hello$\backslash$c0. there$\backslash$cx my friend" will produce
+the string "Hello there my friend" with the word "Hello" in the colors Pink on Black,
+the word "there" in the colors White on Black and my friend in the default colors.
+
+\subsubsection{CTCP2 Colors}
+For CTCP2, either a hex digit indicating the color or a \# folowed by six hex digits
+(just like that used in the X-resources to specify a color)
+may be used to indicate the foreground and background colors.
+
+\begin{quote}
+\begin{description}
+\item[0] Black
+\item[1] Blue
+\item[2] Green
+\item[3] Cyan
+\item[4] Red
+\item[5] Purple (Magenta)
+\item[6] Brown
+\item[7] Lt. Grey
+\item[8] Gray
+\item[9] Lt. Blue
+\item[A] Lt. Green
+\item[B] Lt. Cyan
+\item[C] Lt. Red
+\item[D] Pink (Lt. Magenta)
+\item[E] Yellow
+\item[F] White
+\item[X] Turn off colors
+\end{description}
+\end{quote}
+
+In addition, a '-' may be used to force either the foreground or background
+color to the default color and a '.' may be used to specify that the foreground
+or background color should remain the same as it was.
+
+Ex. 1: Entering in "$\backslash$cd0Hello$\backslash$cf. there$\backslash$cx my friend" will produce
+the string "Hello there my friend" with the word "Hello" in the colors Pink on Black,
+the word "there" in the colors White on Black and my friend in the default colors.
+
+Ex. 2: Entering in "$\backslash$c\#ff00ff\#000000Hello$\backslash$c\#ffffff- there$\backslash$cx my 
+friend" will produce the string "Hello there my friend" with the word "Hello" in the colors Pink
+on Black, the word "there" in the colors White on the default background color and my friend
+in the default colors.
+
+\section{Configurations Using the xIrc.defaults File}
+Currently there are two means used in the configuration of xIrc, the
+xIrc.defaults file and the X-Resources. I'm
+not sure if this will not change in the future or not. For Y'all who
+have been using xIrc for a while, you will find that somethings that
+used to be in the xIrc.defaults file have been moved and made into
+X-Resources. In the future, others or all may be moved also.
+
+Any aliases that you want to pre-define, may be entered into this
+file. It will be read once on startup and then politely ignored
+through the remainder of the session.
+
+At this point  it  MUST reside in the current directory where you are
+when you start xIrc. There are just a handful of various things you
+can set at this point, hopefully it will not get too much larger in
+time.
+
+If you take a look at the defaults file provided, you will get an idea
+of  how  it's formated. definitions can be on multiple lines using the
+continuation  character  as the last character on the line before they
+new  line.  Any  handy  little  definitions you want to be able to use
+while  chatting can also be placed in this file and they will be there
+ready for you to use when you start up.
+
+Here  is  the  list  of  the  currently used tags. Not all of them are
+needed,  though  some  do make life much easier. These names may be in
+any case to simplifiy reading them.
+
+\begin{description}
+\item[BAN\_MESSAGE]
+   String to use for the kick if the kick is implemented with a ban.
+
+\item[CHANNELS]
+   List  of  channels  or  nicks you want to regularly check out, chat
+   with or whatever.
+
+\item[DCC\_SEND\_RESPONSE]
+   Response  message  you  want to send when someone tries to set up a
+   DCC File transfer to you.
+
+\item[EMAIL\_ADDR]
+   Entry  to  specifiy  the  user  name  and  host  name provided when
+   connecting to the server. It must follow the <user>@<domain> syntax
+   or  you  stand the chance that your connection will be rejected. If
+   this entry is not provided, the user name from the /etc/passwd file
+   will  be  used and a dummy domainname of dummy.hostname.org will be
+   used.
+
+\item[KICKMESSAGE]
+   Default message to send when you kick someone.
+
+\item[KICKED\_OTHER\_RESPONSE]
+   Message to send when a kick of someone is detected.
+
+\item[KICKED\_YOU\_RESPONSE]
+   Message to send someone when they kick you.
+
+\item[NICK]
+   Now Obsolete tag. See NICKS.
+
+\item[NICKS]
+   Allows  you  to  define a set of possible nicks to when connecting.
+   Each nick should be seperated with a space.
+
+\item[QUITMESSAGE]
+   Default message to append to the QUIT command.
+
+\item[REALNAME]
+   Will  be  sent when first connecting to a server as your real name.
+   Can  be  anything you like though if you're one of those snots that
+   don't  like  people  being  able  to  see  just who they are really
+   talking  too  (Personal  oppinion there). If it is not defined, the
+   user\_name field of the /etc/passwd file will be used instead.
+
+\item[SERVERS]
+   List of server names you frequent.
+
+\item[TCPPORT]
+   Default TCP port, probably should be left at 6667.
+
+\item[USERINFO]
+   Whatever  you  want to tell the world about yourself when they do a
+   ctcp USERINFO command of you.
+\end{description}
+
+\subsection{Obsolete Tags}
+These tags are no longer used as of Version 1.15 and their
+functionality has been moved to the X-Resources file. 
+\begin{description}
+\item[FRAME\_FG\_COLOR\_NAME]
+\item[FRAME\_FG\_COLOR\_RGB]
+\item[FRAME\_BG\_COLOR\_NAME]
+\item[FRAME\_BG\_COLOR\_RGB]
+\item[WINDOW\_FG\_COLOR\_NAME]
+\item[WINDOW\_FG\_COLOR\_RGB]
+\item[WINDOW\_BG\_COLOR\_NAME]
+\item[WINDOW\_BG\_COLOR\_RGB]
+\end{description}
+
+\section{X-Resources}
+As of version 1.15, xIrc uses X-Resources to set the colors and fonts
+to be used when drawing the widgets. Almost all of its widgets have
+both a class name and a resource name. Currently the names are the
+same except that the class names have the first letter of each word
+capitalized. The names and definitions of the font and color resources
+come directly from the definition of the Qt class library. Therefore,
+for a better understanding of them, it wouldn't hurt to take a look
+at Qt documentation for the classes QColorGroup and QFont.
+
+Currently xIrc does not use the resource definitions defined for the
+root window. They are derived by merging the following sources in the
+order given.
+\begin{itemize}
+\item Hardcoded program defaults
+\item /usr/lib/X11/app-defaults/xIrc $^*$
+\item $\sim$/.Xdefaults
+\end{itemize}
+\flushleft{
+Note:
+}
+\begin{quote}
+$^*$ This file name will be the same as the the name that xIrc was
+invoked as. In otherwords, if a link name \textbf{fred} points to the
+actuall xIrc program, the resulting file name used will be
+/usr/lib/x11/app-defaults/fred.
+\end{quote}
+
+The result of this is that if no other source is given, then the hard
+coded valuee will be used, otherwise, and values given in the
+.Xdefaults will override those in the app-defaults file which will
+override the hardcoded values.
+
+To simplify the documenting of the resources and the widgets, I will
+refer to all of them by thier class name. If you insist on using the
+actual names, you can convert them by making the class name all lowercase.
+\flushleft{Note:}
+\begin{quote}
+For now, it is recomended that only class names be used in the
+resource files. This is because in the near future the names for each
+widget will probably be changing and I'm not sure how yet. Where as I
+see very little change (though anything is possible) of the class
+names.
+\end{quote}
+
+\subsection{Default Values}
+The xIrc program has the following defaults built in. They will be in
+force unless over ridden by definitions in one of the aforementioned
+files.
+\begin{quote}
+\begin{verbatim}
+XIRC*PixMap: xIrc.ppm,
+XIRC*PixMapPath: ./;~/;/usr/local/lib/xIrc/;,
+XIRC*Font.Family: Helvetica,
+XIRC*Font.Size: 12,
+XIRC*Font.Weight: normal,
+XIRC*Menu.Font.Weight: Bold,
+XIRC*Popup.Font.Weight: Bold,
+XIRC*PushBtn.Font.Weight: Bold,
+XIRC*PushBtn.Background: #afafaf,
+XIRC*Background: 0xc3c3c3,
+XIRC*Forground: black,
+XIRC*BaseColor: light yellow,
+XIRC*TextColor: black,
+XIRC*AutoFocus: false,
+
+XIRC*MessageBox.Background: #800000,
+XIRC*MessageBox.Forground: Yellow,
+XIRC*MessageBox.BaseColor: #800000,
+XIRC*MessageBox.TextColor: Yellow,
+XIRC*MessageBox.Font.Weight: Bold,
+XIRC*MessageBox.Font.Size: 18,
+   
+XIRC*ListBox.BaseColor: #b8b8b8,
+
+XIRC*MultiLine.Window.Background: #000090,
+XIRC*MultiLine.Window.HighColor: white,
+XIRC*MultiLine.Window.TextColor: grey72,
+
+XIRC*MessageDialog.Columns: 60,
+XIRC*MessageDialog.Lines: 7,
+XIRC*MessageDialog.PushBtn.Background: #afafaf,
+XIRC*MessageDialog*MultiLine.Window.Background: #bfbfbf,
+XIRC*MessageDialog*MultiLine.Window.BaseColor: #9f9f9f,
+XIRC*MessageDialog*MultiLine.Window.TextColor: Navy Blue,
+
+XIRC*MultiLine.Window.Font.Family: Fixed,
+
+XIRC*DccChat.Input.Font.Family: Fixed,
+XIRC*DccChat.Columns: 80,
+XIRC*DccChat.Lines: 11,
+XIRC*DccChat.MircColors: TRUE,
+XIRC*DccChat.CTCP2: False,
+XIRC*DccChat.Beep: FALSE,
+
+XIRC*MsgChat.Input.Font.Family: Fixed,
+XIRC*MsgChat.Columns: 80,
+XIRC*MsgChat.Lines.Channel: 22,
+XIRC*MsgChat.Lines.Nick: 11,
+XIRC*MsgChat.MircColors: TRUE,
+XIRC*MsgChat.CTCP2: False,
+XIRC*MsgChat.Beep: FALSE,
+
+XIRC*ServerDialog.Servers.Background: #bfbfbf,
+XIRC*ServerDialog.Font.Family: Fixed,
+XIRC*ServerDialog.ImportFile: servers.ini,
+XIRC*ServerDialog.ImportPath: ./,
+XIRC*ServerDialog.ImportFilter: *.ini,
+XIRC*ServerDialog.Filename: .servers,
+XIRC*ServerDialog.Path: /usr/local/lib/xIrc,
+XIRC*ServerDialog.Filter: .*,
+\end{verbatim}
+\end{quote}
+
+I have tried to keep the defaults to a minimum and as generic as possible
+allowing for the greatest flexiblilty. If they cause any problems, I'm
+open for suggestions on how they should be set, though I don't make
+any promises everybody's suggestions wil be put into place.
+
+\subsection{Common Resources}
+Each widget has these resources named.
+\begin{description}
+\item[Background] Used to se the backgound color of the widget. On
+many of the widgets, such as lists, this also includes any scroll bars.
+\item[Foreground] Not sure what all the covers. The one thing that I
+have noticed that it changes is the caret color in the editible
+fields.
+\item[BaseColor] Background color of the input fields. The Background
+color will be used if this is not set.
+\item[TextColor] Color of the text that is displayed in a widget. The
+Foreground color will be used if this is not defined.
+\item[Font.Family] Family name of the font to use, such as, Helvetica,
+Courier, Fixed, etc.
+\item[Font.Size] Pixel size of the font to use.
+\item[Font.Weight] Weight of font to use. This can be either a number
+from 1 to 99 or one of the following names.
+\begin{quote}
+\begin{itemize}
+\item{Light}
+\item{Normal}
+\item{Bold}
+\item{Black}
+\end{itemize}
+\end{quote}
+\end{description}
+
+\subsection{Configurable Widgets}
+
+\begin{description}
+
+\item[XIRC] The application. This has following resource names
+in addition to the common ones.
+
+\begin{description}
+\item[BanDialog] The dialog box used for banning folks from a channel.
+It has the \textbf{Input} and \textbf{PushBtnFrame} widgets beneath
+it.
+
+\item[ChannelDialog] The dialog box for selecting the channel to talk
+on. It also has the \textbf{ComboBox} and \textbf{PushBtnFrame}
+widgets beneath it.
+
+\item[ChannelNickDialog] This dialog box holds the list of current
+members of a channel and has buttons for various actions for the
+nicks. It has the \textbf{ComboBox} and \textbf{PushBtn} widgets
+beneath it.
+
+\item[ComboBox] This is for widgets composed of a list box and an
+edit field. It has the \textbf{Input} widget beneath it.
+
+\item[DccChat] Window used for DCC Chats. This has the same
+widgets beneath it as the \textbf{MsgChat} widget.
+
+It also has the following resources that can be set.
+
+\begin{description}
+\item[Columns] This specifies the number of columns wide the window should be.
+\item[Lines.Channel] This specifies the of lines that a window for a channel
+should have.
+\item[Lines.Nick] This specifies the the number of lines a window for private
+chats should have
+\end{description}
+
+
+\item[DCC.Open] Default Directory to open for Dcc File Sends
+
+\item[DCC.Save] Default Directory to open for Dcc File Receives
+
+\item[ErrorDialog] The dialog box that pops up when an error is
+recieved from the server.
+
+\item[IgnoreDialog] The Dialog Box for viewing and altering the \emph{Ignore
+List}. It has the following resources in addition to the standard
+resources.
+\begin{description}
+\item[File] Default name for loading a file into the list.
+\item[Filename] Name of the file to load on startup.
+\item[Filter] Filter for the files to see in the file dialog.
+\end{description}
+
+\item[Input] This widget is a single line editable field.
+
+\item[ListBox] Used to set the colors and fonts of the various list boxes.
+
+\item[Main] Main text window that the server messages go to.
+
+\item[MessageBox] The dialog for handling errors and warnings.
+
+\item[MessageDialog] The dialog box that pops up when someone sends a
+private message to you. It has the \textbf{PushBtnFrame} widget	and \textbf{MultiLine}
+widget beneath it.
+
+\item[MsgChat] The window you talk with to both a channel or another
+person privately. Currently ther is no differentiation between the
+two, though later there will probably be so. I will keep the ends of
+the new class names \textbf{MsgChat} to simplify the modifications to
+the resources when that time comes.
+
+It has the following resources that can be set.
+
+\begin{description}
+\item[Columns] This specifies the number of columns wide the window should be.
+\item[Lines.Channel] This specifies the of lines that a window for a channel
+should have.
+\item[Lines.Nick] This specifies the the number of lines a window for private
+chats should have
+\end{description}
+
+The \textit{MsgChat} window also has the \textbf{MultiLine},
+\textbf{PushBtnFrame}, \textbf{ChanNickDialog}, and \textbf{Input}
+widgets beneath it.
+
+\item[MultiLine.Frame] This specifies the color of the frame and
+scroll bar sourounding the multiline text widget used for displaying
+the text of the conversations. At this time, because of how the frame
+is layed out, it really only effects the color of the scrollbar.
+
+\item[MultiLine.Window] The multiline text widget used to display the
+text of conversations. For the best results, a fixed font such as
+lucidatypewriter or fixed should be used for this window. The code for
+the widget was written on the assumption that this would be so,
+therefore, all bets are off that the widget will display it's contents
+correctly if a proportional font is used!
+
+\item[NickDialog] The dialog box for selecting a nickname. It too has
+both the \textbf{ComboBox} and \textbf{PushBtnFrame} widgets beneath it.
+
+\item[NickActionDialog] My favorite, the dialog box to do just about
+anything to anyone. It have the \textbf{Input} and \textbf{PushBtnFrame} widgets beneath
+it.
+
+\item[NotifyDialog] The Dialog Box for viewing and altering the \emph{Notify
+List}. It has the following resources in addition to the standard
+resources.
+\begin{description}
+\item[Menu] Used to set the colors and fonts of the menu bar.
+\item[Popup] Used to set the colors and fonts of the popup menus.
+\item[File] Default name for loading a file into the list.
+\item[Filename] Name of the file to load on startup.
+\item[Filter] Filter for the files to see in the file dialog.
+\end{description}
+
+\item[PixMap] Name of the Pixmap file to use as an Icon for closed
+\textit{Message Windows} and \textit{DCC Chat Windows}. Unfortunately,
+This file cannot be of the standard xpm variety. It must be a BMP,
+XBM, or a PNM of the type P1 - P6. I have supplied both an XPM and a
+P3 format PPM file derived from the XPM. The XPM version is for all of
+you fvwm users. 
+
+\item[PixMapPath] A list of paths, delimited with semicolons, to
+search for the pixmap. The default is './;$\sim$/;/usr/local/lib'.
+\end{description}
+
+\item[PushBtnFrame] This frame is for holding one or more push
+buttons. It has the \textbf{PushBtn} widget beneath it.
+
+\item[ServerDialog] The dialog box for selecting a server to connect
+to. It has the \textbf{ComboBox}, \textbf{PushBtnFrame} and
+\textbf{Input} (for the port number) widgets beneath it. In addition to the
+common resources it also uses these additional resources.
+\begin{description}
+\item[Menu] Used to set the colors and fonts of the menu bar.
+\item[Popup] Used to set the colors and fonts of the popup menus.
+\item[ImportFile] Default name for the mIrc servers.ini file
+\item[ImportPath] Default path to find the mIrc file.
+\item[ImportFilter] Default filter for the mIrc file.
+\item[File] Default name for the server file
+\item[Path] Default path to find the server file.
+\item[Filter] Default filter for the server file.
+\end{description}
+
+\item[Servers] The Server Selection Table.
+\begin{description}
+\item[Mask.Group] Mask to restrict servers the shown by group
+\item[Mask.Country] Mask to restrict servers the shown by country
+\item[Mask.State] Mask to restrict servers the shown by state
+\item[Mask.City] Mask to restrict servers the shown by city
+\item[Mask.Server] Mask to restrict servers the shown by server
+\end{description} Mask to restrict servers the shown by group
+
+\item[SocketDialog] The dialog box showing the progress of the
+connection attempt. It has the \textbf{PushBtnFrame} widgets beneath it.
+
+\item[TCPSocket] The socket widgit for establishing and accepting
+connections. This is truely not a widgit as it is never displayed on
+the screen. This object has the following two configurable items.
+\begin{description}
+\item[ConnectTime] Time to wait to make a connection in milliseconds
+(seconds * 1000). The defualt is 1 minute.
+\item[AcceptTime] Time to wait for an incomming connection in
+milliseconds (seconds * 1000). The default is 5 minutes.
+\end{description}
+
+\end{description}
+\end{document}

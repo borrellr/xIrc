@@ -1,0 +1,101 @@
+xIrc-2.3.8 - Robert Borrell <borrell@pobox.com>
+==========
+This release requires the use of Qt Widget library version 2.2.4. Other minor
+enhancements have been made.
+
+xIrc-2.3.7 - Robert Borrell <borrell@pobox.com>
+==========
+This release has been ported to SuSE Linux 7.0.  Further development on the
+Solaris platform has been dropped.  Starting with xIrc-2.3.6, the xIrc program
+requires the use of QT 2.1.1 Widget library.
+
+xIrc-2.3.4 - Robert Borrell <borrell@pobox.com>
+==========
+This release has been ported to qt-2.x platform.  I want to thank Christian
+Poulter for his contribution.  Otherwise there has a few bug fixes in this
+release.
+
+xIrc-2.3 - Robert Borrell <borrell@pobox.com>
+==========
+This release has been ported to qt-1.44 for linux systems and SUN Solaris
+systems using gcc-2.95.2.
+
+xIrc-2.2p1
+==========
+This release offers Colors!!!  There have  also been a few bugs fixed  and 
+the File Dialog used in  DCC transfers has  been worked on  to make a  bit 
+more  sense  than  before.   It  still  probably  leaves  some  room   for 
+improvement though.  
+
+The other big change that I have made is that I've changed the defaults so 
+that the program comes up closer to  the way it looks in the screen  shots 
+than before.  Forgive me for this in the past.  I didn't even think to see 
+how it looked using the defaults for about a year or more.  Was I  shocked 
+at how ugly it looked!  Now the only difference between thetwo is the font 
+I use here at home is  'Lucidabrite'  font  for  the  default  family  and 
+'Lucidatypewriter' for the  message windows and  their input fields.   Are 
+the Lucida fonts standard?  
+
+You will find that there is  now  a  users  guide  in  xIrc.dvi,  xIrc.ps, 
+xIrc.doc.  Take your choice of formats.  The xIrc.doc file is plain  ASCII 
+for those of you with very limited text abilities.  I highly recommend the 
+others as this file  is not  very pretty.   It was  derived from  xIrc.dvi 
+using dvi2tty.  As handy as  this  program  is,  it  doesn't  (and  I  can 
+understand why) handle  going from  a proportional  font to  a fixed  font 
+format very well.  It also does not handle '_' at all well, they come  out 
+as '='.  Therefore, in  the names for the  tags in the xIrc.default  file, 
+substitute '_' where you see aa '='.   In a pinch the ASCII file beats  no 
+documentation at all.  For  you who are  brave at heart  and have alot  of 
+disk space, I provided xIrc.tex  so that  if you  run 'Make  doc' it  will 
+create the  various  documents  using  latex  and  dvi2tty  programs.   My 
+personal preference at this point has been xdvi for viewing purposes.   It 
+has much cleaner fonts  and in  my humble  opinion looks  alot nicer  than 
+ghost-view.  Mind you  I  like  and  use  ghost-view,  but  if  I  had  my 
+druthers...  
+
+Description:
+============
+
+xIrc is as the name implies, and IRC Client program that runs under X.  It 
+is written in C++ and  the binary for it  provided was compiled using c++ 
+2.95.2 and Qt-2.2.4.   See  the  INSTALL  document provided for details on
+building it if  you need or  desire too, have  no fear, it's reasonably
+easy to build.  
+
+
+ To make comments, ask questions, or report bugs, send email to
+Robert Borrell <borrell@pobox.com>
+
+Home Page: http://www.linuxlots.com/~xirc.
+ 
+Known Bugs:
+
+The servers.dat must be in place where the X resources are set for it to 
+be. If it is not, you will not be able connect to a server! See INSTALL
+for details on where to put it.
+
+The message Query Box, the one that informs you of an incomming private 
+message, does not resize properly. Kind of pointless to make it do so 
+since at this point the line buffers for the multiline windows don't get 
+reformated to make the lines of text fit the new window's size.
+
+Speeking of this, none of message windows reformat the text to properly 
+fit the windows new size when resized. New text will be proper formatted 
+though. This could prove to be a nightmare to fix because of how I 
+implimented the multiline windows so it probably won't be fixed in the 
+next few releases.
+
+If you attempt to send a 0 length file with DCC you will get a message box
+letting you know and the transfer will be canceled. The bug is that if I
+close the file, for some reason the application exits. Therefore, each time
+this occurs, one more file descripter is left open. Enough of these and you
+will run out of file desctripters.
+
+To make a new entry to the notification or ignore lists take hold, you 
+must 'save' the list the re-'load' it. Use the default names given in the 
+file dialogs.
+ 
+I believe there may be a problem where you MUST have something in the Nick 
+and Address field of the notification & ignore tables even if the field is 
+not used for the test.  Anything will do even a '.'.  
+

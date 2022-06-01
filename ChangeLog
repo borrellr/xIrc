@@ -1,0 +1,340 @@
+            .------------------.
+------------|  xIrc ChangeLog  |-----------------------
+            `------------------'
+
+-------------------------------------------------------
+    2.3.6 ---> 2.3.7
+-------------------------------------------------------
+
+ - Fixed compiling problems on the Linux platform.
+ - Minor Bugfixes.
+
+-------------------------------------------------------
+    2.3.5 ---> 2.3.6
+-------------------------------------------------------
+
+ - Fixed problem with Main Window displaying numeric
+   codes. It is nolonger using the numeric codes in
+   the main window display.
+ - Starting using Qt-2.1.1 Widget library to fix above
+   problem.  This makes this release nolonger compatible
+   with Qt-1.44 and Qt-2.0x Widget libraries.
+
+-------------------------------------------------------
+    2.3.4 ---> 2.3.5
+-------------------------------------------------------
+
+ - Minor bug fixes in this release.
+
+-------------------------------------------------------
+    2.3.3 ---> 2.3.4
+-------------------------------------------------------
+
+ - Thanks to Christain Poulter <poulter@addcom.de>, I
+   incorporated Qt2 source code changes into the main
+   source code.
+
+-------------------------------------------------------
+    2.3.2 ---> 2.3.3
+-------------------------------------------------------
+
+ - Fixed core dump with xIrc. Fixed text() method in
+   xIrcLineEditQuery class by returning an empty string
+   when the string is empty; otherwise, return the string.
+
+-------------------------------------------------------
+    2.3.1 ---> 2.3.2
+-------------------------------------------------------
+
+ - Fixed configure.in to give proper CXXFLAGS for egcs compilers
+ - Fixed to display signoff messages
+ - Partially fixed to display change nick message
+ - Added About Box under the Help menu.
+ - Added Help Menu to MenuBar.
+ - Fixed Default Font settings
+ - Fixed the set nick code such that the nick appears on the
+   main window title bar.
+ - Reorganized code.
+ - Reorganized changelog.
+ - Disabled the "Folk Online" Window at startup.
+ - Minor Bug fixes.
+
+-------------------------------------------------------
+    2.3 ---> 2.3.1
+-------------------------------------------------------
+
+ - Modified the source to work with automake and autoconf.
+ - Minor Bug fixes.
+
+-------------------------------------------------------
+    2.2p1 ---> 2.3
+-------------------------------------------------------
+
+ - Fixed the seg-fault when entering unknown commands.
+ - Ported to Qt-1.44 and modified xSocket class.
+ - Fixed code problems detected by gcc-2.95.2 C++ compiler.
+
+-------------------------------------------------------
+    2.2 ---> 2.2p1
+-------------------------------------------------------
+
+   Fixed the seg-fault on entering blank lines
+   
+   Fixed the seg-fault caused by receiving unknown CTCP response
+   
+   Removed the line that was confusing the compiler for those
+   compiling against libc6 (glibc).
+
+   Added instructions on where to put the servers.dat file for the proper 
+   operation of the program.  
+
+-------------------------------------------------------
+    2.1 ---> 2.2
+-------------------------------------------------------
+
+   Made major changes to the default values of the X-Resources. Now xIrc
+   starts up looking more like that shown in the "Screen Shots" page
+   at the web site. 
+   
+   Fixed Close button on Channel Nick Window.
+   
+   Fixed segv fault on exiting xIrc.
+   
+   Made extensive changes to add color and ctcp2 functionality.
+   
+   Added Beep on incoming message button to the message windows.
+   
+   Changed to allow default windows sizes to be set through the X-Resources
+   
+   Changed the default setting to make reality match the screen shots given.
+   
+   Added optional CTCP2 Text attributes (Does not include font sizing).
+   
+   Re-organized the sources to place the libX++ directory into the xIrc directory
+   and simplified the build proccess.
+
+-------------------------------------------------------
+    2.0 ---> 2.1
+-------------------------------------------------------
+
+   Added DCC File send and receive functionality.
+
+   Fixed AWAY/UNAWAY once and for all!
+
+   Added beeps for DCC file/chat and private message notifications.
+   
+   Fixed the Nick Actions dialog to raise to the surface when activated.
+
+   Modified the Channel Nick Dialog to open the Nick Actions Dialog on 
+   double clicking a nick instead of opening the Channels & People dialog.
+
+   Sets YOUR current 'Nick' in the caption of the main window.
+
+   Modified the "Folks Online" list (Notifications) to be resizable.
+
+   Fixed notifications to be case insensitive.
+   
+   Made the showing of CTCP responses (version, time, finger) show the 
+   nick. (I still need to figure out a means to place these on the window
+   that they were sent from).
+   
+   Parting from a channel should now be reflected in the main window
+
+-------------------------------------------------------
+    1.19 ---> 2.0
+-------------------------------------------------------
+
+   Replaced the buttons on the main window with menus.
+
+   Added Notification and Ignore lists. These lists will now allow for 
+   notifications of the arrival and departure of individuals, and the
+   ability to ignore individuals.
+
+   Created the classes xIrcMsgDispatch and xIrcMsgDispatchEntry. These classes
+   are responsible for sending out commands to the server then accepting thier 
+   responses and making sure the response is dispatched to the sender of the 
+   message.
+   
+   Modified most of the code to send outgoing commands through xIrcMessageDispatch.
+
+   Now the responses of most commands will be displayed in the window that the
+   command was entered in. This does not include the ctcp commands such as ping.
+
+   Modified xIrcConnect class to steer all responses to xIrcMessageDispatch
+   to be dispatched appropriatly.
+
+   Moved the resource initialization strings of all of the xIrc specific
+   widgets to xIrc.cpp. Added the tag 'XIRC' to the start of all of them.
+   This forces the tags in the external databases to have this tag also.
+
+   Changed the message Query to use the QMultiLineEdit widget. This 
+   eliminates the multiple new message queries from the same nick.
+
+   Changed the default colors of the buttons to be darker than the windows
+   default background color. Also forced the buttons to use a Bold typeface
+   if the font supports it.
+
+-------------------------------------------------------
+    1.18 ---> 1.19
+-------------------------------------------------------
+
+   Changed to accept xIrc.defaults in the current directory to .xIrc in the
+   home directory for the defaults file. If latter is not found, the first is 
+   looked for.
+
+   Rewrote     xIrcServerQuery    and    added    xServerTable,
+   xIrcServerList,    xIrcServerEntry,    xIrcServerList,   and
+   xIrcConnectDialog  to  facilitate  using  and manipulating a
+   seperate  file  for  selecting servers. This also allows for
+   importing mIrc server files.
+
+-------------------------------------------------------
+    1.17 ---> 1.18
+-------------------------------------------------------
+
+   Mostly made changes to support Dcc File transfers. This feature is
+   currently disabled though because it's still quite unstable.
+
+   Hopefully it now handles keyed channels. Not being one to go on them, or
+   even know which ones are keyed, it's hard to test the patch. BTW, Thanks
+   go to Franklin Robert Belew <frb@isc.umr.edu> for the patches!!!
+
+   Finaly got around to using xMessage instead of QMessage so the 
+   error messages and what not come up in the proper font :)).
+
+-------------------------------------------------------
+    1.16 ---> 1.17
+-------------------------------------------------------
+
+   Hmmm... I do have to do better....
+
+-------------------------------------------------------
+    1.15 ---> 1.16
+-------------------------------------------------------
+
+   Added the /LINKS and /MAP commands for what they are worth.
+
+   Modified to handle the new xSocket API
+
+   Replaced Popup dialog boxes for errors and replaced them w/ text
+   messages in the main window untill I find the cause of the
+   segmentation faults. This also include the showing of the server
+   selection dialog box on the socket disconnecting.
+
+   Fixed xIrcDccChatFrame to show actions properly.
+
+-------------------------------------------------------
+    1.14 ---> 1.15
+-------------------------------------------------------
+
+   Added X-Resources for configuration.
+   Created a bitmap for the application.
+   Hopefully fixed a few bugs and not instilled too many new ones!
+
+-------------------------------------------------------
+    1.13 ---> 1.14
+-------------------------------------------------------
+
+   '\'  is  now the continuation character for the xIrc.defaults file,
+   not  '/'!!!  Already  existing  files  must  be fixed otherwise the
+   program WILL bomb!!! See libX++/CHANGES
+
+   Fixed xIrcMessageFrame to use the nick in the Nick List edit window
+   before  it  uses  the selected nick in the list. What this means to
+   the  user  is that they can type a nick into the edit window of the
+   nick list and act upon it even if a nick is already selected in the
+   list.
+
+   Modified   xIrc.cpp   to   Open   the   Server   Dialog   (via  the
+   xIrcConnect::newServer() member function) after selecting the nick.
+
+   Fixed  the  replies to the /names command when used for an existing
+   command  to  be  displayed  to  the screen when the nick box is not
+   visible.
+
+   Fixed the replies to both the /names and /list commands to show the
+   channel name or nick when displayed on the main window. This is how
+   one  would  expect  them  to  behave if a window is not open to the
+   channel.
+
+   Fixed  the  "Give  Ops"  and  "Take Ops" buttons on the Nick Action
+   Dialog. They now work properly.
+
+   Added the following buttons to the Nick Action Dialog,
+      "Who", "Ban".
+
+   Added a Dialog box for doing Bans. This uses the optional parameter
+   BANMESSAGE for the kick message if a kick is performed w/ the ban.
+
+-------------------------------------------------------
+    1.12 ---> 1.13
+-------------------------------------------------------
+
+   Fixed  the Nick, Channel and Server Dialog boxes to work a bit more
+   like  one would expect them to. If an item is selected and the edit
+   field is blank, the selected item will be chosen.
+
+   Moved  the  Initial  Nick  Query  to  the  main line code AFTER the
+   xIrcConnect  object  is  constructed. The outward effect of this is
+   that  the  main  window  will  be  displayed then the query will be
+   shown.
+
+   Added  a  'Nick  Action'  Dialog.  by  double  Clicking  on  a word
+   (Presumably  a Nick) in a window, this dialog will be brought up w/
+   both  the  nick and the window names already filled so that various
+   actions may be done.
+
+   Added  'Nick  Actions' buttons to the top of the widows to bring up
+   the Nick Action Box w/o double clicking on a nick.
+
+   Added a 'Nick List' button to the windows for channels to allow the
+   hiding / showing of the nick list box.
+
+   Modified  the  Nick  Selection  Dialog box to allow for alternative
+   nicks.  It now also has a "Auto Nick Selection" button to allow the
+   names  to be tried automaticaly if the last one tried is already in
+   use.
+
+   Changed  the  NICK tag in the defaults file to NICKS. NICK is still
+   allowed  but  carries  a  stiff  warning  because  next  release it
+   probably won't be.
+
+   Added  the  tags REALNAME and EMAIL_ADDR to the xIrc.defaults file.
+   See README.txt for details.
+
+   Added a 'Close' button to the nick list for channels.
+
+   Divided xIrcConnect.cpp into three files, xIrcConnect[1-3].cpp.
+
+   Fixed  the  Makefile dependency part to include the header files of
+   libX++.
+   
+-------------------------------------------------------
+    1.11 ---> 1.12
+-------------------------------------------------------
+
+   Fixed  References  to  include  files requiring the /usr/include/qt
+   link to not be required any longer
+
+   Made the xIrcConnect widget default colors more palatable
+
+   Corrected type casting to compile w/ the gcc-2.7.2 compiler
+
+   Corrected  the  test for socket connection failure to look for TRUE
+   or FALSE instead of < 0
+
+   Removed  the 2 calls to show() in xIrcMessageFrame widget that were
+   used  to  display the widget each time a new messages was recieved.
+   This was needed to correct for the behavior of the QDialog class in
+   the  new  qt-0.94  release where it centered a dialog object on the
+   screen on every call to show().
+
+   Fixed xIrcMsgQuery object to signal back the entire message when it
+   was  done so the message could be placed into the window of the new
+   frame by xIrcConnect
+
+-------------------------------------------------------
+    1.11
+-------------------------------------------------------
+
+   Initial Release

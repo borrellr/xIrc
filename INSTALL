@@ -1,0 +1,35 @@
+Installation Notes:
+
+SOURCE CODE install path
+------------------------
+Starting xIrc-2.3.8, a port to Qt-2.1.1 or higher is required. Working with the source, do
+
+  tar zxf xIrc-2.3.8.tar.gz (for those using GNU tar) or
+
+  gunzip -c xIrc-2.3.8.tar.gz | tar xf - (for those using non GNU tar).
+
+cd xIrc-2.3.8
+
+Set QTDIR=/path_to_qt211_base/ (e.g., QTDIR=/usr/lib/qt-2.1.1 for bash users)
+
+Type
+      ./configure
+or
+      ./configure --with-qt-libraries=$QTDIR/lib --with-qt-includes=$QTDIR/include
+
+Type make (preferably GNU make).
+
+After the compiling phase, type make install as root.
+
+NOTE:
+There is nolonger support for Qt-1.44.
+
+REDHAT PACKAGE
+--------------
+
+rpm -ihv xIrc-2.3.7-1.i386.rpm
+
+SOLARIS 7 x86 PACKAGE
+---------------------
+
+Discontinued.
