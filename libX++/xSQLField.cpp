@@ -83,7 +83,7 @@ static monthType monthTbl[12] =
    {  "Nov", "11" },
    {  "Dec", "12" }
 };
-#endif POSTGRES
+#endif
 
 xSQLField::xSQLField(xWidgetResInfo *pPRes, QWidget *pParent,
                      xSQLBase *pSqlBase, int db, xSQLFieldDef *pField) :
@@ -272,7 +272,7 @@ void xSQLField::setText(const char *pText)
    }
    else
       xEdit::setText(pText);
-#endif POSTGRES
+#endif
    if (dbg) fprintf(stdout, "xSQLField::setText():Exit\n");
    if (dbg) fflush(stdout);
 }
@@ -298,7 +298,7 @@ bool xSQLField::canBeNull()
    else
       return(TRUE);
 }
-#endif POSTGRES
+#endif
 
 QString xSQLField::tableName()
 {
@@ -309,7 +309,7 @@ QString xSQLField::tableName()
       rv += *cp;
 #ifdef POSTGRES
    rv = rv.lower();
-#endif POSTGRES
+#endif
    return(rv);
 }
 
@@ -325,7 +325,7 @@ QString xSQLField::fieldName()
       rv = cp;
 #ifdef POSTGRES
    rv = rv.lower();
-#endif POSTGRES
+#endif
    return(rv);
 }
 

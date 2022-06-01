@@ -1,3 +1,7 @@
+May 31, 2022 - Robert Borrell <robert.borrell@gmail.com>
+Ported xIrc v2.3.8 to CentOS v2.1 and QT v2.3.1 using gcc-2.96.  A couple minor
+changes to the code.
+
 xIrc-2.3.8 - Robert Borrell <borrell@pobox.com>
 ==========
 This release requires the use of Qt Widget library version 2.2.4. Other minor

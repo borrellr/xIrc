@@ -115,4 +115,4 @@ typedef struct result_s {
 	}
 #endif
 
-#endif XMSQL
+#endif

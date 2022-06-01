@@ -99,7 +99,7 @@ xSQLBase::~xSQLBase()
       msqlFreeResult(pViewData);
 #else
    PQclear((PGresult*)pViewData);
-#endif POSTGRES
+#endif
 }
 
 bool xSQLBase::query(int db, QList<QString> sort)
@@ -117,7 +117,7 @@ bool xSQLBase::query(int db, QString index, QList<QString> sort)
    indexName = getPriTable() + ".index";
 #else
    indexName = getPriTable() + ".ident";
-#endif POSTGRES
+#endif
    links.setAutoDelete(TRUE);
    links.insert((const char *)indexName, new QString(index));
    return(query(db, match, links, skip, sort));
@@ -132,7 +132,7 @@ bool xSQLBase::query(int db, long index, QList<QString> sort)
    indexName = getPriTable() + ".index";
 #else
    indexName = getPriTable() + ".ident";
-#endif POSTGRES
+#endif
    strIndex.setNum(index);
    links.setAutoDelete(TRUE);
    links.insert((const char *)indexName, new QString(strIndex));
@@ -161,7 +161,7 @@ bool xSQLBase::query(int db, QDict<QString> &match, QDict<QString> &links,
       msqlFreeResult(pViewData);
 #else
    PQclear((PGresult*)pViewData);
-#endif POSTGRES
+#endif
 
    strQuery = "SELECT ";
 
@@ -187,7 +187,7 @@ bool xSQLBase::query(int db, QDict<QString> &match, QDict<QString> &links,
    strIndexName = getPriTable() + ".index";
 #else
    strIndexName = getPriTable() + ".ident";
-#endif POSTGRES
+#endif
 
    if (inList(fieldNames, strIndexName) == FALSE)
       strQuery += ", " + strIndexName;
@@ -350,7 +350,7 @@ bool xSQLBase::query(int db, QDict<QString> &match, QDict<QString> &links,
          strQuery += ".index";
 #else
          strQuery += ".ident";
-#endif POSTGRES
+#endif
          strQuery += " = ";
          strQuery += escString(*linksIt.current());
          if (dbg) fprintf(stdout, "xSQLBase::query():5.strQuery = |%s|\n",
@@ -418,7 +418,7 @@ bool xSQLBase::query(int db, QDict<QString> &match, QDict<QString> &links,
       prevQuery = strQuery;
       rv = TRUE;
    }
-#endif POSTGRES
+#endif
 
    if (dbg) fprintf(stdout, "xSQLBase::query():Exit(%d)\n", rv);
    if (dbg) fflush(stdout);
@@ -434,7 +434,7 @@ bool xSQLBase::del(int db, QString index)
    indexName = getPriTable() + ".index";
 #else
    indexName = getPriTable() + ".ident";
-#endif POSTGRES
+#endif
    links.setAutoDelete(TRUE);
    links.insert((const char *)indexName, new QString(index));
    return(del(db, match, links));
@@ -449,7 +449,7 @@ bool xSQLBase::del(int db, long index)
    indexName = getPriTable() + ".index";
 #else
    indexName = getPriTable() + ".ident";
-#endif POSTGRES
+#endif
    strIndex.setNum(index);
    links.setAutoDelete(TRUE);
    links.insert((const char *)indexName, new QString(strIndex));
@@ -471,7 +471,7 @@ bool xSQLBase::del(int db, QDict<QString> &match, QDict<QString> &links)
       msqlFreeResult(pViewData);
 #else
    PQclear(pViewData);
-#endif POSTGRES
+#endif
 
    strQuery = "DELETE FROM ";
 
@@ -604,7 +604,7 @@ bool xSQLBase::del(int db, QDict<QString> &match, QDict<QString> &links)
       prevQuery = strQuery;
       rv = TRUE;
    }
-#endif POSTGRES
+#endif
 
    if (dbg) fprintf(stdout, "xSQLBase::delete():Exit(%d)\n", rv);
    if (dbg) fflush(stdout);
@@ -627,7 +627,7 @@ long xSQLBase::insert(int db, QDict<QString> &fields)
       msqlFreeResult(pViewData);
 #else
    PQclear(pViewData);
-#endif POSTGRES
+#endif
 
    query = "INSERT INTO ";
 
@@ -681,7 +681,7 @@ long xSQLBase::insert(int db, QDict<QString> &fields)
    query += ", index) VALUES ( ";
 #else
    query += ", ident) VALUES ( ";
-#endif POSTGRES
+#endif
    for (x = 0, dataIt.toFirst(); dataIt.current(); ++dataIt, x++)
    {
       if (dbg) fprintf(stdout, "xSQLBase::insert():3.Next Field: Field:|%s|, Data:|%s|\n",
@@ -736,7 +736,7 @@ long xSQLBase::insert(int db, QDict<QString> &fields)
       if (dbg) fflush(stdout);
       rv = ident.toLong(NULL);
    }
-#endif POSTGRES
+#endif
 
    if (dbg) fprintf(stdout, "xSQLBase::insert():Exit(%ld)\n", rv);
    if (dbg) fflush(stdout);
@@ -752,7 +752,7 @@ bool xSQLBase::update(int db, QDict<QString> &fields, QString index)
    indexName = getPriTable() + ".index";
 #else
    indexName = getPriTable() + ".ident";
-#endif POSTGRES
+#endif
    links.setAutoDelete(TRUE);
    links.insert((const char *)indexName, new QString(index));
    return(update(db, fields, links));
@@ -767,7 +767,7 @@ bool xSQLBase::update(int db, QDict<QString> &fields, long index)
    indexName = getPriTable() + ".index";
 #else
    indexName = getPriTable() + ".ident";
-#endif POSTGRES
+#endif
    strIndex.setNum(index);
    links.insert((const char *)indexName, &strIndex);
    return(update(db, fields, links));
@@ -789,7 +789,7 @@ bool xSQLBase::update(int db, QDict<QString> &fields, QDict<QString> &links)
       msqlFreeResult(pViewData);
 #else
    PQclear(pViewData);
-#endif POSTGRES
+#endif
 
    query = "UPDATE ";
 
@@ -956,7 +956,7 @@ bool xSQLBase::update(int db, QDict<QString> &fields, QDict<QString> &links)
       if (dbg) fflush(stdout);
       rv = TRUE;
    }
-#endif POSTGRES
+#endif
 
    if (dbg) fprintf(stdout, "xSQLBase::update():Exit(%d)\n", rv);
    if (dbg) fflush(stdout);
@@ -1015,7 +1015,7 @@ QDict<QString> xSQLBase::getRow(int row)
             }
          }
 */
-#endif POSTGRES
+#endif
       }
       if (calcIt.count() > 0)
       {
@@ -1069,7 +1069,7 @@ QString xSQLBase::getIndex(int row)
    int x;
    m_row pRow;
    m_field *pField;
-#endif POSTGRES
+#endif
    QString rv;
    QListIterator<QString> fieldIt(fieldNames);
 
@@ -1124,7 +1124,7 @@ QString xSQLBase::getIndex(int row)
       if (dbg) fprintf(stdout, "xSQLBase::getIndex():Row not found\n");
       if (dbg) fflush(stdout);
    }
-#endif POSTGRES
+#endif
    if (dbg) fprintf(stdout, "xSQLBase::getIndex(%s):Exit\n", (const char*)rv);
    if (dbg) fflush(stdout);
    return(rv);
@@ -1192,7 +1192,7 @@ int xSQLBase::rows()
    {
       rv = PQntuples(pViewData);
    }
-#endif POSTGRES
+#endif
    else
       rv = 0;
    return(rv);
@@ -1431,7 +1431,7 @@ int xSQLBase::fieldLen(int db, const char *pFName, const char *pTName)
    else
       rv = -1;
    PQclear(r);
-#endif POSTGRES
+#endif
    if (dbg) fprintf(stdout, "xSQLBase::fieldLen():Exit, len = %d\n", rv);
    if (dbg) fflush(stdout);
    return(rv);
@@ -1453,7 +1453,7 @@ int xSQLBase::openDB(const char *pHost, const char *pPort, const char *pName)
       PQfinish((PGconn*)rv);
       rv = -1;
    }
-#endif POSTGRES
+#endif
    return(rv);
 }
 
@@ -1465,7 +1465,7 @@ void xSQLBase::closeDB(int db)
 #else
    PQfinish((PGconn*)db);
    return;
-#endif POSTGRES
+#endif
 }
 
 const char *xSQLBase::dbError(int db)
@@ -1475,6 +1475,6 @@ const char *xSQLBase::dbError(int db)
    return(msqlErrMsg);
 #else
    return(PQerrorMessage((PGconn*)db));
-#endif POSTGRES
+#endif
 }
 
