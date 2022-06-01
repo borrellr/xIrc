@@ -29,7 +29,7 @@
 #else
 #include <libpq-fe.h>
 #include <libpq/libpq-fs.h>
-#endif POSTGRES
+#endif
 #include "xResources.h"
 #include "xSQLBase.h"
 #include "xEdit.h"
@@ -48,7 +48,7 @@ public:
 #ifndef POSTGRES
    bool isKey();
    bool canBeNull();
-#endif POSTGRES
+#endif
    void setValidations(QList<QString> &list);
    int editWidth() { return(edtWidth); };
    void setEditWidth(int eWdth);

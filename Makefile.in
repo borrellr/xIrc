@@ -1,6 +1,6 @@
-# Makefile.in generated automatically by automake 1.4 from Makefile.am
+# Makefile.in generated automatically by automake 1.4-p5 from Makefile.am
 
-# Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
+# Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
 # This Makefile.in is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -81,12 +81,74 @@ bin_PROGRAMS = xIrc
 
 AM_CPPFLAGS = @QT_INCLUDES@ -I./libX++ -DXIRCRESOURCEPATH=\"@libdir@/xIrc\" -DQT2
 
-xIrc_LDFLAGS = -lqt @QT_LDFLAGS@
+xIrc_LDFLAGS = -L/usr/lib/qt-2.3.1/lib -lqt @QT_LDFLAGS@
 
-xIrc_SOURCES = xIrc.cpp xIrcBanDialog.cpp xIrcChanNickBox.cpp xIrcChannelQuery.cpp xIrcCommands.cpp xIrcConnect1.cpp xIrcConnect2.cpp xIrcConnect3.cpp xIrcConnectDialog.cpp xIrcDccChatFrame.cpp xIrcDccFile.cpp xIrcDccQuery.cpp xIrcDccSocket.cpp xIrcIgnoreQuery.cpp xIrcInviteBox.cpp xIrcMircServerParse.cpp xIrcMsgDispatch.cpp xIrcMsgDispatchEntry.cpp xIrcMsgFrame1.cpp xIrcMsgFrame2.cpp xIrcMsgQuery.cpp xIrcNickActionQuery.cpp xIrcNickCombo.cpp xIrcNickList.cpp xIrcNickListEntry.cpp xIrcNickQuery.cpp xIrcNotifyQuery.cpp xIrcNotifyTable.cpp xIrcPeopleEdit.cpp xIrcPeopleEntry.cpp xIrcPeopleList.cpp xIrcPeopleTable.cpp xIrcServerEdit.cpp xIrcServerEntry.cpp xIrcServerList.cpp xIrcServerQuery.cpp xIrcServerTable.cpp xIrcSocket.cpp
+xIrc_SOURCES = xIrc.cpp \
+xIrcBanDialog.cpp \
+xIrcChanNickBox.cpp \
+xIrcChannelQuery.cpp \
+xIrcCommands.cpp \
+xIrcConnect1.cpp \
+xIrcConnect2.cpp \
+xIrcConnect3.cpp \
+xIrcConnectDialog.cpp \
+xIrcDccChatFrame.cpp \
+xIrcDccFile.cpp \
+xIrcDccQuery.cpp \
+xIrcDccSocket.cpp \
+xIrcIgnoreQuery.cpp \
+xIrcInviteBox.cpp \
+xIrcMircServerParse.cpp \
+xIrcMsgDispatch.cpp \
+xIrcMsgDispatchEntry.cpp \
+xIrcMsgFrame1.cpp \
+xIrcMsgFrame2.cpp \
+xIrcMsgQuery.cpp \
+xIrcNickActionQuery.cpp \
+xIrcNickCombo.cpp \
+xIrcNickList.cpp \
+xIrcNickListEntry.cpp \
+xIrcNickQuery.cpp \
+xIrcNotifyQuery.cpp \
+xIrcNotifyTable.cpp \
+xIrcPeopleEdit.cpp \
+xIrcPeopleEntry.cpp \
+xIrcPeopleList.cpp \
+xIrcPeopleTable.cpp \
+xIrcServerEdit.cpp \
+xIrcServerEntry.cpp \
+xIrcServerList.cpp \
+xIrcServerQuery.cpp \
+xIrcServerTable.cpp \
+xIrcSocket.cpp
 
 
-xIrc_LDADD = moc_xIrcBanDialog.o moc_xIrcChanNickBox.o moc_xIrcChannelQuery.o moc_xIrcConnect.o moc_xIrcConnectDialog.o moc_xIrcDccChatFrame.o moc_xIrcDccFile.o moc_xIrcDccQuery.o moc_xIrcDccSocket.o moc_xIrcIgnoreQuery.o moc_xIrcInviteBox.o moc_xIrcMsgDispatchEntry.o moc_xIrcMsgFrame.o moc_xIrcMsgQuery.o moc_xIrcNickActionQuery.o moc_xIrcNickCombo.o moc_xIrcNickQuery.o moc_xIrcNotifyQuery.o moc_xIrcNotifyTable.o moc_xIrcPeopleEdit.o moc_xIrcPeopleTable.o moc_xIrcServerEdit.o moc_xIrcServerQuery.o moc_xIrcServerTable.o moc_xIrcSocket.o -L./libX++ -lX++
+xIrc_LDADD = moc_xIrcBanDialog.o \
+moc_xIrcChanNickBox.o \
+moc_xIrcChannelQuery.o \
+moc_xIrcConnect.o \
+moc_xIrcConnectDialog.o \
+moc_xIrcDccChatFrame.o \
+moc_xIrcDccFile.o \
+moc_xIrcDccQuery.o \
+moc_xIrcDccSocket.o \
+moc_xIrcIgnoreQuery.o \
+moc_xIrcInviteBox.o \
+moc_xIrcMsgDispatchEntry.o \
+moc_xIrcMsgFrame.o \
+moc_xIrcMsgQuery.o \
+moc_xIrcNickActionQuery.o \
+moc_xIrcNickCombo.o \
+moc_xIrcNickQuery.o \
+moc_xIrcNotifyQuery.o \
+moc_xIrcNotifyTable.o \
+moc_xIrcPeopleEdit.o \
+moc_xIrcPeopleTable.o \
+moc_xIrcServerEdit.o \
+moc_xIrcServerQuery.o \
+moc_xIrcServerTable.o \
+moc_xIrcSocket.o \
+-L./libX++ -lX++
 
 
 datadir = $(libdir)/xIrc
@@ -97,7 +159,8 @@ CLEANFILES = moc_*
 
 SUBDIRS = libX++
 
-EXTRA_DIST = xIrc.defaults xIrc.doc xIrc.dvi xIrc.lsm xIrc.ps xIrc.tex xIrc.xpm servers.dat *.h
+EXTRA_DIST = xIrc.defaults xIrc.doc xIrc.dvi xIrc.lsm xIrc.ps xIrc.tex xIrc.xpm \
+servers.dat *.h
 
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -144,8 +207,22 @@ install-sh missing mkinstalldirs
 
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
-TAR = tar
+TAR = gtar
 GZIP_ENV = --best
+DEP_FILES =  .deps/xIrc.P .deps/xIrcBanDialog.P .deps/xIrcChanNickBox.P \
+.deps/xIrcChannelQuery.P .deps/xIrcCommands.P .deps/xIrcConnect1.P \
+.deps/xIrcConnect2.P .deps/xIrcConnect3.P .deps/xIrcConnectDialog.P \
+.deps/xIrcDccChatFrame.P .deps/xIrcDccFile.P .deps/xIrcDccQuery.P \
+.deps/xIrcDccSocket.P .deps/xIrcIgnoreQuery.P .deps/xIrcInviteBox.P \
+.deps/xIrcMircServerParse.P .deps/xIrcMsgDispatch.P \
+.deps/xIrcMsgDispatchEntry.P .deps/xIrcMsgFrame1.P \
+.deps/xIrcMsgFrame2.P .deps/xIrcMsgQuery.P .deps/xIrcNickActionQuery.P \
+.deps/xIrcNickCombo.P .deps/xIrcNickList.P .deps/xIrcNickListEntry.P \
+.deps/xIrcNickQuery.P .deps/xIrcNotifyQuery.P .deps/xIrcNotifyTable.P \
+.deps/xIrcPeopleEdit.P .deps/xIrcPeopleEntry.P .deps/xIrcPeopleList.P \
+.deps/xIrcPeopleTable.P .deps/xIrcServerEdit.P .deps/xIrcServerEntry.P \
+.deps/xIrcServerList.P .deps/xIrcServerQuery.P .deps/xIrcServerTable.P \
+.deps/xIrcSocket.P
 SOURCES = $(xIrc_SOURCES)
 OBJECTS = $(xIrc_OBJECTS)
 
@@ -153,9 +230,9 @@ all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .cpp .o .s
 $(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu Makefile
 
-Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -191,9 +268,6 @@ uninstall-binPROGRAMS:
 	list='$(bin_PROGRAMS)'; for p in $$list; do \
 	  rm -f $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
 	done
-
-.c.o:
-	$(COMPILE) -c $<
 
 .s.o:
 	$(COMPILE) -c $<
@@ -272,7 +346,7 @@ maintainer-clean-recursive:
 	dot_seen=no; \
 	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
 	  rev="$$subdir $$rev"; \
-	  test "$$subdir" = "." && dot_seen=yes; \
+	  test "$$subdir" != "." || dot_seen=yes; \
 	done; \
 	test "$$dot_seen" = "no" && rev=". $$rev"; \
 	target=`echo $@ | sed s/-recursive//`; \
@@ -363,10 +437,15 @@ distdir: $(DISTFILES)
 	-rm -rf $(distdir)
 	mkdir $(distdir)
 	-chmod 777 $(distdir)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
-	    cp -pr $$/$$file $(distdir)/$$file; \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
 	  else \
 	    test -f $(distdir)/$$file \
 	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
@@ -383,442 +462,57 @@ distdir: $(DISTFILES)
 	      || exit 1; \
 	  fi; \
 	done
-moc_xIrcBanDialog.o: moc_xIrcBanDialog.cpp xIrcBanDialog.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xComboBox.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h
-moc_xIrcChanNickBox.o: moc_xIrcChanNickBox.cpp xIrcChanNickBox.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcNickCombo.h libX++/xEditList.h libX++/xLineEdit.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcNickList.h xIrcNickListEntry.h
-moc_xIrcChannelQuery.o: moc_xIrcChannelQuery.cpp xIrcChannelQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xEditList.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h
-moc_xIrcConnect.o: moc_xIrcConnect.cpp xIrcConnect.h \
-	libX++/xMultiLineFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xPshBtnFrame.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtn.h libX++/xSocketDialog.h libX++/xLabel.h \
-	libX++/xMouseEvent.h xIrcSocket.h libX++/xSocket.h \
-	xIrcMsgFrame.h libX++/xEdit.h xIrcCommands.h xIrcChanNickBox.h \
-	xIrcNickCombo.h libX++/xEditList.h libX++/xLineEdit.h \
-	libX++/xDefaults.h libX++/xListBox.h xIrcNickList.h \
-	xIrcNickListEntry.h xIrcIgnoreQuery.h libX++/xComboBox.h \
-	xIrcConnectDialog.h xIrcServerEntry.h xIrcPeopleTable.h \
-	libX++/xCheckBox.h libX++/xTable.h xIrcPeopleList.h \
-	xIrcPeopleEntry.h xIrcNotifyQuery.h xIrcNotifyTable.h \
-	xIrcMsgQuery.h xIrcDccChatFrame.h xIrcDccSocket.h xIrcDccFile.h \
-	libX++/xProgressBar.h xIrcNickActionQuery.h \
-	libX++/xPshBtnTable.h xIrcBanDialog.h
-moc_xIrcConnectDialog.o: moc_xIrcConnectDialog.cpp xIrcConnectDialog.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xComboBox.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcServerEntry.h
-moc_xIrcDccChatFrame.o: moc_xIrcDccChatFrame.cpp xIrcDccChatFrame.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xPshBtnFrame.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xMultiLineFrame.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h xIrcDccSocket.h \
-	libX++/xSocket.h
-moc_xIrcDccFile.o: moc_xIrcDccFile.cpp xIrcDccFile.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xProgressBar.h libX++/xPshBtnFrame.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtn.h xIrcDccSocket.h \
-	libX++/xSocket.h libX++/xMultiLineFrame.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h
-moc_xIrcDccQuery.o: moc_xIrcDccQuery.cpp xIrcDccQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcDccSocket.o: moc_xIrcDccSocket.cpp xIrcDccSocket.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xSocket.h
-moc_xIrcIgnoreQuery.o: moc_xIrcIgnoreQuery.cpp xIrcIgnoreQuery.h \
-	libX++/xComboBox.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xLineEdit.h libX++/xEdit.h libX++/xMouseEvent.h \
-	libX++/xDefaults.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xListBox.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcConnectDialog.h xIrcServerEntry.h xIrcPeopleTable.h \
-	libX++/xCheckBox.h libX++/xTable.h xIrcPeopleList.h \
-	xIrcPeopleEntry.h xIrcSocket.h libX++/xMultiLineWin.h \
-	libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcInviteBox.o: moc_xIrcInviteBox.cpp xIrcInviteBox.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcMsgDispatchEntry.o: moc_xIrcMsgDispatchEntry.cpp \
-	xIrcMsgDispatchEntry.h xIrcSocket.h libX++/xMultiLineWin.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h
-moc_xIrcMsgFrame.o: moc_xIrcMsgFrame.cpp xIrcMsgFrame.h \
-	libX++/xMultiLineFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xPshBtnFrame.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtn.h libX++/xEdit.h libX++/xMouseEvent.h \
-	xIrcSocket.h libX++/xSocket.h xIrcCommands.h xIrcChanNickBox.h \
-	xIrcNickCombo.h libX++/xEditList.h libX++/xLineEdit.h \
-	libX++/xDefaults.h libX++/xListBox.h xIrcNickList.h \
-	xIrcNickListEntry.h
-moc_xIrcMsgQuery.o: moc_xIrcMsgQuery.cpp xIrcMsgQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xMultiLineFrame.h libX++/xMultiLineWin.h \
-	libX++/xMultiLineBuf.h xIrcSocket.h libX++/xSocket.h
-moc_xIrcNickActionQuery.o: moc_xIrcNickActionQuery.cpp \
-	xIrcNickActionQuery.h libX++/xMultiLineFrame.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xMultiLineWin.h \
-	libX++/xMultiLineBuf.h libX++/xPshBtnTable.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtnFrame.h libX++/xPshBtn.h
-moc_xIrcNickCombo.o: moc_xIrcNickCombo.cpp xIrcNickCombo.h \
-	libX++/xEditList.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xLineEdit.h libX++/xEdit.h libX++/xMouseEvent.h \
-	libX++/xDefaults.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xListBox.h xIrcNickList.h xIrcNickListEntry.h
-moc_xIrcNickQuery.o: moc_xIrcNickQuery.cpp xIrcNickQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xEditList.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h
-moc_xIrcNotifyQuery.o: moc_xIrcNotifyQuery.cpp xIrcNotifyQuery.h \
-	libX++/xComboBox.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xLineEdit.h libX++/xEdit.h libX++/xMouseEvent.h \
-	libX++/xDefaults.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xListBox.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcConnectDialog.h xIrcServerEntry.h xIrcPeopleTable.h \
-	libX++/xCheckBox.h libX++/xTable.h xIrcPeopleList.h \
-	xIrcPeopleEntry.h xIrcSocket.h libX++/xMultiLineWin.h \
-	libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcNotifyTable.o: moc_xIrcNotifyTable.cpp xIrcNotifyTable.h \
-	libX++/xComboBox.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xLineEdit.h libX++/xEdit.h libX++/xMouseEvent.h \
-	libX++/xDefaults.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xListBox.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcPeopleTable.h libX++/xCheckBox.h libX++/xTable.h \
-	xIrcPeopleList.h xIrcPeopleEntry.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcPeopleEdit.o: moc_xIrcPeopleEdit.cpp xIrcPeopleEdit.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xCheckBox.h libX++/xComboBox.h libX++/xLineEdit.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcPeopleEntry.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcPeopleTable.o: moc_xIrcPeopleTable.cpp xIrcPeopleTable.h \
-	libX++/xCheckBox.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xFrame.h libX++/xTable.h libX++/xMouseEvent.h \
-	xIrcPeopleList.h xIrcPeopleEntry.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcServerEdit.o: moc_xIrcServerEdit.cpp xIrcServerEdit.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xComboBox.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcServerEntry.h
-moc_xIrcServerQuery.o: moc_xIrcServerQuery.cpp xIrcServerQuery.h \
-	libX++/xComboBox.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xLineEdit.h libX++/xEdit.h libX++/xMouseEvent.h \
-	libX++/xDefaults.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xListBox.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcConnectDialog.h xIrcServerEntry.h xIrcServerTable.h \
-	libX++/xTable.h xIrcServerList.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-moc_xIrcServerTable.o: moc_xIrcServerTable.cpp xIrcServerTable.h \
-	libX++/xFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xTable.h libX++/xMouseEvent.h xIrcServerList.h \
-	xIrcServerEntry.h
-moc_xIrcSocket.o: moc_xIrcSocket.cpp xIrcSocket.h libX++/xMultiLineWin.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h
-xIrc.o: xIrc.cpp libX++/xGauge.h libX++/xMouseEvent.h \
-	libX++/xResources.h libX++/xMisc.h xIrcConnect.h \
-	libX++/xMultiLineFrame.h libX++/xMultiLineWin.h \
-	libX++/xMultiLineBuf.h libX++/xPshBtnFrame.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtn.h libX++/xSocketDialog.h \
-	libX++/xLabel.h xIrcSocket.h libX++/xSocket.h xIrcMsgFrame.h \
-	libX++/xEdit.h xIrcCommands.h xIrcChanNickBox.h xIrcNickCombo.h \
-	libX++/xEditList.h libX++/xLineEdit.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcNickList.h xIrcNickListEntry.h \
-	xIrcIgnoreQuery.h libX++/xComboBox.h xIrcConnectDialog.h \
-	xIrcServerEntry.h xIrcPeopleTable.h libX++/xCheckBox.h \
-	libX++/xTable.h xIrcPeopleList.h xIrcPeopleEntry.h \
-	xIrcNotifyQuery.h xIrcNotifyTable.h xIrcMsgQuery.h \
-	xIrcDccChatFrame.h xIrcDccSocket.h xIrcDccFile.h \
-	libX++/xProgressBar.h xIrcNickActionQuery.h \
-	libX++/xPshBtnTable.h xIrcBanDialog.h xIrcMsgDispatch.h \
-	xIrcMsgDispatchEntry.h xIrcNickQuery.h xIrcLineEditQuery.h \
-	libX++/xLineEditQuery.h xIrcServerQuery.h xIrcServerTable.h \
-	xIrcServerList.h xIrcChannelQuery.h libX++/xApp.h
-xIrcBanDialog.o: xIrcBanDialog.cpp xIrcBanDialog.h libX++/xPshBtnFrame.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtn.h libX++/xComboBox.h \
-	libX++/xLineEdit.h libX++/xEdit.h libX++/xMouseEvent.h \
-	libX++/xDefaults.h libX++/xListBox.h
-xIrcChanNickBox.o: xIrcChanNickBox.cpp xIrcChanNickBox.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcNickCombo.h libX++/xEditList.h libX++/xLineEdit.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcNickList.h xIrcNickListEntry.h
-xIrcChannelQuery.o: xIrcChannelQuery.cpp xIrcChannelQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xEditList.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h xIrcCommands.h
-xIrcCommands.o: xIrcCommands.cpp xIrcCommands.h
-xIrcConnect1.o: xIrcConnect1.cpp libX++/xApp.h xIrcChannelQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xEditList.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h xIrcLineEditQuery.h libX++/xLineEditQuery.h \
-	xIrcMsgDispatch.h xIrcMsgDispatchEntry.h xIrcNickQuery.h \
-	xIrcDccQuery.h xIrcServerQuery.h libX++/xComboBox.h \
-	xIrcConnectDialog.h xIrcServerEntry.h xIrcServerTable.h \
-	libX++/xTable.h xIrcServerList.h xIrcInviteBox.h \
-	xIrcIgnoreQuery.h xIrcPeopleTable.h libX++/xCheckBox.h \
-	xIrcPeopleList.h xIrcPeopleEntry.h xIrcConnect.h \
-	libX++/xMultiLineFrame.h libX++/xSocketDialog.h libX++/xLabel.h \
-	xIrcMsgFrame.h xIrcCommands.h xIrcChanNickBox.h xIrcNickCombo.h \
-	xIrcNickList.h xIrcNickListEntry.h xIrcNotifyQuery.h \
-	xIrcNotifyTable.h xIrcMsgQuery.h xIrcDccChatFrame.h \
-	xIrcDccSocket.h xIrcDccFile.h libX++/xProgressBar.h \
-	xIrcNickActionQuery.h libX++/xPshBtnTable.h xIrcBanDialog.h
-xIrcConnect2.o: xIrcConnect2.cpp libX++/xApp.h xIrcLineEditQuery.h \
-	libX++/xLineEditQuery.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDefaults.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtnFrame.h libX++/xPshBtn.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h \
-	xIrcChannelQuery.h libX++/xEditList.h libX++/xListBox.h \
-	xIrcMsgDispatch.h xIrcMsgDispatchEntry.h xIrcDccQuery.h \
-	xIrcServerQuery.h libX++/xComboBox.h xIrcConnectDialog.h \
-	xIrcServerEntry.h xIrcServerTable.h libX++/xTable.h \
-	xIrcServerList.h xIrcInviteBox.h xIrcConnect.h \
-	libX++/xMultiLineFrame.h libX++/xSocketDialog.h libX++/xLabel.h \
-	xIrcMsgFrame.h xIrcCommands.h xIrcChanNickBox.h xIrcNickCombo.h \
-	xIrcNickList.h xIrcNickListEntry.h xIrcIgnoreQuery.h \
-	xIrcPeopleTable.h libX++/xCheckBox.h xIrcPeopleList.h \
-	xIrcPeopleEntry.h xIrcNotifyQuery.h xIrcNotifyTable.h \
-	xIrcMsgQuery.h xIrcDccChatFrame.h xIrcDccSocket.h xIrcDccFile.h \
-	libX++/xProgressBar.h xIrcNickActionQuery.h \
-	libX++/xPshBtnTable.h xIrcBanDialog.h
-xIrcConnect3.o: xIrcConnect3.cpp xIrcCommands.h xIrcLineEditQuery.h \
-	libX++/xLineEditQuery.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDefaults.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtnFrame.h libX++/xPshBtn.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h \
-	xIrcMsgDispatch.h xIrcMsgDispatchEntry.h xIrcPeopleEdit.h \
-	libX++/xCheckBox.h libX++/xComboBox.h libX++/xListBox.h \
-	xIrcPeopleEntry.h xIrcConnect.h libX++/xMultiLineFrame.h \
-	libX++/xSocketDialog.h libX++/xLabel.h xIrcMsgFrame.h \
-	xIrcChanNickBox.h xIrcNickCombo.h libX++/xEditList.h \
-	xIrcNickList.h xIrcNickListEntry.h xIrcIgnoreQuery.h \
-	xIrcConnectDialog.h xIrcServerEntry.h xIrcPeopleTable.h \
-	libX++/xTable.h xIrcPeopleList.h xIrcNotifyQuery.h \
-	xIrcNotifyTable.h xIrcMsgQuery.h xIrcDccChatFrame.h \
-	xIrcDccSocket.h xIrcDccFile.h libX++/xProgressBar.h \
-	xIrcNickActionQuery.h libX++/xPshBtnTable.h xIrcBanDialog.h
-xIrcConnectDialog.o: xIrcConnectDialog.cpp xIrcConnectDialog.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xComboBox.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcServerEntry.h
-xIrcDccChatFrame.o: xIrcDccChatFrame.cpp libX++/xApp.h libX++/xSocket.h \
-	libX++/xResources.h libX++/xMisc.h xIrcLineEditQuery.h \
-	libX++/xLineEditQuery.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	xIrcDccChatFrame.h libX++/xMultiLineFrame.h xIrcDccSocket.h
-xIrcDccFile.o: xIrcDccFile.cpp libX++/xApp.h libX++/xSocket.h \
-	libX++/xResources.h libX++/xMisc.h xIrcLineEditQuery.h \
-	libX++/xLineEditQuery.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtnFrame.h libX++/xPshBtn.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	xIrcDccFile.h libX++/xProgressBar.h xIrcDccSocket.h \
-	libX++/xMultiLineFrame.h
-xIrcDccQuery.o: xIrcDccQuery.cpp libX++/xApp.h xIrcDccQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcDccSocket.o: xIrcDccSocket.cpp xIrcDccSocket.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xSocket.h
-xIrcIgnoreQuery.o: xIrcIgnoreQuery.cpp xIrcPeopleEdit.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xCheckBox.h libX++/xComboBox.h libX++/xLineEdit.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcPeopleEntry.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h \
-	xIrcIgnoreQuery.h xIrcConnectDialog.h xIrcServerEntry.h \
-	xIrcPeopleTable.h libX++/xTable.h xIrcPeopleList.h
-xIrcInviteBox.o: xIrcInviteBox.cpp xIrcInviteBox.h libX++/xPshBtnFrame.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtn.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcMircServerParse.o: xIrcMircServerParse.cpp libX++/xMessageBox.h \
-	libX++/xLabel.h libX++/xMouseEvent.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xPshBtnFrame.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtn.h xIrcServerList.h \
-	xIrcServerEntry.h
-xIrcMsgDispatch.o: xIrcMsgDispatch.cpp ircreply.h xIrcMsgDispatch.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xMultiLineBuf.h libX++/xSocket.h \
-	xIrcMsgDispatchEntry.h
-xIrcMsgDispatchEntry.o: xIrcMsgDispatchEntry.cpp ircreply.h \
-	xIrcCommands.h xIrcMsgDispatchEntry.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcMsgFrame1.o: xIrcMsgFrame1.cpp libX++/xApp.h libX++/xDefaults.h \
-	libX++/xResources.h libX++/xMisc.h xIrcMsgDispatch.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h xIrcMsgDispatchEntry.h xIrcMsgFrame.h \
-	libX++/xMultiLineFrame.h libX++/xPshBtnFrame.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtn.h libX++/xEdit.h \
-	libX++/xMouseEvent.h xIrcCommands.h xIrcChanNickBox.h \
-	xIrcNickCombo.h libX++/xEditList.h libX++/xLineEdit.h \
-	libX++/xListBox.h xIrcNickList.h xIrcNickListEntry.h \
-	xIrcNickQuery.h
-xIrcMsgFrame2.o: xIrcMsgFrame2.cpp libX++/xApp.h libX++/xDefaults.h \
-	xIrcNickQuery.h libX++/xPshBtnFrame.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtn.h libX++/xEditList.h libX++/xLineEdit.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xListBox.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xSocket.h xIrcLineEditQuery.h libX++/xLineEditQuery.h \
-	xIrcMsgDispatch.h xIrcMsgDispatchEntry.h xIrcMsgFrame.h \
-	libX++/xMultiLineFrame.h xIrcCommands.h xIrcChanNickBox.h \
-	xIrcNickCombo.h xIrcNickList.h xIrcNickListEntry.h \
-	xIrcChannelQuery.h
-xIrcMsgQuery.o: xIrcMsgQuery.cpp libX++/xApp.h xIrcMsgQuery.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xMultiLineFrame.h libX++/xMultiLineWin.h \
-	libX++/xMultiLineBuf.h xIrcSocket.h libX++/xSocket.h
-xIrcNickActionQuery.o: xIrcNickActionQuery.cpp xIrcNickActionQuery.h \
-	libX++/xMultiLineFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xPshBtnTable.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtnFrame.h libX++/xPshBtn.h
-xIrcNickCombo.o: xIrcNickCombo.cpp xIrcNickCombo.h libX++/xEditList.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xLineEdit.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xDefaults.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xListBox.h \
-	xIrcNickList.h xIrcNickListEntry.h
-xIrcNickList.o: xIrcNickList.cpp xIrcNickList.h xIrcNickListEntry.h
-xIrcNickListEntry.o: xIrcNickListEntry.cpp xIrcNickListEntry.h
-xIrcNickQuery.o: xIrcNickQuery.cpp xIrcNickQuery.h libX++/xPshBtnFrame.h \
-	libX++/xResources.h libX++/xMisc.h libX++/xDialog.h \
-	libX++/xFrame.h libX++/xPshBtn.h libX++/xEditList.h \
-	libX++/xLineEdit.h libX++/xEdit.h libX++/xMouseEvent.h \
-	libX++/xDefaults.h libX++/xListBox.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcNotifyQuery.o: xIrcNotifyQuery.cpp xIrcCommands.h xIrcConnect.h \
-	libX++/xMultiLineFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xPshBtnFrame.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtn.h libX++/xSocketDialog.h libX++/xLabel.h \
-	libX++/xMouseEvent.h xIrcSocket.h libX++/xSocket.h \
-	xIrcMsgFrame.h libX++/xEdit.h xIrcChanNickBox.h xIrcNickCombo.h \
-	libX++/xEditList.h libX++/xLineEdit.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcNickList.h xIrcNickListEntry.h \
-	xIrcIgnoreQuery.h libX++/xComboBox.h xIrcConnectDialog.h \
-	xIrcServerEntry.h xIrcPeopleTable.h libX++/xCheckBox.h \
-	libX++/xTable.h xIrcPeopleList.h xIrcPeopleEntry.h \
-	xIrcNotifyQuery.h xIrcNotifyTable.h xIrcMsgQuery.h \
-	xIrcDccChatFrame.h xIrcDccSocket.h xIrcDccFile.h \
-	libX++/xProgressBar.h xIrcNickActionQuery.h \
-	libX++/xPshBtnTable.h xIrcBanDialog.h xIrcMsgDispatch.h \
-	xIrcMsgDispatchEntry.h xIrcPeopleEdit.h
-xIrcNotifyTable.o: xIrcNotifyTable.cpp xIrcCommands.h xIrcConnect.h \
-	libX++/xMultiLineFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xPshBtnFrame.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtn.h libX++/xSocketDialog.h libX++/xLabel.h \
-	libX++/xMouseEvent.h xIrcSocket.h libX++/xSocket.h \
-	xIrcMsgFrame.h libX++/xEdit.h xIrcChanNickBox.h xIrcNickCombo.h \
-	libX++/xEditList.h libX++/xLineEdit.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcNickList.h xIrcNickListEntry.h \
-	xIrcIgnoreQuery.h libX++/xComboBox.h xIrcConnectDialog.h \
-	xIrcServerEntry.h xIrcPeopleTable.h libX++/xCheckBox.h \
-	libX++/xTable.h xIrcPeopleList.h xIrcPeopleEntry.h \
-	xIrcNotifyQuery.h xIrcNotifyTable.h xIrcMsgQuery.h \
-	xIrcDccChatFrame.h xIrcDccSocket.h xIrcDccFile.h \
-	libX++/xProgressBar.h xIrcNickActionQuery.h \
-	libX++/xPshBtnTable.h xIrcBanDialog.h xIrcMsgDispatch.h \
-	xIrcMsgDispatchEntry.h xIrcPeopleEdit.h
-xIrcPeopleEdit.o: xIrcPeopleEdit.cpp xIrcPeopleEdit.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xCheckBox.h libX++/xComboBox.h libX++/xLineEdit.h \
-	libX++/xEdit.h libX++/xMouseEvent.h libX++/xDefaults.h \
-	libX++/xListBox.h xIrcPeopleEntry.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcPeopleEntry.o: xIrcPeopleEntry.cpp xIrcConnect.h \
-	libX++/xMultiLineFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h \
-	libX++/xPshBtnFrame.h libX++/xDialog.h libX++/xFrame.h \
-	libX++/xPshBtn.h libX++/xSocketDialog.h libX++/xLabel.h \
-	libX++/xMouseEvent.h xIrcSocket.h libX++/xSocket.h \
-	xIrcMsgFrame.h libX++/xEdit.h xIrcCommands.h xIrcChanNickBox.h \
-	xIrcNickCombo.h libX++/xEditList.h libX++/xLineEdit.h \
-	libX++/xDefaults.h libX++/xListBox.h xIrcNickList.h \
-	xIrcNickListEntry.h xIrcIgnoreQuery.h libX++/xComboBox.h \
-	xIrcConnectDialog.h xIrcServerEntry.h xIrcPeopleTable.h \
-	libX++/xCheckBox.h libX++/xTable.h xIrcPeopleList.h \
-	xIrcPeopleEntry.h xIrcNotifyQuery.h xIrcNotifyTable.h \
-	xIrcMsgQuery.h xIrcDccChatFrame.h xIrcDccSocket.h xIrcDccFile.h \
-	libX++/xProgressBar.h xIrcNickActionQuery.h \
-	libX++/xPshBtnTable.h xIrcBanDialog.h
-xIrcPeopleList.o: xIrcPeopleList.cpp xIrcPeopleList.h xIrcPeopleEntry.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcPeopleTable.o: xIrcPeopleTable.cpp libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xResources.h libX++/xMisc.h \
-	xIrcPeopleTable.h libX++/xCheckBox.h libX++/xFrame.h \
-	libX++/xTable.h xIrcPeopleList.h xIrcPeopleEntry.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcServerEdit.o: xIrcServerEdit.cpp xIrcServerEdit.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xComboBox.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcServerEntry.h
-xIrcServerEntry.o: xIrcServerEntry.cpp xIrcServerEntry.h
-xIrcServerList.o: xIrcServerList.cpp xIrcServerList.h xIrcServerEntry.h
-xIrcServerQuery.o: xIrcServerQuery.cpp xIrcServerEdit.h \
-	libX++/xPshBtnFrame.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xDialog.h libX++/xFrame.h libX++/xPshBtn.h \
-	libX++/xComboBox.h libX++/xLineEdit.h libX++/xEdit.h \
-	libX++/xMouseEvent.h libX++/xDefaults.h libX++/xListBox.h \
-	xIrcServerEntry.h xIrcServerQuery.h xIrcConnectDialog.h \
-	xIrcServerTable.h libX++/xTable.h xIrcServerList.h xIrcSocket.h \
-	libX++/xMultiLineWin.h libX++/xMultiLineBuf.h libX++/xSocket.h
-xIrcServerTable.o: xIrcServerTable.cpp libX++/xLabel.h \
-	libX++/xMouseEvent.h libX++/xResources.h libX++/xMisc.h \
-	libX++/xEdit.h xIrcMircServerParse.h xIrcServerList.h \
-	xIrcServerEntry.h xIrcServerTable.h libX++/xFrame.h \
-	libX++/xTable.h
-xIrcSocket.o: xIrcSocket.cpp libX++/xDefaults.h xIrcCommands.h \
-	xIrcSocket.h libX++/xMultiLineWin.h libX++/xResources.h \
-	libX++/xMisc.h libX++/xMultiLineBuf.h libX++/xSocket.h
 
+DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+
+-include $(DEP_FILES)
+
+mostlyclean-depend:
+
+clean-depend:
+
+distclean-depend:
+	-rm -rf .deps
+
+maintainer-clean-depend:
+
+%.o: %.c
+	@echo '$(COMPILE) -c $<'; \
+	$(COMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.c
+	@echo '$(LTCOMPILE) -c $<'; \
+	$(LTCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+
+%.o: %.cpp
+	@echo '$(CXXCOMPILE) -c $<'; \
+	$(CXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.cpp
+	@echo '$(LTCXXCOMPILE) -c $<'; \
+	$(LTCXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
 info-am:
 info: info-recursive
 dvi-am:
@@ -858,24 +552,25 @@ distclean-generic:
 
 maintainer-clean-generic:
 mostlyclean-am:  mostlyclean-binPROGRAMS mostlyclean-compile \
-		mostlyclean-tags mostlyclean-generic
+		mostlyclean-tags mostlyclean-depend mostlyclean-generic
 
 mostlyclean: mostlyclean-recursive
 
-clean-am:  clean-binPROGRAMS clean-compile clean-tags clean-generic \
-		mostlyclean-am
+clean-am:  clean-binPROGRAMS clean-compile clean-tags clean-depend \
+		clean-generic mostlyclean-am
 
 clean: clean-recursive
 
 distclean-am:  distclean-binPROGRAMS distclean-compile distclean-tags \
-		distclean-generic clean-am
+		distclean-depend distclean-generic clean-am
 
 distclean: distclean-recursive
 	-rm -f config.status
 
 maintainer-clean-am:  maintainer-clean-binPROGRAMS \
 		maintainer-clean-compile maintainer-clean-tags \
-		maintainer-clean-generic distclean-am
+		maintainer-clean-depend maintainer-clean-generic \
+		distclean-am
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
 
@@ -891,12 +586,14 @@ uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
 all-recursive check-recursive installcheck-recursive info-recursive \
 dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
 maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
-distclean-tags clean-tags maintainer-clean-tags distdir info-am info \
-dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
-install-exec install-data-am install-data install-am install \
-uninstall-am uninstall all-redirect all-am all installdirs-am \
-installdirs mostlyclean-generic distclean-generic clean-generic \
-maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+distclean-tags clean-tags maintainer-clean-tags distdir \
+mostlyclean-depend distclean-depend clean-depend \
+maintainer-clean-depend info-am info dvi-am dvi check check-am \
+installcheck-am installcheck install-exec-am install-exec \
+install-data-am install-data install-am install uninstall-am uninstall \
+all-redirect all-am all installdirs-am installdirs mostlyclean-generic \
+distclean-generic clean-generic maintainer-clean-generic clean \
+mostlyclean distclean maintainer-clean
 
 
 # QT Meta header files

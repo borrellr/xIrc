@@ -114,7 +114,7 @@ private:
    m_result                *pViewData;
 #else
    PGresult                *pViewData;
-#endif POSTGRES
+#endif
 };
 
 #endif

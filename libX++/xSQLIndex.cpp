@@ -33,7 +33,7 @@ xSQLFieldDef fields[] =
    {sqlPlain, "indexes.index", "", NULL, 0}
 #else
    {sqlPlain, "indexes.ident", "", NULL, 0}
-#endif POSTGRES
+#endif
 };
 
 xSQLIndex::xSQLIndex() : xSQLBase(fields)
@@ -56,7 +56,7 @@ QString xSQLIndex::nextIndex(int database, QString &table)
    tmp = table;
 #else
    tmp = table.lower();
-#endif POSTGRES
+#endif
    links.insert("indexes.tablename", &tmp);
    if (query(database, fields, links, sort) == TRUE)
    {
