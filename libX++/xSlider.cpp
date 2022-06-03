@@ -23,16 +23,16 @@
 #include "xMisc.h"
 #include "xSlider.h"
 
-xSlider::xSlider(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
-                 const char *pName = NULL) :
+xSlider::xSlider(xWidgetResInfo *pPRes, QWidget *pParent,
+                 const char *pName) :
          QSlider(pParent, pName)
 {
    initSlider(pPRes);
 }
 
 xSlider::xSlider(xWidgetResInfo *pPRes, QSlider::Orientation orientation,
-                 QWidget *pParent = NULL,
-                 const char *pName = NULL) :
+                 QWidget *pParent,
+                 const char *pName) :
          QSlider(orientation, pParent, pName)
 {
    initSlider(pPRes);

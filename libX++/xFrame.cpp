@@ -85,7 +85,7 @@ xFrame::xFrame(xWidgetResInfo *pPRes, int align, int resz, int space,
    setDefFont(this, wdtRes);
 
    fc = 0;
-   initMetaObject();
+//   initMetaObject();
    widgetAlgn = align;
    widgetResz = resz;
    widgetSpac = space;
@@ -96,11 +96,7 @@ xFrame::xFrame(xWidgetResInfo *pPRes, int align, int resz, int space,
    widgetListLength = 10;
    widgetCount = 0;
    fitFrameRecurse = 0;
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
    fitted = FALSE;
    if (dbg) fprintf(stdout, "xFrame::xFrame():Exit\n");
 }

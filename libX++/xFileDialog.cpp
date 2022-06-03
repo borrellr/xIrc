@@ -93,13 +93,8 @@ void xFileDialog::init(const char *dir,
 
    pDirs = new QDir(dir, "*", QDir::Name, QDir::Dirs);
    pFiles = new QDir(dir, filter, QDir::Name, QDir::Files);
-#ifdef QT2
    pDirList->insertStringList(pDirs->entryList());
    pFileList->insertStringList(pFiles->entryList());
-#else
-   pDirList->insertStrList(pDirs->entryList());
-   pFileList->insertStrList(pFiles->entryList());
-#endif
 
    pDirFrame->fitFrame();
 
@@ -192,17 +187,9 @@ void xFileDialog::moveToDirectory(const char *cp)
       {
          pFiles->cd(cp);
          pDirList->clear();
-#ifdef QT2
          pDirList->insertStringList(pDirs->entryList());
-#else
-         pDirList->insertStrList(pDirs->entryList());
-#endif
          pFileList->clear();
-#ifdef QT2
          pFileList->insertStringList(pFiles->entryList());
-#else
-         pFileList->insertStrList(pFiles->entryList());
-#endif
          pPath->setText(pDirs->absPath());
          pFileList->setCurrentItem(0);
          pFileList->setFocus();
@@ -382,11 +369,7 @@ void xFileDialog::setFilter()
    }
    pFiles->setNameFilter(cp);
    pFileList->clear();
-#ifdef QT2
    pFileList->insertStringList(pFiles->entryList());
-#else
-   pFileList->insertStrList(pFiles->entryList());
-#endif
 }
 
 QString xFileDialog::getOpenFileName(xWidgetResInfo *pPRes,
@@ -450,17 +433,9 @@ void xFileDialog::toggleHidden()
       pDirs->setFilter(QDir::Dirs);
    }
    pFileList->clear();
-#ifdef QT2
    pFileList->insertStringList(pFiles->entryList());
-#else
-   pFileList->insertStrList(pFiles->entryList());
-#endif
    pDirList->clear();
-#ifdef QT2
    pDirList->insertStringList(pDirs->entryList());
-#else
-   pDirList->insertStrList(pDirs->entryList());
-#endif
 }
 
 QString xFileDialog::selectedFile()

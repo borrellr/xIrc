@@ -31,16 +31,9 @@ static int dbg = 0;
 
 extern xApplication *pApp;
 
-#ifdef QT2
 xDialog::xDialog(xWidgetResInfo *pPRes, QWidget *pParent, const char *pName,
                  bool modal, WFlags flags) :
          QDialog(pParent, pName, modal, flags)
-#else
-
-xDialog::xDialog(xWidgetResInfo *pPRes, QWidget *pParent, const char *pName,
-                 bool modal) :
-         QDialog(pParent, pName, modal)
-#endif
 {
    const char *ccp;
 

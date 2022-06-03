@@ -32,7 +32,7 @@
 #include <qobject.h>
 #include <qevent.h>
 #include <qtimer.h>
-#include <qkeycode.h>
+//#include <qkeycode.h>
 
 #include <qlineedit.h>
 #include <qlabel.h>
@@ -44,7 +44,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <xGauge.h>
+#include "xGauge.h"
 
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"

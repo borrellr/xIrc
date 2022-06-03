@@ -204,8 +204,8 @@ void xMultiLineFrame::haveTextSelection(QString str)
    if (dbg) fflush(stdout);
 }
 
-xVertScrollBar::xVertScrollBar(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
-                               const char *pName = NULL) :
+xVertScrollBar::xVertScrollBar(xWidgetResInfo *pPRes, QWidget *pParent,
+                               const char *pName) :
                 QScrollBar(QScrollBar::Vertical, pParent, pName)
 {
    wdtRes = new xWidgetResInfo(pPRes, QString("scrollbar"), QString("ScrollBar"));
