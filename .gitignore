@@ -1,0 +1,9 @@
+.*.un~
+.*.swp
+.*h~
+*.cpp~
+moc*
+.gitignore~
+*.h~
+*.o
+*.so*
