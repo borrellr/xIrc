@@ -136,7 +136,7 @@ xIrcPeopleEntry::xIrcPeopleEntry(xIrcPeopleEntry &e)
 
 int xIrcPeopleEntry::compare(xIrcPeopleEntry *e)
 {
-   return(stricmp(Nick, e->nick()));
+   return(qstricmp(Nick, e->nick()));
 }
 
 bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
@@ -192,7 +192,7 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
             tmpNick += *cp;
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Nick: |%s| == |%s|?\n",
                          (const char *)tmpNick, (const char *)Nick);
-         if (stricmp(tmpNick, Nick) == 0)
+         if (qstricmp(tmpNick, Nick) == 0)
             rv = TRUE;
       }
    }
@@ -240,7 +240,7 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Nick: |%s| == |%s|?\n",
                          (const char *)pMsg->srcNick, (const char *)Nick);
          if (dbg) fflush(stdout);
-         if (stricmp(Nick, pMsg->srcNick) == 0)
+         if (qstricmp(Nick, pMsg->srcNick) == 0)
             rv = TRUE;
       }
       else

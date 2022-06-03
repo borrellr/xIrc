@@ -54,11 +54,7 @@ void xChannelQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
       
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    setMargins(0, 0);
    setWidgetSpacing(0);
    if ((pChannel = new xEditList(wdtRes, this)) != NULL)

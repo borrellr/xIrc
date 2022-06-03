@@ -25,9 +25,9 @@
 
 static int dbg = 0;
 
-xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcServerEntry *entry = NULL) :
+                                     xIrcServerEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("connectdialog"),
                                                               QString("ConnectDialog")),
                            pParent, pName, TRUE)

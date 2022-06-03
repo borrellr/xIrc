@@ -28,9 +28,9 @@
 
 static int dbg = 0;
 
-xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcServerEntry *entry = NULL) :
+                                     xIrcServerEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("serveredit"),
                                                               QString("ServerEdit")),
                            pParent, pName, TRUE)

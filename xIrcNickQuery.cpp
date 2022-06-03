@@ -50,11 +50,7 @@ xIrcNickQuery::xIrcNickQuery(xWidgetResInfo *pPRes, QWidget *pParent,
    if (pName)
       setCaption(pName);
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    pNick = new xEditList(wdtRes, this);
    pNick->setMargins(5, 5);
    pNick->setFrameStyle(QFrame::Panel | QFrame::Raised);

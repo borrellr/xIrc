@@ -15,3 +15,4 @@ xMultiLineFrame.h xMultiLineWin.h xProgressBar.h xPshBtnFrame.h xPshBtn.h \
 xPshBtnTable.h xResources.h xSlider.h xSocketDialog.h xSocket.h xSQLBase.h \
 xSQLField.h xSQLIndex.h xSQLTable.h xSQLView.h xTable.h
 CONFIG += qt warn_on release
+TARGET = X++

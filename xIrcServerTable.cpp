@@ -215,11 +215,7 @@ xIrcServerTable::xIrcServerTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
 
    pServerList = new xIrcServerList();
    pServerList1 = new xIrcServerList();

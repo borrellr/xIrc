@@ -35,6 +35,7 @@ xIrcServerList::xIrcServerList()
 xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
 {
    int x;
+   const QString wc = "*";
    QRegExp groupRE;
    QRegExp countryRE;
    QRegExp stateRE;
@@ -44,36 +45,37 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    xIrcServerListIterator si(list);
 
    portsRE.setWildcard(TRUE);
-   serverRE.setWildcard(TRUE);
-   stateRE.setWildcard(TRUE);
-   cityRE.setWildcard(TRUE);
-   countryRE.setWildcard(TRUE);
-   groupRE.setWildcard(TRUE);
 
    if (entry != NULL && strlen(entry->group()) > 0)
       groupRE = entry->group();
-   else
-      groupRE = "*";
-
+   else {
+      groupRE = wc;
+      groupRE.setWildcard(TRUE);
+   }
    if (entry != NULL && strlen(entry->country()) > 0)
       countryRE = entry->country();
-   else
-      countryRE = "*";
-
+   else {
+      countryRE = wc;
+      countryRE.setWildcard(TRUE);
+   }
    if (entry != NULL && strlen(entry->state()) > 0)
       stateRE = entry->state();
-   else
-      stateRE = "*";
-
+   else {
+      stateRE = wc;
+      stateRE.setWildcard(TRUE);
+   }
    if (entry != NULL && strlen(entry->city()) > 0)
       cityRE = entry->city();
-   else
-      cityRE = "*";
-
+   else {
+      cityRE = wc;
+      cityRE.setWildcard(TRUE);
+   }
    if (entry != NULL && strlen(entry->city()) > 0)
       serverRE = entry->server();
-   else
-      serverRE = "*";
+   else {
+      serverRE = wc;
+      serverRE.setWildcard(TRUE);
+   }
       
    for (; si.current() != NULL; ++si)
    {

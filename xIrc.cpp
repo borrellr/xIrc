@@ -32,7 +32,7 @@
 #include <qobject.h>
 #include <qevent.h>
 #include <qtimer.h>
-//#include <qkeycode.h>
+#include <qkeycode.h>
 
 #include <qlineedit.h>
 #include <qlabel.h>
@@ -44,7 +44,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "xGauge.h"
+#include <xGauge.h>
 
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"
@@ -74,16 +74,12 @@ xIrcMsgDispatch Dispatcher;
 xDefaults Defaults;
 xApplication *pApp = NULL;
 
-#ifdef QT2
 QEvent qEvt(QEvent::User);
-#else
-QEvent qEvt(-1);
-#endif
 
 static const char *pInitialResources[] =
 {
    "XIRC*PixMap: xIrc.ppm",
-   "XIRC*PixMapPath: ./;~/;"XIRCRESOURCEPATH";",
+   "XIRC*PixMapPath: ./;~/;",
    "XIRC*Font.Family: Helvetica",
    "XIRC*Font.Size: 12",
    "XIRC*Font.Weight: normal",
@@ -132,7 +128,7 @@ static const char *pInitialResources[] =
    "XIRC*ServerDialog.ImportPath: ./",
    "XIRC*ServerDialog.ImportFilter: *.ini",
    "XIRC*ServerDialog.Filename: servers.dat",
-   "XIRC*ServerDialog.Path: "XIRCRESOURCEPATH,
+   "XIRC*ServerDialog.Path: ",
    "XIRC*ServerDialog.Filter: .*",
    NULL
 };
@@ -243,27 +239,15 @@ static void setFonts(xResources *r, xApplication *a)
    ccp3 = Resources->get(&appRes, "font.size", "Font.Size");
 
    if (ccp1 == NULL)
-#ifdef QT2
       ccp1 = a->font().family();
-#else
-      ccp1 = a->font()->family();
-#endif
    if (ccp2 == NULL)
    {
-#ifdef QT2
       sprintf(fontWeight, "%d", a->font().weight());
-#else
-      sprintf(fontWeight, "%d", a->font()->weight());
-#endif
       ccp2 = fontWeight;
    }
    if (ccp3 == NULL)
    {
-#ifdef QT2
       sprintf(fontSize, "%d", a->font().pointSize());
-#else
-      sprintf(fontSize, "%d", a->font()->pointSize());
-#endif
       ccp3 = fontSize;
    }
 

@@ -220,11 +220,7 @@ xIrcPeopleTable::xIrcPeopleTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
 
    pPeopleList = new xIrcPeopleList();
 
