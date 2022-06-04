@@ -17,6 +17,4 @@ libX++/configure
 *.in
 libX++/autom4te.cache/requests
 libX++/Makefile
-libX++/Makefile
-libX++/Makefile
 Makefile
