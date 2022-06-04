@@ -67,7 +67,6 @@ typedef struct
    char  monthNum[3];
 } monthType;
 
-#ifdef POSTGRES
 static monthType monthTbl[12] =
 {
    {  "Jan", "01" },
@@ -83,7 +82,6 @@ static monthType monthTbl[12] =
    {  "Nov", "11" },
    {  "Dec", "12" }
 };
-#endif
 
 xSQLField::xSQLField(xWidgetResInfo *pPRes, QWidget *pParent,
                      xSQLBase *pSqlBase, int db, xSQLFieldDef *pField) :
@@ -230,49 +228,7 @@ void xSQLField::setText(const char *pText)
 {
    if (dbg) fprintf(stdout, "xSQLField::setText():Enter\n");
    if (dbg) fflush(stdout);
-#ifndef POSTGRES
    xEdit::setText(pText);
-#else
-   if (fieldType() == sqlDate)
-   {
-      int x;
-      monthType *p;
-      char wd[256], m[256], d[256], t[256], y[256], z[256], date[9];
-      if (isalpha(*pText))
-      {
-         sscanf(pText, "%s %s %s %s %s %s", wd, m, d, t, y, z);
-         for (p = monthTbl, x = 0; x < 12; x++, p++)
-         {
-            if (strcasecmp(p->monthStr, m) == 0)
-            {
-               if (dbg) fprintf(stdout, "xSQLField::setText():Found month %s:%s\n",
-                           p->monthStr, p->monthNum);
-               if (dbg) fflush(stdout);
-               strcpy(m, p->monthNum);
-               break;
-            }
-         }
-         sprintf(date, "%s/%s/%s", m, d, &y[2]);
-         xEdit::setText(date);
-      }
-      else
-      {
-         QString val(pText);
-         val = val.replace(QRegExp("[-/]"), " ");
-         if (dbg) fprintf(stdout, "xSQLField::setText():Converted date |%s|\n",
-                          (const char *)val);
-         sscanf(val, "%s %s %s", m, d, y);
-         if (strlen(y) == 4)
-            sprintf(date, "%s/%s/%s", m, d, &y[2]);
-         else
-            sprintf(date, "%s/%s/%s", m, d, y);
-         if (dbg) fprintf(stdout, "xSQLField::setText():Converted date to |%s|\n", date);
-         xEdit::setText(date);
-      }
-   }
-   else
-      xEdit::setText(pText);
-#endif
    if (dbg) fprintf(stdout, "xSQLField::setText():Exit\n");
    if (dbg) fflush(stdout);
 }
@@ -282,7 +238,6 @@ void xSQLField::setAutoSelect(bool f)
    autoSelect = f;
 }
 
-#ifndef POSTGRES
 bool xSQLField::isKey()
 {
    if (fieldType() == sqlComputation)
@@ -298,7 +253,6 @@ bool xSQLField::canBeNull()
    else
       return(TRUE);
 }
-#endif
 
 QString xSQLField::tableName()
 {
@@ -307,9 +261,7 @@ QString xSQLField::tableName()
 
    for (cp = name(); *cp && *cp != '.'; cp++)
       rv += *cp;
-#ifdef POSTGRES
    rv = rv.lower();
-#endif
    return(rv);
 }
 
@@ -323,9 +275,7 @@ QString xSQLField::fieldName()
       rv = cp + 1;
    else
       rv = cp;
-#ifdef POSTGRES
    rv = rv.lower();
-#endif
    return(rv);
 }
 

@@ -19,5 +19,7 @@ xIrcPeopleList.h xIrcPeopleTable.h xIrcServerEdit.h xIrcServerEntry.h \
 xIrcServerList.h xIrcServerQuery.h xIrcServerTable.h xIrcSocket.h
 INCLUDEPATH += ./libX++
 LIBS += -lX++ -L./libX++
+LIBS += -L/usr/lib/mysql -lmysqlclient -lz -lcrypt -lnsl -lm
+LIBS += -L/usr/lib -lssl -lcrypto
 CONFIG += qt warn_on release
 TARGET += xIrc

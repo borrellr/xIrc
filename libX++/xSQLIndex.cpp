@@ -29,11 +29,7 @@
 xSQLFieldDef fields[] =
 {
    {sqlPlain, "indexes.tablename", "", NULL, 0},
-#ifndef POSTGRES
    {sqlPlain, "indexes.index", "", NULL, 0}
-#else
-   {sqlPlain, "indexes.ident", "", NULL, 0}
-#endif
 };
 
 xSQLIndex::xSQLIndex() : xSQLBase(fields)
@@ -52,31 +48,19 @@ QString xSQLIndex::nextIndex(int database, QString &table)
    char buf[20];
    int x;
 
-#ifndef POSTGRES
    tmp = table;
-#else
-   tmp = table.lower();
-#endif
    links.insert("indexes.tablename", &tmp);
    if (query(database, fields, links, sort) == TRUE)
    {
       data = getRow(1);
 //      data.toFirst();
-#ifndef POSTGRES
       x = strtol((const char *)*data.find("indexes.index"), NULL, 10);
-#else
-      x = strtol((const char *)*data.find("indexes.ident"), NULL, 10);
-#endif
       if (x > 0)
       {
          x++;
          sprintf(buf, "%d", x);
          rv = buf;
-#ifndef POSTGRES
          data.replace("indexes.index", &rv);
-#else
-         data.replace("indexes.ident", &rv);
-#endif
          update(database, data, links);
       }
    }

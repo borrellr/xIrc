@@ -24,12 +24,7 @@
 #define _XSQLFIELD_H
 
 #include <qevent.h>
-#ifndef POSTGRES
 #include "xMsql.h"
-#else
-#include <libpq-fe.h>
-#include <libpq/libpq-fs.h>
-#endif
 #include "xResources.h"
 #include "xSQLBase.h"
 #include "xEdit.h"
@@ -45,10 +40,8 @@ public:
 
    QString tableName();
    QString fieldName();
-#ifndef POSTGRES
    bool isKey();
    bool canBeNull();
-#endif
    void setValidations(QList<QString> &list);
    int editWidth() { return(edtWidth); };
    void setEditWidth(int eWdth);

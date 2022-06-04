@@ -27,12 +27,7 @@
 #include <qstring.h>
 #include <qlist.h>
 #include <qdict.h>
-#ifndef POSTGRES
 #include "xMsql.h"
-#else
-#include <libpq-fe.h>
-#include <libpq/libpq-fs.h>
-#endif
 
 class xSQLField;
 
@@ -110,11 +105,7 @@ private:
    QDict<QString>          fieldLinks;
    QDict<QString>          calcFields;
    QList<QString>          calcNames;
-#ifndef POSTGRES
-   m_result                *pViewData;
-#else
-   PGresult                *pViewData;
-#endif
+   MYSQL_RES                *pViewData;
 };
 
 #endif

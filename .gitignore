@@ -9,10 +9,14 @@ moc*
 *.so*
 *.m4
 *.0
-d2utmpKp1hnh
 autom4te.cache/requests
-libX++/autom4te.cache/requests
+d2utmpKp1hnh
 *.log
 *.status
 libX++/configure
 *.in
+libX++/autom4te.cache/requests
+libX++/Makefile
+libX++/Makefile
+libX++/Makefile
+Makefile
