@@ -23,6 +23,7 @@
 #define XIRCMSGDISPATCHENTRY_H
 
 #include <qobject.h>
+#include <qptrlist.h>
 #include "xIrcSocket.h"
 
 class xIrcMsgDispatchEntry : public QObject
@@ -51,8 +52,8 @@ private:
    int         *pResponseList;
 };
 
-typedef QList<xIrcMsgDispatchEntry>            xIrcMsgDispatchListBase;
-typedef QListIterator<xIrcMsgDispatchEntry>    xIrcMsgDispatchListIterator;
+typedef QPtrList<xIrcMsgDispatchEntry>            xIrcMsgDispatchListBase;
+typedef QPtrListIterator<xIrcMsgDispatchEntry>    xIrcMsgDispatchListIterator;
 
 class xIrcMsgDispatchList : public xIrcMsgDispatchListBase
 {

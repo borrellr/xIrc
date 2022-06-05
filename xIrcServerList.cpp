@@ -20,7 +20,7 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <stdio.h>
 #include "xIrcServerList.h"
@@ -99,6 +99,7 @@ int xIrcServerList::readFile(const char *fn)
    char buf[512], *cp;
    int parm;
    FILE *fp;
+   int dbg = 1;
 
    if ((fp = fopen(fn, "r")) == NULL)
       return(-1);
@@ -145,6 +146,9 @@ int xIrcServerList::readFile(const char *fn)
          }
       }
       xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
+      if(dbg) {
+          printf("Entries:\nGroup: %s\nCountry: %s\nState: %s\nCity: %s\nServer: %s\nPorts: %s\n", groupStr.ascii(), countryStr.ascii(), stateStr.ascii(), cityStr.ascii(), serverStr.ascii(), portsStr.ascii());
+      }
       add(e);
    }
    return(0);

@@ -20,7 +20,7 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <stdio.h>
 #include "xIrcPeopleList.h"

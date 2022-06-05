@@ -23,7 +23,7 @@
 #ifndef _xIRCSOCKET_H
 #define _xIRCSOCKET_H
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qobject.h>
 #include <qstring.h>
 #include <xMultiLineWin.h>
@@ -61,8 +61,8 @@ typedef struct
    QString           rawMsg;
 } xIrcMessage;
 
-typedef QList<xIrcMessage>           xIrcMessageListBase;
-typedef QListIterator<xIrcMessage>   xIrcMessageListIterator;
+typedef QPtrList<xIrcMessage>           xIrcMessageListBase;
+typedef QPtrListIterator<xIrcMessage>   xIrcMessageListIterator;
 
 class xIrcMessageList : public xIrcMessageListBase
 {

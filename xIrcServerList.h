@@ -23,11 +23,11 @@
 #ifndef XIRCSERVERLIST_H
 #define XIRCSERVERLIST_H
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include "xIrcServerEntry.h"
 
-typedef QList<xIrcServerEntry>           xIrcServerListBase;
-typedef QListIterator<xIrcServerEntry>   xIrcServerListIterator;
+typedef QPtrList<xIrcServerEntry>           xIrcServerListBase;
+typedef QPtrListIterator<xIrcServerEntry>   xIrcServerListIterator;
 
 class xIrcServerList : public xIrcServerListBase
 {

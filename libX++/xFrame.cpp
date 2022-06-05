@@ -198,7 +198,7 @@ void xFrame::fitFrame(const QSize *frameSize, bool force)
    int maxSize = 0, offset, totalSize = 0, currentSize;
    int frameH = 0, frameW = 0, offsetV, offsetH;
    int x = 0, x1, x2, x3, x4, x5;
-   QListIterator<QWidget> it(widgetList);
+   QPtrListIterator<QWidget> it(widgetList);
    QWidget *pWidget = it.current();
 
    if (dbg) fprintf(stdout, "xFrame::fitFram.%d(%s:%s):Enter\n", fc, className(), name());

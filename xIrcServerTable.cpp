@@ -21,7 +21,7 @@
 **
  ***************************************************************************/
 #include <stdio.h>
-#include <qlist.h>
+#include <qptrlist.h>
 //#include <qobjcoll.h>
 #include <qregexp.h>
 #include <qlabel.h>

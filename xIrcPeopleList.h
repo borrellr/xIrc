@@ -23,11 +23,11 @@
 #ifndef XIRCPEOPLELIST_H
 #define XIRCPEOPLELIST_H
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include "xIrcPeopleEntry.h"
 
-typedef QList<xIrcPeopleEntry>           xIrcPeopleListBase;
-typedef QListIterator<xIrcPeopleEntry>   xIrcPeopleListIterator;
+typedef QPtrList<xIrcPeopleEntry>           xIrcPeopleListBase;
+typedef QPtrListIterator<xIrcPeopleEntry>   xIrcPeopleListIterator;
 
 class xIrcPeopleList : public xIrcPeopleListBase
 {

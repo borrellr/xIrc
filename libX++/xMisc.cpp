@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qwidget.h>
 #include <qpalette.h>
 #include <qregexp.h>
@@ -302,7 +302,7 @@ xWidgetResInfo::xWidgetResInfo(xWidgetResInfo &res)
    classStr = res.getClass();
 }
 
-void buildList(QList<QString> &list, const char *pTests)
+void buildList(QPtrList<QString> &list, const char *pTests)
 {
    QString tmpStr("");
    int state = 0;
@@ -352,9 +352,9 @@ void buildList(QList<QString> &list, const char *pTests)
    }
 }
 
-bool testString(QList<QString> &list, QString &str)
+bool testString(QPtrList<QString> &list, QString &str)
 {
-   QListIterator<QString> it(list);
+   QPtrListIterator<QString> it(list);
    int x, len;
 
    if (dbg) fprintf(stdout, "testString():Enter\n");
@@ -376,12 +376,12 @@ bool testString(QList<QString> &list, QString &str)
    return(FALSE);
 }
 
-bool inList(QList<QString> &list, QString string)
+bool inList(QPtrList<QString> &list, QString string)
 {
    bool rv = FALSE;
 
    if (dbg) fprintf(stdout, "inList():Entry\n");
-   for (QListIterator<QString> it(list);
+   for (QPtrListIterator<QString> it(list);
         rv == FALSE && it.current() != NULL; ++it)
    {
       if (dbg) fprintf(stdout, "inList():Comparing |%s| & |%s|\n",
