@@ -78,8 +78,8 @@ QEvent qEvt(QEvent::User);
 
 static const char *pInitialResources[] =
 {
-   "XIRC*PixMap: xIrc.ppm",
-   "XIRC*PixMapPath: ./;~/;",
+   "XIRC*PixMap: xIrc.xpm",
+   "XIRC*PixMapPath: ./;~/;/usr/local/lib/xIrc",
    "XIRC*Font.Family: Helvetica",
    "XIRC*Font.Size: 12",
    "XIRC*Font.Weight: normal",
@@ -128,7 +128,7 @@ static const char *pInitialResources[] =
    "XIRC*ServerDialog.ImportPath: ./",
    "XIRC*ServerDialog.ImportFilter: *.ini",
    "XIRC*ServerDialog.Filename: servers.dat",
-   "XIRC*ServerDialog.Path: ",
+   "XIRC*ServerDialog.Path: /usr/local/lib/xIrc",
    "XIRC*ServerDialog.Filter: .*",
    NULL
 };
@@ -256,7 +256,7 @@ static void setFonts(xResources *r, xApplication *a)
 
 static void setPixMap()
 {
-   const char *ccp1, *ccp2, *ccp3;
+   const char *ccp1, *ccp2;
    char *cp, tmpBuf[512], pmBuf[256];
 
    if (dbg) fprintf(stdout, "main():Getting Pixmap file name\n");   

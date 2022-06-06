@@ -22,10 +22,13 @@
  ***************************************************************************/
 #include <qptrlist.h>
 #include <qregexp.h>
+#include <qfile.h>
+#include <qtextstream.h>
+#include <qstringlist.h>
 #include <stdio.h>
 #include "xIrcServerList.h"
 
-static int dbg = 0;
+static int dbg = 1;
 
 xIrcServerList::xIrcServerList()
 {
@@ -96,10 +99,10 @@ xIrcServerList::~xIrcServerList()
 
 int xIrcServerList::readFile(const char *fn)
 {
+#ifdef QT2
    char buf[512], *cp;
    int parm;
    FILE *fp;
-   int dbg = 1;
 
    if ((fp = fopen(fn, "r")) == NULL)
       return(-1);
@@ -151,6 +154,39 @@ int xIrcServerList::readFile(const char *fn)
       }
       add(e);
    }
+#else
+   QStringList lines;
+   QFile file(fn);
+
+   if ( file.open( IO_ReadOnly ) ) {
+      QTextStream stream( &file );
+      QString line;
+      QString groupStr, countryStr, stateStr, cityStr, serverStr, portsStr;
+      while ( !stream.atEnd() ) {
+         line = stream.readLine(); 
+         lines = QStringList::split(":", line, TRUE);
+
+         groupStr = lines.front();
+         lines.pop_front();
+         countryStr = lines.front();
+         lines.pop_front();
+         stateStr = lines.front();
+         lines.pop_front();
+         cityStr = lines.front();
+         lines.pop_front();
+         serverStr = lines.front();
+         lines.pop_front();
+         portsStr = lines.front();
+
+         xIrcServerEntry e(groupStr.ascii(), countryStr.ascii(), stateStr.ascii(), cityStr.ascii(), serverStr.ascii(), portsStr.ascii());
+
+         if(dbg) {
+             printf("Entries:\nGroup: %s\nCountry: %s\nState: %s\nCity: %s\nServer: %s\nPorts: %s\n", groupStr.ascii(), countryStr.ascii(), stateStr.ascii(), cityStr.ascii(), serverStr.ascii(), portsStr.ascii());
+         }
+         add(e);
+      }
+   }
+#endif
    return(0);
 }
 
@@ -184,6 +220,7 @@ int xIrcServerList::writeFile(const char *fn)
 
 void xIrcServerList::add(xIrcServerList &list)
 {
+   if(dbg) { printf("Entering xIrcServerList::add list function\n");}
    xIrcServerListIterator si(list);
 
    for (; si.current() != NULL; ++si)
@@ -192,6 +229,7 @@ void xIrcServerList::add(xIrcServerList &list)
    
 void xIrcServerList::add(xIrcServerEntry &entry)
 {
+   if(dbg) { printf("Entering xIrcServerList::add entry function\n");}
    xIrcServerListIterator si(*this);
    
    for (; si.current() != NULL; ++si)

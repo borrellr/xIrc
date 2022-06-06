@@ -35,8 +35,8 @@ xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                                               QString("ServerEdit")),
                            pParent, pName, TRUE)
 {
-   QHGroupBox *hgroupbox;
-   QHBox *hbox;
+//   QHGroupBox *hgroupbox;
+//   QHBox *hbox;
 
    if (dbg) fprintf(stdout, "xIrcServerEdit::xIrcServerEdit(): Enter\n");
    if (dbg) fflush(stdout);
