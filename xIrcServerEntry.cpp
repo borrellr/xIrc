@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <ctype.h>
 #include <stdio.h>
+#include <qstringlist.h>
 #include "xIrcServerEntry.h"
 
 static int dbg = 1;
@@ -104,21 +105,41 @@ xIrcServerEntry::xIrcServerEntry(xIrcServerEntry &e)
    if (strlen(Ports) == 0)
       Ports = "";
 
-   if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Id = |%s|\n",
-                             (const char *)Id);
-   if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Group = |%s|\n",
-                             (const char *)Group);
-   if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Country = |%s|\n",
-                             (const char *)Country);
-   if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():State = |%s|\n",
-                             (const char *)State);
-   if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():City = |%s|\n",
-                             (const char *)City);
-   if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Server = |%s|\n", 
-                             (const char *)Server);
-   if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Ports = |%s|\n", 
-                             (const char *)Ports);
-   if (dbg) fflush(stdout);
+   if (dbg) {
+      printf("xIrcServerEntry::xIrcServerEntry():Id = |%s|\n", (const char *)Id);
+      printf("xIrcServerEntry::xIrcServerEntry():Group = |%s|\n", (const char *)Group);
+      printf("xIrcServerEntry::xIrcServerEntry():Country = |%s|\n", (const char *)Country);
+      printf("xIrcServerEntry::xIrcServerEntry():State = |%s|\n", (const char *)State);
+      printf("xIrcServerEntry::xIrcServerEntry():City = |%s|\n", (const char *)City);
+      printf("xIrcServerEntry::xIrcServerEntry():Server = |%s|\n", (const char *)Server);
+      printf("xIrcServerEntry::xIrcServerEntry():Ports = |%s|\n", (const char *)Ports);
+   }
+}
+
+xIrcServerEntry::xIrcServerEntry(QString &list)
+{
+    QStringList lines = QStringList::split( ":", list, TRUE);
+    Group = lines.first();
+    lines.pop_front();
+    Country = lines.first();
+    lines.pop_front();
+    State = lines.first();
+    lines.pop_front();
+    City = lines.first();
+    lines.pop_front();
+    Server = lines.first();
+    lines.pop_front();
+    Ports = lines.first();
+
+   if (dbg) {
+      printf("xIrcServerEntry::xIrcServerEntry():Id = |%s|\n", (const char *)Id);
+      printf("xIrcServerEntry::xIrcServerEntry():Group = |%s|\n", (const char *)Group);
+      printf("xIrcServerEntry::xIrcServerEntry():Country = |%s|\n", (const char *)Country);
+      printf("xIrcServerEntry::xIrcServerEntry():State = |%s|\n", (const char *)State);
+      printf("xIrcServerEntry::xIrcServerEntry():City = |%s|\n", (const char *)City);
+      printf("xIrcServerEntry::xIrcServerEntry():Server = |%s|\n", (const char *)Server);
+      printf("xIrcServerEntry::xIrcServerEntry():Ports = |%s|\n", (const char *)Ports);
+   }
 }
 
 char *xIrcServerEntry::parseId(char *p, QString &s)

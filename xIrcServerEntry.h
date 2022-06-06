@@ -32,6 +32,7 @@ public:
    xIrcServerEntry(const char *group, const char *country, const char *state,
                    const char *city, const char *server, const char *ports);
    xIrcServerEntry(xIrcServerEntry &e);
+   xIrcServerEntry(QString &str);
    
    QString server() { return(Server); };
    QString group() { return(Group); };
