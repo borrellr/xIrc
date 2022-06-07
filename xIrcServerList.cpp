@@ -163,6 +163,7 @@ int xIrcServerList::readFile(const char *fn)
       QString groupStr, countryStr, stateStr, cityStr, serverStr, portsStr;
       while ( !stream.atEnd() ) {
          line = stream.readLine(); 
+         if (dbg) { printf("Line: '%s'\n", line.ascii()); }
          if (!line.isEmpty()) {
             xIrcServerEntry e(line);
             add(e);

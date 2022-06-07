@@ -61,10 +61,11 @@ typedef struct
    QString           rawMsg;
 } xIrcMessage;
 
-typedef QPtrList<xIrcMessage>           xIrcMessageListBase;
+//typedef QPtrList<xIrcMessage>           xIrcMessageListBase;
 typedef QPtrListIterator<xIrcMessage>   xIrcMessageListIterator;
 
-class xIrcMessageList : public xIrcMessageListBase
+//class xIrcMessageList : public xIrcMessageListBase
+class xIrcMessageList : public QPtrList<xIrcMessage>
 {
 public:
    xIrcMessageList() { setAutoDelete(TRUE); };
@@ -81,7 +82,7 @@ public:
          pMsg1->dstStr = pMsg->dstStr;
          pMsg1->msgStr = pMsg->msgStr;
          pMsg1->rawMsg = pMsg->rawMsg;
-         xIrcMessageListBase::append(pMsg1);
+         QPtrList<xIrcMessage>::append(pMsg1);
       };
 };
 

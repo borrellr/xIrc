@@ -26,10 +26,11 @@
 #include <qptrlist.h>
 #include "xIrcServerEntry.h"
 
-typedef QPtrList<xIrcServerEntry>           xIrcServerListBase;
+//typedef QPtrList<xIrcServerEntry>           xIrcServerListBase;
 typedef QPtrListIterator<xIrcServerEntry>   xIrcServerListIterator;
 
-class xIrcServerList : public xIrcServerListBase
+//class xIrcServerList : public xIrcServerListBase
+class xIrcServerList : public QPtrList<xIrcServerEntry>
 {
 public:
    xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry);

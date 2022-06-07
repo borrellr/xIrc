@@ -28,6 +28,7 @@
 class xIrcServerEntry
 {
 public:
+   xIrcServerEntry();
    xIrcServerEntry(char *p);
    xIrcServerEntry(const char *group, const char *country, const char *state,
                    const char *city, const char *server, const char *ports);

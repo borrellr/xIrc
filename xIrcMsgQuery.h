@@ -64,10 +64,11 @@ private:
    void initClass(QWidget *pParent, const char *pName);
 };
 
-typedef QPtrList<xIrcMsgQuery>           xIrcMsgQueryListBase;
+//typedef QPtrList<xIrcMsgQuery>           xIrcMsgQueryListBase;
 typedef QPtrListIterator<xIrcMsgQuery>   xIrcMsgQueryListIterator;
 
-class xIrcMsgQueryList : public xIrcMsgQueryListBase
+//class xIrcMsgQueryList : public xIrcMsgQueryListBase
+class xIrcMsgQueryList : public QPtrList<xIrcMsgQuery>
 {
 public:
    xIrcMsgQueryList() { setAutoDelete(TRUE); };
