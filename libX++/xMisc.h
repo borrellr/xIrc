@@ -43,7 +43,7 @@ private:
    QString classStr;
 };
 
-char strtoc(const char *cp, const char **cp);
+char strtoc(const char *cp, const char **cpp);
 void setStrColor(QColor &color, const char *pColorStr);
 void setStrFont(QFont &font, const char *pFamily, const char *pSize = NULL, 
         const char *pWeight = NULL);
