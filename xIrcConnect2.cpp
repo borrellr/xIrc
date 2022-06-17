@@ -115,7 +115,7 @@ void xIrcConnect::initiateDCCFile(xIrcDccFile *fFrame)
    if (dbg) fprintf(stdout, "xIrcConnect::initiateDCCFile():File name: |%s|\n",
                            (const char*)cp);
    if (dbg) fflush(stdout);
-   sprintf(buf, "%cDCC SEND %s %lu %u %n%c", '\x01',
+   sprintf(buf, "%cDCC SEND %s %lu %u %lu%c", '\x01',
                 cp,                
                 ntohl(addr2.sin_addr.s_addr), ntohs(addr1.sin_port), 
                 fSize, '\x01');
@@ -160,7 +160,7 @@ void xIrcConnect::initiateDCCChat(xIrcDccChatFrame *chatFrame)
    msg.dstStr = chatFrame->name();
    msg.msgStr = buf;
    emit msgOut(&msg);
-   sprintf(buf, "%cDCC CHAT chat %lu %n%c", '\x01',
+   sprintf(buf, "%cDCC CHAT chat %lu %u%c", '\x01',
                 ntohl(addr2.sin_addr.s_addr), ntohs(addr2.sin_port), '\x01');
    pMainWin->pWin->putString(buf);
    pMainWin->pWin->putString("\n");

@@ -21,16 +21,16 @@
 **
  ***************************************************************************/
 #include <stdio.h>
-#include <qptrlist.h>
+#include <qlist.h>
 //#include <qobjcoll.h>
-//#include <qregexp.h>
+#include <qregexp.h>
 #include <qlabel.h>
 #include "xLabel.h"
 #include "xEdit.h"
 #include "xIrcMircServerParse.h"
 #include "xIrcServerTable.h"
 
-static int dbg = 1;
+static int dbg = 0;
 
 static const char *pInitialResources[] =
 {
@@ -215,7 +215,11 @@ xIrcServerTable::xIrcServerTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);
+#endif
 
    pServerList = new xIrcServerList();
    pServerList1 = new xIrcServerList();
@@ -229,6 +233,10 @@ xIrcServerTable::xIrcServerTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
 xIrcServerTable::~xIrcServerTable()
 {
+//   if (pTable)
+//      delete pTable;
+//   if (pTable)
+//      delete pTable;
 }
    
 void xIrcServerTable::clear()
@@ -533,27 +541,27 @@ void xIrcServerTable::scroll(int val)
 
 void xIrcServerTable::scrollBack()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollBack():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollBack():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
       pSB->setValue(curRow - 1);
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollBack():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollBack():Exit\n");
    if (dbg) fflush(stdout);
 }
 
 void xIrcServerTable::scrollFwd()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollFwd():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollFwd():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
       pSB->setValue(curRow + 1);
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollFwd():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollFwd():Exit\n");
    if (dbg) fflush(stdout);
 }
 
 void xIrcServerTable::scrollPageBack()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageBack():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageBack():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
    {
@@ -562,13 +570,13 @@ void xIrcServerTable::scrollPageBack()
       highlightNext();
       highlightPrev();
    }
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageBack():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageBack():Exit\n");
    if (dbg) fflush(stdout);
 }
 
 void xIrcServerTable::scrollPageFwd()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageFwd():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageFwd():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
    {
@@ -577,7 +585,7 @@ void xIrcServerTable::scrollPageFwd()
       highlightNext();
       highlightPrev();
    }
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageFwd():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageFwd():Exit\n");
    if (dbg) fflush(stdout);
 }
 
@@ -588,7 +596,7 @@ void xIrcServerTable::setNewMask()
 
 void xIrcServerTable::newMask(bool force)
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::newMask():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::newMask():Enter\n");
    if (dbg) fflush(stdout);
    if (force == TRUE ||
        (groupMask != ((xEdit*)pTable2->getWidget(0, 0))->text()) ||
@@ -618,7 +626,7 @@ void xIrcServerTable::newMask(bool force)
    }
    else
       emit returnPressed();
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::newMask():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::newMask():Enter\n");
    if (dbg) fflush(stdout);
 }
 

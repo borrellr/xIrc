@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 #include <qstring.h>
-#include <qptrlist.h>
+#include <qlist.h>
 
 class xDefaults;
 class xDefltEntry;

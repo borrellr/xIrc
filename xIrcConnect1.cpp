@@ -68,12 +68,21 @@ static const char *pInitialResources[] =
    NULL
 };
 
+#ifdef QT2
 xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
                          const char *name, WFlags iFlags,
                          int width, int height, int maxLines) :
               xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main"),
                                                   QString("Main")),
                       parent, name, FALSE, iFlags)
+#else
+xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
+                         const char *name, WFlags iFlags,
+                         int width, int height, int maxLines) :
+              xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main"),
+                                                  QString("Main")),
+                      parent, name, 0)
+#endif
 {
    struct passwd *pPasswdEnt;
    char buf[80];
@@ -112,7 +121,11 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
    pMainWin = new xMultiLineFrame(wdtRes, this, NULL, width, height, maxLines);
    if (AppPixMap != NULL)
       setIcon(*AppPixMap);
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);   
+#endif
    pPasswdEnt = getpwuid(getuid());
    userName = pPasswdEnt->pw_name;
    realName = pPasswdEnt->pw_gecos;
@@ -301,9 +314,9 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.4\n"
+                  "Version: 2.3.8 \n"
                   "License: GPL\n"
-                  "Copyright: 1997-2022\n\n"
+                  "Copyright: 1997-2001\n\n"
                   "Maintained by Robert Borrell\n"
                   "Developed by Joe Croft");
 }

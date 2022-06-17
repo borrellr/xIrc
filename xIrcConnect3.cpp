@@ -61,8 +61,8 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
    switch (txtSel.iData)
    {
       case xIrcNickActionQuery::DccChat:
-//         struct sockaddr_in addr = pSocket->socketName();
-//         sprintf(buf, "%d", addr.sin_addr.s_addr);
+         struct sockaddr_in addr = pSocket->socketName();
+         sprintf(buf, "%d", addr.sin_addr.s_addr);
          if ((pDccChatFrame = new xIrcDccChatFrame(wdtPrv, NULL, txtSel.text)) != NULL)
          {
             connect(pDccChatFrame, SIGNAL(initiateDCCChat(xIrcDccChatFrame*)),

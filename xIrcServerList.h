@@ -23,14 +23,18 @@
 #ifndef XIRCSERVERLIST_H
 #define XIRCSERVERLIST_H
 
-#include <qptrlist.h>
+#include <qlist.h>
 #include "xIrcServerEntry.h"
 
-//typedef QPtrList<xIrcServerEntry>           xIrcServerListBase;
-typedef QPtrListIterator<xIrcServerEntry>   xIrcServerListIterator;
+#ifdef QT2
+typedef QList<xIrcServerEntry>           xIrcServerListBase;
+typedef QListIterator<xIrcServerEntry>   xIrcServerListIterator;
+#else
+typedef QListT<xIrcServerEntry>           xIrcServerListBase;
+typedef QListIteratorT<xIrcServerEntry>   xIrcServerListIterator;
+#endif
 
-//class xIrcServerList : public xIrcServerListBase
-class xIrcServerList : public QPtrList<xIrcServerEntry>
+class xIrcServerList : public xIrcServerListBase
 {
 public:
    xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry);
@@ -42,6 +46,11 @@ public:
    int import(const char *fn);
    void add(xIrcServerList &list);
    void add(xIrcServerEntry &entry);
+
+#ifndef QT2
+private:
+   int compareItems(GCI e1, GCI e2) { return (((xIrcServerEntry*)e1)->compare((xIrcServerEntry*)e2)); };
+#endif
 };
 
 #endif

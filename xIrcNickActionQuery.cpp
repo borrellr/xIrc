@@ -39,7 +39,11 @@ xIrcNickActionQuery::xIrcNickActionQuery(xWidgetResInfo *pPRes,
    setDefPallet(this, wdtRes);
    setDefFont(this, wdtRes);
 
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);   
+#endif
    pNickEdit = new QLineEdit(this);
    pNickEdit->setText("Nick:");
    //pNickEdit->setMargins(0, 10);

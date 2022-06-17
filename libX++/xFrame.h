@@ -26,7 +26,7 @@
 #include <qdialog.h>
 #include <qdict.h>
 #include <qframe.h>
-#include <qptrlist.h>
+#include <qlist.h>
 #include <qwidget.h>
 #include "xResources.h"
 

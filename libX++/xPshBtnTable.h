@@ -23,7 +23,7 @@
 #ifndef _xPSHBUTTONTABLE_H
 #define _xPSHBUTTONTABLE_H
 
-#include <qptrlist.h>
+#include <qlist.h>
 #include "xDialog.h"
 #include "xResources.h"
 #include "xPshBtnFrame.h"

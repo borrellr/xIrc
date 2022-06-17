@@ -70,7 +70,11 @@ void xIrcNotifyQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
 
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);
+#endif
 
    whoSent = FALSE;
 

@@ -104,17 +104,13 @@ const QString *xMultiLineBuf::getPrev(const QString *pStr, int &changed)
 const QString *xMultiLineBuf::putString(const char *pString)
 {
    const QString *rv;
-   const QString *cpHead;
-   const QString *cpTail;
    
    if (dbg) fprintf(stdout, "MultiLineBuf::putString():Adding String: |%s|\n\r", (char *)pString);
    rv = pHead;
    *pHead = pString;
-   cpHead = pHead;
-   cpTail = pTail;
    if (dbg) fprintf(stdout, "MultiLineBuf::putString():*pHead = |%s|\n\r", (const char *)*pHead);
-   if ((cpHead = nextLine(pHead)) == pTail)
-      cpTail = nextLine(pTail);
+   if (((const QString *)pHead = nextLine(pHead)) == pTail)
+      (const QString *)pTail = nextLine(pTail);
    return(rv);
 }
 

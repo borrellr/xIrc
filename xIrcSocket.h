@@ -23,7 +23,7 @@
 #ifndef _xIRCSOCKET_H
 #define _xIRCSOCKET_H
 
-#include <qptrlist.h>
+#include <qlist.h>
 #include <qobject.h>
 #include <qstring.h>
 #include <xMultiLineWin.h>
@@ -61,11 +61,15 @@ typedef struct
    QString           rawMsg;
 } xIrcMessage;
 
-//typedef QPtrList<xIrcMessage>           xIrcMessageListBase;
-typedef QPtrListIterator<xIrcMessage>   xIrcMessageListIterator;
+#ifdef QT2
+typedef QList<xIrcMessage>           xIrcMessageListBase;
+typedef QListIterator<xIrcMessage>   xIrcMessageListIterator;
+#else
+typedef QListT<xIrcMessage>           xIrcMessageListBase;
+typedef QListIteratorT<xIrcMessage>   xIrcMessageListIterator;
+#endif
 
-//class xIrcMessageList : public xIrcMessageListBase
-class xIrcMessageList : public QPtrList<xIrcMessage>
+class xIrcMessageList : public xIrcMessageListBase
 {
 public:
    xIrcMessageList() { setAutoDelete(TRUE); };
@@ -82,7 +86,7 @@ public:
          pMsg1->dstStr = pMsg->dstStr;
          pMsg1->msgStr = pMsg->msgStr;
          pMsg1->rawMsg = pMsg->rawMsg;
-         QPtrList<xIrcMessage>::append(pMsg1);
+         xIrcMessageListBase::append(pMsg1);
       };
 };
 

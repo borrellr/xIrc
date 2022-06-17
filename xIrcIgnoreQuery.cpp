@@ -65,7 +65,11 @@ void xIrcIgnoreQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
 
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);
+#endif
    pLabel = new QLabel(this);
    pTable = new xIrcPeopleTable(wdtRes, this, "servertable", "Ignore", 10);
 

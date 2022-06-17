@@ -28,15 +28,15 @@
 
 static int dbg = 0;
 
-xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
+xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
                                      const char *pName,
-                                     xIrcServerEntry *entry) :
+                                     xIrcServerEntry *entry = NULL) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("serveredit"),
                                                               QString("ServerEdit")),
                            pParent, pName, TRUE)
 {
-//   QHGroupBox *hgroupbox;
-//   QHBox *hbox;
+   QHGroupBox *hgroupbox;
+   QHBox *hbox;
 
    if (dbg) fprintf(stdout, "xIrcServerEdit::xIrcServerEdit(): Enter\n");
    if (dbg) fflush(stdout);

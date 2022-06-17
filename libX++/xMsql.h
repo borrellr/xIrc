@@ -1,5 +1,5 @@
 /*
-**	mysql.h	- 
+**	msql.h	- 
 **
 **
 ** Copyright (c) 1993-95  David J. Hughes
@@ -19,8 +19,8 @@
 **                also changed function parameters to const where applicable
 **
 */
-#ifndef XMYSQL_H
-#define XMYSQL_H
+#ifndef XMSQL_H
+#define XMSQL_H
 
 #if defined(__STDC__) || defined(__cplusplus)
 #  define __ANSI_PROTO(x)	x
@@ -32,7 +32,7 @@
 extern "C" {
 #endif
 
-typedef	char	** MYSQL_ROW;
+typedef	char	** m_row;
 
 typedef struct field_s {
 	char	*name,
@@ -40,18 +40,18 @@ typedef struct field_s {
 	int	type,
 		length,
 		flags;
-} MYSQL_FIELD;
+} m_field;
 
 
 
 typedef	struct	m_data_s {
 	int	width;
-	MYSQL_ROW	data;
+	m_row	data;
 	struct	m_data_s *next;
 } m_data;
 
 typedef struct m_fdata_s {
-	MYSQL_FIELD	field;
+	m_field	field;
 	struct m_fdata_s *next;
 } m_fdata;
 
@@ -64,11 +64,11 @@ typedef struct result_s {
 		*fieldCursor;
 	int	numRows,
 		numFields;
-} MYSQL_RES;
+} m_result;
 
 
-#define	mysql_nuMYSQL_ROWs(res) res->numRows
-#define	mysql_nuMYSQL_FIELDs(res) res->numFields
+#define	msqlNumRows(res) res->numRows
+#define	msqlNumFields(res) res->numFields
 
 
 #define INT_TYPE	1
@@ -87,32 +87,32 @@ typedef struct result_s {
 /*
 ** Pre-declarations for the API library functions
 */
-#ifndef _MYSQL_SERVER_SOURCE
-//	extern  const char 'mysql_error(mysql)'[];
-	int 	mysql_connect __ANSI_PROTO((const char *));
-	int 	mysql_selectDB __ANSI_PROTO((int, const char*));
-	int 	mysql_query __ANSI_PROTO((int, const char*));
-	int 	mysqlCreateDB __ANSI_PROTO((int, const char*));
-	int 	mysqlDropDB __ANSI_PROTO((int, const char*));
-	int 	mysqlShutdown __ANSI_PROTO((int));
-	int 	mysqlReloadAcls __ANSI_PROTO((int));
-	int 	mysqlGetProtoInfo();
-	char 	*mysqlGetServerInfo();
-	char 	*mysqlGetHostInfo();
-	void	mysql_close __ANSI_PROTO((int));
-	void 	mysql_data_seek __ANSI_PROTO((MYSQL_RES*, int));
-	void 	mysql_fieldSeek __ANSI_PROTO((MYSQL_RES*, int));
-	void 	mysql_free_result __ANSI_PROTO((MYSQL_RES*));
-        MYSQL_ROW   mysql_fetch_row __ANSI_PROTO((MYSQL_RES*));
-	MYSQL_FIELD	*mysql_fetch_field __ANSI_PROTO((MYSQL_RES *));
-	MYSQL_RES * mysql_list_dbs __ANSI_PROTO((int));
-	MYSQL_RES *mysql_list_tables __ANSI_PROTO((int));
-	MYSQL_RES *mysql_list_fields __ANSI_PROTO((int, const char*));
-	MYSQL_RES *mysql_store_result();
+#ifndef _MSQL_SERVER_SOURCE
+	extern  char msqlErrMsg[];
+	int 	msqlConnect __ANSI_PROTO((const char *));
+	int 	msqlSelectDB __ANSI_PROTO((int, const char*));
+	int 	msqlQuery __ANSI_PROTO((int, const char*));
+	int 	msqlCreateDB __ANSI_PROTO((int, const char*));
+	int 	msqlDropDB __ANSI_PROTO((int, const char*));
+	int 	msqlShutdown __ANSI_PROTO((int));
+	int 	msqlReloadAcls __ANSI_PROTO((int));
+	int 	msqlGetProtoInfo();
+	char 	*msqlGetServerInfo();
+	char 	*msqlGetHostInfo();
+	void	msqlClose __ANSI_PROTO((int));
+	void 	msqlDataSeek __ANSI_PROTO((m_result*, int));
+	void 	msqlFieldSeek __ANSI_PROTO((m_result*, int));
+	void 	msqlFreeResult __ANSI_PROTO((m_result*));
+        m_row   msqlFetchRow __ANSI_PROTO((m_result*));
+	m_field	*msqlFetchField __ANSI_PROTO((m_result *));
+	m_result *msqlListDBs __ANSI_PROTO((int));
+	m_result *msqlListTables __ANSI_PROTO((int));
+	m_result *msqlListFields __ANSI_PROTO((int, const char*));
+	m_result *msqlStoreResult();
 #endif
 
 #ifdef __cplusplus
 	}
 #endif
 
-#endif
+#endif XMSQL

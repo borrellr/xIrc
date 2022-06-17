@@ -13,4 +13,5 @@ xMisc.h xMouseEvent.h xMultiLineBuf.h xMultiLineEdit.h \
 xMultiLineFrame.h xMultiLineWin.h xProgressBar.h xPshBtnFrame.h xPshBtn.h \
 xPshBtnTable.h xResources.h xSlider.h xSocketDialog.h xSocket.h xTable.h
 CONFIG += qt warn_on release
+DEFINES += QT2
 TARGET = X++

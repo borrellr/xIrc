@@ -37,7 +37,7 @@ xIrcNickListEntry::xIrcNickListEntry(const char *pName, xIrcNickListEntry *entry
       link(entry);
 }
 
-xIrcNickListEntry::xIrcNickListEntry(xIrcNickListEntry *pNick, xIrcNickListEntry *entry)
+xIrcNickListEntry::xIrcNickListEntry(xIrcNickListEntry *pNick, xIrcNickListEntry *entry = NULL)
 {
    nick = "";
    addr = "";

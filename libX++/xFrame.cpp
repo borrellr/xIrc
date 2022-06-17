@@ -96,7 +96,11 @@ xFrame::xFrame(xWidgetResInfo *pPRes, int align, int resz, int space,
    widgetListLength = 10;
    widgetCount = 0;
    fitFrameRecurse = 0;
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);
+#endif
    fitted = FALSE;
    if (dbg) fprintf(stdout, "xFrame::xFrame():Exit\n");
 }
@@ -198,7 +202,7 @@ void xFrame::fitFrame(const QSize *frameSize, bool force)
    int maxSize = 0, offset, totalSize = 0, currentSize;
    int frameH = 0, frameW = 0, offsetV, offsetH;
    int x = 0, x1, x2, x3, x4, x5;
-   QPtrListIterator<QWidget> it(widgetList);
+   QListIterator<QWidget> it(widgetList);
    QWidget *pWidget = it.current();
 
    if (dbg) fprintf(stdout, "xFrame::fitFram.%d(%s:%s):Enter\n", fc, className(), name());

@@ -26,7 +26,7 @@
 
 #include <qcolor.h>
 #include <qfont.h>
-#include <qptrlist.h>
+#include <qlist.h>
 #include <qstring.h>
 
 class xWidgetResInfo

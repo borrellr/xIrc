@@ -21,7 +21,7 @@
 **
  ***************************************************************************/
 #include <stdio.h>
-#include <qptrlist.h>
+#include <qlist.h>
 #include <qregexp.h>
 #include <qlabel.h>
 #include "xEdit.h"
@@ -220,7 +220,11 @@ xIrcPeopleTable::xIrcPeopleTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);
+#endif
 
    pPeopleList = new xIrcPeopleList();
 
@@ -558,27 +562,27 @@ void xIrcPeopleTable::scroll(int val)
 
 void xIrcPeopleTable::scrollBack()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollBack():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollBack():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
       pSB->setValue(curRow - 1);
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollBack():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollBack():Exit\n");
    if (dbg) fflush(stdout);
 }
 
 void xIrcPeopleTable::scrollFwd()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollFwd():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollFwd():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
       pSB->setValue(curRow + 1);
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollFwd():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollFwd():Exit\n");
    if (dbg) fflush(stdout);
 }
 
 void xIrcPeopleTable::scrollPageBack()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageBack():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageBack():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
    {
@@ -587,13 +591,13 @@ void xIrcPeopleTable::scrollPageBack()
       highlightNext();
       highlightPrev();
    }
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageBack():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageBack():Exit\n");
    if (dbg) fflush(stdout);
 }
 
 void xIrcPeopleTable::scrollPageFwd()
 {
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageFwd():Enter\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageFwd():Enter\n");
    if (dbg) fflush(stdout);
    if (enbRow <= 0)
    {
@@ -602,7 +606,7 @@ void xIrcPeopleTable::scrollPageFwd()
       highlightNext();
       highlightPrev();
    }
-   if (dbg) fprintf(stdout, "xIrcPeopleTable::scrollPageFwd():Exit\n");
+   if (dbg) fprintf(stdout, "xSqlTable::scrollPageFwd():Exit\n");
    if (dbg) fflush(stdout);
 }
 

@@ -330,7 +330,7 @@ void xTable::resizeWidget(int col, int row)
 void xTable::clearAll()
 {
    QWidget *pWidget;
-   QPtrListIterator<QWidget> it(widgetList);
+   QListIterator<QWidget> it(widgetList);
 
    for (it.toFirst(); (pWidget = it.current()) != NULL; ++it)
    {
@@ -365,7 +365,7 @@ void xTable::fitFrame()
    
    row = col = 0;
 
-   QPtrListIterator<QWidget> it(widgetList);
+   QListIterator<QWidget> it(widgetList);
    if (dbg) fprintf(stdout, "xTable::fitFrame():Fitting %d Widgets\n", it.count());
    if (dbg) fflush(stdout);
 
@@ -450,9 +450,9 @@ QWidget *xTable::getWidget(int col, int row)
    return(widgetList.at(row * numCols + col));
 }
    
-QPtrListIterator<QWidget> xTable::widgetIt()
+QListIterator<QWidget> xTable::widgetIt()
 {
-   QPtrListIterator<QWidget> it(widgetList);
+   QListIterator<QWidget> it(widgetList);
    return(it);
 }
 

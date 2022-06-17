@@ -19,5 +19,6 @@ xIrcPeopleList.h xIrcPeopleTable.h xIrcServerEdit.h xIrcServerEntry.h \
 xIrcServerList.h xIrcServerQuery.h xIrcServerTable.h xIrcSocket.h
 INCLUDEPATH += ./libX++
 LIBS += -lX++ -L./libX++
+DEFINES += QT2
 CONFIG += qt warn_on release
 TARGET += xIrc

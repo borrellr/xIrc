@@ -64,7 +64,11 @@ void xServerQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
 
+#ifdef QT2
    setFocusPolicy(StrongFocus);
+#else
+   setAcceptFocus(TRUE);
+#endif
    pLabel = new QLabel(this);
    pTable = new xIrcServerTable(wdtRes, this, "servertable", 10);
 
@@ -102,7 +106,7 @@ void xServerQuery::initClass(const char *pName)
    pAccel->connectItem(pAccel->insertItem(Key_End), this, SLOT(gotoLast()));
    
    if ((pPath = Resources->get(wdtRes, "path", "Path")) == NULL)
-      pPath = "XIRCRESOURCEPATH";
+      pPath = "/usr/local/lib/xIrc";
    serverFile = pPath;
    if ((pFn = Resources->get(wdtRes, "filename", "Filename")) == NULL)
       pFn = ".servers";
@@ -281,7 +285,7 @@ void xServerQuery::saveList()
    if ((pFn = Resources->get(wdtRes, "filename", "Filename")) == NULL)
       pFn = ".servers";
    if ((pPath = Resources->get(wdtRes, "path", "Path")) == NULL)
-      pPath ="XIRCRESOURCEPATH";
+      pPath = "/usr/local/lib/xIrc";
    if ((pFilt = Resources->get(wdtRes, "filter", "Filter")) == NULL)
       pFilt = ".*";
 

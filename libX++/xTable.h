@@ -24,7 +24,7 @@
 #define _XTABLE_H
 
 #include <qframe.h>
-#include <qptrlist.h>
+#include <qlist.h>
 #include <qlineedit.h>
 #include <qintdict.h>
 #include "xMouseEvent.h"
