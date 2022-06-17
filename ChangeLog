@@ -2,12 +2,25 @@
 ------------|  xIrc ChangeLog  |-----------------------
             `------------------'
 
+ - Ported to CentOS v4.5 using the Qt-3.3.1.
+ - Ported to CentOS v2.1 using the Qt-2.3
+
+-------------------------------------------------------
+    2.3.7 ---> 2.3.8
+-------------------------------------------------------
+ - This release requires the use of Qt Widget library version 2.2.4.
+ - Other minor enhancements have been made.
+
 -------------------------------------------------------
     2.3.6 ---> 2.3.7
 -------------------------------------------------------
 
  - Fixed compiling problems on the Linux platform.
  - Minor Bugfixes.
+ - This release has been ported to SuSE Linux 7.0.
+ - Starting with xIrc-2.3.6, the xIrc program requires the use of
+   QT 2.1.1 Widget library.
+ - Further development on the Solaris platform has been dropped.
 
 -------------------------------------------------------
     2.3.5 ---> 2.3.6
