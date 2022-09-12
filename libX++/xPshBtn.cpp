@@ -32,7 +32,7 @@ static const char *pInitialResources[] =
    NULL
 };
 
-xPshBtn::xPshBtn(xWidgetResInfo *pPRes, QWidget *pParent,
+xPshBtn::xPshBtn(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
         const char *pName, const char *pText, int id) :
    QPushButton(pText, pParent, pName)
 {

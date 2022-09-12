@@ -57,8 +57,9 @@
 #include <xResources.h>
 #include <xDefaults.h>
 #include <xMisc.h>
+#include "MyApp.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
@@ -78,8 +79,8 @@ QEvent qEvt(QEvent::User);
 
 static const char *pInitialResources[] =
 {
-   "XIRC*PixMap: xIrc.xpm",
-   "XIRC*PixMapPath: ./;~/;/usr/local/lib/xIrc",
+   "XIRC*PixMap: xIrc.ppm",
+   "XIRC*PixMapPath: ./;~/;/usr/local/lib/xIrc;",
    "XIRC*Font.Family: Helvetica",
    "XIRC*Font.Size: 12",
    "XIRC*Font.Weight: normal",
@@ -151,25 +152,6 @@ static void sigpipe(int s)
    if (dbg) fprintf(stdout, "*** Got SIGPIPE!\n");
 }
 
-class MyApp : public xApplication
-{
-public:
-   MyApp(int argc, char **argv);
-   bool notify(QObject *pRcvr, QEvent *pEvt);
-};
-
-MyApp::MyApp(int argc, char **argv) :
-         xApplication(argc, argv)
-{
-   if (dbg) fprintf(stdout, "MyApp::MyApp()!!!\n");
-   if (dbg) fflush(stdout);
-}
-
-bool MyApp::notify(QObject *pRcvr, QEvent *pEvt)
-{
-   return(xApplication::notify(pRcvr, pEvt));
-}
-
 static void setDefaults()
 {
    FILE *pfd;
@@ -195,7 +177,7 @@ static void setDefaults()
    Defaults.setCallBack(defaultSpecHandler);
 //   Defaults.setEscapes(defEscapes);
    Defaults.load(pfd, NULL);
-//   if (dbg) Defaults.show();
+   if (dbg) Defaults.show();
 }
 
 static void setColors(xResources *r, xApplication *a)

@@ -30,7 +30,6 @@ typedef QPtrList<xIrcPeopleEntry>           xIrcPeopleListBase;
 typedef QPtrListIterator<xIrcPeopleEntry>   xIrcPeopleListIterator;
 
 class xIrcPeopleList : public xIrcPeopleListBase
-//class xIrcPeopleList : public QPtrList<xIrcPeopleEntry>
 {
 public:
    xIrcPeopleList(xIrcPeopleList &list);

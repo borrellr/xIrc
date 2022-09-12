@@ -50,7 +50,7 @@ protected slots:
    void buttonClicked(int id);
    
 private:
-   QList<xPshBtn> btnList;
+   QPtrList<xPshBtn> btnList;
    xWidgetResInfo *wdtRes;
 };
 

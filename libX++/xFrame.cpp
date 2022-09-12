@@ -85,7 +85,6 @@ xFrame::xFrame(xWidgetResInfo *pPRes, int align, int resz, int space,
    setDefFont(this, wdtRes);
 
    fc = 0;
-//   initMetaObject();
    widgetAlgn = align;
    widgetResz = resz;
    widgetSpac = space;

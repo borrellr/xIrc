@@ -30,7 +30,7 @@
 #include "xIrcPeopleEdit.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
                     
 extern xDefaults Defaults;
 extern xIrcConnect *pTWindow;

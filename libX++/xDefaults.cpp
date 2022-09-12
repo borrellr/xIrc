@@ -368,3 +368,14 @@ CallBack xDefaults::setCallBack(CallBack pCallBack)
    callBack = pCallBack;
    return(rv);
 }
+
+void xDefaults::show()
+{
+   QPtrListIterator<xDefltEntry> it(defList);
+   xDefltEntry *entry;
+
+   while ((entry = it.current()) != 0) {
+      ++it;
+      printf("Tag: %s Value: %s \n", entry->strTag.ascii(), entry->strVal.ascii());
+   }
+}

@@ -52,11 +52,10 @@ private:
    int         *pResponseList;
 };
 
-//typedef QPtrList<xIrcMsgDispatchEntry>            xIrcMsgDispatchListBase;
+typedef QPtrList<xIrcMsgDispatchEntry>            xIrcMsgDispatchListBase;
 typedef QPtrListIterator<xIrcMsgDispatchEntry>    xIrcMsgDispatchListIterator;
 
-//class xIrcMsgDispatchList : public xIrcMsgDispatchListBase
-class xIrcMsgDispatchList : public QPtrList<xIrcMsgDispatchEntry>
+class xIrcMsgDispatchList : public xIrcMsgDispatchListBase
 {
 public:
    xIrcMsgDispatchList() { setAutoDelete(TRUE); };

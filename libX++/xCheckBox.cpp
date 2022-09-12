@@ -31,7 +31,7 @@ static const char *pInitialResources[] =
    NULL
 };
 
-xCheckBox::xCheckBox(xWidgetResInfo *pPRes, QWidget *pParent,
+xCheckBox::xCheckBox(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
         const char *pName, const char *pText, int id) :
    QCheckBox(pText, pParent, pName)
 {

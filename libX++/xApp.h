@@ -24,7 +24,7 @@
 #define _XAPP_H
 
 #include <qapplication.h>
-#include <qstack.h>
+#include <qptrstack.h>
 
 class xApplication : public QApplication
 {
@@ -37,7 +37,7 @@ public:
    void restoreActiveWindow();
 
 private:
-   QStack<QWidget>   activeStack;
+   QPtrStack<QWidget>   activeStack;
 };
    
 #endif

@@ -48,8 +48,7 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
-//static int dbg = 0;
-#define dbg 0
+static bool dbg = FALSE;
 
 extern xApplication *pApp;
 extern xDefaults Defaults;
@@ -301,9 +300,9 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.4\n"
+                  "Version: 2.3.8 \n"
                   "License: GPL\n"
-                  "Copyright: 1997-2022\n\n"
+                  "Copyright: 1997-2001\n\n"
                   "Maintained by Robert Borrell\n"
                   "Developed by Joe Croft");
 }
@@ -550,8 +549,8 @@ void xIrcConnect::newServer()
       if (btn == xServerQuery::Accepted)
       {
          if (dbg) {
-            fprintf(stderr, "xIrcConnect::newServer():Creating new socket\n");
-            fflush(stderr);
+            printf("xIrcConnect::newServer():Creating new socket\n");
+            printf("Server: %s\n", ServQuery->server());
          }
          pSocket = new xIrcSocket(wdtPrv, this,
                                   ServQuery->server(), ServQuery->port(),
@@ -627,6 +626,7 @@ void xIrcConnect::newServer()
          pNotify->shutDown();
       }
    }
+   if (dbg) printf("xIrcConnect::newServer():Exit\n");
 }
 
 void xIrcConnect::newNick()

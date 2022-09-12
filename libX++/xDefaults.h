@@ -71,9 +71,10 @@ public:
    xDefltEntry *makeEntry(QString &str);
    void        load(FILE *pFile, const char *pDefaults[]);
    CallBack    setCallBack(CallBack pCallBack);
+   void        show();
 
 private:
-   QList<xDefltEntry>   defList;
+   QPtrList<xDefltEntry>   defList;
    CallBack    callBack;
 };
 

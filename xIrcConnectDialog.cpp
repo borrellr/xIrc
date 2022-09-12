@@ -23,7 +23,7 @@
 #include <qstrlist.h>
 #include "xIrcConnectDialog.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
@@ -157,7 +157,8 @@ xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent,
          if (dbg) fflush(stdout);
          while (*cp != ',' && *cp != '\0')
             s += *(cp++);
-         ports.inSort(s);
+         ports.append(s);
+         ports.sort();
          if (dbg) fprintf(stdout, "xIrcConnectDialog::xIrcConnectDialog(): cp remaining length = %d\n", 
                                  strlen(cp));
          if (dbg) fflush(stdout);

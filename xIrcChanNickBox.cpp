@@ -22,7 +22,7 @@
  ***************************************************************************/
 #include "xIrcChanNickBox.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
    
 xIrcChanNickBox::xIrcChanNickBox(xWidgetResInfo *pPRes, QWidget *pParent,
                                  const char *pName) : 

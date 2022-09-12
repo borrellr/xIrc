@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include "xIrcPeopleList.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 xIrcPeopleList::xIrcPeopleList()
 {
@@ -162,7 +162,10 @@ void xIrcPeopleList::add(xIrcPeopleEntry &entry)
       if (si.current()->mask() == entry.mask())
          f = FALSE;
    }
-   if (f) inSort(new xIrcPeopleEntry(entry));
+   if (f) {
+      append(new xIrcPeopleEntry(entry));
+      sort();
+   }
 }
 
 bool xIrcPeopleList::matches(xIrcMessage *pMsg)

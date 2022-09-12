@@ -27,7 +27,7 @@
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static bool dbg = 0;
                     
 extern xDefaults Defaults;
 

@@ -91,7 +91,7 @@ public:
    void coupleWidgets(QWidget *pWdt1, QWidget *pWdt2, int side);
    
 private:
-   QList<QWidget> widgetList;
+   QPtrList<QWidget> widgetList;
    QDict<xWdtSpec> couplings;
    bool     fitted;
    int      widgetAlgn;

@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <qptrlist.h>
+#include <qlist.h>
 #include <qwidget.h>
 #include <qpalette.h>
 #include <qregexp.h>

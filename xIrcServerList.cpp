@@ -22,13 +22,10 @@
  ***************************************************************************/
 #include <qptrlist.h>
 #include <qregexp.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qstringlist.h>
 #include <stdio.h>
 #include "xIrcServerList.h"
 
-static int dbg = 1;
+static bool dbg = FALSE;
 
 xIrcServerList::xIrcServerList()
 {
@@ -48,37 +45,36 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    xIrcServerListIterator si(list);
 
    portsRE.setWildcard(TRUE);
+   serverRE.setWildcard(TRUE);
+   stateRE.setWildcard(TRUE);
+   cityRE.setWildcard(TRUE);
+   countryRE.setWildcard(TRUE);
+   groupRE.setWildcard(TRUE);
 
    if (entry != NULL && strlen(entry->group()) > 0)
       groupRE = entry->group();
-   else {
+   else
       groupRE = wc;
-      groupRE.setWildcard(TRUE);
-   }
+
    if (entry != NULL && strlen(entry->country()) > 0)
       countryRE = entry->country();
-   else {
+   else
       countryRE = wc;
-      countryRE.setWildcard(TRUE);
-   }
+
    if (entry != NULL && strlen(entry->state()) > 0)
       stateRE = entry->state();
-   else {
+   else
       stateRE = wc;
-      stateRE.setWildcard(TRUE);
-   }
+
    if (entry != NULL && strlen(entry->city()) > 0)
       cityRE = entry->city();
-   else {
+   else
       cityRE = wc;
-      cityRE.setWildcard(TRUE);
-   }
+
    if (entry != NULL && strlen(entry->city()) > 0)
       serverRE = entry->server();
-   else {
+   else
       serverRE = wc;
-      serverRE.setWildcard(TRUE);
-   }
       
    for (; si.current() != NULL; ++si)
    {
@@ -99,7 +95,6 @@ xIrcServerList::~xIrcServerList()
 
 int xIrcServerList::readFile(const char *fn)
 {
-#ifdef QT2
    char buf[512], *cp;
    int parm;
    FILE *fp;
@@ -149,29 +144,8 @@ int xIrcServerList::readFile(const char *fn)
          }
       }
       xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
-      if(dbg) {
-          printf("Entries:\nGroup: %s\nCountry: %s\nState: %s\nCity: %s\nServer: %s\nPorts: %s\n", groupStr.ascii(), countryStr.ascii(), stateStr.ascii(), cityStr.ascii(), serverStr.ascii(), portsStr.ascii());
-      }
       add(e);
    }
-#else
-   QFile file(fn);
-
-   if ( file.open( IO_ReadOnly ) ) {
-      QTextStream stream( &file );
-      QString line;
-      QString groupStr, countryStr, stateStr, cityStr, serverStr, portsStr;
-      while ( !stream.atEnd() ) {
-         line = stream.readLine(); 
-         if (dbg) { printf("Line: '%s'\n", line.ascii()); }
-         if (!line.isEmpty()) {
-            xIrcServerEntry e(line);
-            add(e);
-         }
-      }
-      file.close();
-   }
-#endif
    return(0);
 }
 
@@ -205,7 +179,6 @@ int xIrcServerList::writeFile(const char *fn)
 
 void xIrcServerList::add(xIrcServerList &list)
 {
-   if(dbg) { printf("Entering xIrcServerList::add list function\n");}
    xIrcServerListIterator si(list);
 
    for (; si.current() != NULL; ++si)
@@ -214,10 +187,7 @@ void xIrcServerList::add(xIrcServerList &list)
    
 void xIrcServerList::add(xIrcServerEntry &entry)
 {
-   if(dbg) { printf("Entering xIrcServerList::add entry function\n");}
    xIrcServerListIterator si(*this);
-
-   if(dbg) { printf("Entering xIrcServerList::add entry function for loop\n");}
    
    for (; si.current() != NULL; ++si)
    {
@@ -227,10 +197,6 @@ void xIrcServerList::add(xIrcServerEntry &entry)
          break;
       }
    }
-
-   if(dbg) { printf("Entering xIrcServerList::add entry function inSort\n");}
-
-//   inSort(new xIrcServerEntry(entry));
-
-   if(dbg) { printf("Entering xIrcServerList::add entry function Exit\n");}
+   append(new xIrcServerEntry(entry));
+   sort();
 }
