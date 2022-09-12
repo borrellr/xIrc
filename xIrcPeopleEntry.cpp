@@ -26,7 +26,7 @@
 #include "xIrcConnect.h"
 #include "xIrcPeopleEntry.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 extern xIrcCommands ircResponses;
 
@@ -192,7 +192,7 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
             tmpNick += *cp;
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Nick: |%s| == |%s|?\n",
                          (const char *)tmpNick, (const char *)Nick);
-         if (qstricmp(tmpNick, Nick) == 0)
+            if (qstricmp(tmpNick, Nick) == 0)
             rv = TRUE;
       }
    }

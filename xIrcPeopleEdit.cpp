@@ -23,11 +23,11 @@
 #include <qstrlist.h>
 #include "xIrcPeopleEdit.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
-xIrcPeopleEdit::xIrcPeopleEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcPeopleEdit::xIrcPeopleEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcPeopleEntry *entry = NULL) :
+                                     xIrcPeopleEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString(pName),
                                                               QString("PeopleEdit")),
                            pParent, pName, TRUE)

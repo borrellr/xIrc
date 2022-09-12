@@ -21,8 +21,7 @@
 **
  ***************************************************************************/
 #include <stdio.h>
-#include <qlist.h>
-//#include <qobjcoll.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <qlabel.h>
 #include "xLabel.h"
@@ -30,7 +29,7 @@
 #include "xIrcMircServerParse.h"
 #include "xIrcServerTable.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 static const char *pInitialResources[] =
 {
@@ -215,11 +214,7 @@ xIrcServerTable::xIrcServerTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
 
    pServerList = new xIrcServerList();
    pServerList1 = new xIrcServerList();

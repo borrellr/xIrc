@@ -20,12 +20,12 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <stdio.h>
 #include "xIrcServerList.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 xIrcServerList::xIrcServerList()
 {
@@ -197,5 +197,6 @@ void xIrcServerList::add(xIrcServerEntry &entry)
          break;
       }
    }
-//   inSort(new xIrcServerEntry(entry));
+   append(new xIrcServerEntry(entry));
+   sort();
 }

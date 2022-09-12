@@ -25,7 +25,7 @@
 #include "xIrcBanDialog.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
                     
 extern xDefaults Defaults;
 
@@ -47,11 +47,7 @@ xIrcBanDialog::xIrcBanDialog(xWidgetResInfo *pPRes, QWidget *pParent,
    else
       setCaption("Ban");
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    pEditFrame = new xFrame(wdtRes, this);
    pEditFrame->setFrameStyle(QFrame::Panel | QFrame::Raised);
 

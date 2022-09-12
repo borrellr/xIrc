@@ -26,7 +26,7 @@
 #include <qmessagebox.h>
 #include "xIrcDccSocket.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 static QString strHost;
 static QString strService;
 

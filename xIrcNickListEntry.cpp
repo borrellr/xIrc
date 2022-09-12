@@ -24,7 +24,7 @@
 #include <ctype.h>
 #include "xIrcNickListEntry.h"
 
-static int dbg = 0;
+static bool  dbg = FALSE;
 
 xIrcNickListEntry::xIrcNickListEntry(const char *pName, xIrcNickListEntry *entry)
 {
@@ -37,7 +37,7 @@ xIrcNickListEntry::xIrcNickListEntry(const char *pName, xIrcNickListEntry *entry
       link(entry);
 }
 
-xIrcNickListEntry::xIrcNickListEntry(xIrcNickListEntry *pNick, xIrcNickListEntry *entry = NULL)
+xIrcNickListEntry::xIrcNickListEntry(xIrcNickListEntry *pNick, xIrcNickListEntry *entry)
 {
    nick = "";
    addr = "";

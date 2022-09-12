@@ -33,7 +33,7 @@
 #include "xResources.h"
 #include "xIrcDccChatFrame.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 extern xApplication *pApp;
 extern xDefaults Defaults;

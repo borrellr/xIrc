@@ -27,7 +27,7 @@
 #include "xIrcServerQuery.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
                     
 extern xDefaults Defaults;
 
@@ -64,11 +64,7 @@ void xServerQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
    pLabel = new QLabel(this);
    pTable = new xIrcServerTable(wdtRes, this, "servertable", 10);
 

@@ -48,8 +48,7 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
-//static int dbg = 0;
-#define dbg 0
+static bool dbg = FALSE;
 
 extern xApplication *pApp;
 extern xDefaults Defaults;
@@ -68,21 +67,12 @@ static const char *pInitialResources[] =
    NULL
 };
 
-#ifdef QT2
 xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
                          const char *name, WFlags iFlags,
                          int width, int height, int maxLines) :
               xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main"),
                                                   QString("Main")),
                       parent, name, FALSE, iFlags)
-#else
-xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
-                         const char *name, WFlags iFlags,
-                         int width, int height, int maxLines) :
-              xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main"),
-                                                  QString("Main")),
-                      parent, name, 0)
-#endif
 {
    struct passwd *pPasswdEnt;
    char buf[80];
@@ -121,11 +111,7 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
    pMainWin = new xMultiLineFrame(wdtRes, this, NULL, width, height, maxLines);
    if (AppPixMap != NULL)
       setIcon(*AppPixMap);
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    pPasswdEnt = getpwuid(getuid());
    userName = pPasswdEnt->pw_name;
    realName = pPasswdEnt->pw_gecos;
@@ -563,8 +549,8 @@ void xIrcConnect::newServer()
       if (btn == xServerQuery::Accepted)
       {
          if (dbg) {
-            fprintf(stderr, "xIrcConnect::newServer():Creating new socket\n");
-            fflush(stderr);
+            printf("xIrcConnect::newServer():Creating new socket\n");
+            printf("Server: %s\n", ServQuery->server());
          }
          pSocket = new xIrcSocket(wdtPrv, this,
                                   ServQuery->server(), ServQuery->port(),
@@ -640,6 +626,7 @@ void xIrcConnect::newServer()
          pNotify->shutDown();
       }
    }
+   if (dbg) printf("xIrcConnect::newServer():Exit\n");
 }
 
 void xIrcConnect::newNick()

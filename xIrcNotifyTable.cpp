@@ -29,7 +29,7 @@
 #include "xIrcPeopleEdit.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
                     
 static const char *pInitialResources[] =
 {
@@ -108,7 +108,8 @@ void xIrcNotifyTable::update(xIrcPeopleList *pList)
 //                                  (const char*)p->nick(),
 //                                (const char*)p->mask());
          if (dbg) fflush(stdout); 
-         pListBox->inSort(t);
+         pListBox->insertItem(t);
+         pListBox->sort();
       }
    }
    pListBox->repaint(FALSE);

@@ -58,7 +58,7 @@
 #include <xDefaults.h>
 #include <xMisc.h>
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
@@ -74,11 +74,7 @@ xIrcMsgDispatch Dispatcher;
 xDefaults Defaults;
 xApplication *pApp = NULL;
 
-#ifdef QT2
 QEvent qEvt(QEvent::User);
-#else
-QEvent qEvt(-1);
-#endif
 
 static const char *pInitialResources[] =
 {
@@ -243,27 +239,15 @@ static void setFonts(xResources *r, xApplication *a)
    ccp3 = Resources->get(&appRes, "font.size", "Font.Size");
 
    if (ccp1 == NULL)
-#ifdef QT2
       ccp1 = a->font().family();
-#else
-      ccp1 = a->font()->family();
-#endif
    if (ccp2 == NULL)
    {
-#ifdef QT2
       sprintf(fontWeight, "%d", a->font().weight());
-#else
-      sprintf(fontWeight, "%d", a->font()->weight());
-#endif
       ccp2 = fontWeight;
    }
    if (ccp3 == NULL)
    {
-#ifdef QT2
       sprintf(fontSize, "%d", a->font().pointSize());
-#else
-      sprintf(fontSize, "%d", a->font()->pointSize());
-#endif
       ccp3 = fontSize;
    }
 
@@ -272,7 +256,7 @@ static void setFonts(xResources *r, xApplication *a)
 
 static void setPixMap()
 {
-   const char *ccp1, *ccp2, *ccp3;
+   const char *ccp1, *ccp2;
    char *cp, tmpBuf[512], pmBuf[256];
 
    if (dbg) fprintf(stdout, "main():Getting Pixmap file name\n");   

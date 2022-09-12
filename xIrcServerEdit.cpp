@@ -26,17 +26,17 @@
 #include <qhgroupbox.h>
 #include "xIrcServerEdit.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
-xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcServerEntry *entry = NULL) :
+                                     xIrcServerEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("serveredit"),
                                                               QString("ServerEdit")),
                            pParent, pName, TRUE)
 {
-   QHGroupBox *hgroupbox;
-   QHBox *hbox;
+//   QHGroupBox *hgroupbox;
+//   QHBox *hbox;
 
    if (dbg) fprintf(stdout, "xIrcServerEdit::xIrcServerEdit(): Enter\n");
    if (dbg) fflush(stdout);

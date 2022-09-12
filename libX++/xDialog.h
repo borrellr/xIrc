@@ -34,13 +34,8 @@ class xDialog : public QDialog
    Q_OBJECT
 
 public:
-#ifdef QT2
    xDialog(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
            const char *pName = NULL, bool modal = FALSE, WFlags f = 0);
-#else
-   xDialog(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
-           const char *pName = NULL, bool modal = FALSE);
-#endif
    xDialog(xWidgetResInfo *pPRes, xFrame *pFrame = NULL,
            QWidget *pParent = NULL, const char *pName = NULL);
    ~xDialog();

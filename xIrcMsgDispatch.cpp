@@ -22,7 +22,7 @@
 #include "ircreply.h"
 #include "xIrcMsgDispatch.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 xIrcMsgDispatch::xIrcMsgDispatch()
 {

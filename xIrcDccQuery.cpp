@@ -25,7 +25,7 @@
 #include <xApp.h>
 #include "xIrcDccQuery.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 extern xApplication *pApp;
 
@@ -50,11 +50,7 @@ void xIrcDccQuery::initClass(QWidget *pParent, const char *pName, bool autoDelet
    pName = pName;
       
    setCaption("DCC Request");
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    deleteFlag = autoDelete;
    
    pHeader = new QLabel(this);

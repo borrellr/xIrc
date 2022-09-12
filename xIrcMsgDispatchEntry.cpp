@@ -29,7 +29,7 @@ extern xIrcCommands ircResponses;
 #undef VERSION
 #endif
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 static int rspOper[] = { RPL_YOUREOPER, 0 };
 static int rspMode[] = { RPL_CHANNELMODEIS, RPL_ENDOFBANLIST, 0 };

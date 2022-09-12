@@ -28,7 +28,7 @@
 
 extern xApplication *pApp;
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 static const char *pInitialResources[] =
 {
@@ -65,11 +65,7 @@ void xIrcMsgQuery::initClass(QWidget *pParent, const char *pName)
    pParent = pParent;
    pName = pName;
       
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    
    if ((ccp = Resources->get(wdtRes, "Columns", "Columns")) == NULL)
       cols = 40;

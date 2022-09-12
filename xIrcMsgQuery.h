@@ -23,6 +23,7 @@
 #ifndef _xIRCMSGQUERY_H
 #define _xIRCMSGQUERY_H
 
+#include <qptrlist.h>
 #include <qlabel.h>
 #include <xPshBtnFrame.h>
 #include <xDialog.h>
@@ -63,13 +64,8 @@ private:
    void initClass(QWidget *pParent, const char *pName);
 };
 
-#ifdef QT2
-typedef QList<xIrcMsgQuery>           xIrcMsgQueryListBase;
-typedef QListIterator<xIrcMsgQuery>   xIrcMsgQueryListIterator;
-#else
-typedef QListT<xIrcMsgQuery>           xIrcMsgQueryListBase;
-typedef QListIteratorT<xIrcMsgQuery>   xIrcMsgQueryListIterator;
-#endif
+typedef QPtrList<xIrcMsgQuery>           xIrcMsgQueryListBase;
+typedef QPtrListIterator<xIrcMsgQuery>   xIrcMsgQueryListIterator;
 
 class xIrcMsgQueryList : public xIrcMsgQueryListBase
 {

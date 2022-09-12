@@ -43,7 +43,7 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 extern xIrcLineEditQuery *KickQuery;
 extern xIrcCommands ircResponses;

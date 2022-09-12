@@ -21,13 +21,13 @@
 **
  ***************************************************************************/
 #include <stdio.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <qlabel.h>
 #include "xEdit.h"
 #include "xIrcPeopleTable.h"
 
-static int dbg = 0;
+static bool dbg = FALSE;
 
 static const char *pInitialResources[] =
 {
@@ -220,11 +220,7 @@ xIrcPeopleTable::xIrcPeopleTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
 
    pPeopleList = new xIrcPeopleList();
 
