@@ -23,7 +23,7 @@
 #ifndef _xPSHBUTTONFRAME_H
 #define _xPSHBUTTONFRAME_H
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include "xResources.h"
 #include "xDialog.h"
 #include "xPshBtn.h"
@@ -50,7 +50,7 @@ protected slots:
    void buttonClicked(int id);
    
 private:
-   QList<xPshBtn> btnList;
+   QPtrList<xPshBtn> btnList;
    xWidgetResInfo *wdtRes;
 };
 

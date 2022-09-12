@@ -119,7 +119,8 @@ void xEditList::insertItemsSort(const char *pItems, char delim)
             if (!unique || getIndex((const char *)pStr) < 0)
             {
                if (dbg) fprintf(stdout, "xEditList::insertItemsSort():Adding Nick |%s|\n", (const char *)pStr); 
-               pList->inSort((const char *)pStr);
+               pList->insertItem((const char *)pStr);
+               pList->sort();
             }
             x = 0;
             pStr = "";

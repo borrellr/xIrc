@@ -26,7 +26,7 @@
 
 #include <qcolor.h>
 #include <qfont.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qstring.h>
 
 class xWidgetResInfo
@@ -50,9 +50,9 @@ void setStrFont(QFont &font, const char *pFamily, const char *pSize = NULL,
 QFont setStrFont(const char *pFamily, const char *pSize, 
         const char *pWeight);
 
-void buildList(QList<QString> &list, const char *pTests);
-bool testString(QList<QString> &list, QString &str);
-bool inList(QList<QString> &list, QString string);
+void buildList(QPtrList<QString> &list, const char *pTests);
+bool testString(QPtrList<QString> &list, QString &str);
+bool inList(QPtrList<QString> &list, QString string);
 
 void setDefPallet(QWidget *pWdt, xWidgetResInfo *wdtRes);
 void setDefFont(QWidget *pWdt, xWidgetResInfo *wdtRes);

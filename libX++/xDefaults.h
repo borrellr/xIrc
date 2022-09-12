@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 #include <qstring.h>
-#include <qlist.h>
+#include <qptrlist.h>
 
 class xDefaults;
 class xDefltEntry;
@@ -73,7 +73,7 @@ public:
    CallBack    setCallBack(CallBack pCallBack);
 
 private:
-   QList<xDefltEntry>   defList;
+   QPtrList<xDefltEntry>   defList;
    CallBack    callBack;
 };
 

@@ -24,7 +24,7 @@
 #define _XTABLE_H
 
 #include <qframe.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qlineedit.h>
 #include <qintdict.h>
 #include "xMouseEvent.h"
@@ -66,7 +66,8 @@ public:
    int  getRowHeight(int row);
    QWidget *getWidget(int num);
    QWidget *getWidget(int col, int row);
-   QListIterator<QWidget> widgetIt();
+   QPtrListIterator<QWidget> widgetIt();
+   QPtrList<QWidget> widgetList;
    void resizeWidget(int col, int row);
    void appendAt(int row);
    void insert(int row);
@@ -81,8 +82,6 @@ public:
    {
       return(curSelectedRow);
    };
-
-   QList<QWidget> widgetList;
 
 protected:
 /*

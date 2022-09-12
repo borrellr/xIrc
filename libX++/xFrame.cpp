@@ -85,9 +85,6 @@ xFrame::xFrame(xWidgetResInfo *pPRes, int align, int resz, int space,
    setDefFont(this, wdtRes);
 
    fc = 0;
-#ifndef QT3
-   initMetaObject();
-#endif
    widgetAlgn = align;
    widgetResz = resz;
    widgetSpac = space;
@@ -200,11 +197,7 @@ void xFrame::fitFrame(const QSize *frameSize, bool force)
    int maxSize = 0, offset, totalSize = 0, currentSize;
    int frameH = 0, frameW = 0, offsetV, offsetH;
    int x = 0, x1, x2, x3, x4, x5;
-#ifdef QT3
    QPtrListIterator<QWidget> it(widgetList);
-#else
-   QListIterator<QWidget> it(widgetList);
-#endif
    QWidget *pWidget = it.current();
 
    if (dbg) fprintf(stdout, "xFrame::fitFram.%d(%s:%s):Enter\n", fc, className(), name());

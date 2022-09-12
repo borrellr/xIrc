@@ -25,7 +25,7 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qdict.h>
 #ifndef POSTGRES
 #include "xMsql.h"
@@ -59,12 +59,13 @@ public:
    xSQLBase(xSQLFieldDef *fields);
    virtual ~xSQLBase();
 
-   virtual bool query(int db, QList<QString> sort);
-   virtual bool query(int db, QString index, QList<QString> sort);
-   virtual bool query(int db, long index, QList<QString> sort);
+   virtual bool query(int db, QPtrList<QString> sort);
+   virtual bool query(int db, QString index, QPtrList<QString> sort);
+   virtual bool query(int db, long index, QPtrList<QString> sort);
    virtual bool query(int db, QDict<QString> &match, QDict<QString> &links,
-                      QList<QString> sort);
+                      QPtrList<QString> sort);
    virtual bool query(int db, QDict<QString> &match, QDict<QString> &links,
+                      QDict<QString> &skip, QPtrList<QString> sort);
                       QDict<QString> &skip, QList<QString> sort);
    virtual bool del(int db, QString index);
    virtual bool del(int db, long index);
