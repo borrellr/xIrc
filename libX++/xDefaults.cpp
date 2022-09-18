@@ -162,49 +162,44 @@ QString xDefaults::expandEntry(QString &strVal)
 xDefltEntry *xDefaults::findEntry(QString &strTag)
 {
    xDefltEntry *pEntry;
+   pEntry = new xDefltEntry();
 
-   for (pEntry = defList.first(); pEntry != NULL; pEntry = defList.next())
-      if (strTag.upper() == pEntry->strTag)
-         break;
+   pEntry->strTag = strTag.upper();
+   xDefaultMap::iterator it = defList.find(pEntry->strTag);
+
+   if (it != defList.end())
+      pEntry->strVal.append(it.data());   
+
    return(pEntry);
 }
 
 const char *xDefaults::findEntry(const char *pTag)
 {
-   xDefltEntry *pEntry;
    QString strTag(pTag);
+   QString s("");
 
-   if ((pEntry = findEntry(strTag)) != NULL)
-      return((const char *)pEntry->strVal);
-   else
-      return((const char *)NULL);
+   strTag = strTag.upper();
+   xDefaultMap::iterator it = defList.find(strTag);
+
+   if (it != defList.end())
+      s.append(it.data());
+
+   return (const char *)s.latin1();
 }
 
 void xDefaults::add(const char *pStr)
 {
-   xDefltEntry *pEntry, *pEntry1;
    QString strTmp(pStr);
+   QString key, value;
 
-   if ((pEntry1 = makeEntry(strTmp)) != NULL)
-   {
-      if ((pEntry = findEntry(pEntry1->strTag)) != NULL)
-      {
-         pEntry->strVal = pEntry1->strVal;
-         delete pEntry1;
-      }
-      else
-         defList.append(pEntry1);
-   }
+   key = strTmp.section("=", 0, 0);
+   value = strTmp.section("=", 1, 1);
+   defList[key.upper()] = value.simplifyWhiteSpace();
 }
 
 void xDefaults::add(QString &strTag, QString &strVal)
 {
-   xDefltEntry *pEntry;
-
-   if ((pEntry = findEntry(strTag)) != NULL)
-      pEntry->strVal = strVal;
-   else
-      defList.append(new xDefltEntry(strTag, strVal));
+   defList.insert(strTag.upper(), strVal.simplifyWhiteSpace());
 }
 
 void xDefaults::set(QString strTag, QString strVal)
@@ -267,99 +262,46 @@ const char *xDefaults::get(const char *pTag, bool expand)
 xDefltEntry *xDefaults::makeEntry(QString &str)
 {
    QString strTag, strVal;
-   const char *cp;
+   strTag = str.section("=", 0, 0);
+   strVal = str.section("=", 1, 1);
 
-   cp = (const char *)str;
-   while (isspace(*cp))
-      cp++;
-   for (cp = str, strTag = ""; cp && *cp != '\0'; cp++)
-   {
-      if (*cp == '\n' || *cp == '\r' || *cp == '=' || isspace(*cp))
-         break;
-      strTag += toupper(*cp);
-   }
-   while (isspace(*cp))
-      cp++;
-   if (*cp != '=')
-      return(new xDefltEntry());
-
-   cp++;
-   while (isspace(*cp))
-      cp++;
-   for (strVal = ""; cp && *cp != '\0'; cp++)
-   {
-      if (*cp == '\n' || *cp == '\r')
-         break;
-      else if ((*cp == '$' || *cp == '\\') && *(cp + 1) == '$')
-      {
-         strVal += '$';
-         cp++;
-      }
-      else if ((*cp == '%' || *cp == '\\') && *(cp + 1) == '%')
-      {
-         strVal += '$';
-         cp++;
-      }
-      strVal += *cp;
-   }
    return(new xDefltEntry(strTag, strVal));
 }
 
-void xDefaults::load(FILE *pFile, const char *pDefaults[])
+void xDefaults::load(QFile &file, QStringList &Defaults)
 {
    QString strTmp;
-   int state;
-   char ch, ch1 = ' ';
 
-   if (pDefaults != NULL)
+   if (!Defaults.isEmpty())
    {
-      while (*pDefaults != NULL)
-      {
-         add(QString(*pDefaults));
-         pDefaults++;
-      }
    }
 
-   for (strTmp = "", state = 0; pFile != NULL && !feof(pFile);)
-   {
-      if ((ch = fgetc(pFile)) != EOF)
-      {
-         switch (state)
-         {
-            case 0:
-               switch (ch)
-               {
-                  case '\n':
-                     add(strTmp);
-                     strTmp = "";
-                     break;
-                  case '\r':
-                     break;
-                  case '\\':
-                     ch1 = ch;
-                     state = 1;
-                     break;
-                  default:
-                     strTmp += ch;
-               }
-               break;
-            case 1:
-               switch (ch)
-               {
-                  case '\n':
-                     state = 0;
-                     break;
-                  case '\r':
-                     break;
-                  default:
-                     strTmp += ch1;
-                     strTmp += ch;
-                     state = 0;
-               }
-               break;
+   QTextStream stream(&file);
+   QString line, line2, key, value;
+
+   while (!stream.atEnd()) {
+      line = stream.readLine();
+      if (!line.isEmpty()) {
+         if (line.endsWith("\\")) {
+            line2.append(line);
+         } else {
+            if (line2.isEmpty()) {
+               line = line.simplifyWhiteSpace();
+               key = line.section("=", 0, 0);
+               value = line.section("=", 1, 1);
+               defList[key.upper()] = value.simplifyWhiteSpace();
+            } else {
+               line2.remove("\\");
+               line2 = line2.simplifyWhiteSpace();
+               key = line2.section("=", 0, 0);
+               value = line2.section("=", 1, 1);
+               defList[key.upper()] = value.simplifyWhiteSpace();
+               line2 = "";
+            }
          }
       }
    }
+   file.close();
 }
 
 CallBack xDefaults::setCallBack(CallBack pCallBack)
@@ -371,11 +313,11 @@ CallBack xDefaults::setCallBack(CallBack pCallBack)
 
 void xDefaults::show()
 {
-   QPtrListIterator<xDefltEntry> it(defList);
-   xDefltEntry *entry;
+   xDefaultMap::Iterator it;
 
-   while ((entry = it.current()) != 0) {
-      ++it;
-      printf("Tag: %s Value: %s \n", entry->strTag.ascii(), entry->strVal.ascii());
+   printf("Printing Default keys and values:\n");
+   for ( it = defList.begin(); it != defList.end(); ++it ) {
+       printf("Key: \"%s\" Value: \"%s\"\n", it.key().latin1(), it.data().latin1());
    }
+   printf("Printed Default keys and values:\n");
 }

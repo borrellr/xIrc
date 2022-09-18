@@ -26,6 +26,9 @@
 #include <stdio.h>
 #include <qstring.h>
 #include <qptrlist.h>
+#include <qmap.h>
+#include <qfile.h>
+#include <qstringlist.h>
 
 class xDefaults;
 class xDefltEntry;
@@ -51,6 +54,7 @@ private:
 };
 
 typedef const char *(*CallBack)(QString);
+typedef QMap<QString, QString> xDefaultMap;
 
 class xDefaults
 {
@@ -69,12 +73,12 @@ public:
    const char  *get(const char *pTag, bool expand = TRUE);
    bool        getValStr(QString &strTag, QString &strVal, bool expand = TRUE);
    xDefltEntry *makeEntry(QString &str);
-   void        load(FILE *pFile, const char *pDefaults[]);
+   void        load(QFile &pFile, QStringList &Defaults);
    CallBack    setCallBack(CallBack pCallBack);
    void        show();
 
 private:
-   QPtrList<xDefltEntry>   defList;
+   xDefaultMap defList;
    CallBack    callBack;
 };
 
