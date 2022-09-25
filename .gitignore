@@ -1,0 +1,6 @@
+
+*.un~
+AUTHORS~
+ChangeLog~
+libX++/moc_xDialog.cpp
+README~
