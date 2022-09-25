@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include "xIrcPeopleList.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcPeopleList::xIrcPeopleList()
 {

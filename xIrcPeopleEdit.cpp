@@ -23,7 +23,7 @@
 #include <qstrlist.h>
 #include "xIrcPeopleEdit.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcPeopleEdit::xIrcPeopleEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,

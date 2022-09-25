@@ -28,7 +28,7 @@
 #include <xResources.h>
 #include "xIrcServerList.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 bool xIrcMircServerParse(const char *fn, xIrcServerList &ServerList)
 {

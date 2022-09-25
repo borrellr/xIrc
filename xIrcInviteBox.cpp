@@ -23,7 +23,7 @@
 #include <ctype.h>
 #include "xIrcInviteBox.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcInviteBox::xIrcInviteBox(xWidgetResInfo *pPRes, QWidget *pParent, 
                              const char *pName, QObject *pReceiver, 

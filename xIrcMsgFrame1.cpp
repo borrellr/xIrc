@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/types.h>
+#include <qt.h>
 #include <qkeycode.h>
 #include <xApp.h>
 #include "xDefaults.h"
@@ -34,7 +35,7 @@
 #include "xIrcNickQuery.h"
 #include "xIrcSocket.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 extern xApplication *pApp;
 extern xIrcCommands ircResponses;

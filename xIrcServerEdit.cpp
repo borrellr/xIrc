@@ -26,7 +26,7 @@
 #include <qhgroupbox.h>
 #include "xIrcServerEdit.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
@@ -35,8 +35,8 @@ xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                                               QString("ServerEdit")),
                            pParent, pName, TRUE)
 {
-//   QHGroupBox *hgroupbox;
-//   QHBox *hbox;
+   QHGroupBox *hgroupbox;
+   QHBox *hbox;
 
    if (dbg) fprintf(stdout, "xIrcServerEdit::xIrcServerEdit(): Enter\n");
    if (dbg) fflush(stdout);

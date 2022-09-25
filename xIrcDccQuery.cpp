@@ -25,7 +25,7 @@
 #include <xApp.h>
 #include "xIrcDccQuery.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 extern xApplication *pApp;
 

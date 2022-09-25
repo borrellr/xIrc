@@ -1,4 +1,12 @@
-/*************************************************************************** **    xIrc.cpp  $Revision: 1.9 $ - $Name:  $ **    IRC Client Main Line code ** **    Copyright (C) 1997 1998 Joseph Croft <joe@croftj.net> ** Copyright (C) 1995, 1996  Joseph Croft <jcroft@unicomp.net>  ** ** This program is free software; you can redistribute it and/or modify ** it under the terms of the GNU General Public License as published by
+/***************************************************************************
+**    xIrc.cpp  $Revision: 1.9 $ - $Name:  $ 
+**    IRC Client Main Line code
+**
+**    Copyright (C) 1997 1998 Joseph Croft <joe@croftj.net>
+** Copyright (C) 1995, 1996  Joseph Croft <jcroft@unicomp.net>  
+** 
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 1, or (at your option)
 ** any later version.
 ** 
@@ -12,8 +20,8 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <qapplication.h>
-
 #include <qpainter.h>
 #include <qwindowdefs.h>
 #include <qfontinfo.h>
@@ -31,8 +39,6 @@
 #include <qdialog.h>
 #include <qmessagebox.h>
 #include <qfiledialog.h>
-#include <qdir.h>
-#include <qfile.h>
 
 #include <signal.h>
 #include <stdlib.h>
@@ -47,14 +53,12 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
-
 #include <xApp.h>
 #include <xResources.h>
 #include <xDefaults.h>
 #include <xMisc.h>
-#include "MyApp.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
@@ -147,38 +151,57 @@ static void sigpipe(int s)
    if (dbg) fprintf(stdout, "*** Got SIGPIPE!\n");
 }
 
+class MyApp : public xApplication
+{
+public:
+   MyApp(int argc, char **argv);
+   bool notify(QObject *pRcvr, QEvent *pEvt);
+};
+
+MyApp::MyApp(int argc, char **argv) :
+         xApplication(argc, argv)
+{
+   if (dbg) fprintf(stdout, "MyApp::MyApp()!!!\n");
+   if (dbg) fflush(stdout);
+}
+
+bool MyApp::notify(QObject *pRcvr, QEvent *pEvt)
+{
+   return(xApplication::notify(pRcvr, pEvt));
+}
+
 static void setDefaults()
 {
-   QDir d(getenv("HOME"));
-   QFile f(d.filePath(".xirc"));
-   if (f.exists()) {
-      if (!f.open(IO_ReadOnly)) {
-         qWarning("Missing local .xirc file");
-      }
-   } else {
-      d = QDir::root();
-      d.cd("usr/local/lib");
-      if (d.exists("xIrc")) {
-         d.cd("xIrc");
-         f.setName(d.filePath("xIrc.defaults"));
-         if (f.exists()) {
-            if (!f.open(IO_ReadOnly)) {
-               qWarning("Missing xIrc.defaults file");
-               return;
-            }
-         }
+   FILE *pfd;
+
+   if (dbg) fprintf(stdout, "main():Opening defaults\n");   
+   if (dbg) fflush(stdout);
+   if ((pfd = fopen("xIrc.defaults", "r")) == NULL)
+   {
+      char dnam[128];
+      const char *cp;
+      
+      if ((cp = getenv("HOME")) != NULL)
+      {
+         strcpy(dnam, cp);
+         strcat(dnam, "/.xIrc");
+         if (dbg) fprintf(stdout, "main():Trying defaults file |%s|\n", dnam);   
+         if (dbg) fflush(stdout);
+         pfd = fopen(dnam, "r");
+//         if (dbg) fprintf(stdout, "main():Defaults file pointer = |0x%x|\n", pfd);   
+//         if (dbg) fflush(stdout);
       }
    }
-   QStringList lines;
-   Defaults.load(f, lines);
-
-   if (dbg) Defaults.show();
+   Defaults.setCallBack(defaultSpecHandler);
+//   Defaults.setEscapes(defEscapes);
+   Defaults.load(pfd, NULL);
+//   if (dbg) Defaults.show();
 }
 
 static void setColors(xResources *r, xApplication *a)
 {
    QColor fg, bg, baseColor, textColor;
-   const char *ccp1;
+   const char *ccp1 = NULL;
 
    if (dbg) fprintf(stdout, "main():Setting Colors and Pallete\n");   
    if (dbg) fflush(stdout);
@@ -233,7 +256,7 @@ static void setFonts(xResources *r, xApplication *a)
 
 static void setPixMap()
 {
-   const char *ccp1, *ccp2;
+   const char *ccp1, *ccp2, *ccp3;
    char *cp, tmpBuf[512], pmBuf[256];
 
    if (dbg) fprintf(stdout, "main():Getting Pixmap file name\n");   

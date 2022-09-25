@@ -25,7 +25,7 @@
 #include "xIrcBanDialog.h"
 #include "xDefaults.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
                     
 extern xDefaults Defaults;
 

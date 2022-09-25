@@ -22,12 +22,13 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qfiledialog.h>
 #include "xIrcServerEdit.h"
 #include "xIrcServerQuery.h"
 #include "xDefaults.h"
 
-static bool dbg = FALSE;
+static int dbg = 1;
                     
 extern xDefaults Defaults;
 

@@ -25,7 +25,7 @@
 #include "xIrcCommands.h"
 #include "xIrcSocket.h"
 
-static bool dbg = FALSE;
+static int dbg = 1;
 
 extern xDefaults Defaults;
 extern xIrcCommands ircResponses;

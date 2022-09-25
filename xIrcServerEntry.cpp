@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include "xIrcServerEntry.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcServerEntry::xIrcServerEntry(char *p)
 {

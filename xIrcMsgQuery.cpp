@@ -28,7 +28,7 @@
 
 extern xApplication *pApp;
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 static const char *pInitialResources[] =
 {

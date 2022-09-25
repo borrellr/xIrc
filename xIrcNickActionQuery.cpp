@@ -25,7 +25,7 @@
 #include <qfont.h>
 #include "xIrcNickActionQuery.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcNickActionQuery::xIrcNickActionQuery(xWidgetResInfo *pPRes, 
                                          QWidget *pParent, const char *pName) :

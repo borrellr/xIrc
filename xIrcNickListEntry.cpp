@@ -24,7 +24,7 @@
 #include <ctype.h>
 #include "xIrcNickListEntry.h"
 
-static bool  dbg = FALSE;
+static int dbg = 0;
 
 xIrcNickListEntry::xIrcNickListEntry(const char *pName, xIrcNickListEntry *entry)
 {

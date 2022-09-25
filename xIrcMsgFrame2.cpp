@@ -35,7 +35,7 @@
 #include "xIrcMsgFrame.h"
 #include "xIrcChannelQuery.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 extern xApplication *pApp;
 extern xDefaults Defaults;

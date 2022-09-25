@@ -1,14 +1,3 @@
-Latest Updates
-==========
-June 16, 2022 xIrc ported to CentOS v4.5.  Requires the -ansi or std=c++98
-option along with the -fpermissive to build. Switch from configure to qmake
-to create the Makefile.  Post editing required to add above options.  Also,
-use Qt v3.3.x to integrate.  The changes are in the dev1 branch of the xIrc
-github repository.
-
-May  30, 2022 xIrc ported to CentOS v2.1
-May  29, 2022 xIrc code now in GitHub at https://github.com/borrellr/xIrc.git
-
 xIrc-2.3.8 - Robert Borrell <borrell@pobox.com>
 ==========
 This release requires the use of Qt Widget library version 2.2.4. Other minor

@@ -30,6 +30,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <qt.h>
 #include <qglobal.h>
 #include <qapplication.h>
 #include <qkeycode.h>
@@ -48,7 +49,8 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
-static bool dbg = FALSE;
+//static int dbg = 0;
+#define dbg 1
 
 extern xApplication *pApp;
 extern xDefaults Defaults;

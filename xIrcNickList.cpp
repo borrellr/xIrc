@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include "xIrcNickList.h"
 
-static bool dbg = FALSE;
+static int dbg = 0;
 
 xIrcNickList::xIrcNickList()
 {

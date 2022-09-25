@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include "xIrcNickCombo.h"
 
-static bool  dbg = FALSE;
+static int dbg = 0;
 
 xIrcNickCombo::xIrcNickCombo(xWidgetResInfo *pPRes, QWidget *pParent,
                              const char *pName, int type) :
