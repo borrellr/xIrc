@@ -30,7 +30,7 @@
 #include "xIrcMircServerParse.h"
 #include "xIrcServerTable.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 static const char *pInitialResources[] =
 {

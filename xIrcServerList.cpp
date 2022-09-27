@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include "xIrcServerList.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcServerList::xIrcServerList()
 {

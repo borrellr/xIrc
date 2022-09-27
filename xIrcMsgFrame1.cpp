@@ -35,7 +35,7 @@
 #include "xIrcNickQuery.h"
 #include "xIrcSocket.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 extern xApplication *pApp;
 extern xIrcCommands ircResponses;

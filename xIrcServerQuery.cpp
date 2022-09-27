@@ -28,7 +28,7 @@
 #include "xIrcServerQuery.h"
 #include "xDefaults.h"
 
-static int dbg = 1;
+static bool dbg = false;
                     
 extern xDefaults Defaults;
 

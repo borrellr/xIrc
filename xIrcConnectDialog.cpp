@@ -24,7 +24,7 @@
 #include <qstrlist.h>
 #include "xIrcConnectDialog.h"
 
-static int dbg = 0;
+static bool  dbg = false;
 
 xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,

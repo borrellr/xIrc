@@ -25,7 +25,7 @@
 #include <qt.h>
 #include "xIrcNickListEntry.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcNickListEntry::xIrcNickListEntry(const char *pName, xIrcNickListEntry *entry)
 {

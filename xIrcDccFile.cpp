@@ -36,7 +36,7 @@
 #include "xResources.h"
 #include "xIrcDccFile.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 extern xApplication *pApp;
 extern xDefaults Defaults;

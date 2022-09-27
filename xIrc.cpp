@@ -58,7 +58,7 @@
 #include <xDefaults.h>
 #include <xMisc.h>
 
-static int dbg = 0;
+static bool  dbg = false;
 
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;

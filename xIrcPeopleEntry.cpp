@@ -27,7 +27,7 @@
 #include "xIrcConnect.h"
 #include "xIrcPeopleEntry.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 extern xIrcCommands ircResponses;
 

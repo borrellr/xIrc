@@ -27,7 +27,7 @@
 #include <qhgroupbox.h>
 #include "xIrcServerEdit.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,

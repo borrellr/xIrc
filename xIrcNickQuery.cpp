@@ -27,7 +27,7 @@
 #include "xResources.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static int dbg = false;
                     
 extern xDefaults Defaults;
 extern xResources *Resources;

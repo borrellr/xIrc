@@ -25,7 +25,7 @@
 #include <qt.h>
 #include "xIrcServerEntry.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcServerEntry::xIrcServerEntry(char *p)
 {

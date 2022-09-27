@@ -28,7 +28,7 @@
 #include "xEdit.h"
 #include "xIrcPeopleTable.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 static const char *pInitialResources[] =
 {

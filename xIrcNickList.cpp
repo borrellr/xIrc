@@ -26,7 +26,7 @@
 #include <qt.h>
 #include "xIrcNickList.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcNickList::xIrcNickList()
 {

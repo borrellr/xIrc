@@ -30,7 +30,7 @@
 #include "xIrcPeopleEdit.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static bool dbg = false;
                     
 static const char *pInitialResources[] =
 {
