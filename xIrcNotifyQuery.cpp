@@ -29,11 +29,9 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcNotifyQuery.h"
 #include "xIrcPeopleEdit.h"
-#include "xDefaults.h"
 
 static bool dbg = false;
                     
-extern xDefaults Defaults;
 extern xIrcConnect *pTWindow;
 extern xIrcCommands ircResponses;
 extern xIrcMsgDispatch Dispatcher;

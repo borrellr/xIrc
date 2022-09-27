@@ -26,12 +26,9 @@
 #include <qfiledialog.h>
 #include "xIrcServerEdit.h"
 #include "xIrcServerQuery.h"
-#include "xDefaults.h"
 
 static bool dbg = false;
                     
-extern xDefaults Defaults;
-
 static const char *pInitialResources[] =
 {
    NULL

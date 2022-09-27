@@ -22,13 +22,11 @@
  ***************************************************************************/
 #include <ctype.h>
 #include <qt.h>
-#include <xDefaults.h>
 #include "xIrcCommands.h"
 #include "xIrcSocket.h"
 
 static bool dbg = false;
 
-extern xDefaults Defaults;
 extern xIrcCommands ircResponses;
 
 static int stdColors[16][3] = 
@@ -698,9 +696,7 @@ QString parseLine(const char *cp, bool mircColors, bool ctcp2)
    char ch;
 
    for (; *cp && isspace(*cp); cp++);
-//   strTmp = cp;
-//   strTmp = Defaults.expandEntry(strTmp);
-//   cp = strTmp;
+
    for (ch = ' '; *cp;)
    {
       if (ch == '\\')
