@@ -26,7 +26,6 @@
 #include <string.h>
 #include <qt.h>
 #include <xMessageBox.h>
-#include <xResources.h>
 #include "xIrcServerList.h"
 
 static bool dbg = false;

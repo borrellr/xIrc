@@ -24,13 +24,11 @@
 #include <qt.h>
 #include <qmessagebox.h>
 #include "xIrcNickQuery.h"
-#include "xResources.h"
 #include "xDefaults.h"
 
 static int dbg = false;
                     
 extern xDefaults Defaults;
-extern xResources *Resources;
 extern QPixmap *AppPixMap;
 
 xIrcNickQuery::xIrcNickQuery(xWidgetResInfo *pPRes, QWidget *pParent,
