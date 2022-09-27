@@ -21,6 +21,7 @@
 **
  ***************************************************************************/
 #include <ctype.h>
+#include <qt.h>
 #include <qregexp.h>
 #include <stdio.h>
 #include "xIrcConnect.h"

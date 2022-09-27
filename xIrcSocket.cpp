@@ -21,6 +21,7 @@
 **
  ***************************************************************************/
 #include <ctype.h>
+#include <qt.h>
 #include <xDefaults.h>
 #include "xIrcCommands.h"
 #include "xIrcSocket.h"

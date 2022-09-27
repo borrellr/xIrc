@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <string.h>
+#include <qt.h>
 #include <qfont.h>
 #include "xIrcNickActionQuery.h"
 

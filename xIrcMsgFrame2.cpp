@@ -25,6 +25,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/types.h>
+#include <qt.h>
 #include <qkeycode.h>
 #include <qmenubar.h>
 #include <xApp.h>

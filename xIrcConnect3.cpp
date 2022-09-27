@@ -31,6 +31,7 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <qt.h>
 #include <qkeycode.h>
 #include <qmenubar.h>
 #include <qmessagebox.h>

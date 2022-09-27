@@ -21,6 +21,7 @@
 **
  ***************************************************************************/
 #include <stdio.h>
+#include <qt.h>
 #include <qptrlist.h>
 #include <qregexp.h>
 #include <qlabel.h>

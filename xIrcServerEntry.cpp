@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <ctype.h>
 #include <stdio.h>
+#include <qt.h>
 #include "xIrcServerEntry.h"
 
 static int dbg = 0;

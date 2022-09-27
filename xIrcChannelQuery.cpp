@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <ctype.h>
+#include <qt.h>
 #include <qmessagebox.h>
 #include "xIrcChannelQuery.h"
 #include "xIrcCommands.h"

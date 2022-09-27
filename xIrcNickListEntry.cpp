@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <ctype.h>
+#include <qt.h>
 #include "xIrcNickListEntry.h"
 
 static int dbg = 0;

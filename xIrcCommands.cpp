@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include "strings.h"
 #include "ctype.h"
+#include <qt.h>
 #include "xIrcCommands.h"
 
 xIrcCommands ircResponses;

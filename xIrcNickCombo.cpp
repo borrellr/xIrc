@@ -21,6 +21,7 @@
 **
  ***************************************************************************/
 #include <stdio.h>
+#include <qt.h>
 #include "xIrcNickCombo.h"
 
 static int dbg = 0;

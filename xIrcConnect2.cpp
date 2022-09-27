@@ -33,6 +33,7 @@
 #include <time.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <qt.h>
 #include <qapplication.h>
 #include <qkeycode.h>
 #include <qmenubar.h>
@@ -67,7 +68,7 @@ void xIrcConnect::initiateDCCFile(xIrcDccFile *fFrame)
    char buf[512], fName[512];
    QString tmpStr, tmpStr1, tmpStr2;
    const char *cp;
-   unsigned long fSize;
+   unsigned int fSize;
    struct stat fs;
 
    sleep(1);
@@ -115,7 +116,7 @@ void xIrcConnect::initiateDCCFile(xIrcDccFile *fFrame)
    if (dbg) fprintf(stdout, "xIrcConnect::initiateDCCFile():File name: |%s|\n",
                            (const char*)cp);
    if (dbg) fflush(stdout);
-   sprintf(buf, "%cDCC SEND %s %lu %u %lu%c", '\x01',
+   sprintf(buf, "%cDCC SEND %s %u %u %u%c", '\x01',
                 cp,                
                 ntohl(addr2.sin_addr.s_addr), ntohs(addr1.sin_port), 
                 fSize, '\x01');
@@ -160,7 +161,7 @@ void xIrcConnect::initiateDCCChat(xIrcDccChatFrame *chatFrame)
    msg.dstStr = chatFrame->name();
    msg.msgStr = buf;
    emit msgOut(&msg);
-   sprintf(buf, "%cDCC CHAT chat %lu %u%c", '\x01',
+   sprintf(buf, "%cDCC CHAT chat %u %u%c", '\x01',
                 ntohl(addr2.sin_addr.s_addr), ntohs(addr2.sin_port), '\x01');
    pMainWin->pWin->putString(buf);
    pMainWin->pWin->putString("\n");

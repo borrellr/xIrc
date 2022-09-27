@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qfont.h>
 #include <xApp.h>
 #include "xIrcMsgQuery.h"

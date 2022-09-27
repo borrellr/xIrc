@@ -20,6 +20,7 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <qstrlist.h>
 #include <qgrid.h>
 #include <qhbox.h>
@@ -35,9 +36,6 @@ xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                                               QString("ServerEdit")),
                            pParent, pName, TRUE)
 {
-   QHGroupBox *hgroupbox;
-   QHBox *hbox;
-
    if (dbg) fprintf(stdout, "xIrcServerEdit::xIrcServerEdit(): Enter\n");
    if (dbg) fflush(stdout);
 

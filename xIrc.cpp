@@ -234,9 +234,9 @@ static void setFonts(xResources *r, xApplication *a)
    char fontWeight[80], fontSize[80];
    const char *ccp1, *ccp2, *ccp3;
 
-   ccp1 = Resources->get(&appRes, "font.family", "Font.Family");
-   ccp2 = Resources->get(&appRes, "font.weight", "Font.Weight");
-   ccp3 = Resources->get(&appRes, "font.size", "Font.Size");
+   ccp1 = r->get(&appRes, "font.family", "Font.Family");
+   ccp2 = r->get(&appRes, "font.weight", "Font.Weight");
+   ccp3 = r->get(&appRes, "font.size", "Font.Size");
 
    if (ccp1 == NULL)
       ccp1 = a->font().family();
@@ -256,7 +256,7 @@ static void setFonts(xResources *r, xApplication *a)
 
 static void setPixMap()
 {
-   const char *ccp1, *ccp2, *ccp3;
+   const char *ccp1, *ccp2;
    char *cp, tmpBuf[512], pmBuf[256];
 
    if (dbg) fprintf(stdout, "main():Getting Pixmap file name\n");   

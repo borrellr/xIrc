@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <qfont.h>
+#include <qt.h>
 #include <xApp.h>
 #include "xIrcDccQuery.h"
 

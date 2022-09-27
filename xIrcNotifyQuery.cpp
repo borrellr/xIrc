@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qfiledialog.h>
 #include "xIrcCommands.h"
 #include "xIrcConnect.h"

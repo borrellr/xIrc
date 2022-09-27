@@ -23,6 +23,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qmessagebox.h>
 #include "xIrcDccSocket.h"
 

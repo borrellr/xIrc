@@ -21,6 +21,7 @@
 **
  ***************************************************************************/
 #include <stdio.h>
+#include <qt.h>
 #include <qmessagebox.h>
 #include "xIrcBanDialog.h"
 #include "xDefaults.h"

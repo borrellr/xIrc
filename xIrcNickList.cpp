@@ -23,6 +23,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <qt.h>
 #include "xIrcNickList.h"
 
 static int dbg = 0;
