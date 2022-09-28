@@ -49,8 +49,7 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
-//static int dbg = 0;
-#define dbg 1
+static bool dbg = false;
 
 extern xApplication *pApp;
 extern xDefaults Defaults;
