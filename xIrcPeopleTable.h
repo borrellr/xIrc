@@ -31,7 +31,6 @@
 #include <qstring.h>
 #include <xCheckBox.h>
 #include <xFrame.h>
-#include <xResources.h>
 #include <xTable.h>
 #include "xIrcPeopleList.h"
 

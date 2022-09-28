@@ -28,7 +28,6 @@
 #include <xPshBtnFrame.h>
 #include <xDialog.h>
 #include <xMultiLineFrame.h>
-#include <xResources.h>
 #include "xIrcSocket.h"
 
 class xIrcMsgQuery : public xDialog

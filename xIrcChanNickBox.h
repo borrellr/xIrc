@@ -26,7 +26,6 @@
 #include <qfont.h>
 #include <xDialog.h>
 #include <xPshBtnFrame.h>
-#include <xResources.h>
 #include "xIrcNickCombo.h"
 
 #define xCN_Whois   1

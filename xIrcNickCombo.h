@@ -26,7 +26,6 @@
 #include <ctype.h>
 #include <qstring.h>
 #include <xEditList.h>
-#include <xResources.h>
 #include "xIrcNickList.h"
 
 #define NCT_NAME     01

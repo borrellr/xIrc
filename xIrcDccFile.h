@@ -26,7 +26,6 @@
 #include <qtimer.h>
 #include <xEdit.h>
 #include <qlabel.h>
-#include <xResources.h>
 #include <xProgressBar.h>
 #include <xPshBtnFrame.h>
 #include <qlineedit.h>

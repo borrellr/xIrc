@@ -31,7 +31,6 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <xPshBtnFrame.h>
-#include <xResources.h>
 #include "xIrcConnectDialog.h"
 #include "xIrcPeopleTable.h"
 #include "xIrcSocket.h"

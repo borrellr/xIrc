@@ -27,7 +27,6 @@
 #include <qlabel.h>
 #include <xPshBtnFrame.h>
 #include <xDialog.h>
-#include <xResources.h>
 #include "xIrcSocket.h"
 
 class xIrcInviteBox : public xDialog

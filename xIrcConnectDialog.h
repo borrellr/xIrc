@@ -29,7 +29,6 @@
 #include <xDialog.h>
 #include <qlabel.h>
 #include <qgrid.h>
-#include <xResources.h>
 #include "xIrcServerEntry.h"
 
 class xIrcConnectDialog : public xDialog

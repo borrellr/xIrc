@@ -28,7 +28,6 @@
 #include <qlineedit.h>
 #include <xEditList.h>
 #include <xDialog.h>
-#include <xResources.h>
 #include "xIrcSocket.h"
 
 class xIrcNickQuery : public xDialog

@@ -27,7 +27,6 @@
 #include <qobject.h>
 #include <qstring.h>
 #include <xMultiLineWin.h>
-#include <xResources.h>
 #include <xSocket.h>
 
 typedef enum

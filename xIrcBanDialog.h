@@ -28,7 +28,6 @@
 #include <qlineedit.h>
 #include <xComboBox.h>
 #include <xDialog.h>
-#include <xResources.h>
 
 class xIrcBanDialog : public xDialog
 {

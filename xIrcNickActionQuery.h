@@ -26,7 +26,6 @@
 #include <xMultiLineFrame.h>
 #include <xPshBtnTable.h>
 #include <xDialog.h>
-#include <xResources.h>
 #include <qlineedit.h>
 
 class xIrcNickActionQuery : public xDialog
