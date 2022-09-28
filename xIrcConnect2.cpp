@@ -53,11 +53,8 @@
 
 static bool  dbg = false;
 
-extern xApplication *pApp;
 extern xDefaults Defaults;
 extern xChannelQuery *ChanQuery;
-extern xServerQuery *ServQuery;
-extern xIrcLineEditQuery *QuitQuery;
 extern xIrcCommands ircResponses;
 extern xIrcMsgDispatch Dispatcher;
 

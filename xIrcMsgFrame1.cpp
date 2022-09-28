@@ -28,7 +28,6 @@
 #include <qt.h>
 #include <qkeycode.h>
 #include <xApp.h>
-#include "xDefaults.h"
 #include "xResources.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcMsgFrame.h"
@@ -37,10 +36,8 @@
 
 static bool dbg = false;
 
-extern xApplication *pApp;
 extern xIrcCommands ircResponses;
 extern xIrcNickQuery *NickQuery;
-extern xDefaults Defaults;
 extern QPixmap *AppPixMap;
 extern xIrcMsgDispatch Dispatcher;
 
