@@ -51,7 +51,6 @@
 
 static bool dbg = false;
 
-extern xApplication *pApp;
 extern xDefaults Defaults;
 extern xIrcNickQuery *NickQuery;
 extern xChannelQuery *ChanQuery;
@@ -373,7 +372,7 @@ void xIrcConnect::quitIrc()
          quitFlag = TRUE;
       }
       else
-         pApp->quit();
+         qApp->quit();
    }
 }
 
@@ -717,10 +716,10 @@ void xIrcConnect::socketClosed()
       if (dbg) fprintf(stdout, "xIrcConnect::socketClosed():Signals disconnected\n");
       if (dbg) fflush(stdout);
       if (quitFlag)
-         pApp->quit();
+         qApp->quit();
       else
       {
-         pApp->beep();
+         qApp->beep();
          sprintf(buf, "[B]***Connection Closed!!\n");
          pMainWin->pWin->putString(buf);
 //         newServer();

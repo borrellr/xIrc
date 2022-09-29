@@ -27,8 +27,6 @@
 #include <xApp.h>
 #include "xIrcMsgQuery.h"
 
-extern xApplication *pApp;
-
 static bool dbg = false;
 
 static const char *pInitialResources[] =
@@ -144,7 +142,7 @@ void xIrcMsgQuery::add(xIrcMessage *pmsg)
    }
 
    pMsg->pWin->putString(strTmp);
-   pApp->beep();
+   qApp->beep();
 
    if (dbg) fprintf(stdout, "xIrcMsgQuery::setupQuery():Exit\n");
    if (dbg) fflush(stdout);   

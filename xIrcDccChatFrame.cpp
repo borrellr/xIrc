@@ -36,7 +36,6 @@
 
 static bool dbg = false;
 
-extern xApplication *pApp;
 extern xDefaults Defaults;
 extern QPixmap *AppPixMap;
 
@@ -446,7 +445,7 @@ void xIrcDccChatFrame::socketIn(char *pText)
          pMsgFrame->pWin->putString(buf);
          socketData = "";
          if (pBeepMsg->isChecked())
-            pApp->beep();
+            qApp->beep();
       }
       else if (*pText != '\r')
          socketData += *pText;
@@ -466,7 +465,7 @@ void xIrcDccChatFrame::socketClosed()
               this, SLOT(socketIn(char *)));
       QObject::disconnect(pSocket, SIGNAL(socketClosed()),
               this, SLOT(socketClosed()));
-      pApp->beep();
+      qApp->beep();
       pMsgFrame->pWin->putString("***\x02 Connection Closed!!!\n");
       delete pSocket;
       pSocket = NULL;

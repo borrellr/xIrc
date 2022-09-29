@@ -38,7 +38,6 @@
 
 static bool dbg = false;
 
-extern xApplication *pApp;
 extern xDefaults Defaults;
 extern xIrcCommands ircResponses;
 extern xChannelQuery *ChanQuery;
@@ -394,7 +393,7 @@ void xIrcMessageFrame::ircPrivMessageIn(xIrcMessage *pMsg)
       }
    }
    if (pBeepMsg->isChecked())
-      pApp->beep();
+      qApp->beep();
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Exit\n");
    if (dbg) fflush(stdout);
 }

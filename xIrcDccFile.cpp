@@ -32,14 +32,11 @@
 #include <qmessagebox.h>
 #include <xSocket.h>
 #include "xIrcLineEditQuery.h"
-#include "xDefaults.h"
 #include "xResources.h"
 #include "xIrcDccFile.h"
 
 static bool dbg = false;
 
-extern xApplication *pApp;
-extern xDefaults Defaults;
 extern QPixmap *AppPixMap;
 
 static const char *pInitialResources[] =
@@ -489,7 +486,7 @@ void xIrcDccFile::socketClosed()
 {
    if (dbg) fprintf(stdout, "xIrcDccFile::socketClosed():Enter\n");
    if (dbg) fflush(stdout);
-   pApp->beep();
+   qApp->beep();
    QObject::disconnect(pSocket, SIGNAL(readFromSocket(xSocketBuffer)),
            this, SLOT(socketIn(xSocketBuffer)));
    QObject::disconnect(pSocket, SIGNAL(socketClosed()),

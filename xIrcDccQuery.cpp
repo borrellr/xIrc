@@ -28,8 +28,6 @@
 
 static bool dbg = false;
 
-extern xApplication *pApp;
-
 xIrcDccQuery::xIrcDccQuery(xWidgetResInfo *pPRes, QWidget *pParent,
                            const char *pName, bool autoDelete) :
                xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("dccquerydialog"),
@@ -113,7 +111,7 @@ void xIrcDccQuery::setupQuery(const char *pType, xIrcMessage *pMsg)
 //   s.setHeight(pButtons->height());
 //   pButtons->fitFrame(&s);
    initFrame();
-   pApp->beep();
+   qApp->beep();
    show();
    if (dbg) fprintf(stdout, "xIrcDccQuery::setupQuery():Exit\n\r");
    if (dbg) fflush(stdout);   
