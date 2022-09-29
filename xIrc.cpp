@@ -51,7 +51,6 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
-#include <xApp.h>
 #include <xResources.h>
 #include <xDefaults.h>
 #include <xMisc.h>
@@ -70,7 +69,6 @@ QPixmap *AppPixMap;
 xIrcMsgDispatch Dispatcher;
 
 xDefaults Defaults;
-xApplication *pApp = NULL;
 
 QEvent qEvt(QEvent::User);
 
@@ -177,7 +175,7 @@ static void setDefaults()
 //   if (dbg) Defaults.show();
 }
 
-static void setColors(xResources *r, xApplication *a)
+static void setColors(xResources *r, QApplication *a)
 {
    QColor fg, bg, baseColor, textColor;
    const char *ccp1 = NULL;
@@ -208,7 +206,7 @@ static void setColors(xResources *r, xApplication *a)
    a->setPalette(p);
 }
 
-static void setFonts(xResources *r, xApplication *a)
+static void setFonts(xResources *r, QApplication *a)
 {
    char fontWeight[80], fontSize[80];
    const char *ccp1, *ccp2, *ccp3;
@@ -359,35 +357,25 @@ static void DeleteWindows()
 int main(int argc, char **argv)
 {
    QFont defFont;
-   struct sigaction sa;
    const char *ccp1;
    char buf[256];
 
    if (dbg) fprintf(stdout, "main():Enter\n");   
    if (dbg) fflush(stdout);
 
-   /*
-   ** Personal preference is to initialize each member individualy, but some
-   ** flavors of Unix, such as SGI, don't have all the members Linux does.
-   ** This should be just as effective though for both systems.
-   */
-   memset(&sa, 0, sizeof(sa));
-   sa.sa_handler = sigpipe;
-   sigaction(SIGPIPE, &sa, NULL);
-
    ccp1 = NULL;
    Resources = new xResources(&ccp1, &opts, 0, &argc, argv);
    Resources->setWidgetInit(pInitialResources);
-   xApplication a(argc, argv);
-   pApp = &a;
+
+   QApplication app(argc, argv);
 
    setDefaults();
-   setColors(Resources, pApp);
-   setFonts(Resources, pApp);
+   setColors(Resources, &app);
+   setFonts(Resources, &app);
    setPixMap();
    InitializeWindows();
 
-   a.setMainWidget( pTWindow );
+   qApp->setMainWidget( pTWindow );
    pTWindow->show();
    for (;;)
    {
@@ -401,7 +389,7 @@ int main(int argc, char **argv)
    pTWindow->show();
    pTWindow->newServer();
 
-   a.exec();
+   app.exec();
 
    DeleteWindows();
 }
