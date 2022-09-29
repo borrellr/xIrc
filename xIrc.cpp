@@ -44,8 +44,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <xGauge.h>
-
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcNickQuery.h"
@@ -149,25 +147,6 @@ static void sigpipe(int s)
 {
    s = 0;
    if (dbg) fprintf(stdout, "*** Got SIGPIPE!\n");
-}
-
-class MyApp : public xApplication
-{
-public:
-   MyApp(int argc, char **argv);
-   bool notify(QObject *pRcvr, QEvent *pEvt);
-};
-
-MyApp::MyApp(int argc, char **argv) :
-         xApplication(argc, argv)
-{
-   if (dbg) fprintf(stdout, "MyApp::MyApp()!!!\n");
-   if (dbg) fflush(stdout);
-}
-
-bool MyApp::notify(QObject *pRcvr, QEvent *pEvt)
-{
-   return(xApplication::notify(pRcvr, pEvt));
 }
 
 static void setDefaults()
@@ -399,7 +378,7 @@ int main(int argc, char **argv)
    ccp1 = NULL;
    Resources = new xResources(&ccp1, &opts, 0, &argc, argv);
    Resources->setWidgetInit(pInitialResources);
-   MyApp a( argc, argv );
+   xApplication a(argc, argv);
    pApp = &a;
 
    setDefaults();
