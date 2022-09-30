@@ -141,37 +141,36 @@ static const char *defaultSpecHandler(QString strSeq)
    return((const char *)rv);
 }
 
-static void sigpipe(int s)
-{
-   s = 0;
-   if (dbg) fprintf(stdout, "*** Got SIGPIPE!\n");
-}
-
 static void setDefaults()
 {
    FILE *pfd;
+   char dnam[128];
+   const char *cp;
 
    if (dbg) fprintf(stdout, "main():Opening defaults\n");   
    if (dbg) fflush(stdout);
    if ((pfd = fopen("xIrc.defaults", "r")) == NULL)
    {
-      char dnam[128];
-      const char *cp;
-      
-      if ((cp = getenv("HOME")) != NULL)
-      {
-         strcpy(dnam, cp);
-         strcat(dnam, "/.xIrc");
-         if (dbg) fprintf(stdout, "main():Trying defaults file |%s|\n", dnam);   
-         if (dbg) fflush(stdout);
-         pfd = fopen(dnam, "r");
-//         if (dbg) fprintf(stdout, "main():Defaults file pointer = |0x%x|\n", pfd);   
-//         if (dbg) fflush(stdout);
-      }
+      return;
    }
    Defaults.setCallBack(defaultSpecHandler);
 //   Defaults.setEscapes(defEscapes);
    Defaults.load(pfd, NULL);
+   fclose(pfd);
+
+   // Load custom options
+   if ((cp = getenv("HOME")) != NULL)
+   {
+      FILE *pfd2;
+      strcpy(dnam, cp);
+      strcat(dnam, "/.xIrc/xIrc.ini");
+      if (dbg) fprintf(stdout, "main():Trying defaults file |%s|\n", dnam);   
+      if (dbg) fflush(stdout);
+      if ((pfd2 = fopen(dnam, "r")) != NULL) {
+         Defaults.load(pfd2, NULL);
+         fclose(pfd2);
+      }
+   }
 //   if (dbg) Defaults.show();
 }
 
@@ -354,20 +353,10 @@ static void DeleteWindows()
    if (dbg) fflush(stdout);
 }
 
-int main(int argc, char **argv)
+void xIrcInitialize(QApplication& app)
 {
    QFont defFont;
-   const char *ccp1;
    char buf[256];
-
-   if (dbg) fprintf(stdout, "main():Enter\n");   
-   if (dbg) fflush(stdout);
-
-   ccp1 = NULL;
-   Resources = new xResources(&ccp1, &opts, 0, &argc, argv);
-   Resources->setWidgetInit(pInitialResources);
-
-   QApplication app(argc, argv);
 
    setDefaults();
    setColors(Resources, &app);
@@ -388,6 +377,21 @@ int main(int argc, char **argv)
    pTWindow->setCaption(buf);
    pTWindow->show();
    pTWindow->newServer();
+}
+
+int main(int argc, char **argv)
+{
+   const char *ccp1 = NULL; 
+
+   if (dbg) fprintf(stdout, "main():Enter\n");   
+   if (dbg) fflush(stdout);
+
+   Resources = new xResources(&ccp1, &opts, 0, &argc, argv);
+   Resources->setWidgetInit(pInitialResources);
+
+   QApplication app(argc, argv);
+
+   xIrcInitialize(app);
 
    app.exec();
 
