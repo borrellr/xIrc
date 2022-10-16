@@ -51,7 +51,7 @@ protected:
    void stepChanged();
 
 private:
-   void xGauge::initGauge(xWidgetResInfo *pPRes);
+   void initGauge(xWidgetResInfo *pPRes);
 
    int         thick;
    Orientation orient;
