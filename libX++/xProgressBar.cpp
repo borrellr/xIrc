@@ -26,8 +26,8 @@
 
 // static int dbg = 0;
 
-xProgressBar::xProgressBar(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
-                           const char *pName = NULL) :
+xProgressBar::xProgressBar(xWidgetResInfo *pPRes, QWidget *pParent,
+                           const char *pName) :
               QProgressBar(pParent, pName, 0)
 {
    wdtRes = new xWidgetResInfo(pPRes, QString("input"), QString("Input"));
@@ -35,8 +35,8 @@ xProgressBar::xProgressBar(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
    setDefFont(this, wdtRes);
 }
 
-xProgressBar::xProgressBar(xWidgetResInfo *pPRes, int totalSteps, QWidget *pParent = NULL,
-                           const char *pName = NULL) :
+xProgressBar::xProgressBar(xWidgetResInfo *pPRes, int totalSteps, QWidget *pParent,
+                           const char *pName) :
               QProgressBar(totalSteps, pParent, pName, 0)
 {
    wdtRes = new xWidgetResInfo(pPRes, QString("input"), QString("Input"));
