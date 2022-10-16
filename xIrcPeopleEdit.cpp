@@ -25,9 +25,9 @@
 
 static int dbg = 0;
 
-xIrcPeopleEdit::xIrcPeopleEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcPeopleEdit::xIrcPeopleEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcPeopleEntry *entry = NULL) :
+                                     xIrcPeopleEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString(pName),
                                                               QString("PeopleEdit")),
                            pParent, pName, TRUE)
