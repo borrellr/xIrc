@@ -42,7 +42,7 @@ public:
       setDefPallet(this, wdtRes);
       setDefFont(this, wdtRes);
    };
-   friend xComboBox;
+   friend class xComboBox;
    
 protected:
    virtual void keyPressEvent(QKeyEvent *pEvt)
