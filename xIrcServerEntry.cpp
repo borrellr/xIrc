@@ -27,6 +27,10 @@
 
 static bool dbg = false;
 
+xIrcServerEntry::xIrcServerEntry()
+{
+}
+
 xIrcServerEntry::xIrcServerEntry(char *p)
 {
    p = parseId(p, Id);
@@ -42,19 +46,19 @@ xIrcServerEntry::xIrcServerEntry(char *p)
    p = parseServer(p, Server);
    p = parsePorts(p, Ports);
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Id = |%s|\n",
-                             (const char *)Id);
+                             (const char *)Id.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Group = |%s|\n",
-                             (const char *)Group);
+                             (const char *)Group.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Country = |%s|\n",
-                             (const char *)Country);
+                             (const char *)Country.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():State = |%s|\n",
-                             (const char *)State);
+                             (const char *)State.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():City = |%s|\n",
-                             (const char *)City);
+                             (const char *)City.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Server = |%s|\n", 
-                             (const char *)Server);
+                             (const char *)Server.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Ports = |%s|\n", 
-                             (const char *)Ports);
+                             (const char *)Ports.latin1());
    if (dbg) fflush(stdout);
 }
 
@@ -68,19 +72,19 @@ xIrcServerEntry::xIrcServerEntry(const char *group, const char *country, const c
    Server = server;
    Ports = ports;
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Id = |%s|\n",
-                             (const char *)Id);
+                             (const char *)Id.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Group = |%s|\n",
-                             (const char *)Group);
+                             (const char *)Group.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Country = |%s|\n",
-                             (const char *)Country);
+                             (const char *)Country.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():State = |%s|\n",
-                             (const char *)State);
+                             (const char *)State.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():City = |%s|\n",
-                             (const char *)City);
+                             (const char *)City.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Server = |%s|\n", 
-                             (const char *)Server);
+                             (const char *)Server.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Ports = |%s|\n", 
-                             (const char *)Ports);
+                             (const char *)Ports.latin1());
    if (dbg) fflush(stdout);
 }
 
@@ -92,33 +96,33 @@ xIrcServerEntry::xIrcServerEntry(xIrcServerEntry &e)
    City = e.city();
    Server = e.server();
    Ports = e.ports();
-   if (strlen(Group) == 0)
+   if (Group.isEmpty())
       Group = "";
-   if (strlen(Country) == 0)
+   if (Country.isEmpty())
       Country = "";
-   if (strlen(State) == 0)
+   if (State.isEmpty())
       State = "";
-   if (strlen(City) == 0)
+   if (City.isEmpty())
       City = "";
-   if (strlen(Server) == 0)
+   if (Server.isEmpty())
       Server = "";
-   if (strlen(Ports) == 0)
+   if (Ports.isEmpty())
       Ports = "";
 
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Id = |%s|\n",
-                             (const char *)Id);
+                             (const char *)Id.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Group = |%s|\n",
-                             (const char *)Group);
+                             (const char *)Group.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Country = |%s|\n",
-                             (const char *)Country);
+                             (const char *)Country.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():State = |%s|\n",
-                             (const char *)State);
+                             (const char *)State.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():City = |%s|\n",
-                             (const char *)City);
+                             (const char *)City.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Server = |%s|\n", 
-                             (const char *)Server);
+                             (const char *)Server.latin1());
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Ports = |%s|\n", 
-                             (const char *)Ports);
+                             (const char *)Ports.latin1());
    if (dbg) fflush(stdout);
 }
 
@@ -163,7 +167,7 @@ char *xIrcServerEntry::parseState(char *p, QString &s)
    if (dbg) fflush(stdout);
    for (;*p != ',' && *p != '\0' && p != p1; p++)
       s += *p;
-   if (dbg) fprintf(stdout, "xIrcServerEntry::parseState():s = |%s|\n", (const char *)s);
+   if (dbg) fprintf(stdout, "xIrcServerEntry::parseState():s = |%s|\n", (const char *)s.latin1());
    if (dbg) fflush(stdout);
    if (p != p1)
    {
@@ -221,13 +225,25 @@ int xIrcServerEntry::compare(xIrcServerEntry *e)
       if (Country == e->Country)
       {
          if (State == e->State)
-            return(strcmp(City, e->City));
+            return(strcmp(City.latin1(), e->City.latin1()));
          else 
-            return(strcmp(State, e->State));
+            return(strcmp(State.latin1(), e->State.latin1()));
       }
       else
-         return(strcmp(Country, e->Country));
+         return(strcmp(Country.latin1(), e->Country.latin1()));
    }
-   return(strcmp(Group, e->Group));
+   return(strcmp(Group.latin1(), e->Group.latin1()));
 }
 
+void xIrcServerEntry::showEntries()
+{
+   if (true) {
+      printf ("Id is |%s|\n", Id.latin1());
+      printf ("Group is |%s|\n", Group.latin1());
+      printf ("Country is |%s|\n", Country.latin1());
+      printf ("State is |%s|\n", State.latin1());
+      printf ("City is |%s|\n", City.latin1());
+      printf ("Server is |%s|\n", Server.latin1());
+      printf ("Ports is |%s|\n", Ports.latin1());
+   }
+}

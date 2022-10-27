@@ -151,14 +151,14 @@ xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent,
    if (dbg) fflush(stdout);
    if (entry != NULL)
    {
-      for (cp = entry->ports(); *cp;)
+      for (cp = entry->ports().latin1(); *cp;)
       {
          QString s;
          if (dbg) fprintf(stdout, "xIrcConnectDialog::xIrcConnectDialog(): cp = |%s|\n", cp);
          if (dbg) fflush(stdout);
          while (*cp != ',' && *cp != '\0')
             s += *(cp++);
-         ports.append(s);
+         ports.append(s.latin1());
          ports.sort();
          if (dbg) fprintf(stdout, "xIrcConnectDialog::xIrcConnectDialog(): cp remaining length = %d\n", 
                                  strlen(cp));
@@ -212,7 +212,7 @@ QString xIrcConnectDialog::port()
 {
    QString rv;
 
-   if (strlen(pPort->currentText()) > 0)
+   if (!pPort->currentText().isEmpty())
       rv = pPort->currentText();
    else
       rv = pPort->text(pPort->currentItem());

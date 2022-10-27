@@ -106,7 +106,8 @@ void xServerQuery::initClass(const char *pName)
       pFn = ".servers";
    serverFile += '/';
    serverFile += pFn;
-   pTable->readFile(serverFile);
+   printf ("The server file to load is |%s|\n", serverFile.latin1());
+   pTable->readFile(serverFile.latin1());
    
    pButtons = new xPshBtnFrame(wdtRes, this);
    pButtons->setFrameStyle(QFrame::Panel | QFrame::Raised);
@@ -235,7 +236,7 @@ void xServerQuery::doConnect(int status)
       if (dbg) fflush(stdout);
       Port = pConnect->port();
       if (dbg) fprintf(stdout, "xServerQuery::doConnect():Port = |%s|\n",
-                       (const char *)Port);
+                       (const char *)Port.latin1());
       if (dbg) fflush(stdout);
    }
    if (dbg) fprintf(stdout, "xServerQuery::doConnect():Exit\n");
@@ -267,8 +268,8 @@ void xServerQuery::importList()
       pFilt = "*.ini";
 
    fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   if (strlen(fileName) > 0)
-      pTable->import(fileName);
+   if (!fileName.isEmpty())
+      pTable->import(fileName.latin1());
 }
 
 void xServerQuery::saveList()
@@ -284,8 +285,8 @@ void xServerQuery::saveList()
       pFilt = ".*";
 
    fileName = QFileDialog::getSaveFileName(pPath + "/" + pFn, pFilt, this);
-   if (strlen(fileName) > 0)
-      pTable->writeFile(fileName);
+   if (!fileName.isEmpty())
+      pTable->writeFile(fileName.latin1());
 }
 
 void xServerQuery::editEntry()
@@ -323,7 +324,7 @@ void xServerQuery::loadList()
    if ((pFilt = Resources->get(wdtRes, "filter", "Filter")) == NULL)
       pFilt = ".*";
    fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   pTable->readFile(fileName);
+   pTable->readFile(fileName.latin1());
    pTable->showRows(pTable->currentRow());
 }
 

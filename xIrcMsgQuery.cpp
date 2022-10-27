@@ -135,13 +135,13 @@ void xIrcMsgQuery::add(xIrcMessage *pmsg)
    strTmp = "<";
    strTmp += pmsg->srcNick;
    strTmp += "> ";
-   for (cp = pmsg->msgStr; *cp; cp++)
+   for (cp = pmsg->msgStr.latin1(); *cp; cp++)
    {
       if (*cp != '\n' && *cp != '\r')
          strTmp += *cp;
    }
 
-   pMsg->pWin->putString(strTmp);
+   pMsg->pWin->putString(strTmp.latin1());
    qApp->beep();
 
    if (dbg) fprintf(stdout, "xIrcMsgQuery::setupQuery():Exit\n");
@@ -184,7 +184,7 @@ void xIrcMsgQuery::haveTextSelection(xMultiLineTextSelection msg)
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():Enter\n");
    if (dbg) fflush(stdout);
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():winName = |%s|, text = |%s|\n",
-                             (const char *)msg.winName, (const char *)msg.text);
+                             (const char *)msg.winName.latin1(), (const char *)msg.text.latin1());
    if (dbg) fflush(stdout);
    emit textSelected(msg);
 }

@@ -101,15 +101,15 @@ void xIrcNickActionQuery::wakeUp(xMultiLineTextSelection text)
    if (dbg) fprintf(stdout, "xIrcNickActionQuery::wakeUp():Enter\n");
    if (dbg) fflush(stdout);
    txtSel = text;
-   if (txtSel.text != NULL && strlen(txtSel.text) > 0)
+   if (txtSel.text != NULL && !txtSel.text.isEmpty())
    {
-      if (dbg) fprintf(stdout, "xIrcNickActionQuery::wakeUp():Nick = |%s|\n", (const char*)text.text);
+      if (dbg) fprintf(stdout, "xIrcNickActionQuery::wakeUp():Nick = |%s|\n", (const char*)text.text.latin1());
       if (dbg) fflush(stdout);
       pNickEdit->setText(text.text);
    }
    if (txtSel.winName != NULL)  // && strlen(txtSel.winName) > 0)
    {
-      if (dbg) fprintf(stdout, "xIrcNickActionQuery::wakeUp():Channel = |%s|\n", (const char*)text.winName);
+      if (dbg) fprintf(stdout, "xIrcNickActionQuery::wakeUp():Channel = |%s|\n", (const char*)text.winName.latin1());
       if (dbg) fflush(stdout);
       pChanEdit->setText(text.winName);
    }
@@ -127,12 +127,12 @@ void xIrcNickActionQuery::wakeUp(const char *pNick)
    txtSel.winName = "";
    for (; *pNick != '\0' && *pNick != ' '; pNick++)
       txtSel.text += *pNick;
-   if (dbg) fprintf(stdout, "xIrcNickActionQuery::wakeUp():Have Nick |%s|\n", (const char*)txtSel.text);
+   if (dbg) fprintf(stdout, "xIrcNickActionQuery::wakeUp():Have Nick |%s|\n", (const char*)txtSel.text.latin1());
    if (dbg) fflush(stdout);
    txtSel.winName = "";
-   if (strlen(txtSel.text) > 0)
+   if (!txtSel.text.isEmpty())
       pNickEdit->setText(txtSel.text);
-   if (strlen(txtSel.winName) > 0)
+   if (!txtSel.winName.isEmpty())
       pChanEdit->setText(txtSel.winName);
    raise();
    show();

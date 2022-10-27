@@ -189,7 +189,7 @@ xIrcPeopleTable::xIrcPeopleTable(xWidgetResInfo *pPRes, QWidget *pParent,
       pTable->addWidget((pLabel = new QLabel(pTable)));
       pLabel->setFrameStyle(QFrame::Panel | QFrame::Raised);
 
-      pBtnFrame = new xIrcPeopleBtns(wdtRes, pTable, "", FlagLabel);
+      pBtnFrame = new xIrcPeopleBtns(wdtRes, pTable, "", FlagLabel.latin1());
       pBtnFrame->fitFrame();
       pTable->addWidget(pBtnFrame);
       pBtnFrame->setFrameStyle(QFrame::Panel | QFrame::Raised);
@@ -253,7 +253,7 @@ void xIrcPeopleTable::gotClicked(xIrcPeopleBtns *pBtn)
    for (x = 0; x < row; x++, ++si)
       ;
    if (dbg) fprintf(stdout, "xIrcPeopleTable::gotClicked():Setting Flag for nick: |%s|\n",
-                           (const char *)si.current()->nick());
+                           (const char *)si.current()->nick().latin1());
    if (dbg) fflush(stdout);
    si.current()->setFlag(pBtn->flag());
    if (dbg) fprintf(stdout, "xIrcPeopleTable::gotClicked():Exit\n");

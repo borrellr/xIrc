@@ -82,29 +82,29 @@ void xIrcNotifyTable::update(xIrcPeopleList *pList)
       QString r(p->realNick());
 
       if (dbg) fprintf(stdout, "xIrcNotifyTable::update():Looking at %s:%s:%s\n", 
-                               (const char*)r,
-                               (const char*)p->nick(),
-                               (const char*)p->mask());
+                               (const char*)r.latin1(),
+                               (const char*)p->nick().latin1(),
+                               (const char*)p->mask().latin1());
       if (dbg) fflush(stdout); 
       if (dbg) fprintf(stdout, "xIrcNotifyTable::update():Looking at %s:%s:%s\n", 
-                               (const char*)r,
-                               (const char*)p->nick(),
-                               (const char*)p->mask());
+                               (const char*)r.latin1(),
+                               (const char*)p->nick().latin1(),
+                               (const char*)p->mask().latin1());
       if (dbg) fflush(stdout); 
       if (dbg) fprintf(stdout, "xIrcNotifyTable::update():Looking at %s:%s:%s\n", 
-                               (const char*)r,
-                               (const char*)p->nick(),
-                               (const char*)p->mask());
+                               (const char*)r.latin1(),
+                               (const char*)p->nick().latin1(),
+                               (const char*)p->mask().latin1());
       if (dbg) fflush(stdout); 
       if (p->state() >= 2)
       {
-         QString t((const char*)r);
+         QString t((const char*)r.latin1());
 
          t += " (";
          t += p->mask();
          t += ")";
          if (dbg) fprintf(stdout, "xIrcNotifyTable::update():Adding :%s:\n", 
-                                  (const char*)r);
+                                  (const char*)r.latin1());
 //                                  (const char*)p->nick(),
 //                                (const char*)p->mask());
          if (dbg) fflush(stdout); 
@@ -123,7 +123,7 @@ void xIrcNotifyTable::haveSelection(int x)
 
    if (dbg) fprintf(stdout, "xIrcNotifyTable::haveSelected():Enter\n");
    if (dbg) fflush(stdout); 
-   cp = pListBox->text(x);
+   cp = pListBox->text(x).latin1();
    if (dbg) fprintf(stdout, "xIrcNotifyTable::haveSelected():Have Nick |%s|\n", cp);
    if (dbg) fflush(stdout); 
    emit selected(cp);

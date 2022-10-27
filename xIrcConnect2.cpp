@@ -178,28 +178,28 @@ void xIrcConnect::dccChatHandler(xIrcMessage *pMsg)
    const char *cp;
 
    if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():got response |%s| from query\n",
-                            (const char *)pMsg->srcNick);
+                            (const char *)pMsg->srcNick.latin1());
    if (dbg) fflush(stdout);
    if (pMsg->rspCode == xIrcDccQuery::Message)
    {
       if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():Setting up normal chat window!\n");
       if (dbg) fflush(stdout);
-      if ((pMsgFrame = makeNewMsgFrame(NULL, pMsg->srcNick)) != NULL)
+      if ((pMsgFrame = makeNewMsgFrame(NULL, pMsg->srcNick.latin1())) != NULL)
          pMsgFrame->show();
    }
    else if (pMsg->rspCode == xIrcDccQuery::Accepted)
    {
       if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():Got Accept from Query, isolating IP from |%s|\n",
-                               (const char *)pMsg->msgStr);
-      for (cp = pMsg->msgStr; isspace(*cp); cp++);
+                               (const char *)pMsg->msgStr.latin1());
+      for (cp = pMsg->msgStr.latin1(); isspace(*cp); cp++);
       if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():Spaces Skipped, remaining: |%s|\n", cp);
       for (; !isspace(*cp); cp++);
       if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():Setting up DCC Chat to %s @ |%s|!\n",
-                               (const char *)pMsg->srcNick, cp);
+                               (const char *)pMsg->srcNick.latin1(), cp);
       if (dbg) fflush(stdout);
       if (pMsg->pmsgTyp == ipmDCCChat)
       {
-         pDccChatFrame = new xIrcDccChatFrame(wdtPrv, NULL, pMsg->srcNick);
+         pDccChatFrame = new xIrcDccChatFrame(wdtPrv, NULL, pMsg->srcNick.latin1());
          if (pDccChatFrame != NULL)
          {
             if ((err = pDccChatFrame->connectTo(cp)) == 0)
@@ -212,7 +212,7 @@ void xIrcConnect::dccChatHandler(xIrcMessage *pMsg)
             else
             {
                sprintf(buf, "Error Making DCC Connection to %s:%s",
-                            (const char *)pMsg->srcNick, strerror(err));
+                            (const char *)pMsg->srcNick.latin1(), strerror(err));
                QMessageBox::warning(this, "Error", buf);
                delete pDccChatFrame;
             }
@@ -228,7 +228,7 @@ void xIrcConnect::dccChatHandler(xIrcMessage *pMsg)
          if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():Have file send request\n");
          if (dbg) fflush(stdout);
          pDir = Resources->get(wdtRes, "dcc.dir", "DCC.Dir");
-         for (cp = pMsg->msgStr; *(++cp) != ' ';)
+         for (cp = pMsg->msgStr.latin1(); *(++cp) != ' ';)
             file += *cp;
          if (pSaveDialog->exec() == QDialog::Accepted)
          {
@@ -236,11 +236,11 @@ void xIrcConnect::dccChatHandler(xIrcMessage *pMsg)
             if (dbg) fflush(stdout);
             QString s(pSaveDialog->selectedFile());
             if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():File name = |%s|\n",
-                                     (const char *)s);
+                                     (const char *)s.latin1());
             if (dbg) fflush(stdout);
-            if ((fd = open(s, O_RDWR | O_CREAT | O_TRUNC, S_IREAD | S_IWRITE | S_IRGRP | S_IROTH)) >= 0)
+            if ((fd = open(s.latin1(), O_RDWR | O_CREAT | O_TRUNC, S_IREAD | S_IWRITE | S_IRGRP | S_IROTH)) >= 0)
             {
-               pDccFileFrame = new xIrcDccFile(wdtPrv, file, NULL, pMsg->srcNick);
+               pDccFileFrame = new xIrcDccFile(wdtPrv, file.latin1(), NULL, pMsg->srcNick.latin1());
                if (pDccFileFrame != NULL)
                {
                   if ((err = pDccFileFrame->connectTo(cp, fd)) == 0)
@@ -248,7 +248,7 @@ void xIrcConnect::dccChatHandler(xIrcMessage *pMsg)
                   else
                   {
                      sprintf(buf, "Error Making DCC Connection to %s:%s",
-                                  (const char *)pMsg->srcNick, strerror(err));
+                                  (const char *)pMsg->srcNick.latin1(), strerror(err));
                      QMessageBox::warning(this, "Error", buf);
                      delete pDccFileFrame;
                   }
@@ -257,7 +257,7 @@ void xIrcConnect::dccChatHandler(xIrcMessage *pMsg)
             else
             {
                sprintf(buf, "Error Opening file %s:%s",
-                            (const char *)s, strerror(errno));
+                            (const char *)s.latin1(), strerror(errno));
                QMessageBox::warning(this, "Error", buf);
                delete pDccFileFrame;
             }
@@ -286,7 +286,7 @@ void xIrcConnect::msgQryHandler(xIrcMsgQuery *pMsgQuery)
       if (dbg) fflush(stdout);
       pMsg = pMsgList->first();
       pMsg1 = pMsg;
-      if ((pMsgFrame = makeNewMsgFrame(NULL, pMsg->srcNick)) != NULL)
+      if ((pMsgFrame = makeNewMsgFrame(NULL, pMsg->srcNick.latin1())) != NULL)
       {
          if (dbg) fprintf(stdout, "xIrcConnect::msgQryHandler():Showing message frame\n");
          if (dbg) fflush(stdout);
@@ -308,7 +308,7 @@ void xIrcConnect::msgQryHandler(xIrcMsgQuery *pMsgQuery)
 
 void xIrcConnect::acceptInvite(QString strChannel)
 {
-   ChanQuery->setText((const char *)strChannel);
+   ChanQuery->setText((const char *)strChannel.latin1());
    newChannel();
 }
 
@@ -322,12 +322,12 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
    
    if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():msgTyp = %d\n", (int)pMsg->pmsgTyp);
    if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():rspCode = %d\n", (int)pMsg->rspCode);
-   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():rspStr = %s\n", (const char *)pMsg->rspStr);
-   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():srcNick = %s\n", (const char *)pMsg->srcNick);
-   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():srcAddr = %s\n", (const char *)pMsg->srcAddr);
-   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():dstStr = %s\n", (const char *)pMsg->dstStr);
-   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():msgStr = %s\n", (const char *)pMsg->msgStr);
-   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():rawMsg = %s\n", (const char *)pMsg->rawMsg);
+   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():rspStr = %s\n", (const char *)pMsg->rspStr.latin1());
+   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():srcNick = %s\n", (const char *)pMsg->srcNick.latin1());
+   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():srcAddr = %s\n", (const char *)pMsg->srcAddr.latin1());
+   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():dstStr = %s\n", (const char *)pMsg->dstStr.latin1());
+   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():msgStr = %s\n", (const char *)pMsg->msgStr.latin1());
+   if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():rawMsg = %s\n", (const char *)pMsg->rawMsg.latin1());
    if (dbg) fflush(stdout);
 
    pSocketBox->hide();
@@ -344,14 +344,14 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
          if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():Testing window |%s|\n", (char *)pMsgFrame->name());
          if (dbg) fflush(stdout);
          if (strlen(pMsgFrame->name()) > 0 &&
-             pMsgFrame->is((const char *)pMsg->srcNick))
+             pMsgFrame->is((const char *)pMsg->srcNick.latin1()))
          {
             if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():Found a Match!!!\n");
             if (dbg) fflush(stdout);
-            pMsgFrame->newName((const char *)pMsg->dstStr);
+            pMsgFrame->newName((const char *)pMsg->dstStr.latin1());
             sprintf(str, "[B]*** %s is now known as %s\n",
-                         (const char *)pMsg->srcNick,
-                         (const char *)pMsg->dstStr);
+                         (const char *)pMsg->srcNick.latin1(),
+                         (const char *)pMsg->dstStr.latin1());
             pMsgFrame->putString(str);
          }
       }
@@ -399,7 +399,7 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
       QRegExp regexp( " .*" );
       QString tempName((char*)pMsgFrame->name());
       tempName.replace( regexp, "");
-      pMsgFrame->setName((const char *)tempName);
+      pMsgFrame->setName((const char *)tempName.latin1());
 
       if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():testing window |%s|\n", (char *)pMsgFrame->name());
       if (dbg) fflush(stdout);
@@ -418,7 +418,7 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
    if (dbg) fflush(stdout);
    if (x == 0 && ((!isMsg(pMsg->rspCode, "PRIVMSG") && 
                    !isMsg(pMsg->rspCode, "NOTICE")) ||
-                  strlen(pMsg->srcNick) == 0))
+                  pMsg->srcNick.isEmpty()))
    {
       if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():Not new PRIVMSG\n");
       if (dbg) fflush(stdout);
@@ -431,7 +431,7 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
    else if (x == 0)
    {
       if (!isMsg(pMsg->rspCode, "NOTICE") || 
-          strstr((const char *)pMsg->msgStr, "DCC Chat") == NULL)
+          strstr((const char *)pMsg->msgStr.latin1(), "DCC Chat") == NULL)
       {
          if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():is new PRIVMSG\n");
          if (dbg) fflush(stdout);
@@ -473,16 +473,16 @@ xIrcMessageFrame *xIrcConnect::findMsgFrame(const char *pName)
    
    nameTmp1 = pName;
    nameTmp1.upper();
-   if (dbg) fprintf(stdout, "xIrcConnect::findMsgFrame():Looking for %s\n", (const char *)nameTmp1);
+   if (dbg) fprintf(stdout, "xIrcConnect::findMsgFrame():Looking for %s\n", (const char *)nameTmp1.latin1());
    if (dbg) fflush(stdout);
    for (x = 0, rv = pIrcMsgFrames; rv != NULL; rv = rv->next())
    {
       nameTmp2 = rv->name();
       nameTmp2.upper();
-      strcpy(name, (const char*)nameTmp2);
+      strcpy(name, (const char*)nameTmp2.latin1());
       if (dbg) fprintf(stdout, "xIrcConnect::findMsgFrame():Testing %s\n", name);
       if (dbg) fflush(stdout);
-      if (strcmp((const char *)nameTmp1, name) == 0)
+      if (strcmp((const char *)nameTmp1.latin1(), name) == 0)
       {
          if (dbg) fprintf(stdout, "xIrcConnect::findMsgFrame():Have match!!\n");
          if (dbg) fflush(stdout);
@@ -509,16 +509,16 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
       case ipmPing:
          if (isMsg(pMsg->rspCode, "NOTICE"))
          {
-            long pingTime = time(NULL) - atol(pMsg->msgStr);
+            long pingTime = time(NULL) - atol(pMsg->msgStr.latin1());
             long pingMins = pingTime / 60;
             long pingSecs = pingTime % 60;
             if (pingMins > 0)
                sprintf(str, "*** Ping from %s: %ld:%02ld minutes\n", 
-                            (const char *)pMsg->srcNick,
+                            (const char *)pMsg->srcNick.latin1(),
                             pingMins, pingSecs);
             else
                sprintf(str, "*** Ping from %s: %ld seconds\n", 
-                             (const char *)pMsg->srcNick, pingSecs);
+                             (const char *)pMsg->srcNick.latin1(), pingSecs);
             pMainWin->pWin->putString(str);
 /*
             sprintf(str, "*** Ping from %s: %s\n", (const char *)pMsg->srcNick,
@@ -527,9 +527,9 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
          }
          else if (isMsg(pMsg->rspCode, "PRIVMSG"))
          {
-            sprintf(str, "*** Pinged by %s\n", (const char *)pMsg->srcNick);
+            sprintf(str, "*** Pinged by %s\n", (const char *)pMsg->srcNick.latin1());
             pMainWin->pWin->putString(str);
-            for (cp = (const char *)pMsg->msgStr, cp1 = str; *cp; cp++)
+            for (cp = (const char *)pMsg->msgStr.latin1(), cp1 = str; *cp; cp++)
                if (*cp >= ' ')
                {
                   *(cp1++) = *cp;
@@ -542,7 +542,7 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
             msg.msgStr += str;
             msg.msgStr += "\x01";
             if (dbg) fprintf(stdout, "xIrcConnect::doSpecial():Sending |%s| to Socket\n",
-                                     (const char *)msg.msgStr);
+                                     (const char *)msg.msgStr.latin1());
             if (dbg) fflush(stdout);
             emit msgOut(&msg);
          }
@@ -570,7 +570,7 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
             QString file("Send: ");
             const char *cp;
 
-            for (cp = pMsg->msgStr; *(++cp) != ' ';)
+            for (cp = pMsg->msgStr.latin1(); *(++cp) != ' ';)
                file += *cp;
             file += " Size: ";
             if (dbg) fprintf(stdout, "xIrcConnect::doSpecial():Skipping IP |%s|\n", cp);
@@ -589,7 +589,7 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
                file += *cp;
             file += " Bytes\n";
             connect(pMsgQry, SIGNAL(done(xIrcMessage *)), this, SLOT(dccChatHandler(xIrcMessage *)));
-            pMsgQry->setupQuery(file, pMsg);
+            pMsgQry->setupQuery(file.latin1(), pMsg);
          }
          if (dbg) fprintf(stdout, "xIrcConnect::doSpecial():Waiting Query Response!\n");
          if (dbg) fflush(stdout);
@@ -599,7 +599,7 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
       case ipmDCC:
          if (dbg) fprintf(stdout, "xIrcConnect::doSpecial():Got DCC Request!\n");
          if (dbg) fflush(stdout);
-         sprintf(str, "* %s %s", (const char *)pMsg->srcNick, (const char *)pMsg->msgStr);
+         sprintf(str, "* %s %s", (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->msgStr.latin1());
          pMainWin->pWin->putString(str);
          if (isMsg(pMsg->rspCode, "PRIVMSG"))
          {
@@ -613,7 +613,7 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
                msg.dstStr = pMsg->srcNick;
                msg.msgStr = cp;
                if (dbg) fprintf(stdout, "xIrcConnect::doSpecial():Sending |%s| to Socket\n",
-                                        (const char *)msg.msgStr);
+                                        (const char *)msg.msgStr.latin1());
                if (dbg) fflush(stdout);
                emit msgOut(&msg);
                if (pMsg->pmsgTyp == ipmDCCSend)
@@ -626,7 +626,7 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
                      msg.dstStr = pMsg->srcNick;
                      msg.msgStr = cp;
                      if (dbg) fprintf(stdout, "xIrcConnect::doSpecial():Sending |%s| to Socket\n",
-                                              (const char *)msg.msgStr);
+                                              (const char *)msg.msgStr.latin1());
                      if (dbg) fflush(stdout);
                      emit msgOut(&msg);
                   }
@@ -737,7 +737,7 @@ bool xIrcConnect::doSpecialMessage(xIrcMessage *pMsg)
             msg.dstStr = pMsg->srcNick;
             msg.msgStr = "\x01";
             msg.msgStr += "FINGER ";
-            sprintf(str, "%s", (const char *)realName);
+            sprintf(str, "%s", (const char *)realName.latin1());
             msg.msgStr += str;
             msg.msgStr += "\x01";
             emit msgOut(&msg);

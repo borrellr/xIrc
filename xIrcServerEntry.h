@@ -28,6 +28,7 @@
 class xIrcServerEntry
 {
 public:
+   xIrcServerEntry();
    xIrcServerEntry(char *p);
    xIrcServerEntry(const char *group, const char *country, const char *state,
                    const char *city, const char *server, const char *ports);
@@ -53,6 +54,7 @@ public:
    bool isCity(QString &s) { return((s == City) ? TRUE : FALSE); };
    bool isId(QString &s) { return((s == Id) ? TRUE : FALSE); };
    int compare(xIrcServerEntry *e);
+   void showEntries();
 
 private:
    char *parseId(char *p, QString &s);

@@ -97,18 +97,18 @@ int xIrcPeopleList::readFile(const char *fn)
          }
       }
       if (dbg) fprintf(stdout, "xIrcPeopleList::readFile():flagStr: |%s|\n", 
-                        (const char *)flagStr);
+                        (const char *)flagStr.latin1());
       if (dbg) fflush(stdout);
-      if (strcmp(flagStr, "+") == 0)
+      if (strcmp(flagStr.latin1(), "+") == 0)
          flag = 1;
-      else if (strcmp(flagStr, "-") == 0)
+      else if (strcmp(flagStr.latin1(), "-") == 0)
          flag = -1;
       else
          flag = 0;
       if (dbg) fprintf(stdout, "xIrcPeopleList::readFile():flag = %d\n", flag);
       if (dbg) fflush(stdout);
 
-      xIrcPeopleEntry e(nickStr, maskStr, msgStr, flag);
+      xIrcPeopleEntry e(nickStr.latin1(), maskStr.latin1(), msgStr.latin1(), flag);
       add(e);
    }
    return(0);
@@ -129,13 +129,13 @@ int xIrcPeopleList::writeFile(const char *fn)
    {
       
       sprintf(buf, "%s:%s:%s:%s\n", 
-                  (const char *)si.current()->nick(),    
-                  (const char *)si.current()->mask(),
+                  (const char *)si.current()->nick().latin1(),    
+                  (const char *)si.current()->mask().latin1(),
 
                   (si.current()->flag() > 0) ? "+" :
                     (si.current()->flag() < 0) ? "-" : ".",
-                  ((const char *)si.current()->message() != NULL) ?
-                     (const char *)si.current()->message() : "");
+                  ((const char *)si.current()->message().latin1() != NULL) ?
+                     (const char *)si.current()->message().latin1() : "");
 
       fputs(buf,fp);
    }

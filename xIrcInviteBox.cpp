@@ -41,7 +41,7 @@ xIrcInviteBox::xIrcInviteBox(xWidgetResInfo *pPRes, QWidget *pParent,
    setDefPallet(this, wdtRes);
    setDefFont(this, wdtRes);
 
-   for (cp = pMsg->msgStr; *cp && !isspace(*cp) &&
+   for (cp = pMsg->msgStr.latin1(); *cp && !isspace(*cp) &&
                            *cp != '\r' && *cp != '\n'; cp++)
       strChannel += *cp;
 
@@ -55,8 +55,8 @@ xIrcInviteBox::xIrcInviteBox(xWidgetResInfo *pPRes, QWidget *pParent,
    pLabel->setAlignment(AlignCenter);
    pLabel->setFrameStyle(QFrame::Panel | QFrame::Raised);
    sprintf(buff, "%s cordially invites you to channel %s",
-           (const char *)pMsg->srcNick,
-           (const char *)pMsg->msgStr);
+           (const char *)pMsg->srcNick.latin1(),
+           (const char *)pMsg->msgStr.latin1());
    pLabel->setText(buff);
    pLabel->adjustSize();
 

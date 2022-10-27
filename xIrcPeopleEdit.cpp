@@ -129,9 +129,9 @@ xIrcPeopleEdit::~xIrcPeopleEdit()
 void xIrcPeopleEdit::gotReturn()
 {
    int f;
-   pEntry->setNick(pNick->text());
-   pEntry->setMask(pMask->text());
-   pEntry->setMessage(pMessage->text());
+   pEntry->setNick(pNick->text().latin1());
+   pEntry->setMask(pMask->text().latin1());
+   pEntry->setMessage(pMessage->text().latin1());
    f = (pFlag->isChecked() == FALSE) ?
        0 : (pByAddr->isChecked() == TRUE) ? 1 : -1;
    pEntry->setFlag(f);
@@ -154,9 +154,9 @@ void xIrcPeopleEdit::gotButton(int btn)
          break;
 
       case Accepted:
-         pEntry->setNick(pNick->text());
-         pEntry->setMask(pMask->text());
-         pEntry->setMessage(pMessage->text());
+         pEntry->setNick(pNick->text().latin1());
+         pEntry->setMask(pMask->text().latin1());
+         pEntry->setMessage(pMessage->text().latin1());
          f = (pFlag->isChecked() == FALSE) ? 0 : (pByAddr->isChecked() == TRUE) ? 1 : -1;
          pEntry->setFlag(f);
          done(Accepted);

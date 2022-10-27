@@ -41,7 +41,7 @@ public:
    int import(const char *fn);
    void add(xIrcServerList &list);
    void add(xIrcServerEntry &entry);
-
+   void showEntries();
 };
 
 #endif

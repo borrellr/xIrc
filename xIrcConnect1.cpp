@@ -411,7 +411,7 @@ void xIrcConnect::goodConnection(int sock)
                       inet_ntoa(addr.sin_addr), 
                       htonl(addr.sin_addr.s_addr), addr.sin_port);
    }
-   pSocketBox->connected(QString("Connected: Waiting Response from Host"));
+   pSocketBox->connected(QString("Connected: Waiting Response from Host").latin1());
 // pMainWin->pWin->putString("Connected!!!\n");
 
 /*
@@ -425,17 +425,17 @@ void xIrcConnect::goodConnection(int sock)
    sock++;
    sendMsgToSocket(buf);
    if ((pRealName = Defaults.get("REALNAME")) == NULL)
-      pRealName = realName;
+      pRealName = realName.latin1();
    if ((cp = Defaults.get("EMAIL_ADDR")) == NULL)
    {
       pHostName = "dummy.hostname.org";
-      pUserName = userName;
+      pUserName = userName.latin1();
    }
    else
    {
       for (strTmp = ""; *cp && *cp != '@'; cp++)
          strTmp += *cp;
-      pUserName = strTmp;
+      pUserName = strTmp.latin1();
       if (*cp)
          pHostName = ++cp;
       else
@@ -643,7 +643,7 @@ void xIrcConnect::newNick()
          sendMsgToSocket(buf);
          break;
       }
-      else if((strlen(nickName) == 0) && (NickQuery->result() != Rejected))
+      else if(nickName.isEmpty() && (NickQuery->result() != Rejected))
          QMessageBox::warning(this, "Error", "You must choose a NickName");
       else
          break;
@@ -861,29 +861,29 @@ void xIrcConnect::showResponse(xIrcMessage *pMsg)
 
    switch(pMsg->rspCode) {
    case 25:
-      sprintf(buf, "*** Mode Change \"%s\"", (const char*)pMsg->msgStr);
+      sprintf(buf, "*** Mode Change \"%s\"", (const char*)pMsg->msgStr.latin1());
       break;
    case 27:
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStr2 = "*** " + pMsg->srcNick + " is now known as " + tmpStrList[1];
-      sprintf(buf, "%s", (const char*)tmpStr2);
+      sprintf(buf, "%s", (const char*)tmpStr2.latin1());
       break;
    case 29:
-      sprintf(buf, "*** Left Channel %s", (const char*)pMsg->dstStr);
+      sprintf(buf, "*** Left Channel %s", (const char*)pMsg->dstStr.latin1());
       break;
    case 33:
       tmpStr = pMsg->rawMsg;
       pos = tmpStr.find(":", 1);
       tmpStr.remove(0, ++pos);
       tmpStr2 = "*** Signoff " + pMsg->srcNick + ": " + tmpStr;
-      sprintf(buf, "%s", (const char*)tmpStr2);
+      sprintf(buf, "%s", (const char*)tmpStr2.latin1());
       break;
    case 311:
       tmpStrList = QStringList::split(":",  pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " is " + tmpStrList1[4] + "@";
       tmpStr2 += tmpStrList1[5] + "(" + tmpStrList[1] + ")";
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 312:
       tmpStr = pMsg->rawMsg;
@@ -892,36 +892,36 @@ void xIrcConnect::showResponse(xIrcMessage *pMsg)
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** on irc server " + tmpStrList1[4] + "(" + tmpStr + ")";
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 314:
       tmpStrList = QStringList::split(":",  pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " was " + tmpStrList1[4] + "@";
       tmpStr2 += tmpStrList1[5] + "(" + tmpStrList[1] + ")";
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 318:
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " " + tmpStrList[1];
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 319:
       tmpStr = pMsg->rawMsg;
       pos = tmpStr.find(":", 1);
       tmpStr.remove(0, ++pos);
       tmpStr2 = "*** on irc channel(s) : " + tmpStr;
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 369:
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " " + tmpStrList[1];
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    default:
-      sprintf(buf, "*** %s", (const char *)pMsg->msgStr);
+      sprintf(buf, "*** %s", (const char *)pMsg->msgStr.latin1());
    }
    pMainWin->pWin->putString(buf);
 }

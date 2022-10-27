@@ -150,7 +150,7 @@ const char *xIrcCommands::text(int cmd)
    {
       sprintf(buf, "%d::", cmd);
       tmpStr = buf;
-      rv = tmpStr;
+      rv = tmpStr.latin1();
    }
    return(rv);
 }

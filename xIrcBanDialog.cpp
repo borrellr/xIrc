@@ -121,7 +121,7 @@ void xIrcBanDialog::gotButton(int btn)
       case Kick:
       case Accepted:
          if (dbg) fprintf(stdout, "xIrcBanDialog::gotButton():Accepting??\n\r");
-         if (strlen(pMask->text()) == 0)
+         if (pMask->text().isEmpty())
          {
             QMessageBox::warning(this, "Error", "No Ban Mask Specified");
             return;

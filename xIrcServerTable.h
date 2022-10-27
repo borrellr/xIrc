@@ -79,6 +79,7 @@ public slots:
 
 private:
    void setSB();
+   void showMaskEntries();
 
    QString                 groupMask;
    QString                 countryMask;

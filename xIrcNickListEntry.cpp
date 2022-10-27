@@ -84,22 +84,22 @@ bool xIrcNickListEntry::is(const char *pName, bool byNick)
    {
       if (dbg > 2) fprintf(stdout, "xIrcNickListEntry::is():Test by name\n");
       if (dbg > 2) fflush(stdout);
-      for (tmpNick = "", cp = nick; *cp; cp++)
+      for (tmpNick = "", cp = nick.latin1(); *cp; cp++)
          tmpNick += toupper(*cp);
    }
    else
    {
       if (dbg > 2) fprintf(stdout, "xIrcNickListEntry::is():Test by addr\n");
       if (dbg > 2) fflush(stdout);
-      for (tmpNick = "", cp = addr; *cp; cp++)
+      for (tmpNick = "", cp = addr.latin1(); *cp; cp++)
          tmpNick += toupper(*cp);
    }
 
    if (dbg > 2) fprintf(stdout, "xIrcNickListEntry::is():Testing |%s| against |%s|\n",
-                              (const char *)tmpName, (const char *)tmpNick);
+                              (const char *)tmpName.latin1(), (const char *)tmpNick.latin1());
    if (dbg > 2) fflush(stdout);
-   cp1 = (const char *)tmpNick;
-   cp2 = (const char *)tmpName;
+   cp1 = (const char *)tmpNick.latin1();
+   cp2 = (const char *)tmpName.latin1();
    if (dbg > 2) fprintf(stdout, "xIrcNickListEntry::is():cp1 = |%s|\n", cp1);
    if (dbg > 2) fflush(stdout);
    if (dbg > 2) fprintf(stdout, "xIrcNickListEntry::is():cp2 = |%s|\n", cp2);
@@ -141,7 +141,7 @@ const char *xIrcNickListEntry::getNick(bool fullName)
 
    if (dbg) fprintf(stdout, "xIrcNickListEntry::getNick():Enter\n");
    if (dbg) fflush(stdout);
-   cp = nick;
+   cp = nick.latin1();
    if (dbg) fprintf(stdout, "xIrcNickListEntry::getNick():Raw nick = |%s|, fullName = %d\n", cp, fullName);
    if (dbg) fflush(stdout);
    if (fullName || *cp != '@')

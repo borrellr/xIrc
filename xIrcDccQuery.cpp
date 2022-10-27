@@ -103,7 +103,7 @@ void xIrcDccQuery::setupQuery(const char *pType, xIrcMessage *pMsg)
    strTmp += pMsg->srcNick;
    
    strTmp += "\n\nAccept?";
-   if (dbg) fprintf(stdout, "xIrcDccQuery::setupQuery():Setting Query Text to |%s|\n", (const char *)strTmp);
+   if (dbg) fprintf(stdout, "xIrcDccQuery::setupQuery():Setting Query Text to |%s|\n", (const char *)strTmp.latin1());
    if (dbg) fflush(stdout);
    pHeader->setText(strTmp);
    pHeader->adjustSize();

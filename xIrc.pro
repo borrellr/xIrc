@@ -19,6 +19,6 @@ xIrcPeopleList.h xIrcPeopleTable.h xIrcServerEdit.h xIrcServerEntry.h \
 xIrcServerList.h xIrcServerQuery.h xIrcServerTable.h xIrcSocket.h
 INCLUDEPATH += ../libX++
 LIBS += -lX++ -L/usr/local/lib/xIrc
-DEFINES += QT2 QT3
+DEFINES += QT2 QT3 QT_NO_ASCII_CAST
 CONFIG += qt warn_on release
 TARGET += xIrc

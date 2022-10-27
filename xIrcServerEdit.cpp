@@ -171,12 +171,12 @@ xIrcServerEdit::~xIrcServerEdit()
 
 void xIrcServerEdit::gotReturn()
 {
-   pEntry->setGroup(pGroup->text());
-   pEntry->setCountry(pCountry->text());
-   pEntry->setState(pState->text());
-   pEntry->setCity(pCity->text());
-   pEntry->setServer(pServer->text());
-   pEntry->setPorts(pPort->text());
+   pEntry->setGroup(pGroup->text().latin1());
+   pEntry->setCountry(pCountry->text().latin1());
+   pEntry->setState(pState->text().latin1());
+   pEntry->setCity(pCity->text().latin1());
+   pEntry->setServer(pServer->text().latin1());
+   pEntry->setPorts(pPort->text().latin1());
    done(Accepted);
 }
 
@@ -193,4 +193,3 @@ void xIrcServerEdit::gotButton(int btn)
          break;
    }
 }
-//#include "xIrcServerEdit.moc"

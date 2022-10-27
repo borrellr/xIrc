@@ -135,10 +135,10 @@ static XrmOptionDescList opts = NULL;
 static const char *defaultSpecHandler(QString strSeq)
 {
    static QString rv;
-   const char *cp = strSeq;
+   const char *cp = strSeq.latin1();
 
    rv = parseAttr(&cp, TRUE, FALSE);
-   return((const char *)rv);
+   return((const char *)rv.latin1());
 }
 
 static void setDefaults()
@@ -215,7 +215,7 @@ static void setFonts(xResources *r, QApplication *a)
    ccp3 = r->get(&appRes, "font.size", "Font.Size");
 
    if (ccp1 == NULL)
-      ccp1 = a->font().family();
+      ccp1 = a->font().family().latin1();
    if (ccp2 == NULL)
    {
       sprintf(fontWeight, "%d", a->font().weight());
