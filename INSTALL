@@ -1,35 +1,47 @@
 Installation Notes:
 
+ENVIRONMENT
+------------------------
+On Windows 10, the following:
+
+- Install VMWare Player (see www.vmware.com for details).
+  Alternatively you can use a different virtual machine product.
+- Install GitHub Desktop and WinSCP.
+- Download the CentOSv4.8 ISOs and perform an install.  Ensure that you install
+  all required development tools (gcc, g++, qt-3.3, qt-3.3-devel, qmake and
+  required dependencies) NOTE: CentOSv4 does not come with git client.
+
+
 SOURCE CODE install path
 ------------------------
-Starting xIrc-2.3.8, a port to Qt-2.1.1 or higher is required. Working with the source, do
+- Use the GitHub Desktop to checkout the xIrc source code from
+  http://github.com/borrellr/xIrc/
+- Use the GitHub Desktop to checkout the libX++ source code from
+  http://github.com/borrellr/libX++/
+- Using WinScp transfer the source into CentOS system into working directory.
+- Set the environment variable QTDIR=/usr/lib/qt-3.3.3 (for CentOSv4).
+- First build the libX++.so.1.0.0. Run qmake, which should create the Makefile.
+  Run make.  If successful, it will create the libX++.so.1.0.0 along with its
+  link files. 
+- As root on create the /usr/local/lib/xIrc directory. Copy the servers.dat and
+  xIrc.defaults file in /usr/local/lib/xIrc.
+- Copy the libX++.so.1.0.0 into /usr/local/lib/xIrc. Create the links from
+  libX++.so.1.0.0 to libX++.so.1.0, libX++.so.1, and libX++.so. Copy the the
+  xIrc.conf to /etc/ld.so.conf.d/ directory and run ldconfig.
+- In the working xIrc directory, run qmake to create the Makefile. Run make.
+  If successful, you should have a working xIrc binary.
 
-  tar zxf xIrc-2.3.8.tar.gz (for those using GNU tar) or
+CUSTOMIZATIONS
+----------------
+You can create your own customizations in your home directory.  With .servers
+you can have own custom irc servers.  Using a colon as the separator, the
+required fields are group, country, state, city, server, and ports.  You can
+have more than one port listed, which is comma separated.  For example:
 
-  gunzip -c xIrc-2.3.8.tar.gz | tar xf - (for those using non GNU tar).
+EFNet:USA:AZ:Phoenix:irc.primenet.com:6667 
 
-cd xIrc-2.3.8
+In the .xIrc directory, you can have your own custom variables in the
+xIrc.defaults file.  The entries are simple as demonstrated in following:
 
-Set QTDIR=/path_to_qt211_base/ (e.g., QTDIR=/usr/lib/qt-2.1.1 for bash users)
-
-Type
-      ./configure
-or
-      ./configure --with-qt-libraries=$QTDIR/lib --with-qt-includes=$QTDIR/include
-
-Type make (preferably GNU make).
-
-After the compiling phase, type make install as root.
-
-NOTE:
-There is nolonger support for Qt-1.44.
-
-REDHAT PACKAGE
---------------
-
-rpm -ihv xIrc-2.3.7-1.i386.rpm
-
-SOLARIS 7 x86 PACKAGE
----------------------
-
-Discontinued.
+nicks= Rhys JohnConner Terminator JohnHenry
+channels= #centos #qt #chatzone

@@ -300,9 +300,9 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.3.8 \n"
+                  "Version: 2.3.9 \n"
                   "License: GPL\n"
-                  "Copyright: 1997-2001\n\n"
+                  "Copyright: 1997-2022\n\n"
                   "Maintained by Robert Borrell\n"
                   "Developed by Joe Croft");
 }

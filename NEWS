@@ -6,6 +6,11 @@ xIrc is now in GitHub.com. News can be found in at the following URL:
 
 http://github.com/borrellr/xIrc/NEWS
 
+Official release of xIrc-2.3.9.
+
+The source code has been migrated to Qt3 (v3.3.3) running on CentOSv4 (v4.8)
+using gcc v3.4.6.
+
 May 20, 2001
 ============
 
