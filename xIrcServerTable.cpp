@@ -30,7 +30,7 @@
 #include "xIrcMircServerParse.h"
 #include "xIrcServerTable.h"
 
-static bool dbg = true;
+static bool dbg = false;
 
 static const char *pInitialResources[] =
 {
@@ -626,22 +626,33 @@ void xIrcServerTable::newMask(bool force)
       cityMask = ((xEdit*)pTable2->getWidget(3, 0))->text();
       serverMask = ((xEdit*)pTable2->getWidget(4, 0))->text();
 
-#if 0
-      xIrcServerEntry mask(
-         ((xEdit*)pTable2->getWidget(0, 0))->text(),
-         ((xEdit*)pTable2->getWidget(1, 0))->text(),
-         ((xEdit*)pTable2->getWidget(2, 0))->text(),
-         ((xEdit*)pTable2->getWidget(3, 0))->text(),
-         ((xEdit*)pTable2->getWidget(4, 0))->text(),
-         "*");
-#else
+      int pos = 0;
+      QRegExp rx("[A-Z][a-z]+");
+      QRegExpValidator v(rx, 0);
+
+      if (!v.validate(groupMask, pos))
+         groupMask = "*";
+
+      if (!v.validate(countryMask, pos))
+         countryMask = "*";
+
+      if (!v.validate(stateMask, pos))
+         stateMask = "*";
+
+      if (!v.validate(cityMask, pos))
+         cityMask = "*";
+
+      if (!v.validate(serverMask, pos))
+         serverMask = "*";
+
       showMaskEntries();
-//      xIrcServerEntry mask(
-//         groupMask.latin1(), countryMask.latin1(), stateMask.latin1(),
-//         cityMask.latin1(), serverMask.latin1(), "*");
-      xIrcServerEntry mask("*", "*", "*", "*", "*", "*");
+
+      xIrcServerEntry mask(
+         groupMask.latin1(), countryMask.latin1(), stateMask.latin1(),
+         cityMask.latin1(), serverMask.latin1(), "*");
+//      xIrcServerEntry mask("*", "*", "*", "*", "*", "*");
       mask.showEntries();
-#endif
+
       xIrcServerList *list = new xIrcServerList(*pServerList, &mask);
       delete pServerList1;
       pServerList1 = list;

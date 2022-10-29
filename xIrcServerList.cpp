@@ -44,10 +44,6 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    QRegExp portsRE;
    xIrcServerListIterator si(list);
 
-#ifndef QT3
-   int x;
-#endif
-
    portsRE.setWildcard(TRUE);
    serverRE.setWildcard(TRUE);
    stateRE.setWildcard(TRUE);
@@ -55,32 +51,6 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    countryRE.setWildcard(TRUE);
    groupRE.setWildcard(TRUE);
 
-#ifndef QT3
-   if (entry != NULL && strlen(entry->group()) > 0)
-      groupRE = entry->group();
-   else
-      groupRE = wc;
-
-   if (entry != NULL && strlen(entry->country()) > 0)
-      countryRE = entry->country();
-   else
-      countryRE = wc;
-
-   if (entry != NULL && strlen(entry->state()) > 0)
-      stateRE = entry->state();
-   else
-      stateRE = wc;
-
-   if (entry != NULL && strlen(entry->city()) > 0)
-      cityRE = entry->city();
-   else
-      cityRE = wc;
-
-   if (entry != NULL && strlen(entry->city()) > 0)
-      serverRE = entry->server();
-   else
-      serverRE = wc;
-#else
    if (entry != NULL && !entry->group().isEmpty())
       groupRE.setPattern(entry->group());
    else
@@ -113,27 +83,15 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    printf ("City pattern is [%s]\n", cityRE.pattern().latin1());
    printf ("Server pattern is [%s]\n", serverRE.pattern().latin1());
 
-#endif
-      
    for (; si.current() != NULL; ++si)
    {
-#ifndef QT3
-      if ((groupRE.match(si.current()->group(), 0, &x) >= 0) &&
-          (countryRE.match(si.current()->country(), 0, &x) >= 0) && 
-          (stateRE.match(si.current()->state(), 0, &x) >= 0) && 
-          (cityRE.match(si.current()->city(), 0, &x) >= 0) && 
-          (serverRE.match(si.current()->server(), 0, &x) >= 0))
-#else
       if (groupRE.exactMatch(si.current()->group()) &&
           countryRE.exactMatch(si.current()->country()) && 
           stateRE.exactMatch(si.current()->state()) && 
           cityRE.exactMatch(si.current()->city()) && 
           serverRE.exactMatch(si.current()->server()))
-#endif
       {
          add(*si.current());
-//      }  else {
-//        printf ("No match....\n");
       }
    }
 }
