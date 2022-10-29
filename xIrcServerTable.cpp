@@ -636,9 +636,10 @@ void xIrcServerTable::newMask(bool force)
          "*");
 #else
       showMaskEntries();
-      xIrcServerEntry mask(
-         groupMask.latin1(), countryMask.latin1(), stateMask.latin1(),
-         cityMask.latin1(), serverMask.latin1(), "*");
+//      xIrcServerEntry mask(
+//         groupMask.latin1(), countryMask.latin1(), stateMask.latin1(),
+//         cityMask.latin1(), serverMask.latin1(), "*");
+      xIrcServerEntry mask("*", "*", "*", "*", "*", "*");
       mask.showEntries();
 #endif
       xIrcServerList *list = new xIrcServerList(*pServerList, &mask);

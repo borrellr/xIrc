@@ -46,6 +46,7 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
 
 #ifndef QT3
    int x;
+#endif
 
    portsRE.setWildcard(TRUE);
    serverRE.setWildcard(TRUE);
@@ -53,7 +54,6 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    cityRE.setWildcard(TRUE);
    countryRE.setWildcard(TRUE);
    groupRE.setWildcard(TRUE);
-#endif
 
 #ifndef QT3
    if (entry != NULL && strlen(entry->group()) > 0)
@@ -132,8 +132,8 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
 #endif
       {
          add(*si.current());
-      } else {
-        printf ("No match....\n");
+//      }  else {
+//        printf ("No match....\n");
       }
    }
 }
