@@ -20,8 +20,8 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <qapplication.h>
-
 #include <qpainter.h>
 #include <qwindowdefs.h>
 #include <qfontinfo.h>
@@ -44,8 +44,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <xGauge.h>
-
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcNickQuery.h"
@@ -53,12 +51,11 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
-#include <xApp.h>
 #include <xResources.h>
 #include <xDefaults.h>
 #include <xMisc.h>
 
-static int dbg = 0;
+static bool  dbg = false;
 
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
@@ -72,18 +69,13 @@ QPixmap *AppPixMap;
 xIrcMsgDispatch Dispatcher;
 
 xDefaults Defaults;
-xApplication *pApp = NULL;
 
-#ifdef QT2
 QEvent qEvt(QEvent::User);
-#else
-QEvent qEvt(-1);
-#endif
 
 static const char *pInitialResources[] =
 {
    "XIRC*PixMap: xIrc.ppm",
-   "XIRC*PixMapPath: ./;~/;"XIRCRESOURCEPATH";",
+   "XIRC*PixMapPath: ./;~/;/usr/local/lib/xIrc;",
    "XIRC*Font.Family: Helvetica",
    "XIRC*Font.Size: 12",
    "XIRC*Font.Weight: normal",
@@ -132,7 +124,7 @@ static const char *pInitialResources[] =
    "XIRC*ServerDialog.ImportPath: ./",
    "XIRC*ServerDialog.ImportFilter: *.ini",
    "XIRC*ServerDialog.Filename: servers.dat",
-   "XIRC*ServerDialog.Path: "XIRCRESOURCEPATH,
+   "XIRC*ServerDialog.Path: /usr/local/lib/xIrc",
    "XIRC*ServerDialog.Filter: .*",
    NULL
 };
@@ -143,66 +135,46 @@ static XrmOptionDescList opts = NULL;
 static const char *defaultSpecHandler(QString strSeq)
 {
    static QString rv;
-   const char *cp = strSeq;
+   const char *cp = strSeq.latin1();
 
    rv = parseAttr(&cp, TRUE, FALSE);
-   return((const char *)rv);
-}
-
-static void sigpipe(int s)
-{
-   s = 0;
-   if (dbg) fprintf(stdout, "*** Got SIGPIPE!\n");
-}
-
-class MyApp : public xApplication
-{
-public:
-   MyApp(int argc, char **argv);
-   bool notify(QObject *pRcvr, QEvent *pEvt);
-};
-
-MyApp::MyApp(int argc, char **argv) :
-         xApplication(argc, argv)
-{
-   if (dbg) fprintf(stdout, "MyApp::MyApp()!!!\n");
-   if (dbg) fflush(stdout);
-}
-
-bool MyApp::notify(QObject *pRcvr, QEvent *pEvt)
-{
-   return(xApplication::notify(pRcvr, pEvt));
+   return((const char *)rv.latin1());
 }
 
 static void setDefaults()
 {
    FILE *pfd;
+   char dnam[128];
+   const char *cp;
 
    if (dbg) fprintf(stdout, "main():Opening defaults\n");   
    if (dbg) fflush(stdout);
    if ((pfd = fopen("xIrc.defaults", "r")) == NULL)
    {
-      char dnam[128];
-      const char *cp;
-      
-      if ((cp = getenv("HOME")) != NULL)
-      {
-         strcpy(dnam, cp);
-         strcat(dnam, "/.xIrc");
-         if (dbg) fprintf(stdout, "main():Trying defaults file |%s|\n", dnam);   
-         if (dbg) fflush(stdout);
-         pfd = fopen(dnam, "r");
-//         if (dbg) fprintf(stdout, "main():Defaults file pointer = |0x%x|\n", pfd);   
-//         if (dbg) fflush(stdout);
-      }
+      return;
    }
    Defaults.setCallBack(defaultSpecHandler);
 //   Defaults.setEscapes(defEscapes);
    Defaults.load(pfd, NULL);
+   fclose(pfd);
+
+   // Load custom options
+   if ((cp = getenv("HOME")) != NULL)
+   {
+      FILE *pfd2;
+      strcpy(dnam, cp);
+      strcat(dnam, "/.xIrc/xIrc.ini");
+      if (dbg) fprintf(stdout, "main():Trying defaults file |%s|\n", dnam);   
+      if (dbg) fflush(stdout);
+      if ((pfd2 = fopen(dnam, "r")) != NULL) {
+         Defaults.load(pfd2, NULL);
+         fclose(pfd2);
+      }
+   }
 //   if (dbg) Defaults.show();
 }
 
-static void setColors(xResources *r, xApplication *a)
+static void setColors(xResources *r, QApplication *a)
 {
    QColor fg, bg, baseColor, textColor;
    const char *ccp1 = NULL;
@@ -233,37 +205,25 @@ static void setColors(xResources *r, xApplication *a)
    a->setPalette(p);
 }
 
-static void setFonts(xResources *r, xApplication *a)
+static void setFonts(xResources *r, QApplication *a)
 {
    char fontWeight[80], fontSize[80];
    const char *ccp1, *ccp2, *ccp3;
 
-   ccp1 = Resources->get(&appRes, "font.family", "Font.Family");
-   ccp2 = Resources->get(&appRes, "font.weight", "Font.Weight");
-   ccp3 = Resources->get(&appRes, "font.size", "Font.Size");
+   ccp1 = r->get(&appRes, "font.family", "Font.Family");
+   ccp2 = r->get(&appRes, "font.weight", "Font.Weight");
+   ccp3 = r->get(&appRes, "font.size", "Font.Size");
 
    if (ccp1 == NULL)
-#ifdef QT2
-      ccp1 = a->font().family();
-#else
-      ccp1 = a->font()->family();
-#endif
+      ccp1 = a->font().family().latin1();
    if (ccp2 == NULL)
    {
-#ifdef QT2
       sprintf(fontWeight, "%d", a->font().weight());
-#else
-      sprintf(fontWeight, "%d", a->font()->weight());
-#endif
       ccp2 = fontWeight;
    }
    if (ccp3 == NULL)
    {
-#ifdef QT2
       sprintf(fontSize, "%d", a->font().pointSize());
-#else
-      sprintf(fontSize, "%d", a->font()->pointSize());
-#endif
       ccp3 = fontSize;
    }
 
@@ -272,7 +232,7 @@ static void setFonts(xResources *r, xApplication *a)
 
 static void setPixMap()
 {
-   const char *ccp1, *ccp2, *ccp3;
+   const char *ccp1, *ccp2;
    char *cp, tmpBuf[512], pmBuf[256];
 
    if (dbg) fprintf(stdout, "main():Getting Pixmap file name\n");   
@@ -393,38 +353,18 @@ static void DeleteWindows()
    if (dbg) fflush(stdout);
 }
 
-int main(int argc, char **argv)
+void xIrcInitialize(QApplication& app)
 {
    QFont defFont;
-   struct sigaction sa;
-   const char *ccp1;
    char buf[256];
 
-   if (dbg) fprintf(stdout, "main():Enter\n");   
-   if (dbg) fflush(stdout);
-
-   /*
-   ** Personal preference is to initialize each member individualy, but some
-   ** flavors of Unix, such as SGI, don't have all the members Linux does.
-   ** This should be just as effective though for both systems.
-   */
-   memset(&sa, 0, sizeof(sa));
-   sa.sa_handler = sigpipe;
-   sigaction(SIGPIPE, &sa, NULL);
-
-   ccp1 = NULL;
-   Resources = new xResources(&ccp1, &opts, 0, &argc, argv);
-   Resources->setWidgetInit(pInitialResources);
-   MyApp a( argc, argv );
-   pApp = &a;
-
    setDefaults();
-   setColors(Resources, pApp);
-   setFonts(Resources, pApp);
+   setColors(Resources, &app);
+   setFonts(Resources, &app);
    setPixMap();
    InitializeWindows();
 
-   a.setMainWidget( pTWindow );
+   qApp->setMainWidget( pTWindow );
    pTWindow->show();
    for (;;)
    {
@@ -437,8 +377,23 @@ int main(int argc, char **argv)
    pTWindow->setCaption(buf);
    pTWindow->show();
    pTWindow->newServer();
+}
 
-   a.exec();
+int main(int argc, char **argv)
+{
+   const char *ccp1 = NULL; 
+
+   if (dbg) fprintf(stdout, "main():Enter\n");   
+   if (dbg) fflush(stdout);
+
+   Resources = new xResources(&ccp1, &opts, 0, &argc, argv);
+   Resources->setWidgetInit(pInitialResources);
+
+   QApplication app(argc, argv);
+
+   xIrcInitialize(app);
+
+   app.exec();
 
    DeleteWindows();
 }

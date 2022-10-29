@@ -21,8 +21,8 @@
 **
  ***************************************************************************/
 #include <stdio.h>
-#include <qlist.h>
-//#include <qobjcoll.h>
+#include <qt.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <qlabel.h>
 #include "xLabel.h"
@@ -30,7 +30,7 @@
 #include "xIrcMircServerParse.h"
 #include "xIrcServerTable.h"
 
-static int dbg = 0;
+static bool dbg = true;
 
 static const char *pInitialResources[] =
 {
@@ -44,6 +44,7 @@ xIrcServerTable::xIrcServerTable(xWidgetResInfo *pPRes, QWidget *pParent,
                   xALIGN_Vert, xSPACE_Resize, 0, pParent, pName)
 {
    int x;
+   const char *resVal;
    QLabel *pLabel;
    xLabel *pLabel2;
    xEdit *pEdit;
@@ -63,11 +64,27 @@ xIrcServerTable::xIrcServerTable(xWidgetResInfo *pPRes, QWidget *pParent,
    setFrameStyle(QFrame::Panel | QFrame::Raised);
    setMargins(0, 0);
 
-   groupMask = Resources->get(wdtRes, "mask.group", "Mask.Group");
-   countryMask = Resources->get(wdtRes, "mask.country", "Mask.Country");
-   stateMask = Resources->get(wdtRes, "mask.state", "Mask.State");
-   cityMask = Resources->get(wdtRes, "mask.city", "Mask.City");
-   serverMask = Resources->get(wdtRes, "mask.server", "Mask.Server");
+   resVal = Resources->get(wdtRes, "mask.group", "Mask.Group");
+   if (resVal != NULL)
+      groupMask = resVal;
+
+   resVal = Resources->get(wdtRes, "mask.country", "Mask.Country");
+   if (resVal != NULL)
+      countryMask = resVal;
+
+   resVal = Resources->get(wdtRes, "mask.state", "Mask.State");
+   if (resVal != NULL)
+      stateMask = resVal;
+
+   resVal = Resources->get(wdtRes, "mask.city", "Mask.City");
+   if (resVal != NULL)
+      cityMask = resVal;
+
+   resVal = Resources->get(wdtRes, "mask.server", "Mask.Server");
+   if (resVal != NULL)
+      serverMask = resVal;
+
+   showMaskEntries();
 
    if (dbg) fprintf(stdout, "xIrcServerTable::xIrcServerTable():Creating Field Table\n");
    if (dbg) fflush(stdout);
@@ -215,11 +232,7 @@ xIrcServerTable::xIrcServerTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
 
    pServerList = new xIrcServerList();
    pServerList1 = new xIrcServerList();
@@ -248,6 +261,7 @@ void xIrcServerTable::clear()
 void xIrcServerTable::readFile(const char *fn)
 {
    pServerList->readFile(fn);
+//   pServerList->showEntries();
 
    newMask(TRUE);
    setSB();
@@ -309,11 +323,11 @@ void xIrcServerTable::showRows(int row)
       ;
    for (r = 0; r < pTable->rows() && si.current() != NULL; ++si)
    {
-      ((QLabel*)pTable->getWidget(0, r))->setText(si.current()->group());
-      ((QLabel*)pTable->getWidget(1, r))->setText(si.current()->country());
-      ((QLabel*)pTable->getWidget(2, r))->setText(si.current()->state());
-      ((QLabel*)pTable->getWidget(3, r))->setText(si.current()->city());
-      ((QLabel*)pTable->getWidget(4, r))->setText(si.current()->server());
+      ((QLabel*)pTable->getWidget(0, r))->setText(si.current()->group().latin1());
+      ((QLabel*)pTable->getWidget(1, r))->setText(si.current()->country().latin1());
+      ((QLabel*)pTable->getWidget(2, r))->setText(si.current()->state().latin1());
+      ((QLabel*)pTable->getWidget(3, r))->setText(si.current()->city().latin1());
+      ((QLabel*)pTable->getWidget(4, r))->setText(si.current()->server().latin1());
       if (selRow >= row && selRow < row + pTable->rows())
       {
          if (dbg) fprintf(stdout, "xIrcServerTable::showRows():selRow = %d\n", selRow);
@@ -596,8 +610,9 @@ void xIrcServerTable::setNewMask()
 
 void xIrcServerTable::newMask(bool force)
 {
-   if (dbg) fprintf(stdout, "xSqlTable::newMask():Enter\n");
-   if (dbg) fflush(stdout);
+   if (dbg) printf("xIrcServerTable::newMask():Enter\n");
+
+   showMaskEntries();
    if (force == TRUE ||
        (groupMask != ((xEdit*)pTable2->getWidget(0, 0))->text()) ||
        (countryMask != ((xEdit*)pTable2->getWidget(1, 0))->text()) ||
@@ -611,6 +626,7 @@ void xIrcServerTable::newMask(bool force)
       cityMask = ((xEdit*)pTable2->getWidget(3, 0))->text();
       serverMask = ((xEdit*)pTable2->getWidget(4, 0))->text();
 
+#if 0
       xIrcServerEntry mask(
          ((xEdit*)pTable2->getWidget(0, 0))->text(),
          ((xEdit*)pTable2->getWidget(1, 0))->text(),
@@ -618,6 +634,14 @@ void xIrcServerTable::newMask(bool force)
          ((xEdit*)pTable2->getWidget(3, 0))->text(),
          ((xEdit*)pTable2->getWidget(4, 0))->text(),
          "*");
+#else
+      showMaskEntries();
+//      xIrcServerEntry mask(
+//         groupMask.latin1(), countryMask.latin1(), stateMask.latin1(),
+//         cityMask.latin1(), serverMask.latin1(), "*");
+      xIrcServerEntry mask("*", "*", "*", "*", "*", "*");
+      mask.showEntries();
+#endif
       xIrcServerList *list = new xIrcServerList(*pServerList, &mask);
       delete pServerList1;
       pServerList1 = list;
@@ -626,7 +650,7 @@ void xIrcServerTable::newMask(bool force)
    }
    else
       emit returnPressed();
-   if (dbg) fprintf(stdout, "xSqlTable::newMask():Enter\n");
+   if (dbg) fprintf(stdout, "xIrcServerTable::newMask():Enter\n");
    if (dbg) fflush(stdout);
 }
 
@@ -657,4 +681,13 @@ void xIrcServerTable::setSB()
    }
    selRow = 0;
    curRow = 0;
+}
+
+void xIrcServerTable::showMaskEntries()
+{
+   printf ("Group Mask is   |%s|\n", groupMask.latin1());
+   printf ("Country Mask is |%s|\n", countryMask.latin1());
+   printf ("State Mask is   |%s|\n", stateMask.latin1());
+   printf ("City Mask is    |%s|\n", cityMask.latin1());
+   printf ("Server Mask is  |%s|\n", serverMask.latin1());
 }

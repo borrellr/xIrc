@@ -2,5 +2,8 @@
 *.un~
 AUTHORS~
 ChangeLog~
-libX++/moc_xDialog.cpp
 README~
+libX++/moc_xDialog.cpp
+moc_servereditdialog.cpp
+NEWS~
+INSTALL~

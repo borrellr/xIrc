@@ -31,6 +31,7 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <qt.h>
 #include <qkeycode.h>
 #include <qmenubar.h>
 #include <qmessagebox.h>
@@ -43,7 +44,7 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
-static int dbg = 0;
+static bool  dbg = false;
 
 extern xIrcLineEditQuery *KickQuery;
 extern xIrcCommands ircResponses;
@@ -57,13 +58,13 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
    xIrcMessage msg;
    xIrcMessageFrame *pMsg;
    xIrcDccChatFrame *pDccChatFrame;
+   struct sockaddr_in addr = pSocket->socketName();
 
    switch (txtSel.iData)
    {
       case xIrcNickActionQuery::DccChat:
-//         struct sockaddr_in addr = pSocket->socketName();
-//         sprintf(buf, "%d", addr.sin_addr.s_addr);
-         if ((pDccChatFrame = new xIrcDccChatFrame(wdtPrv, NULL, txtSel.text)) != NULL)
+         sprintf(buf, "%d", addr.sin_addr.s_addr);
+         if ((pDccChatFrame = new xIrcDccChatFrame(wdtPrv, NULL, txtSel.text.latin1())) != NULL)
          {
             connect(pDccChatFrame, SIGNAL(initiateDCCChat(xIrcDccChatFrame*)),
                     this, SLOT(initiateDCCChat(xIrcDccChatFrame*)));
@@ -76,7 +77,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
             else
             {
                sprintf(buf, "Error Accepting Connection from %s:%s",
-                            (const char *)txtSel.text, strerror(err));
+                            (const char *)txtSel.text.latin1(), strerror(err));
                QMessageBox::warning(this, "Error", buf);
                disconnect(pDccChatFrame, SIGNAL(initiateDCCChat(xIrcDccChatFrame*)),
                           this, SLOT(initiateDCCChat(xIrcDccChatFrame*)));
@@ -86,23 +87,23 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
          return;
                   
       case xIrcNickActionQuery::PrivChat:
-         if (findMsgFrame(txtSel.text) == NULL)
+         if (findMsgFrame(txtSel.text.latin1()) == NULL)
          {
             if (dbg) fprintf(stdout, "xIrcConnect::gotChannelBoxResults():Creating Message Frame\n");
             if (dbg) fflush(stdout);
-            if ((pMsg = makeNewMsgFrame(NULL, txtSel.text)) != NULL)
+            if ((pMsg = makeNewMsgFrame(NULL, txtSel.text.latin1())) != NULL)
             {
                if (dbg) fprintf(stdout, "xIrcConnect::gotChannelBoxResults():Showing Message Frame\n");
                if (dbg) fflush(stdout);
                pMsg->show();
                if (dbg) fprintf(stdout, "xIrcConnect::gotChannelBoxResults():Getting channel name\n");
                if (dbg) fflush(stdout);
-               cp = txtSel.text;
+               cp = txtSel.text.latin1();
                if (*cp == '#')
                {
                   if (dbg) fprintf(stdout, "xIrcConnect::gotChannelBoxResults():Joining channel\n");
                   if (dbg) fflush(stdout);
-                  sprintf(buf, "JOIN %s\n", (const char *)txtSel.text);
+                  sprintf(buf, "JOIN %s\n", (const char *)txtSel.text.latin1());
                   sendMsgToSocket(buf);
                }
             }     
@@ -113,7 +114,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
          return;
 
       case xIrcNickActionQuery::Kick:
-         cp = txtSel.winName;
+         cp = txtSel.winName.latin1();
          if (*cp != '#')
          {
             QMessageBox::warning(this, "Error", "Channel not specified!!");
@@ -154,7 +155,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
          break;
 
       case xIrcNickActionQuery::Ban:
-         cp = txtSel.winName;
+         cp = txtSel.winName.latin1();
          if (*cp != '#')
          {
             QMessageBox::warning(this, "Error", "Channel not specified!!");
@@ -174,7 +175,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
          break;
 
       case xIrcNickActionQuery::GiveOps:
-         cp = txtSel.winName;
+         cp = txtSel.winName.latin1();
          if (*cp != '#')
          {
             QMessageBox::warning(this, "Error", "Channel not specified!!");
@@ -191,7 +192,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
          break;
 
       case xIrcNickActionQuery::TakeOps:
-         cp = txtSel.winName;
+         cp = txtSel.winName.latin1();
          if (*cp != '#')
          {
             QMessageBox::warning(this, "Error", "Channel not specified!!");
@@ -280,9 +281,9 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
             int fd;
 
             if (dbg) fprintf(stdout, "xIrcConnect::nickActionHandler(():Opening file |%s|\n",
-                                      (const char *)file);
+                                      (const char *)file.latin1());
             if (dbg) fflush(stdout);
-            if ((fd = open((const char*)file, O_RDONLY)) >= 0)
+            if ((fd = open((const char*)file.latin1(), O_RDONLY)) >= 0)
             {
                struct stat fs;
                unsigned long fSize;
@@ -303,7 +304,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
                else
                {
                   xIrcDccFile *pDccFileFrame;
-                  if ((pDccFileFrame = new xIrcDccFile(wdtPrv, file, NULL, txtSel.text)) != NULL)
+                  if ((pDccFileFrame = new xIrcDccFile(wdtPrv, file.latin1(), NULL, txtSel.text.latin1())) != NULL)
                   {
                      connect(pDccFileFrame, SIGNAL(initiateDCCFile(xIrcDccFile*)),
                              this, SLOT(initiateDCCFile(xIrcDccFile*)));
@@ -322,7 +323,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
             else
             {
                char buf[256];
-               sprintf(buf, "Error opening file %s:%s", (const char*)file, strerror(errno));
+               sprintf(buf, "Error opening file %s:%s", (const char*)file.latin1(), strerror(errno));
                QMessageBox::warning(this, "Error", buf);
             }
          }
@@ -341,15 +342,15 @@ QString xIrcConnect::buildBanMask(xIrcMessage *pMsg)
 
    if (pMsg->rspCode == 352)
    {
-      cp = pMsg->dstStr;
+      cp = pMsg->dstStr.latin1();
       if (*cp != '#')
       {
          rv += pMsg->dstStr;
-         for (cp = pMsg->msgStr; *cp == ' '; cp++);
+         for (cp = pMsg->msgStr.latin1(); *cp == ' '; cp++);
       }
       else
       {
-         for (cp = pMsg->msgStr; *cp == ' '; cp++);
+         for (cp = pMsg->msgStr.latin1(); *cp == ' '; cp++);
          for (; *cp != ' '; cp++)
             rv += *cp;
       }
@@ -412,9 +413,9 @@ void xIrcConnect::doBanResp(xIrcMessage *pMsg)
       if (dbg) fprintf(stdout, "xIrcConnect::doBanResp():Have Ban Who Response!\n");
       if (dbg) fflush(stdout);
       banFlag = FALSE;
-      pBanBox->setNick(banNick);
-      pBanBox->setChan(banChan);
-      pBanBox->setMask(buildBanMask(pMsg));
+      pBanBox->setNick(banNick.latin1());
+      pBanBox->setChan(banChan.latin1());
+      pBanBox->setMask(buildBanMask(pMsg).latin1());
       if ((x = pBanBox->exec()) != xIrcBanDialog::Rejected)
       {
          msg.rspCode = ircResponses.code("MODE");

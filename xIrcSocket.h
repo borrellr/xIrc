@@ -23,11 +23,10 @@
 #ifndef _xIRCSOCKET_H
 #define _xIRCSOCKET_H
 
-#include <qlist.h>
+#include <qptrlist.h>
 #include <qobject.h>
 #include <qstring.h>
 #include <xMultiLineWin.h>
-#include <xResources.h>
 #include <xSocket.h>
 
 typedef enum
@@ -61,13 +60,8 @@ typedef struct
    QString           rawMsg;
 } xIrcMessage;
 
-#ifdef QT2
-typedef QList<xIrcMessage>           xIrcMessageListBase;
-typedef QListIterator<xIrcMessage>   xIrcMessageListIterator;
-#else
-typedef QListT<xIrcMessage>           xIrcMessageListBase;
-typedef QListIteratorT<xIrcMessage>   xIrcMessageListIterator;
-#endif
+typedef QPtrList<xIrcMessage>           xIrcMessageListBase;
+typedef QPtrListIterator<xIrcMessage>   xIrcMessageListIterator;
 
 class xIrcMessageList : public xIrcMessageListBase
 {

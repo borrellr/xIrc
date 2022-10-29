@@ -31,7 +31,6 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <xPshBtnFrame.h>
-#include <xResources.h>
 #include "xIrcConnectDialog.h"
 #include "xIrcServerTable.h"
 #include "xIrcSocket.h"
@@ -47,9 +46,9 @@ public:
    void initClass(const char *pName);
    
    const char *server() { 
-         return((const char *)pTable->entry(pTable->selectedRow())->server()); 
+         return((const char *)pTable->entry(pTable->selectedRow())->server().latin1()); 
       };
-   const char *port() { return((const char *)Port); };
+   const char *port() { return((const char *)Port.latin1()); };
 
    enum QryResults { Rejected, Accepted, Disconnect };
 

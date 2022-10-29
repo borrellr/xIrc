@@ -24,7 +24,6 @@
 #define _XIRCDCCCHATFRAME_H
 
 #include <qcheckbox.h>
-#include <xResources.h>
 #include <xPshBtnFrame.h>
 #include <xEdit.h>
 #include "xMultiLineFrame.h"

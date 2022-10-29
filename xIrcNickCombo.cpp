@@ -21,9 +21,10 @@
 **
  ***************************************************************************/
 #include <stdio.h>
+#include <qt.h>
 #include "xIrcNickCombo.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcNickCombo::xIrcNickCombo(xWidgetResInfo *pPRes, QWidget *pParent,
                              const char *pName, int type) :

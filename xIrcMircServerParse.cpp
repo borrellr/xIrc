@@ -24,11 +24,11 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <qt.h>
 #include <xMessageBox.h>
-#include <xResources.h>
 #include "xIrcServerList.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 bool xIrcMircServerParse(const char *fn, xIrcServerList &ServerList)
 {

@@ -22,12 +22,11 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <qfont.h>
+#include <qt.h>
 #include <xApp.h>
 #include "xIrcDccQuery.h"
 
-static int dbg = 0;
-
-extern xApplication *pApp;
+static bool dbg = false;
 
 xIrcDccQuery::xIrcDccQuery(xWidgetResInfo *pPRes, QWidget *pParent,
                            const char *pName, bool autoDelete) :
@@ -50,11 +49,7 @@ void xIrcDccQuery::initClass(QWidget *pParent, const char *pName, bool autoDelet
    pName = pName;
       
    setCaption("DCC Request");
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    deleteFlag = autoDelete;
    
    pHeader = new QLabel(this);
@@ -108,7 +103,7 @@ void xIrcDccQuery::setupQuery(const char *pType, xIrcMessage *pMsg)
    strTmp += pMsg->srcNick;
    
    strTmp += "\n\nAccept?";
-   if (dbg) fprintf(stdout, "xIrcDccQuery::setupQuery():Setting Query Text to |%s|\n", (const char *)strTmp);
+   if (dbg) fprintf(stdout, "xIrcDccQuery::setupQuery():Setting Query Text to |%s|\n", (const char *)strTmp.latin1());
    if (dbg) fflush(stdout);
    pHeader->setText(strTmp);
    pHeader->adjustSize();
@@ -116,7 +111,7 @@ void xIrcDccQuery::setupQuery(const char *pType, xIrcMessage *pMsg)
 //   s.setHeight(pButtons->height());
 //   pButtons->fitFrame(&s);
    initFrame();
-   pApp->beep();
+   qApp->beep();
    show();
    if (dbg) fprintf(stdout, "xIrcDccQuery::setupQuery():Exit\n\r");
    if (dbg) fflush(stdout);   

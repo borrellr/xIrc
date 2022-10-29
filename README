@@ -1,6 +1,9 @@
-May 31, 2022 - Robert Borrell <robert.borrell@gmail.com>
-Ported xIrc v2.3.8 to CentOS v2.1 and QT v2.3.1 using gcc-2.96.  A couple minor
-changes to the code.
+xIrc-2.3.9 - Robert Borrell <robert.borrell@gmail.com>
+==========
+This release is a modified version of 2.3.8 that has been ported to Qt3.
+See installation page for more details on how to build the binary.
+This release has some known issues such as the server list in the table is
+not sorted.
 
 xIrc-2.3.8 - Robert Borrell <borrell@pobox.com>
 ==========

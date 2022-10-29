@@ -20,24 +20,22 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <qstrlist.h>
 #include <qgrid.h>
 #include <qhbox.h>
 #include <qhgroupbox.h>
 #include "xIrcServerEdit.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
-xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcServerEdit::xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcServerEntry *entry = NULL) :
+                                     xIrcServerEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("serveredit"),
                                                               QString("ServerEdit")),
                            pParent, pName, TRUE)
 {
-   QHGroupBox *hgroupbox;
-   QHBox *hbox;
-
    if (dbg) fprintf(stdout, "xIrcServerEdit::xIrcServerEdit(): Enter\n");
    if (dbg) fflush(stdout);
 
@@ -173,12 +171,12 @@ xIrcServerEdit::~xIrcServerEdit()
 
 void xIrcServerEdit::gotReturn()
 {
-   pEntry->setGroup(pGroup->text());
-   pEntry->setCountry(pCountry->text());
-   pEntry->setState(pState->text());
-   pEntry->setCity(pCity->text());
-   pEntry->setServer(pServer->text());
-   pEntry->setPorts(pPort->text());
+   pEntry->setGroup(pGroup->text().latin1());
+   pEntry->setCountry(pCountry->text().latin1());
+   pEntry->setState(pState->text().latin1());
+   pEntry->setCity(pCity->text().latin1());
+   pEntry->setServer(pServer->text().latin1());
+   pEntry->setPorts(pPort->text().latin1());
    done(Accepted);
 }
 
@@ -195,4 +193,3 @@ void xIrcServerEdit::gotButton(int btn)
          break;
    }
 }
-//#include "xIrcServerEdit.moc"

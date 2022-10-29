@@ -21,13 +21,14 @@
 **
  ***************************************************************************/
 #include <stdio.h>
-#include <qlist.h>
+#include <qt.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <qlabel.h>
 #include "xEdit.h"
 #include "xIrcPeopleTable.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 static const char *pInitialResources[] =
 {
@@ -188,7 +189,7 @@ xIrcPeopleTable::xIrcPeopleTable(xWidgetResInfo *pPRes, QWidget *pParent,
       pTable->addWidget((pLabel = new QLabel(pTable)));
       pLabel->setFrameStyle(QFrame::Panel | QFrame::Raised);
 
-      pBtnFrame = new xIrcPeopleBtns(wdtRes, pTable, "", FlagLabel);
+      pBtnFrame = new xIrcPeopleBtns(wdtRes, pTable, "", FlagLabel.latin1());
       pBtnFrame->fitFrame();
       pTable->addWidget(pBtnFrame);
       pBtnFrame->setFrameStyle(QFrame::Panel | QFrame::Raised);
@@ -220,11 +221,7 @@ xIrcPeopleTable::xIrcPeopleTable(xWidgetResInfo *pPRes, QWidget *pParent,
 
    addWidget(pFrame);
    fitFrame();
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
 
    pPeopleList = new xIrcPeopleList();
 
@@ -256,7 +253,7 @@ void xIrcPeopleTable::gotClicked(xIrcPeopleBtns *pBtn)
    for (x = 0; x < row; x++, ++si)
       ;
    if (dbg) fprintf(stdout, "xIrcPeopleTable::gotClicked():Setting Flag for nick: |%s|\n",
-                           (const char *)si.current()->nick());
+                           (const char *)si.current()->nick().latin1());
    if (dbg) fflush(stdout);
    si.current()->setFlag(pBtn->flag());
    if (dbg) fprintf(stdout, "xIrcPeopleTable::gotClicked():Exit\n");

@@ -26,7 +26,6 @@
 #include <qtimer.h>
 #include <xEdit.h>
 #include <qlabel.h>
-#include <xResources.h>
 #include <xProgressBar.h>
 #include <xPshBtnFrame.h>
 #include <qlineedit.h>
@@ -47,7 +46,7 @@ public:
    int connectTo(const char *pNetAddr = NULL, int fd = -1);
    xSocketTCP *socket();
    int accept(int fd);
-   const char *filename() { return((const char*)fileName); };
+   const char *filename() { return((const char*)fileName.latin1()); };
    int file_d() { return(fd); };
 
 

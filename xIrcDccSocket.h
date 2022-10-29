@@ -25,7 +25,6 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <xResources.h>
 #include <xSocket.h>
 
 class xIrcDccSocket : public xSocketTCP

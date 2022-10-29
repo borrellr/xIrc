@@ -31,7 +31,6 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <xPshBtnFrame.h>
-#include <xResources.h>
 #include "xIrcPeopleTable.h"
 
 class xIrcNotifyTable : public xDialog

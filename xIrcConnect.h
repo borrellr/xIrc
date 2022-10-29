@@ -30,7 +30,6 @@
 #include <xMultiLineFrame.h>
 #include <xPshBtnFrame.h>
 #include <xSocketDialog.h>
-#include <xResources.h>
 #include "xIrcSocket.h"
 #include "xIrcMsgFrame.h"
 #include "xIrcIgnoreQuery.h"

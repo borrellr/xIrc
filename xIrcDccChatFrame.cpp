@@ -20,6 +20,7 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <xApp.h>
 #include <errno.h>
 #include <ctype.h>
@@ -33,9 +34,8 @@
 #include "xResources.h"
 #include "xIrcDccChatFrame.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
-extern xApplication *pApp;
 extern xDefaults Defaults;
 extern QPixmap *AppPixMap;
 
@@ -348,22 +348,22 @@ void xIrcDccChatFrame::gotKeyboardInput()
    if (!isVisible())
       show();
    msgStr = parseLine(buf, pMircColors->isChecked(), pCtcp2->isChecked());
-   cp = msgStr;
+   cp = msgStr.latin1();
    if (*cp == '/')
       procCommand(++cp);
    else
    {
-      if (strlen(msgStr) > 0)
+      if (!msgStr.isEmpty())
       {
          if (dbg) fprintf(stdout, "xIrcDccChatFrame::gotKeyboardInput():Sending input\n");
          if (dbg) fflush(stdout);
-         sprintf(buf, "%s\n", (const char *)msgStr);
+         sprintf(buf, "%s\n", (const char *)msgStr.latin1());
          emit textOut(buf);
          if (dbg) fprintf(stdout, "xIrcDccChatFrame::gotKeyboardInput():Putting it on the screen!\n");
          if (dbg) fflush(stdout);
-         sprintf(buf, "-> %s\n", (const char *)msgStr);
+         sprintf(buf, "-> %s\n", (const char *)msgStr.latin1());
          msgStr = translateMessage(buf);
-         pMsgFrame->pWin->putString(msgStr);
+         pMsgFrame->pWin->putString(msgStr.latin1());
       }
    }
    if (dbg) fprintf(stdout, "xIrcDccChatFrame::gotKeyboardInput():Clearing the edit field!\n");
@@ -403,7 +403,7 @@ void xIrcDccChatFrame::procCommand(const char *pStr)
       if (dbg) fprintf(stdout, "xIrcDccChatFrame::procCommand():Emiting |%s| to Screen\n", buf);
       if (dbg) fflush(stdout);
       msgStr = translateMessage(buf);
-      pMsgFrame->pWin->putString(msgStr);
+      pMsgFrame->pWin->putString(msgStr.latin1());
       if (dbg) fprintf(stdout, "xIrcDccChatFrame::procCommand():Done!!\n");
       if (dbg) fflush(stdout);
    }
@@ -419,7 +419,7 @@ void xIrcDccChatFrame::procCommand(const char *pStr)
       Defaults.set(buf, cp2);
       sprintf(buf1, "*** $%s set to:\"%s\"\n", buf, cp2);
       msgStr = translateMessage(buf1);
-      pMsgFrame->pWin->putString(msgStr);
+      pMsgFrame->pWin->putString(msgStr.latin1());
    }
    if (dbg) fprintf(stdout, "xIrcDccChatFrame::procCommand():Exit\n");
    if (dbg) fflush(stdout);
@@ -438,14 +438,14 @@ void xIrcDccChatFrame::socketIn(char *pText)
       {
          socketData += pText;
          if (dbg) fprintf(stdout, "xIrcDccChatFrame::socketIn(): Have String %s\n",
-                              (const char *)socketData);
+                              (const char *)socketData.latin1());
          if (dbg) fflush(stdout);
-         msgStr = translateMessage(socketData);
-         sprintf(buf, "<%s> %s", name(), (const char *)msgStr);
+         msgStr = translateMessage(socketData.latin1());
+         sprintf(buf, "<%s> %s", name(), (const char *)msgStr.latin1());
          pMsgFrame->pWin->putString(buf);
          socketData = "";
          if (pBeepMsg->isChecked())
-            pApp->beep();
+            qApp->beep();
       }
       else if (*pText != '\r')
          socketData += *pText;
@@ -465,7 +465,7 @@ void xIrcDccChatFrame::socketClosed()
               this, SLOT(socketIn(char *)));
       QObject::disconnect(pSocket, SIGNAL(socketClosed()),
               this, SLOT(socketClosed()));
-      pApp->beep();
+      qApp->beep();
       pMsgFrame->pWin->putString("***\x02 Connection Closed!!!\n");
       delete pSocket;
       pSocket = NULL;
@@ -476,7 +476,7 @@ void xIrcDccChatFrame::haveTextSelection(xMultiLineTextSelection msg)
    if (dbg) fprintf(stdout, "xIrcDccChatFrame::havetextSelection():Enter\n");
    if (dbg) fflush(stdout);
    if (dbg) fprintf(stdout, "xIrcDccChatFrame::havetextSelection():winName = |%s|, text = |%s|\n",
-                             (const char *)msg.winName, (const char *)msg.text);
+                             (const char *)msg.winName.latin1(), (const char *)msg.text.latin1());
    if (dbg) fflush(stdout);
    emit textSelected(msg);
 }

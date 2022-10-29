@@ -20,14 +20,15 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <qstrlist.h>
 #include "xIrcConnectDialog.h"
 
-static int dbg = 0;
+static bool  dbg = false;
 
-xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcServerEntry *entry = NULL) :
+                                     xIrcServerEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("connectdialog"),
                                                               QString("ConnectDialog")),
                            pParent, pName, TRUE)
@@ -150,14 +151,15 @@ xIrcConnectDialog::xIrcConnectDialog(xWidgetResInfo *pPRes, QWidget *pParent = N
    if (dbg) fflush(stdout);
    if (entry != NULL)
    {
-      for (cp = entry->ports(); *cp;)
+      for (cp = entry->ports().latin1(); *cp;)
       {
          QString s;
          if (dbg) fprintf(stdout, "xIrcConnectDialog::xIrcConnectDialog(): cp = |%s|\n", cp);
          if (dbg) fflush(stdout);
          while (*cp != ',' && *cp != '\0')
             s += *(cp++);
-         ports.inSort(s);
+         ports.append(s.latin1());
+         ports.sort();
          if (dbg) fprintf(stdout, "xIrcConnectDialog::xIrcConnectDialog(): cp remaining length = %d\n", 
                                  strlen(cp));
          if (dbg) fflush(stdout);
@@ -210,7 +212,7 @@ QString xIrcConnectDialog::port()
 {
    QString rv;
 
-   if (strlen(pPort->currentText()) > 0)
+   if (!pPort->currentText().isEmpty())
       rv = pPort->currentText();
    else
       rv = pPort->text(pPort->currentItem());

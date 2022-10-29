@@ -20,12 +20,13 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
-#include <qlist.h>
+#include <qt.h>
+#include <qptrlist.h>
 #include <qregexp.h>
 #include <stdio.h>
 #include "xIrcServerList.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcServerList::xIrcServerList()
 {
@@ -34,7 +35,7 @@ xIrcServerList::xIrcServerList()
 
 xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
 {
-   int x;
+   const QString wc = "*";
    QRegExp groupRE;
    QRegExp countryRE;
    QRegExp stateRE;
@@ -43,6 +44,10 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    QRegExp portsRE;
    xIrcServerListIterator si(list);
 
+#ifndef QT3
+   int x;
+#endif
+
    portsRE.setWildcard(TRUE);
    serverRE.setWildcard(TRUE);
    stateRE.setWildcard(TRUE);
@@ -50,40 +55,85 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    countryRE.setWildcard(TRUE);
    groupRE.setWildcard(TRUE);
 
+#ifndef QT3
    if (entry != NULL && strlen(entry->group()) > 0)
       groupRE = entry->group();
    else
-      groupRE = "*";
+      groupRE = wc;
 
    if (entry != NULL && strlen(entry->country()) > 0)
       countryRE = entry->country();
    else
-      countryRE = "*";
+      countryRE = wc;
 
    if (entry != NULL && strlen(entry->state()) > 0)
       stateRE = entry->state();
    else
-      stateRE = "*";
+      stateRE = wc;
 
    if (entry != NULL && strlen(entry->city()) > 0)
       cityRE = entry->city();
    else
-      cityRE = "*";
+      cityRE = wc;
 
    if (entry != NULL && strlen(entry->city()) > 0)
       serverRE = entry->server();
    else
-      serverRE = "*";
+      serverRE = wc;
+#else
+   if (entry != NULL && !entry->group().isEmpty())
+      groupRE.setPattern(entry->group());
+   else
+      groupRE.setPattern(wc);
+
+   if (entry != NULL && !entry->country().isEmpty())
+      countryRE.setPattern(entry->country());
+   else
+      countryRE.setPattern(wc);
+
+   if (entry != NULL && !entry->state().isEmpty())
+      stateRE.setPattern(entry->state());
+   else
+      stateRE.setPattern(wc);
+
+   if (entry != NULL && !entry->city().isEmpty())
+      cityRE.setPattern(entry->city());
+   else
+      cityRE.setPattern(wc);
+
+   if (entry != NULL && !entry->city().isEmpty())
+      serverRE.setPattern(entry->server());
+   else
+      serverRE.setPattern(wc);
+
+   // Display patterns
+   printf ("Group pattern is [%s]\n", groupRE.pattern().latin1());
+   printf ("Country pattern is [%s]\n", countryRE.pattern().latin1());
+   printf ("State pattern is [%s]\n", stateRE.pattern().latin1());
+   printf ("City pattern is [%s]\n", cityRE.pattern().latin1());
+   printf ("Server pattern is [%s]\n", serverRE.pattern().latin1());
+
+#endif
       
    for (; si.current() != NULL; ++si)
    {
+#ifndef QT3
       if ((groupRE.match(si.current()->group(), 0, &x) >= 0) &&
           (countryRE.match(si.current()->country(), 0, &x) >= 0) && 
           (stateRE.match(si.current()->state(), 0, &x) >= 0) && 
           (cityRE.match(si.current()->city(), 0, &x) >= 0) && 
           (serverRE.match(si.current()->server(), 0, &x) >= 0))
+#else
+      if (groupRE.exactMatch(si.current()->group()) &&
+          countryRE.exactMatch(si.current()->country()) && 
+          stateRE.exactMatch(si.current()->state()) && 
+          cityRE.exactMatch(si.current()->city()) && 
+          serverRE.exactMatch(si.current()->server()))
+#endif
       {
          add(*si.current());
+//      }  else {
+//        printf ("No match....\n");
       }
    }
 }
@@ -142,7 +192,7 @@ int xIrcServerList::readFile(const char *fn)
                break;
          }
       }
-      xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
+      xIrcServerEntry e(groupStr.latin1(), countryStr.latin1(), stateStr.latin1(), cityStr.latin1(), serverStr.latin1(), portsStr.latin1());
       add(e);
    }
    return(0);
@@ -162,12 +212,12 @@ int xIrcServerList::writeFile(const char *fn)
    for (; si.current() != NULL; ++si)
    {
       sprintf(buf, "%s:%s:%s:%s:%s:%s\n", 
-                  (const char *)si.current()->group(),    
-                  (const char *)si.current()->country(),    
-                  (const char *)si.current()->state(),    
-                  (const char *)si.current()->city(),    
-                  (const char *)si.current()->server(),    
-                  (const char *)si.current()->ports());
+                  (const char *)si.current()->group().latin1(),    
+                  (const char *)si.current()->country().latin1(),    
+                  (const char *)si.current()->state().latin1(),    
+                  (const char *)si.current()->city().latin1(),    
+                  (const char *)si.current()->server().latin1(),    
+                  (const char *)si.current()->ports().latin1());
       fputs(buf,fp);
    }
    fclose(fp);
@@ -196,5 +246,28 @@ void xIrcServerList::add(xIrcServerEntry &entry)
          break;
       }
    }
-   inSort(new xIrcServerEntry(entry));
+   append(new xIrcServerEntry(entry));
+   sort();
+}
+
+void xIrcServerList::showEntries()
+{
+   xIrcServerListIterator si(*this);
+   QString tmpStr;
+
+   while (si.current() != NULL) {
+      tmpStr = si.current()->group();
+      printf("The group is: |%s|\n",  tmpStr.latin1());
+      tmpStr = si.current()->country();
+      printf("The country is: |%s|\n",  tmpStr.latin1());
+      tmpStr = si.current()->state();
+      printf("The state is: |%s|\n",  tmpStr.latin1());
+      tmpStr = si.current()->city();
+      printf("The city is: |%s|\n",  tmpStr.latin1());
+      tmpStr = si.current()->server();
+      printf("The server is: |%s|\n",  tmpStr.latin1());
+      tmpStr = si.current()->ports();
+      printf("The ports are: |%s|\n", tmpStr.latin1());
+      ++si;
+   }
 }

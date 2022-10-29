@@ -20,6 +20,7 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <xApp.h>
 #include <errno.h>
 #include <ctype.h>
@@ -31,14 +32,11 @@
 #include <qmessagebox.h>
 #include <xSocket.h>
 #include "xIrcLineEditQuery.h"
-#include "xDefaults.h"
 #include "xResources.h"
 #include "xIrcDccFile.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
-extern xApplication *pApp;
-extern xDefaults Defaults;
 extern QPixmap *AppPixMap;
 
 static const char *pInitialResources[] =
@@ -488,7 +486,7 @@ void xIrcDccFile::socketClosed()
 {
    if (dbg) fprintf(stdout, "xIrcDccFile::socketClosed():Enter\n");
    if (dbg) fflush(stdout);
-   pApp->beep();
+   qApp->beep();
    QObject::disconnect(pSocket, SIGNAL(readFromSocket(xSocketBuffer)),
            this, SLOT(socketIn(xSocketBuffer)));
    QObject::disconnect(pSocket, SIGNAL(socketClosed()),

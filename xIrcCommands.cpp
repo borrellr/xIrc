@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include "strings.h"
 #include "ctype.h"
+#include <qt.h>
 #include "xIrcCommands.h"
 
 xIrcCommands ircResponses;
@@ -149,7 +150,7 @@ const char *xIrcCommands::text(int cmd)
    {
       sprintf(buf, "%d::", cmd);
       tmpStr = buf;
-      rv = tmpStr;
+      rv = tmpStr.latin1();
    }
    return(rv);
 }

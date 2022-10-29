@@ -23,10 +23,11 @@
 #include <errno.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qmessagebox.h>
 #include "xIrcDccSocket.h"
 
-static int dbg = 0;
+static bool dbg = false;
 static QString strHost;
 static QString strService;
 
@@ -88,14 +89,14 @@ const char *xIrcDccSocket::na2Host(const char *pNetAddr)
    for (; *cp && !isspace(*cp); cp++)
       strHost += *cp;
    if (dbg) fprintf(stdout, "xIrcDccSocket::na2Host():strHost = |%s|\n", 
-                             (const char *)strHost);
+                             (const char *)strHost.latin1());
    if (dbg) fflush(stdout);
    while (isspace(*cp)) cp++;
    for (; *cp && !isspace(*cp); cp++)
       strService1 += *cp;
    if (dbg) fprintf(stdout, "xIrcDccSocket::na2Host():strServ = |%s|\n", 
-                             (const char *)strService);
-   cp = strHost;
+                             (const char *)strService.latin1());
+   cp = strHost.latin1();
    return(cp);
 }
 
@@ -113,14 +114,14 @@ const char *xIrcDccSocket::na2Service(const char *pNetAddr)
    for (; *cp && !isspace(*cp); cp++)
       strHost1 += *cp;
    if (dbg) fprintf(stdout, "xIrcDccSocket::na2Service():strHost = |%s|\n", 
-                             (const char *)strHost);
+                             (const char *)strHost.latin1());
    if (dbg) fflush(stdout);
    while (isspace(*cp)) cp++;
    for (; *cp && !isspace(*cp); cp++)
       strService += *cp;
    if (dbg) fprintf(stdout, "xIrcDccSocket::na2Service():strServ = |%s|\n", 
                              cp);
-   cp = strService;
+   cp = strService.latin1();
    return(cp);
 }
 

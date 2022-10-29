@@ -28,7 +28,6 @@
 #include <qlineedit.h>
 #include <xComboBox.h>
 #include <xDialog.h>
-#include <xResources.h>
 
 class xIrcBanDialog : public xDialog
 {
@@ -39,10 +38,10 @@ public:
                  const char *pName = NULL);
    ~xIrcBanDialog();
    
-   const char *nick() { return(pNick->text()); };
-   const char *chan() { return(pChan->text()); };
-   const char *mask() { return(pMask->text()); };
-   const char *text() { return(pText->text()); };
+   const char *nick() { return(pNick->text().latin1()); };
+   const char *chan() { return(pChan->text().latin1()); };
+   const char *mask() { return(pMask->text().latin1()); };
+   const char *text() { return(pText->text().latin1()); };
    void setNick(const char *pStr) { pNick->setText(pStr); };
    void setChan(const char *pStr) { pChan->setText(pStr); };
    void setMask(const char *pStr) { pMask->setText(pStr); };

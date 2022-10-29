@@ -20,14 +20,15 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <qstrlist.h>
 #include "xIrcPeopleEdit.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
-xIrcPeopleEdit::xIrcPeopleEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
+xIrcPeopleEdit::xIrcPeopleEdit(xWidgetResInfo *pPRes, QWidget *pParent,
                                      const char *pName,
-                                     xIrcPeopleEntry *entry = NULL) :
+                                     xIrcPeopleEntry *entry) :
                    xDialog(wdtRes = new xWidgetResInfo(pPRes, QString(pName),
                                                               QString("PeopleEdit")),
                            pParent, pName, TRUE)
@@ -128,9 +129,9 @@ xIrcPeopleEdit::~xIrcPeopleEdit()
 void xIrcPeopleEdit::gotReturn()
 {
    int f;
-   pEntry->setNick(pNick->text());
-   pEntry->setMask(pMask->text());
-   pEntry->setMessage(pMessage->text());
+   pEntry->setNick(pNick->text().latin1());
+   pEntry->setMask(pMask->text().latin1());
+   pEntry->setMessage(pMessage->text().latin1());
    f = (pFlag->isChecked() == FALSE) ?
        0 : (pByAddr->isChecked() == TRUE) ? 1 : -1;
    pEntry->setFlag(f);
@@ -153,9 +154,9 @@ void xIrcPeopleEdit::gotButton(int btn)
          break;
 
       case Accepted:
-         pEntry->setNick(pNick->text());
-         pEntry->setMask(pMask->text());
-         pEntry->setMessage(pMessage->text());
+         pEntry->setNick(pNick->text().latin1());
+         pEntry->setMask(pMask->text().latin1());
+         pEntry->setMessage(pMessage->text().latin1());
          f = (pFlag->isChecked() == FALSE) ? 0 : (pByAddr->isChecked() == TRUE) ? 1 : -1;
          pEntry->setFlag(f);
          done(Accepted);

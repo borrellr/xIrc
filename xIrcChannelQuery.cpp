@@ -22,13 +22,14 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <ctype.h>
+#include <qt.h>
 #include <qmessagebox.h>
 #include "xIrcChannelQuery.h"
 #include "xIrcCommands.h"
 #include "xDefaults.h"
 #include "xIrcSocket.h"
 
-static int dbg = 0;
+static bool  dbg = false;
                     
 extern xIrcCommands ircResponses;
 extern xDefaults Defaults;
@@ -54,11 +55,7 @@ void xChannelQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
       
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    setMargins(0, 0);
    setWidgetSpacing(0);
    if ((pChannel = new xEditList(wdtRes, this)) != NULL)

@@ -31,7 +31,6 @@
 #include <qevent.h>
 #include <xFrame.h>
 #include <qlabel.h>
-#include <xResources.h>
 #include <xTable.h>
 #include <xMouseEvent.h>
 #include "xIrcServerList.h"
@@ -80,6 +79,7 @@ public slots:
 
 private:
    void setSB();
+   void showMaskEntries();
 
    QString                 groupMask;
    QString                 countryMask;

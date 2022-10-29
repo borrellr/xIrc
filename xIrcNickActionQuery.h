@@ -26,7 +26,6 @@
 #include <xMultiLineFrame.h>
 #include <xPshBtnTable.h>
 #include <xDialog.h>
-#include <xResources.h>
 #include <qlineedit.h>
 
 class xIrcNickActionQuery : public xDialog
@@ -37,8 +36,8 @@ public:
    xIrcNickActionQuery(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
                        const char *pName = NULL);
    ~xIrcNickActionQuery();
-   const char *nick() { return(pNickEdit->text()); };
-   const char *chan() { return(pChanEdit->text()); };
+   const char *nick() { return(pNickEdit->text().latin1()); };
+   const char *chan() { return(pChanEdit->text().latin1()); };
    void setNick(const char *pStr) { pNickEdit->setText(pStr); };
    void setChan(const char *pStr) { pChanEdit->setText(pStr); };
 

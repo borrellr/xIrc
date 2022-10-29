@@ -19,10 +19,11 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
+#include <qt.h>
 #include "ircreply.h"
 #include "xIrcMsgDispatch.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcMsgDispatch::xIrcMsgDispatch()
 {

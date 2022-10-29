@@ -21,11 +21,12 @@
 **
  ***************************************************************************/
 #include <stdio.h>
+#include <qt.h>
 #include <qmessagebox.h>
 #include "xIrcBanDialog.h"
 #include "xDefaults.h"
 
-static int dbg = 0;
+static bool  dbg = false;
                     
 extern xDefaults Defaults;
 
@@ -47,11 +48,7 @@ xIrcBanDialog::xIrcBanDialog(xWidgetResInfo *pPRes, QWidget *pParent,
    else
       setCaption("Ban");
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    pEditFrame = new xFrame(wdtRes, this);
    pEditFrame->setFrameStyle(QFrame::Panel | QFrame::Raised);
 
@@ -124,7 +121,7 @@ void xIrcBanDialog::gotButton(int btn)
       case Kick:
       case Accepted:
          if (dbg) fprintf(stdout, "xIrcBanDialog::gotButton():Accepting??\n\r");
-         if (strlen(pMask->text()) == 0)
+         if (pMask->text().isEmpty())
          {
             QMessageBox::warning(this, "Error", "No Ban Mask Specified");
             return;

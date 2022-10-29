@@ -26,7 +26,6 @@
 #include <xPshBtnFrame.h>
 #include <xEditList.h>
 #include <xDialog.h>
-#include <xResources.h>
 #include "xIrcSocket.h"
 
 #define xCQ_Clear    2

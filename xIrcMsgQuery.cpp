@@ -22,13 +22,12 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qfont.h>
 #include <xApp.h>
 #include "xIrcMsgQuery.h"
 
-extern xApplication *pApp;
-
-static int dbg = 0;
+static bool dbg = false;
 
 static const char *pInitialResources[] =
 {
@@ -65,11 +64,7 @@ void xIrcMsgQuery::initClass(QWidget *pParent, const char *pName)
    pParent = pParent;
    pName = pName;
       
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    
    if ((ccp = Resources->get(wdtRes, "Columns", "Columns")) == NULL)
       cols = 40;
@@ -140,14 +135,14 @@ void xIrcMsgQuery::add(xIrcMessage *pmsg)
    strTmp = "<";
    strTmp += pmsg->srcNick;
    strTmp += "> ";
-   for (cp = pmsg->msgStr; *cp; cp++)
+   for (cp = pmsg->msgStr.latin1(); *cp; cp++)
    {
       if (*cp != '\n' && *cp != '\r')
          strTmp += *cp;
    }
 
-   pMsg->pWin->putString(strTmp);
-   pApp->beep();
+   pMsg->pWin->putString(strTmp.latin1());
+   qApp->beep();
 
    if (dbg) fprintf(stdout, "xIrcMsgQuery::setupQuery():Exit\n");
    if (dbg) fflush(stdout);   
@@ -189,7 +184,7 @@ void xIrcMsgQuery::haveTextSelection(xMultiLineTextSelection msg)
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():Enter\n");
    if (dbg) fflush(stdout);
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():winName = |%s|, text = |%s|\n",
-                             (const char *)msg.winName, (const char *)msg.text);
+                             (const char *)msg.winName.latin1(), (const char *)msg.text.latin1());
    if (dbg) fflush(stdout);
    emit textSelected(msg);
 }

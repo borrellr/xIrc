@@ -25,21 +25,19 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/types.h>
+#include <qt.h>
 #include <qkeycode.h>
 #include <xApp.h>
-#include "xDefaults.h"
 #include "xResources.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcMsgFrame.h"
 #include "xIrcNickQuery.h"
 #include "xIrcSocket.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
-extern xApplication *pApp;
 extern xIrcCommands ircResponses;
 extern xIrcNickQuery *NickQuery;
-extern xDefaults Defaults;
 extern QPixmap *AppPixMap;
 extern xIrcMsgDispatch Dispatcher;
 
@@ -305,10 +303,10 @@ void xIrcMessageFrame::buttonPressed(int btn)
             s2 += "\\Cdd D \\CX|";
             s2 += "\\Cee E \\CX|";
             s2 += "\\Cff F \\CX";
-            s3 = parseLine(s1, pMircColors->isChecked(), pCtcp2->isChecked());
-            putString(s3);
-            s3 = parseLine(s2, pMircColors->isChecked(), pCtcp2->isChecked());
-            putString(s3);
+            s3 = parseLine(s1.latin1(), pMircColors->isChecked(), pCtcp2->isChecked());
+            putString(s3.latin1());
+            s3 = parseLine(s2.latin1(), pMircColors->isChecked(), pCtcp2->isChecked());
+            putString(s3.latin1());
          }
          break;
    }
@@ -387,7 +385,7 @@ bool xIrcMessageFrame::is(const char *pName)
    for (cp = (const char *)name(), tmpName = ""; *cp; cp++)
       tmpName += toupper(*cp);
    if (dbg) fprintf(stdout, "xIrcMessageFrame::is():Testing Name:|%s| to Nick:|%s|\n",
-                            (const char *)tmpName, (const char *)tmpNick);
+                            (const char *)tmpName.latin1(), (const char *)tmpNick.latin1());
    rv = (tmpName == tmpNick) ? TRUE : FALSE;
    if (dbg) fprintf(stdout, "xIrcMessageFrame::is():Exit- Names %s\n", rv == TRUE ?
                             "Matched!!" : "Didnot Match");
@@ -406,7 +404,7 @@ void xIrcMessageFrame::doPing()
    msg.msgStr += "PING ";
    msg.msgStr += buf;
    msg.msgStr += "\x01";
-   sprintf(buf1, "*** Ping command sent to %s\n", (const char *)msg.dstStr);
+   sprintf(buf1, "*** Ping command sent to %s\n", (const char *)msg.dstStr.latin1());
    putString(buf1);
    Dispatcher.dispatchMsg(this, SLOT(ircRespMessageIn(xIrcMessage*)), &msg);
 //   emit ircMessageOut(&msg);
@@ -474,7 +472,7 @@ void xIrcMessageFrame::gotKeyboardInput()
 
    strcpy(buf, pEdit->text());
    msgStr = parseLine(buf, pMircColors->isChecked(), pCtcp2->isChecked());
-   if ((cp = msgStr) == NULL)
+   if ((cp = msgStr.latin1()) == NULL)
    {
       if (dbg) fprintf(stdout, "xIrcMessageFrame::gotKeyboardInput():Blank line!!\n");
       if (dbg) fflush(stdout);
@@ -483,7 +481,7 @@ void xIrcMessageFrame::gotKeyboardInput()
       procCommand(++cp);
    else
    {
-      if (strlen(msgStr) > 0)
+      if (!msgStr.isEmpty())
       {
          msg.rspCode = ircResponses.code("PRIVMSG");
          msg.dstStr = name();
@@ -494,7 +492,7 @@ void xIrcMessageFrame::gotKeyboardInput()
 //         emit ircMessageOut(&msg);
          if (dbg) fprintf(stdout, "xIrcMessageFrame::gotKeyboardInput():Putting it on the screen!\n");
          if (dbg) fflush(stdout);
-         sprintf(buf, "-> %s\n", (const char *)msgStr);
+         sprintf(buf, "-> %s\n", (const char *)msgStr.latin1());
          putString(buf);
       }
    }
@@ -509,7 +507,7 @@ void xIrcMessageFrame::putString(const char *pStr)
 {
    QString s;
    s = translateMessage(pStr);
-   pMsgFrame->pWin->putString(s);
+   pMsgFrame->pWin->putString(s.latin1());
 }
 
 bool xIrcMessageFrame::procServerMsg(xIrcMessage *pMsg)
@@ -523,31 +521,31 @@ bool xIrcMessageFrame::procServerMsg(xIrcMessage *pMsg)
    
    for (cp = NickQuery->text(), tmpNick = ""; *cp; cp++)
       tmpNick += toupper(*cp);
-   for (cp = pMsg->srcNick, tmpSrc = ""; *cp; cp++)
+   for (cp = pMsg->srcNick.latin1(), tmpSrc = ""; *cp; cp++)
       tmpSrc += toupper(*cp);
-   for (cp = pMsg->dstStr, tmpDst = ""; *cp; cp++)
+   for (cp = pMsg->dstStr.latin1(), tmpDst = ""; *cp; cp++)
       tmpDst += toupper(*cp);
    for (cp = (char *)name(), tmpName = ""; *cp; cp++)
       tmpName += toupper(*cp);
    
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ProcServerMsg():Comparing |%s| & |%s| to |%s|\n", 
-                             (const char *)tmpSrc, (const char *)tmpDst, 
-                             (const char *)tmpName);
+                             (const char *)tmpSrc.latin1(), (const char *)tmpDst.latin1(), 
+                             (const char *)tmpName.latin1());
    if (dbg) fflush(stdout);
       
    if (
          (tmpNick == tmpDst && tmpSrc == tmpName) || 
          tmpDst == tmpName || 
          (
-            pNicks && ((b = pNicks->is(tmpSrc)) && tmpDst == tmpName)
+            pNicks && ((b = pNicks->is(tmpSrc.latin1())) && tmpDst == tmpName)
          ) || (
-            pNicks && (b = pNicks->is(tmpDst)) && 
+            pNicks && (b = pNicks->is(tmpDst.latin1())) && 
             (
                (pMsg->rspCode >= 311 && pMsg->rspCode <= 319) ||
                pMsg->rspCode == 301
             )
          ) || (
-            pNicks && (b = pNicks->is(tmpSrc)) && 
+            pNicks && (b = pNicks->is(tmpSrc.latin1())) && 
             (
                pMsg->rspCode == 27 ||
                pMsg->rspCode == 33
@@ -564,7 +562,7 @@ bool xIrcMessageFrame::procServerMsg(xIrcMessage *pMsg)
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ProcServerMsg():Adding new nicks to Box\n");
          if (dbg) fflush(stdout);
          if (pNicks && pNicks->isVisible())
-            pNicks->setNicks(pMsg->msgStr);
+            pNicks->setNicks(pMsg->msgStr.latin1());
          else
             ircRespMessageIn(pMsg);
       }
@@ -619,7 +617,7 @@ void xIrcMessageFrame::haveTextSelection(xMultiLineTextSelection msg)
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():Enter\n");
    if (dbg) fflush(stdout);
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():winName = |%s|, text = |%s|\n",
-                             (const char *)msg.winName, (const char *)msg.text);
+                             (const char *)msg.winName.latin1(), (const char *)msg.text.latin1());
    if (dbg) fflush(stdout);
    emit textSelected(msg);
 }

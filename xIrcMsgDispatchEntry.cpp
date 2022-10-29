@@ -19,6 +19,7 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
+#include <qt.h>
 #include "ircreply.h"
 #include "xIrcCommands.h"
 #include "xIrcMsgDispatchEntry.h"
@@ -29,7 +30,7 @@ extern xIrcCommands ircResponses;
 #undef VERSION
 #endif
 
-static int dbg = 0;
+static bool dbg = false;
 
 static int rspOper[] = { RPL_YOUREOPER, 0 };
 static int rspMode[] = { RPL_CHANNELMODEIS, RPL_ENDOFBANLIST, 0 };
@@ -262,7 +263,7 @@ xIrcMsgDispatchEntry::xIrcMsgDispatchEntry(QObject *pObj, const char *pSlot,
          if (dbg) fflush(stdout);
          accepted = 1;
          if (pObject != NULL)
-            connect(this, SIGNAL(gotResponse(xIrcMessage*)), pObject, (const char*)slot);
+            connect(this, SIGNAL(gotResponse(xIrcMessage*)), pObject, (const char*)slot.latin1());
       }
       else
          accepted = 0;

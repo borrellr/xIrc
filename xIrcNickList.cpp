@@ -23,9 +23,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <qt.h>
 #include "xIrcNickList.h"
 
-static int dbg = 0;
+static bool dbg = false;
 
 xIrcNickList::xIrcNickList()
 {
@@ -114,11 +115,11 @@ void xIrcNickList::merge(const char *pName, char delim)
          tmpName += *cp;
       if (dbg) fprintf(stdout, "xIrcNickList::merge(char *):Testing if the name exists\n");
       if (dbg) fflush(stdout);
-      if (!is(tmpName))
+      if (!is(tmpName.latin1()))
       {
-         if (dbg) fprintf(stdout, "xIrcNickList::merge(char *):Creating new name %s\n", (const char *)tmpName);
+         if (dbg) fprintf(stdout, "xIrcNickList::merge(char *):Creating new name %s\n", (const char *)tmpName.latin1());
          if (dbg) fflush(stdout);
-         pEntry = new xIrcNickListEntry(tmpName);
+         pEntry = new xIrcNickListEntry(tmpName.latin1());
          if (pList == NULL)
             pList = pEntry;
          else
@@ -210,9 +211,9 @@ void xIrcNickList::remove(const char *pNames, bool delflag, char delim)
    cp = pNames;
    for (tmpName = ""; *cp && *cp != delim && !isspace(*cp); cp++)
       tmpName += *cp;
-   if (dbg) fprintf(stdout, "xIrcNickList::remove(char *):Searching for |%s|\n", (const char *)tmpName);
+   if (dbg) fprintf(stdout, "xIrcNickList::remove(char *):Searching for |%s|\n", (const char *)tmpName.latin1());
    if (dbg) fflush(stdout);
-   if ((pEntry = find(tmpName)) != NULL)
+   if ((pEntry = find(tmpName.latin1())) != NULL)
    {
       if (dbg) fprintf(stdout, "xIrcNickList::remove(char *):Found it!!\n");
       if (dbg) fflush(stdout);
@@ -257,7 +258,7 @@ const char *xIrcNickList::getNicks(char delim, bool fullName)
       if (pEntry->next() != NULL)
          strTmp += delim;
    }
-   return(strTmp);
+   return(strTmp.latin1());
 }
 const char *xIrcNickList::getAddrs(char delim)
 {
@@ -271,7 +272,7 @@ const char *xIrcNickList::getAddrs(char delim)
       if (pEntry->next() != NULL)
          strTmp += ',';
    }
-   return(strTmp);
+   return(strTmp.latin1());
 }
 
 xIrcNickListEntry *xIrcNickList::getNext(xIrcNickListEntry *pEntry)
