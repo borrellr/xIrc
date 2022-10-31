@@ -23,6 +23,7 @@
 #ifndef _xIRCCONNECT_H
 #define _xIRCCONNECT_H
 
+#include <qaction.h>
 #include <qmenubar.h>
 #include <qpopupmenu.h>
 #include <qstring.h>
@@ -160,6 +161,17 @@ private:
    bool  isMsg(int cmd, char *pStr);
    void InitializeMenu();
    void joinChannel(const char *);
+   void initializeActions();
+   QAction *showNotifyListAct;
+   QAction *showNickActionAct;
+   QAction *newNickAct;
+   QAction *newServerAct;
+   QAction *showIgnoreAct;
+   QAction *showNotifyAct;
+   QAction *connectServerAct;
+   QAction *newChannelAct;
+   QAction *quitIrcAct;
+   QAction *aboutAct;
 };
 
 #endif

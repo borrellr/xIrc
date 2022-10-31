@@ -23,10 +23,10 @@
 #ifndef _xIRCIGNOREQUERY_H
 #define _xIRCIGNOREQUERY_H
 
+#include <qaction.h>
 #include <qmenubar.h>
 #include <qmenubar.h>
 #include <qpopupmenu.h>
-#include <xComboBox.h>
 #include <xDialog.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -72,6 +72,7 @@ private slots:
    void gotoLast();
 
 private:
+   void              initializeActions();
    QString           Port;
    QAccel            *pAccel;
    QMenuBar          *pMenu;
@@ -81,6 +82,13 @@ private:
    xIrcPeopleTable   *pTable;
    xPshBtnFrame      *pButtons;
    xWidgetResInfo    *wdtRes;
+   QAction           *newListAct;
+   QAction           *loadListAct;
+   QAction           *saveListAct;
+   QAction           *doneAct;
+   QAction           *editEntryAct;
+   QAction           *newEntryAct;
+   QAction           *deleteEntryAct;
 };
 
 #endif

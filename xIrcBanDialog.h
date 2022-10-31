@@ -26,7 +26,6 @@
 #include <qcheckbox.h>
 #include <xPshBtnFrame.h>
 #include <qlineedit.h>
-#include <xComboBox.h>
 #include <xDialog.h>
 
 class xIrcBanDialog : public xDialog
@@ -42,10 +41,10 @@ public:
    const char *chan() { return(pChan->text().latin1()); };
    const char *mask() { return(pMask->text().latin1()); };
    const char *text() { return(pText->text().latin1()); };
-   void setNick(const char *pStr) { pNick->setText(pStr); };
-   void setChan(const char *pStr) { pChan->setText(pStr); };
-   void setMask(const char *pStr) { pMask->setText(pStr); };
-   void setText(const char *pStr) { pText->setText(pStr); };
+   void setNick(const QString &Str) { pNick->setText(Str); };
+   void setChan(const QString &Str) { pChan->setText(Str); };
+   void setMask(const QString &Str) { pMask->setText(Str); };
+   void setText(const QString &Str) { pText->setText(Str); };
 
    enum QryResults { Rejected, Accepted, Kick, UnBan, Default, Clear };
 

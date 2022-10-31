@@ -23,10 +23,10 @@
 #ifndef _xIRCSERVERQUERY_H
 #define _xIRCSERVERQUERY_H
 
+#include <qaction.h>
 #include <qmenubar.h>
 #include <qmenubar.h>
 #include <qpopupmenu.h>
-#include <xComboBox.h>
 #include <xDialog.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -80,6 +80,7 @@ private slots:
    void gotoLast();
 
 private:
+   void initializeActions();
    QString           Port;
    QAccel            *pAccel;
    QMenuBar          *pMenu;
@@ -90,6 +91,16 @@ private:
    xIrcServerTable   *pTable;
    xPshBtnFrame      *pButtons;
    xWidgetResInfo    *wdtRes;
+   QAction *newListAct;
+   QAction *loadListAct;
+   QAction *importListAct;
+   QAction *saveListAct;
+   QAction *doneAct;
+   QAction *connectServerAct;
+   QAction *disconnectServerAct;
+   QAction *newEntryAct;
+   QAction *editEntryAct;
+   QAction *deleteEntryAct;
 };
 
 #endif

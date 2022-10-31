@@ -47,7 +47,39 @@ xIrcIgnoreQuery::xIrcIgnoreQuery(xWidgetResInfo *pPRes, QWidget *pParent,
    setDefPallet(this, wdtRes);
    setDefFont(this, wdtRes);
 
+   initializeActions();
    initClass(pName);
+}
+
+void xIrcIgnoreQuery::initializeActions()
+{
+   newListAct = new QAction(tr("New"), 0, this);
+   newListAct->setStatusTip(tr("Create a new list"));
+   connect(newListAct, SIGNAL(activated()), this, SLOT(newList()));
+
+   loadListAct = new QAction(tr("Load"), 0, this);
+   loadListAct->setStatusTip(tr("Load a list of servers"));
+   connect(loadListAct, SIGNAL(activated()), this, SLOT(loadList()));
+
+   saveListAct = new QAction(tr("Save As"), 0, this);
+   saveListAct->setStatusTip(tr("Save the server list"));
+   connect(saveListAct, SIGNAL(activated()), this, SLOT(saveList()));
+
+   doneAct = new QAction(tr("Done"), 0, this);
+   doneAct->setStatusTip(tr("Exit the dialog"));
+   connect(doneAct, SIGNAL(activated()), this, SLOT(reject()));
+
+   newEntryAct = new QAction(tr("New"), 0, this);
+   newEntryAct->setStatusTip(tr("Create new server entry"));
+   connect(newEntryAct, SIGNAL(activated()), this, SLOT(newEntry()));
+
+   editEntryAct = new QAction(tr("Edit"), 0, this);
+   editEntryAct->setStatusTip(tr("Edit a server entry"));
+   connect(editEntryAct, SIGNAL(activated()), this, SLOT(editEntry()));
+
+   deleteEntryAct = new QAction(tr("Delete"), 0, this);
+   deleteEntryAct->setStatusTip(tr("Delete a server entry"));
+   connect(deleteEntryAct, SIGNAL(activated()), this, SLOT(deleteEntry()));
 }
 
 void xIrcIgnoreQuery::initClass(const char *pName)
@@ -71,18 +103,18 @@ void xIrcIgnoreQuery::initClass(const char *pName)
    pTable = new xIrcPeopleTable(wdtRes, this, "servertable", "Ignore", 10);
 
    pFileMenu = new QPopupMenu;
-   pFileMenu->insertItem("New", this, SLOT(newList()));
-   pFileMenu->insertItem("Load", this, SLOT(loadList()));
-   pFileMenu->insertItem("Save As", this, SLOT(saveList()));
-   pFileMenu->insertItem("Done", this, SLOT(reject()));
+   newListAct->addTo(pFileMenu);
+   loadListAct->addTo(pFileMenu);
+   saveListAct->addTo(pFileMenu);
+   doneAct->addTo(pFileMenu);
    setDefFont(pFileMenu, &wdtPopTmp);
    setDefPallet(pFileMenu, &wdtPopTmp);
 
 
    pIgnoreMenu = new QPopupMenu();
-   pIgnoreMenu->insertItem("Edit", this, SLOT(editEntry()));
-   pIgnoreMenu->insertItem("New", this, SLOT(newEntry()));
-   pIgnoreMenu->insertItem("Delete", this, SLOT(deleteEntry()));
+   newEntryAct->addTo(pIgnoreMenu);
+   editEntryAct->addTo(pIgnoreMenu);
+   deleteEntryAct->addTo(pIgnoreMenu);
    setDefFont(pIgnoreMenu, &wdtPopTmp);
    setDefPallet(pIgnoreMenu, &wdtPopTmp);
 

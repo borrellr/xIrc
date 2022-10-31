@@ -46,14 +46,14 @@ xChannelQuery::xChannelQuery(xWidgetResInfo *pPRes, QWidget *pParent,
    initClass(pName);
 }
 
-void xChannelQuery::initClass(const char *pName)
+void xChannelQuery::initClass(const QString &Name)
 {
    char *cp;
 
    if (dbg) fprintf(stdout, "xChannelQuery::xinitClass():Enter\n\r");
    
-   if (pName)
-      setCaption(pName);
+   if (!Name.isEmpty())
+      setCaption(Name);
       
    setFocusPolicy(StrongFocus);
    setMargins(0, 0);

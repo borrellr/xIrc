@@ -23,10 +23,10 @@
 #ifndef _xIRCNOTIFYQUERY_H
 #define _xIRCNOTIFYQUERY_H
 
+#include <qaction.h>
 #include <qmenubar.h>
 #include <qmenubar.h>
 #include <qpopupmenu.h>
-#include <xComboBox.h>
 #include <xDialog.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -82,6 +82,7 @@ private slots:
    void gotoLast();
 
 private:
+   void              initializeActions();
    bool              whoSent;
    QString           getNick(xIrcMessage*);
    QString           Port;
@@ -95,6 +96,13 @@ private:
    xIrcPeopleListIterator *pPeople;
    xPshBtnFrame      *pButtons;
    xWidgetResInfo    *wdtRes;
+   QAction           *newListAct;
+   QAction           *loadListAct;
+   QAction           *saveListAct;
+   QAction           *doneAct;
+   QAction           *newEntryAct;
+   QAction           *editEntryAct;
+   QAction           *deleteEntryAct;
 };
 
 #endif

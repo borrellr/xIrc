@@ -44,7 +44,41 @@ xServerQuery::xServerQuery(xWidgetResInfo *pPRes, QWidget *pParent,
    setDefPallet(this, wdtRes);
    setDefFont(this, wdtRes);
 
+   initializeActions();
    initClass(pName);
+}
+
+void xServerQuery::initializeActions()
+{
+   newListAct = new QAction(tr("New"), 0, this);
+   connect(newListAct, SIGNAL(activated()), this, SLOT(newList()));
+
+   loadListAct = new QAction(tr("Load"), 0, this);
+   connect(loadListAct, SIGNAL(activated()), this, SLOT(loadList()));
+
+   importListAct = new QAction(tr("Import"), 0, this);
+   connect(importListAct, SIGNAL(activated()), this, SLOT(importList()));
+
+   saveListAct = new QAction(tr("Save As"), 0, this);
+   connect(saveListAct, SIGNAL(activated()), this, SLOT(saveList()));
+
+   doneAct = new QAction(tr("Done"), 0, this);
+   connect(doneAct, SIGNAL(activated()), this, SLOT(reject()));
+
+   connectServerAct = new QAction(tr("Connect"), 0, this);
+   connect(connectServerAct, SIGNAL(activated()), this, SLOT(connectServer()));
+
+   disconnectServerAct = new QAction(tr("Disconnect"), 0, this);
+   connect(disconnectServerAct, SIGNAL(activated()), this, SLOT(disconnectServer()));
+
+   newEntryAct = new QAction(tr("New"), 0, this);
+   connect(newEntryAct, SIGNAL(activated()), this, SLOT(newEntry()));
+
+   editEntryAct = new QAction(tr("Edit"), 0, this);
+   connect(editEntryAct, SIGNAL(activated()), this, SLOT(editEntry()));
+
+   deleteEntryAct = new QAction(tr("Delete"), 0, this);
+   connect(deleteEntryAct, SIGNAL(activated()), this, SLOT(deleteEntry()));
 }
 
 void xServerQuery::initClass(const char *pName)
@@ -66,22 +100,21 @@ void xServerQuery::initClass(const char *pName)
    pLabel = new QLabel(this);
    pTable = new xIrcServerTable(wdtRes, this, "servertable", 10);
 
-   pFileMenu = new QPopupMenu;
-   pFileMenu->insertItem("New", this, SLOT(newList()));
-   pFileMenu->insertItem("Load", this, SLOT(loadList()));
-   pFileMenu->insertItem("Import", this, SLOT(importList()));
-   pFileMenu->insertItem("Save As", this, SLOT(saveList()));
-   pFileMenu->insertItem("Done", this, SLOT(reject()));
+   pFileMenu = new QPopupMenu();
+   newListAct->addTo(pFileMenu);
+   loadListAct->addTo(pFileMenu);
+   importListAct->addTo(pFileMenu);
+   saveListAct->addTo(pFileMenu);
+   doneAct->addTo(pFileMenu);
    setDefFont(pFileMenu, &wdtPopTmp);
    setDefPallet(pFileMenu, &wdtPopTmp);
 
-
    pServerMenu = new QPopupMenu();
-   pServerMenu->insertItem("Connect", this, SLOT(connectServer()));
-   pServerMenu->insertItem("Disconnect", this, SLOT(disconnectServer()));
-   pServerMenu->insertItem("New", this, SLOT(newEntry()));
-   pServerMenu->insertItem("Edit", this, SLOT(editEntry()));
-   pServerMenu->insertItem("Delete", this, SLOT(deleteEntry()));
+   connectServerAct->addTo(pServerMenu);
+   disconnectServerAct->addTo(pServerMenu);
+   newEntryAct->addTo(pServerMenu);
+   editEntryAct->addTo(pServerMenu);
+   deleteEntryAct->addTo(pServerMenu);
    setDefFont(pServerMenu, &wdtPopTmp);
    setDefPallet(pServerMenu, &wdtPopTmp);
 

@@ -630,19 +630,19 @@ void xIrcServerTable::newMask(bool force)
       QRegExp rx("[A-Z][a-z]+");
       QRegExpValidator v(rx, 0);
 
-      if (!v.validate(groupMask, pos))
+      if (!v.validate(groupMask, pos) || groupMask.isEmpty())
          groupMask = "*";
 
-      if (!v.validate(countryMask, pos))
+      if (!v.validate(countryMask, pos) || countryMask.isEmpty())
          countryMask = "*";
 
-      if (!v.validate(stateMask, pos))
+      if (!v.validate(stateMask, pos) || stateMask.isEmpty())
          stateMask = "*";
 
-      if (!v.validate(cityMask, pos))
+      if (!v.validate(cityMask, pos) || cityMask.isEmpty())
          cityMask = "*";
 
-      if (!v.validate(serverMask, pos))
+      if (!v.validate(serverMask, pos) || serverMask.isEmpty())
          serverMask = "*";
 
       showMaskEntries();
