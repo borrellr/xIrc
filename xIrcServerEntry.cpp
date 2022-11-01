@@ -65,6 +65,15 @@ xIrcServerEntry::xIrcServerEntry(char *p)
 xIrcServerEntry::xIrcServerEntry(const char *group, const char *country, const char *state,
                                  const char *city, const char *server, const char *ports)
 {
+   QString Group(group), Country(country), State(state), City(city),
+        Server(server), Ports(ports);
+   xIrcServerEntry(Group, Country, State, City, Server, Ports);
+}
+
+xIrcServerEntry::xIrcServerEntry(const QString &group, const QString &country,
+     const QString &state, const QString &city, const QString &server,
+     const QString &ports)
+{
    Group = group;
    Country = country;
    State = state;
