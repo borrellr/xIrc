@@ -258,9 +258,9 @@ void xIrcServerTable::clear()
    newMask(TRUE);
 }
 
-void xIrcServerTable::readFile(const char *fn)
+void xIrcServerTable::readFile(const QString &fn)
 {
-   pServerList->readFile(fn);
+   pServerList->readFile(fn.latin1());
 //   pServerList->showEntries();
 
    newMask(TRUE);
@@ -268,19 +268,19 @@ void xIrcServerTable::readFile(const char *fn)
    showRows();
 }
 
-void xIrcServerTable::writeFile(const char *fn)
+void xIrcServerTable::writeFile(const QString &fn)
 {
-   if (dbg) fprintf(stdout, "xIrcServerTable::writeFile(%s):Enter\n", fn);
+   if (dbg) fprintf(stdout, "xIrcServerTable::writeFile(%s):Enter\n", fn.latin1());
    if (dbg) fflush(stdout);
-   pServerList->writeFile(fn);
+   pServerList->writeFile(fn.latin1());
    showRows();
-   if (dbg) fprintf(stdout, "xIrcServerTable::writeFile(%s):Exit\n", fn);
+   if (dbg) fprintf(stdout, "xIrcServerTable::writeFile(%s):Exit\n", fn.latin1());
    if (dbg) fflush(stdout);
 }
 
-void xIrcServerTable::import(const char *fn)
+void xIrcServerTable::import(const QString &fn)
 {
-   xIrcMircServerParse(fn, *pServerList);
+   xIrcMircServerParse(fn.latin1(), *pServerList);
 
    newMask(TRUE);
    setSB();

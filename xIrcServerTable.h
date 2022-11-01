@@ -49,9 +49,9 @@ public:
    xIrcServerEntry *entry(int r);
    void remove(int r);
    void clear();
-   void readFile(const char *fn);
-   void writeFile(const char *fn);
-   void import(const char *fn);
+   void readFile(const QString &fn);
+   void writeFile(const QString &fn);
+   void import(const QString &fn);
    void add(xIrcServerEntry &entry);
 
 signals:

@@ -100,13 +100,13 @@ xIrcServerList::~xIrcServerList()
 {
 }
 
-int xIrcServerList::readFile(const char *fn)
+int xIrcServerList::readFile(const QString &fn)
 {
    char buf[512], *cp;
    int parm;
    FILE *fp;
 
-   if ((fp = fopen(fn, "r")) == NULL)
+   if ((fp = fopen(fn.latin1(), "r")) == NULL)
       return(-1);
 
    while (fgets(buf, sizeof(buf), fp) != NULL)
@@ -150,21 +150,21 @@ int xIrcServerList::readFile(const char *fn)
                break;
          }
       }
-      xIrcServerEntry e(groupStr.latin1(), countryStr.latin1(), stateStr.latin1(), cityStr.latin1(), serverStr.latin1(), portsStr.latin1());
+      xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
       add(e);
    }
    return(0);
 }
 
-int xIrcServerList::writeFile(const char *fn)
+int xIrcServerList::writeFile(const QString &fn)
 {
    xIrcServerListIterator si(*this);
    char buf[512];
    FILE *fp;
 
-   if (dbg) fprintf(stdout, "xIrcServerList::writeFile(%s):Enter\n", fn);
+   if (dbg) fprintf(stdout, "xIrcServerList::writeFile(%s):Enter\n", fn.latin1());
    if (dbg) fflush(stdout);
-   if ((fp = fopen(fn, "w")) == NULL)
+   if ((fp = fopen(fn.latin1(), "w")) == NULL)
       return(-1);
 
    for (; si.current() != NULL; ++si)
@@ -179,7 +179,7 @@ int xIrcServerList::writeFile(const char *fn)
       fputs(buf,fp);
    }
    fclose(fp);
-   if (dbg) fprintf(stdout, "xIrcServerList::writeFile(%s):Exit\n", fn);
+   if (dbg) fprintf(stdout, "xIrcServerList::writeFile(%s):Exit\n", fn.latin1());
    if (dbg) fflush(stdout);
    return(0);
 }

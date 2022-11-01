@@ -36,9 +36,9 @@ public:
    xIrcServerList();
    ~xIrcServerList();
 
-   int readFile(const char *fn);
-   int writeFile(const char *fn);
-   int import(const char *fn);
+   int readFile(const QString &fn);
+   int writeFile(const QString &fn);
+   int import(const QString &fn);
    void add(xIrcServerList &list);
    void add(xIrcServerEntry &entry);
    void showEntries();
