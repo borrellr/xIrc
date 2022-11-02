@@ -56,7 +56,7 @@ public:
    bool isState(QString &s) { return((s == State) ? TRUE : FALSE); };
    bool isCity(QString &s) { return((s == City) ? TRUE : FALSE); };
    bool isId(QString &s) { return((s == Id) ? TRUE : FALSE); };
-   int compare(xIrcServerEntry *e);
+   bool compare(xIrcServerEntry *e);
    void showEntries();
 
 private:

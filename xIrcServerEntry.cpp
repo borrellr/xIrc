@@ -227,32 +227,30 @@ char *xIrcServerEntry::parsePorts(char *p, QString &s)
    return(p);
 }
 
-int xIrcServerEntry::compare(xIrcServerEntry *e)
+bool xIrcServerEntry::compare(xIrcServerEntry *e)
 {
    if (Group == e->Group)
    {
       if (Country == e->Country)
       {
          if (State == e->State)
-            return(strcmp(City.latin1(), e->City.latin1()));
+            return(City == e->City);
          else 
-            return(strcmp(State.latin1(), e->State.latin1()));
+            return(State == e->State);
       }
       else
-         return(strcmp(Country.latin1(), e->Country.latin1()));
+         return(Country == e->Country);
    }
-   return(strcmp(Group.latin1(), e->Group.latin1()));
+   return(Group == e->Group);
 }
 
 void xIrcServerEntry::showEntries()
 {
-   if (true) {
-      printf ("Id is |%s|\n", Id.latin1());
-      printf ("Group is |%s|\n", Group.latin1());
-      printf ("Country is |%s|\n", Country.latin1());
-      printf ("State is |%s|\n", State.latin1());
-      printf ("City is |%s|\n", City.latin1());
-      printf ("Server is |%s|\n", Server.latin1());
-      printf ("Ports is |%s|\n", Ports.latin1());
-   }
+   printf ("     Id is |%s|\n", Id.latin1());
+   printf ("  Group is |%s|\n", Group.latin1());
+   printf ("Country is |%s|\n", Country.latin1());
+   printf ("  State is |%s|\n", State.latin1());
+   printf ("   City is |%s|\n", City.latin1());
+   printf (" Server is |%s|\n", Server.latin1());
+   printf ("  Ports is |%s|\n", Ports.latin1());
 }
