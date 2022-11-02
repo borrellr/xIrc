@@ -26,7 +26,9 @@
 #include <stdio.h>
 #include "xIrcServerList.h"
 
+#ifndef QT3
 static bool dbg = false;
+#endif
 
 xIrcServerList::xIrcServerList()
 {
@@ -102,86 +104,74 @@ xIrcServerList::~xIrcServerList()
 
 int xIrcServerList::readFile(const QString &fn)
 {
-   char buf[512], *cp;
-   int parm;
-   FILE *fp;
+   QFile f(fn);
 
-   if ((fp = fopen(fn.latin1(), "r")) == NULL)
-      return(-1);
-
-   while (fgets(buf, sizeof(buf), fp) != NULL)
-   {
-      QString groupStr, countryStr, stateStr, cityStr, serverStr, portsStr;
-      for (cp = buf, parm = 0; *cp; cp++)
-      {
-         if (*cp == '\n')
-            continue;
-         else if (*cp == ':')
-         {
-            parm++;
-            continue;
-         }
-
-         switch (parm)
-         {
-            
-            case 0:
-               groupStr += *cp;
-               break;
-
-            case 1:
-               countryStr += *cp;
-               break;
-
-            case 2:
-               stateStr += *cp;
-               break;
-
-            case 3:
-               cityStr += *cp;
-               break;
-
-            case 4:
-               serverStr += *cp;
-               break;
-
-            case 5:
-               portsStr += *cp;
-               break;
-         }
-      }
-      xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
-      add(e);
+   if (!f.exists()) {
+       qWarning("File %s does not exists\n", fn.latin1());
+       return false;
    }
-   return(0);
+
+   if (!f.open(IO_ReadOnly)) {
+      qWarning("File %s is not readonly\n", fn.latin1());
+      return false;
+   }
+
+   QTextStream stream(&f);
+   QString line;
+   QString groupStr, countryStr, stateStr, cityStr, serverStr, portsStr;
+   QStringList dataLines;
+
+   while ( !stream.atEnd()) {
+      line = stream.readLine();
+      if (!line.isEmpty()) {
+         dataLines = QStringList::split(":", line);
+         if (dataLines.count() == 6) {
+            groupStr = dataLines[0];
+            countryStr = dataLines[1];
+            stateStr = dataLines[2];
+            cityStr = dataLines[3];
+            serverStr = dataLines[4];
+            portsStr = dataLines[5];
+            xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
+            add(e);
+         }
+         dataLines.clear();
+      }
+   }
+   f.close();
+   return true;
 }
 
 int xIrcServerList::writeFile(const QString &fn)
 {
-   xIrcServerListIterator si(*this);
-   char buf[512];
-   FILE *fp;
+   QFile f(fn);
 
-   if (dbg) fprintf(stdout, "xIrcServerList::writeFile(%s):Enter\n", fn.latin1());
-   if (dbg) fflush(stdout);
-   if ((fp = fopen(fn.latin1(), "w")) == NULL)
-      return(-1);
-
-   for (; si.current() != NULL; ++si)
-   {
-      sprintf(buf, "%s:%s:%s:%s:%s:%s\n", 
-                  (const char *)si.current()->group().latin1(),    
-                  (const char *)si.current()->country().latin1(),    
-                  (const char *)si.current()->state().latin1(),    
-                  (const char *)si.current()->city().latin1(),    
-                  (const char *)si.current()->server().latin1(),    
-                  (const char *)si.current()->ports().latin1());
-      fputs(buf,fp);
+   if (!f.open(IO_WriteOnly)) {
+      qWarning("File %s is not writable\n", fn.latin1());
+      return false;
    }
-   fclose(fp);
-   if (dbg) fprintf(stdout, "xIrcServerList::writeFile(%s):Exit\n", fn.latin1());
-   if (dbg) fflush(stdout);
-   return(0);
+
+   QTextStream stream(&f);
+   QStringList writeData;
+   QString writeBuf;
+
+   xIrcServerListIterator si(*this);
+   while ( si.current() != NULL)
+   {
+       writeData.append(si.current()->group());
+       writeData.append(si.current()->country());
+       writeData.append(si.current()->state());
+       writeData.append(si.current()->city());
+       writeData.append(si.current()->server());
+       writeData.append(si.current()->ports());
+       writeBuf = writeData.join(":");
+       stream << writeBuf.latin1() << endl;
+       writeData.clear();
+       ++si;
+   }
+   f.close();
+
+   return true;
 }
 
 void xIrcServerList::add(xIrcServerList &list)
