@@ -89,7 +89,8 @@ void xServerQuery::initMenus()
 
 void xServerQuery::initLoadData()
 {
-   if (!serverList->readFile("servers.dat")) {
+   QString fileName("/usr/local/lib/xIrc/servers.dat");
+   if (!serverList->readFile(fileName)) {
       qWarning("The file servers.dat is not present");
       return;
    }
