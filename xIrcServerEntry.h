@@ -30,13 +30,13 @@ class xIrcServerEntry
 public:
    xIrcServerEntry();
    xIrcServerEntry(char *p);
-   xIrcServerEntry(const QString &group, const QString &country, const QString
-                   &state, const QString &city, const QString &server, const
-                   QString &ports);
    xIrcServerEntry(const char *group, const char *country, const char *state,
                    const char *city, const char *server, const char *ports);
+   xIrcServerEntry(const QString &g, const QString &c, const QString &s,
+                   const QString &ci, const QString &se, const QString &p);
    xIrcServerEntry(xIrcServerEntry &e);
-   
+
+   void showEntries();
    QString server() { return(Server); };
    QString group() { return(Group); };
    QString country() { return(Country); };
@@ -56,8 +56,7 @@ public:
    bool isState(QString &s) { return((s == State) ? TRUE : FALSE); };
    bool isCity(QString &s) { return((s == City) ? TRUE : FALSE); };
    bool isId(QString &s) { return((s == Id) ? TRUE : FALSE); };
-   bool compare(xIrcServerEntry *e);
-   void showEntries();
+   int compare(xIrcServerEntry *e);
 
 private:
    char *parseId(char *p, QString &s);
