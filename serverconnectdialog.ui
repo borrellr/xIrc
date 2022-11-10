@@ -1,0 +1,241 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>serverConnectDialog</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>serverConnectDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>257</width>
+            <height>272</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>serverConnectDialog</string>
+    </property>
+    <property name="focusPolicy">
+        <enum>StrongFocus</enum>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>true</bool>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>200</y>
+                <width>190</width>
+                <height>50</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QPushButton">
+                <property name="name">
+                    <cstring>buttonOk</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                    <sizepolicy>
+                        <hsizetype>0</hsizetype>
+                        <vsizetype>0</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                    </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                    <size>
+                        <width>80</width>
+                        <height>30</height>
+                    </size>
+                </property>
+                <property name="text">
+                    <string>&amp;OK</string>
+                </property>
+                <property name="accel">
+                    <string></string>
+                </property>
+                <property name="autoDefault">
+                    <bool>true</bool>
+                </property>
+                <property name="default">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QPushButton">
+                <property name="name">
+                    <cstring>buttonCancel</cstring>
+                </property>
+                <property name="minimumSize">
+                    <size>
+                        <width>80</width>
+                        <height>30</height>
+                    </size>
+                </property>
+                <property name="text">
+                    <string>&amp;Cancel</string>
+                </property>
+                <property name="accel">
+                    <string></string>
+                </property>
+                <property name="autoDefault">
+                    <bool>true</bool>
+                </property>
+            </widget>
+        </hbox>
+    </widget>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>13</y>
+                <width>213</width>
+                <height>180</height>
+            </rect>
+        </property>
+        <grid>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLabel" row="0" column="0">
+                <property name="name">
+                    <cstring>groupLabel</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;p align="right"&gt;Group: &lt;/p&gt;</string>
+                </property>
+            </widget>
+            <widget class="QLabel" row="2" column="0">
+                <property name="name">
+                    <cstring>stateLabel</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;p align="right"&gt;State: &lt;/p&gt;</string>
+                </property>
+            </widget>
+            <widget class="QLabel" row="5" column="0">
+                <property name="name">
+                    <cstring>portLabel</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;p align="right"&gt;Port: &lt;/p&gt;</string>
+                </property>
+            </widget>
+            <widget class="QLabel" row="4" column="0">
+                <property name="name">
+                    <cstring>serverLabel</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;p align="right"&gt;Server: &lt;/p&gt;</string>
+                </property>
+            </widget>
+            <widget class="QLabel" row="1" column="0">
+                <property name="name">
+                    <cstring>countryLabel</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;p align="right"&gt;Country: &lt;/p&gt;</string>
+                </property>
+            </widget>
+            <widget class="QComboBox" row="5" column="1">
+                <property name="name">
+                    <cstring>portComboBox</cstring>
+                </property>
+                <property name="editable">
+                    <bool>false</bool>
+                </property>
+            </widget>
+            <widget class="QLineEdit" row="4" column="1">
+                <property name="name">
+                    <cstring>serverEdit</cstring>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLineEdit" row="2" column="1">
+                <property name="name">
+                    <cstring>stateEdit</cstring>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLineEdit" row="3" column="1">
+                <property name="name">
+                    <cstring>cityEdit</cstring>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLineEdit" row="0" column="1">
+                <property name="name">
+                    <cstring>groupEdit</cstring>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLineEdit" row="1" column="1">
+                <property name="name">
+                    <cstring>countryEdit</cstring>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLabel" row="3" column="0">
+                <property name="name">
+                    <cstring>cityLabel</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;p align="right"&gt;City: &lt;/p&gt;</string>
+                </property>
+            </widget>
+        </grid>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>buttonOk</sender>
+        <signal>clicked()</signal>
+        <receiver>serverConnectDialog</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>buttonCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>serverConnectDialog</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>groupEdit</tabstop>
+    <tabstop>countryEdit</tabstop>
+    <tabstop>stateEdit</tabstop>
+    <tabstop>cityEdit</tabstop>
+    <tabstop>serverEdit</tabstop>
+    <tabstop>buttonOk</tabstop>
+    <tabstop>buttonCancel</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in implementation">serverconnectdialog.ui.h</include>
+</includes>
+<functions>
+    <function returnType="bool">isEnable()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -36,12 +36,15 @@ public:
    xIrcServerList();
    ~xIrcServerList();
 
-   int readFile(const QString &fn);
-   int writeFile(const QString &fn);
-   int import(const QString &fn);
+   bool readFile(const QString &fn);
+   bool writeFile(const QString &fn);
+//   bool import(const QString &fn);
    void add(xIrcServerList &list);
    void add(xIrcServerEntry &entry);
+   void removeEntry(xIrcServerEntry *entry);
    void showEntries();
+   bool compareItems(xIrcServerEntry *e1, xIrcServerEntry *e2);
+   void replaceEntry(xIrcServerEntry *e1, xIrcServerEntry *e2);
+   xIrcServerEntry *findEntry(xIrcServerEntry *e);
 };
-
 #endif
