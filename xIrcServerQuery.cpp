@@ -184,12 +184,13 @@ void xServerQuery::loadList()
 
 void xServerQuery::connectServer()
 {
-   xIrcConnectDialog *conServer = new xIrcConnectDialog();
+   xIrcConnectDialog *conServer = new xIrcConnectDialog(this);
    int row = pTable->currentRow();
    pTable->getRowData(row);
    xIrcServerEntry *currEntry = pTable->getCurrentEntry();
    conServer->initEntry(serverList->findEntry(currEntry));
    conServer->show();
+   conServer->raise();
    if (int x = conServer->exec()) {
       pServerEntry = conServer->getEntry();
       connServer = pServerEntry->server();
