@@ -1,3 +1,26 @@
+xIrc-2.3.10 - Robert Borrell <robert.borrell@gmail.com>
+===========
+In this release, the serverQuery class along with the following classes were
+replaced with Qt3 classes:
+
+  - xIrcSeverQuery
+  - xIrcServerTable
+  - xIrcServerEdit
+  - xIrcServerEntry
+  - xIrcConnectDialog
+
+In addition two new Qt Designer UI files are introduced:
+
+  - serverconnectdialog.ui
+  - servereditdialog.ui
+
+The above UI file are the base class for xIrcConnectDialog and xIrcServerEdit,
+respectively.  These changes are successfully integrated into the xIrc code
+base. This is the first step in modernizing the xIrc code base and move away
+the dependence on the libX++ files.
+
+The build and test environment moved from CentOS v4 to CentOS v5 with Qt3.
+
 xIrc-2.3.9 - Robert Borrell <robert.borrell@gmail.com>
 ==========
 This release is a modified version of 2.3.8 that has been ported to Qt3.
