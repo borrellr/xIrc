@@ -1,54 +1,38 @@
-/***************************************************************************
-**    xIrcServerQuery.cpp  $Revision: 1.6 $ - $Name:  $ 
-**    Dialog box to get server name
-**
-**    Copyright (C) 1997 1998 Joseph Croft <joe@croftj.net>
-** Copyright (C) 1995, 1996  Joseph Croft <jcroft@unicomp.net>  
-** 
-** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by
-** the Free Software Foundation; either version 1, or (at your option)
-** any later version.
-** 
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-** 
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-**
- ***************************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <qt.h>
 #include <qfiledialog.h>
-#include "xIrcServerEdit.h"
 #include "xIrcServerQuery.h"
+#include "xIrcServerEdit.h"
+#include "xIrcConnectDialog.h"
 
-static bool dbg = false;
-                    
-static const char *pInitialResources[] =
+xServerQuery::xServerQuery(QWidget *parent, const char *name)
+    : QDialog(parent, name)
 {
-   NULL
-};
-
-xServerQuery::xServerQuery(xWidgetResInfo *pPRes, QWidget *pParent,
-                           const char *pName) :
-               xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("serverdialog"),
-                                                   QString("ServerDialog")),
-                       pParent, pName, TRUE)
-{
-   Resources->setWidgetInit(pInitialResources);
-   setDefPallet(this, wdtRes);
-   setDefFont(this, wdtRes);
-
-   initializeActions();
-   initClass(pName);
+   initClass();
+   initActions();
+   initMenus();
+   initLoadData();
+   if (name)
+      setCaption(name);
 }
 
-void xServerQuery::initializeActions()
+xServerQuery::~xServerQuery()
+{
+}
+
+void xServerQuery::initClass()
+{
+   serverList = new xIrcServerList();
+   pTable = new xIrcServerTable(this);
+   pMenuBar = new QMenuBar(this);
+
+   QRect r(0,0,400,400);
+   pLayout = new QBoxLayout(this, QBoxLayout::Down);
+   pLayout->setGeometry(r);
+   pLayout->setMenuBar(pMenuBar);
+   pLayout->add(pTable);
+   pServerEntry = NULL;
+}
+
+void xServerQuery::initActions()
 {
    newListAct = new QAction(tr("New"), 0, this);
    connect(newListAct, SIGNAL(activated()), this, SLOT(newList()));
@@ -81,263 +65,138 @@ void xServerQuery::initializeActions()
    connect(deleteEntryAct, SIGNAL(activated()), this, SLOT(deleteEntry()));
 }
 
-void xServerQuery::initClass(const char *pName)
+void xServerQuery::initMenus()
 {
-   const char *pFn, *pPath;
-   QString serverFile;
-
-   if (dbg) fprintf(stdout, "xinitClass::xinitClass():Enter\n\r");
-   if (dbg) fflush(stdout); 
-
-   xWidgetResInfo wdtTmp(wdtRes, QString("menu"), QString("Menu"));
-   xWidgetResInfo wdtPopTmp(&wdtTmp, QString("popup"), QString("Popup"));
-
-//   mainFrame->setAutoDelete(TRUE);
-   if (pName)
-      setCaption(pName);
-
-   setFocusPolicy(StrongFocus);
-   pLabel = new QLabel(this);
-   pTable = new xIrcServerTable(wdtRes, this, "servertable", 10);
-
    pFileMenu = new QPopupMenu();
    newListAct->addTo(pFileMenu);
    loadListAct->addTo(pFileMenu);
    importListAct->addTo(pFileMenu);
    saveListAct->addTo(pFileMenu);
+   pFileMenu->insertSeparator();
    doneAct->addTo(pFileMenu);
-   setDefFont(pFileMenu, &wdtPopTmp);
-   setDefPallet(pFileMenu, &wdtPopTmp);
 
    pServerMenu = new QPopupMenu();
    connectServerAct->addTo(pServerMenu);
    disconnectServerAct->addTo(pServerMenu);
+   pServerMenu->insertSeparator();
    newEntryAct->addTo(pServerMenu);
    editEntryAct->addTo(pServerMenu);
    deleteEntryAct->addTo(pServerMenu);
-   setDefFont(pServerMenu, &wdtPopTmp);
-   setDefPallet(pServerMenu, &wdtPopTmp);
 
-   pMenu = new QMenuBar(this);
-   pMenu->insertItem("&File", pFileMenu);
-   pMenu->insertItem("&Server", pServerMenu);
-   setDefFont(pMenu, &wdtTmp);
-   setDefPallet(pMenu, &wdtTmp);
-
-   pAccel = new QAccel(this, "");
-   pAccel->connectItem(pAccel->insertItem(Key_Prior), pTable, SLOT(scrollPageBack()));
-   pAccel->connectItem(pAccel->insertItem(Key_Next), pTable, SLOT(scrollPageFwd()));
-   pAccel->connectItem(pAccel->insertItem(Key_Up), pTable, SLOT(highlightPrev()));
-   pAccel->connectItem(pAccel->insertItem(Key_Down), pTable, SLOT(highlightNext()));
-   pAccel->connectItem(pAccel->insertItem(Key_Home), this, SLOT(gotoFirst()));
-   pAccel->connectItem(pAccel->insertItem(Key_End), this, SLOT(gotoLast()));
-   
-   if ((pPath = Resources->get(wdtRes, "path", "Path")) == NULL)
-      pPath = "/usr/local/lib/xIrc";
-   serverFile = pPath;
-   if ((pFn = Resources->get(wdtRes, "filename", "Filename")) == NULL)
-      pFn = ".servers";
-   serverFile += '/';
-   serverFile += pFn;
-   printf ("The server file to load is |%s|\n", serverFile.latin1());
-   pTable->readFile(serverFile.latin1());
-   
-   pButtons = new xPshBtnFrame(wdtRes, this);
-   pButtons->setFrameStyle(QFrame::Panel | QFrame::Raised);
-   pButtons->setAlignment(xALIGN_Horz);
-   pButtons->addButton("Connect",     xServerQuery::Accepted);
-   pButtons->addButton("Disconnect",  xServerQuery::Disconnect);
-/*
-   pButtons->addButton("Edit",  xServerQuery::Edit);
-   pButtons->addButton("Delete",  xServerQuery::Delete);
-   pButtons->addButton("Load",  xServerQuery::Load);
-   pButtons->addButton("Save",  xServerQuery::Save);
-   pButtons->addButton("Import",  xServerQuery::Import);
-   pButtons->addButton("Clear",  xServerQuery::Clear);
-*/
-   pButtons->addButton("Cancel", xServerQuery::Rejected);
-
-   addWidget(pLabel);
-   addWidget(pTable);
-   addWidget(pButtons);
-   setResizeMode(xSPACE_Resize);
-   setMargins(0,0);
-   setWidgetSpacing(0);
-   initFrame();
-   
-   connect(pTable, SIGNAL(rowDoubleClicked(int)),
-           this, SLOT(serverSelected(int)));
-   connect(pButtons, SIGNAL(clicked(int)), this, SLOT(gotButton(int)));
-   connect(pTable, SIGNAL(returnPressed()),
-           this, SLOT(gotReturn()));
-
-   pConnect = NULL;
-   if (dbg) fprintf(stdout, "xinitClass::xinitClass():Exit\n\r");
-   if (dbg) fflush(stdout); 
+   pMenuBar->insertItem("&File", pFileMenu);
+   pMenuBar->insertItem("&Server", pServerMenu);
 }
 
-void xServerQuery::gotButton(int btn)
+void xServerQuery::initLoadData()
 {
-   QString tmpStr;
-
-   if (dbg) fprintf(stdout, "xServerQuery::gotButton(%d):Enter\n\r", btn);
-   if (dbg) fflush(stdout); 
-   switch((QryResults)btn)
-   {
-      case Disconnect:
-         if (dbg) fprintf(stdout, "xServerQuery::gotButton():Disconnecting??\n\r");
-         if (dbg) fflush(stdout); 
-         done(btn);
-         break;
-
-      case Accepted:                                                         
-         if (dbg) fprintf(stdout, "xServerQuery::gotButton():Accepting??\n\r");
-         if (dbg) fflush(stdout);
-         if (pTable != NULL)
-            serverSelected(pTable->selectedRow());
-         else
-            serverSelected(-1);
-         break;                                                              
-
-      case Rejected:                                                         
-         if (dbg) fprintf(stdout, "xServerQuery::gotButton():Rejecting??\n\r");
-         if (dbg) fflush(stdout); 
-         reject();
-         break;
+   QString fileName("/usr/local/lib/xIrc/servers.dat");
+   if (!serverList->readFile(fileName)) {
+      qWarning("The file servers.dat is not present");
+      return;
    }
-   if (dbg) fprintf(stdout, "xServerQuery::gotButton():Exit\n\r");
-}
-
-void xServerQuery::accept()
-{
-   QDialog::accept();
-}
-
-void xServerQuery::reject()
-{
-   QDialog::reject();
-}
-
-void xServerQuery::gotReturn()
-{
-
-   if (dbg) fprintf(stdout, "xServerQuery::gotReturn():Enter\n\r");
-   serverSelected(pTable->selectedRow());
-   if (dbg) fprintf(stdout, "xServerQuery::gotReturn():Exit\n\r");
-}
-
-void xServerQuery::newEntry()
-{
-   xIrcServerEntry e("", "", "", "", "", "");
-
-   xIrcServerEdit editDlg(wdtRes, NULL, "Server Entry Edit", &e);
-   editDlg.exec();
-   pTable->add(e);
-   pTable->showRows(pTable->currentRow());
-}
-
-void xServerQuery::serverSelected(int row)
-{
-   int x;
-
-   if (dbg) fprintf(stdout, "xServerQuery::serverSelected():Enter\n");
-   if (dbg) fflush(stdout);
-   if (pTable != NULL && pTable->entry(row) != NULL)
-      pConnect = new xIrcConnectDialog(wdtRes, NULL, "Server Connect", pTable->entry(row));
-   else
-      pConnect = new xIrcConnectDialog(wdtRes, NULL, "Server Connect", NULL);
-   connect(pConnect, SIGNAL(completed(int)),
-           this, SLOT(doConnect(int)));
-   x = pConnect->exec();
-   if (dbg) fprintf(stdout, "xServerQuery::serverSelected():Connect Dialog Complete\n");
-   if (dbg) fflush(stdout);
-   delete pConnect;
-   pConnect = NULL;
-   if (x == QDialog::Accepted)
-      done(x);
-   if (dbg) fprintf(stdout, "xServerQuery::serverSelected():Exit\n");
-   if (dbg) fflush(stdout);
-}
-
-void xServerQuery::doConnect(int status)
-{
-   if (dbg) fprintf(stdout, "xServerQuery::doConnect(%d):Enter\n", status);
-   if (dbg) fflush(stdout);
-   if (status)
-   {
-      if (dbg) fprintf(stdout, "xServerQuery::doConnect():Have good status\n");
-      if (dbg) fflush(stdout);
-      Port = pConnect->port();
-      if (dbg) fprintf(stdout, "xServerQuery::doConnect():Port = |%s|\n",
-                       (const char *)Port.latin1());
-      if (dbg) fflush(stdout);
-   }
-   if (dbg) fprintf(stdout, "xServerQuery::doConnect():Exit\n");
-   if (dbg) fflush(stdout);
+//   serverList->showEntries();
+   pTable->loadTable(serverList);
 }
 
 void xServerQuery::newList()
 {
-   if (dbg) fprintf(stdout, "xServerQuery::newList():Enter\n");
-   if (dbg) fflush(stdout);
-   pTable->clear();
-   if (dbg) fprintf(stdout, "xServerQuery::newList():Calling shoRows()\n");
-   if (dbg) fflush(stdout);
-   pTable->showRows(0);
-   if (dbg) fprintf(stdout, "xServerQuery::newList():Exit\n");
-   if (dbg) fflush(stdout);
+   if (serverList)
+      delete serverList;
+   serverList = new xIrcServerList();
+
+   pTable->clearTable();
 }
 
 void xServerQuery::importList()
 {
-   QString pFn, pPath, pFilt;
-   QString fileName;
-
-   if ((pFn = Resources->get(wdtRes, "importfile", "ImportFile")) == NULL)
-      pFn = "servers.ini";
-   if ((pPath = Resources->get(wdtRes, "path", "Path")) == NULL)
-      pPath = "./";
-   if ((pFilt = Resources->get(wdtRes, "importfilter", "ImportFilter")) == NULL)
-      pFilt = "*.ini";
-
-   fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   if (!fileName.isEmpty())
-      pTable->import(fileName.latin1());
 }
 
 void xServerQuery::saveList()
 {
-   QString pFn, pPath, pFilt;
+   QString pFn(".servers"), pPath(getenv("HOME")), pFilt(".*");
    QString fileName;
-
-   if ((pFn = Resources->get(wdtRes, "filename", "Filename")) == NULL)
-      pFn = ".servers";
-   if ((pPath = Resources->get(wdtRes, "path", "Path")) == NULL)
-      pPath = "/usr/local/lib/xIrc";
-   if ((pFilt = Resources->get(wdtRes, "filter", "Filter")) == NULL)
-      pFilt = ".*";
 
    fileName = QFileDialog::getSaveFileName(pPath + "/" + pFn, pFilt, this);
    if (!fileName.isEmpty())
-      pTable->writeFile(fileName.latin1());
+      serverList->writeFile(fileName);
+}
+
+void xServerQuery::newEntry()
+{
+   xIrcServerEdit *newEdit = new xIrcServerEdit(this);
+
+   newEdit->show();
+   if (newEdit->exec()) {
+      xIrcServerEntry *result = newEdit->getEntry();
+      serverList->add(*result);
+      pTable->addEntry(*result);
+   }
 }
 
 void xServerQuery::editEntry()
 {
-   xIrcServerEdit editDlg(wdtRes, NULL, "Server Entry Edit", 
-                          pTable->entry(pTable->selectedRow()));
-   editDlg.exec();
-   pTable->showRows(pTable->currentRow());
+   xIrcServerEdit *modEdit = new xIrcServerEdit(this);
+
+   int row = pTable->currentRow();
+   pTable->getRowData(row);
+   xIrcServerEntry *currEntry = pTable->getCurrentEntry();
+//   currEntry->showEntries();
+
+   modEdit->initEntry(serverList->findEntry(currEntry));
+   modEdit->show();
+   if (modEdit->exec()) {
+      xIrcServerEntry *result = modEdit->getEntry(); 
+      serverList->replaceEntry(currEntry, result);
+//      serverList->showEntries();
+      pTable->replaceEntry(row, result);
+   }
 }
 
 void xServerQuery::deleteEntry()
 {
-   pTable->remove(pTable->selectedRow());
+   int row = pTable->currentRow();
+   pTable->getRowData(row);
+   xIrcServerEntry *currEntry = pTable->getCurrentEntry();
+//   currEntry->showEntries();
+   pTable->removeRow(row);
+   pTable->decCurNumRows();
+   serverList->removeEntry(currEntry);
+}
+
+void xServerQuery::loadList()
+{
+   QString pFn(".servers"), pPath(getenv("HOME")), pFilt(".*");
+   QString fileName;
+
+   fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
+
+   if (!fileName.isEmpty())
+   {
+      if (!serverList->readFile(fileName))
+      {
+         qWarning("The file %s is not present", fileName.latin1());
+         return;
+      }
+      //serverList->showEntries();
+      pTable->loadTable(serverList);
+   }
 }
 
 void xServerQuery::connectServer()
 {
-   serverSelected(pTable->selectedRow());
+   xIrcConnectDialog *conServer = new xIrcConnectDialog(this);
+   int row = pTable->currentRow();
+   pTable->getRowData(row);
+   xIrcServerEntry *currEntry = pTable->getCurrentEntry();
+   conServer->initEntry(serverList->findEntry(currEntry));
+   conServer->show();
+   conServer->raise();
+   if (int x = conServer->exec()) {
+      pServerEntry = conServer->getEntry();
+      connServer = pServerEntry->server();
+      connPort = pServerEntry->ports();
+      done(x);
+   }
 }
 
 void xServerQuery::disconnectServer()
@@ -345,61 +204,7 @@ void xServerQuery::disconnectServer()
    done(Disconnect);
 }
 
-void xServerQuery::loadList()
+void xServerQuery::reject()
 {
-   QString pFn, pPath, pFilt;
-   QString fileName;
-
-   if ((pFn = Resources->get(wdtRes, "file", "File")) == NULL)
-      pFn = ".servers";
-   if ((pPath = getenv("HOME")) == NULL)
-      pPath = "./";
-   if ((pFilt = Resources->get(wdtRes, "filter", "Filter")) == NULL)
-      pFilt = ".*";
-   fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   pTable->readFile(fileName.latin1());
-   pTable->showRows(pTable->currentRow());
+   QDialog::reject();
 }
-
-void xServerQuery::gotoFirst()
-{
-//   pTable->scroll(0);
-   pTable->highlightRow(0);
-   pTable->highlightPrev();
-}
-
-void xServerQuery::gotoLast()
-{
-   pTable->highlightRow(pTable->rows() - 1);
-//   pTable->scroll(pTable->rows() - 1);
-}
-
-xServerQuery::~xServerQuery()
-{
-   if (pAccel)
-      delete pAccel;
-
-   if (pTable)
-   {
-      if (dbg) fprintf(stdout, "xServerQuery::~xServerQuery():Deleting pTable\n");
-      if (dbg) fflush(stdout);
-      delete pTable;
-   }
-   if (pLabel)
-   {
-      if (dbg) fprintf(stdout, "xServerQuery::~xServerQuery():Deleting pLabel\n");
-      if (dbg) fflush(stdout);
-      delete pLabel;
-
-   }
-   if(pButtons)
-   {
-      if (dbg) fprintf(stdout, "xServerQuery::~xServerQuery():Deleting pButtons\n");
-      if (dbg) fflush(stdout);
-      delete pButtons;
-   }
-   if (dbg) fprintf(stdout, "xServerQuery::~xServerQuery():Done!\n");
-   if (dbg) fflush(stdout);
-}
-
-//#include "xIrcServerQuery.moc"
