@@ -22,6 +22,7 @@ public:
    void decCurNumRows() { --curNumRows; }
    xIrcServerEntry *getCurrentEntry() { return &findEntry; }
    void replaceEntry(int r, xIrcServerEntry *e);
+   bool readFile(QString &e);
 
 public slots:
    void getRowData(int rows);

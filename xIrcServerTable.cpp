@@ -1,3 +1,4 @@
+#include <qfile.h>
 #include <qmemarray.h>
 #include "xIrcServerTable.h"
 
@@ -115,4 +116,44 @@ void xIrcServerTable::replaceEntry(int row, xIrcServerEntry *modEntry)
 
    tmpStr = modEntry->server();
    setText(row, col, tmpStr);
+}
+
+bool xIrcServerTable::readFile(QString &fn)
+{
+   QFile f(fn);
+
+   if (!f.exists()) {
+       qWarning("File %s does not exists\n", fn.latin1());
+       return false;
+   }
+
+   if (!f.open(IO_ReadOnly)) {
+      qWarning("File %s is not readonly\n", fn.latin1());
+      return false;
+   }
+
+   QTextStream stream(&f);
+   QString line;
+   QString groupStr, countryStr, stateStr, cityStr, serverStr, portsStr;
+   QStringList dataLines;
+
+   while ( !stream.atEnd()) {
+      line = stream.readLine();
+      if (!line.isEmpty()) {
+         dataLines = QStringList::split(":", line);
+         if (dataLines.count() == 6) {
+            groupStr = dataLines[0];
+            countryStr = dataLines[1];
+            stateStr = dataLines[2];
+            cityStr = dataLines[3];
+            serverStr = dataLines[4];
+            portsStr = dataLines[5];
+            xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
+            addEntry(e);
+         }
+         dataLines.clear();
+      }
+   }
+   f.close();
+   return true;
 }

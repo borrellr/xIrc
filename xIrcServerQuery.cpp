@@ -178,7 +178,8 @@ void xServerQuery::loadList()
          return;
       }
       //serverList->showEntries();
-      pTable->loadTable(serverList);
+      //pTable->loadTable(serverList);
+      pTable->readFile(fileName);
    }
 }
 
