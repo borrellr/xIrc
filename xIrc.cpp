@@ -284,7 +284,7 @@ static void InitializeWindows()
    if (dbg) fprintf(stdout, "main():ServQuery\n");   
    if (dbg) fflush(stdout);
 //   ServQuery = new xServerQuery(&appRes, NULL, "Server Selection");
-   ServQuery = new xServerQuery();
+   ServQuery = new xServerQuery(NULL, "Server Selection");
 
    if (dbg) fprintf(stdout, "main():Opening channel Query\n");   
    if (dbg) fflush(stdout);
