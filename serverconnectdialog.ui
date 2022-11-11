@@ -9,14 +9,14 @@
             <x>0</x>
             <y>0</y>
             <width>257</width>
-            <height>272</height>
+            <height>350</height>
         </rect>
     </property>
     <property name="caption">
         <string>serverConnectDialog</string>
     </property>
     <property name="focusPolicy">
-        <enum>StrongFocus</enum>
+        <enum>NoFocus</enum>
     </property>
     <property name="sizeGripEnabled">
         <bool>true</bool>
@@ -28,7 +28,7 @@
         <property name="geometry">
             <rect>
                 <x>30</x>
-                <y>200</y>
+                <y>280</y>
                 <width>190</width>
                 <height>50</height>
             </rect>
@@ -101,8 +101,8 @@
             <rect>
                 <x>11</x>
                 <y>13</y>
-                <width>213</width>
-                <height>180</height>
+                <width>220</width>
+                <height>260</height>
             </rect>
         </property>
         <grid>
@@ -231,11 +231,5 @@
     <tabstop>buttonOk</tabstop>
     <tabstop>buttonCancel</tabstop>
 </tabstops>
-<includes>
-    <include location="local" impldecl="in implementation">serverconnectdialog.ui.h</include>
-</includes>
-<functions>
-    <function returnType="bool">isEnable()</function>
-</functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>
