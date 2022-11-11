@@ -21,6 +21,9 @@ public:
    const char *port() { return connPort.latin1(); }
    enum QryResults { Rejected, Accepted, Disconnect };
 
+signals:
+   void msgToSocket(const char *pBuf);
+
 public slots:
    void newList();
    void importList();
