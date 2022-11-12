@@ -28,7 +28,14 @@
 static bool dbg = false;
 
 xIrcServerEntry::xIrcServerEntry()
-{
+{ 
+   Id = "";
+   Group = "";
+   Country = "";
+   State = "";
+   City = "";
+   Server = "";
+   Ports = "";
 }
 
 xIrcServerEntry::xIrcServerEntry(char *p)
@@ -88,6 +95,17 @@ xIrcServerEntry::xIrcServerEntry(const char *group, const char *country, const c
    if (dbg) fflush(stdout);
 }
 
+xIrcServerEntry::xIrcServerEntry(const QString &group, const QString &country,
+    const QString &state, const QString &city, const QString &server, const
+    QString &ports)
+{
+   Group = group;
+   Country = country;
+   State = state;
+   City = city;
+   Server = server;
+   Ports = ports;
+}
 xIrcServerEntry::xIrcServerEntry(xIrcServerEntry &e)
 {
    Group = e.group();
@@ -96,17 +114,17 @@ xIrcServerEntry::xIrcServerEntry(xIrcServerEntry &e)
    City = e.city();
    Server = e.server();
    Ports = e.ports();
-   if (Group.isEmpty())
+   if (Group.length() == 0)
       Group = "";
-   if (Country.isEmpty())
+   if (Country.length() == 0)
       Country = "";
-   if (State.isEmpty())
+   if (State.length() == 0)
       State = "";
-   if (City.isEmpty())
+   if (City.length() == 0)
       City = "";
-   if (Server.isEmpty())
+   if (Server.length() == 0)
       Server = "";
-   if (Ports.isEmpty())
+   if (Ports.length() == 0)
       Ports = "";
 
    if (dbg) fprintf(stdout, "xIrcServerEntry::xIrcServerEntry():Id = |%s|\n",
@@ -225,25 +243,22 @@ int xIrcServerEntry::compare(xIrcServerEntry *e)
       if (Country == e->Country)
       {
          if (State == e->State)
-            return(strcmp(City.latin1(), e->City.latin1()));
+            return(City == e->City);
          else 
-            return(strcmp(State.latin1(), e->State.latin1()));
+            return(State == e->State);
       }
       else
-         return(strcmp(Country.latin1(), e->Country.latin1()));
+         return(Country == e->Country);
    }
-   return(strcmp(Group.latin1(), e->Group.latin1()));
+   return(Group == e->Group);
 }
 
 void xIrcServerEntry::showEntries()
 {
-   if (true) {
-      printf ("Id is |%s|\n", Id.latin1());
-      printf ("Group is |%s|\n", Group.latin1());
-      printf ("Country is |%s|\n", Country.latin1());
-      printf ("State is |%s|\n", State.latin1());
-      printf ("City is |%s|\n", City.latin1());
-      printf ("Server is |%s|\n", Server.latin1());
-      printf ("Ports is |%s|\n", Ports.latin1());
-   }
+   printf("Group:   |%s|\n", Group.latin1());
+   printf("Country: |%s|\n", Country.latin1());
+   printf("State;   |%s|\n", State.latin1());
+   printf("City:    |%s|\n", City.latin1());
+   printf("Server;  |%s|\n", Server.latin1());
+   printf("Ports:   |%s|\n", Ports.latin1());
 }

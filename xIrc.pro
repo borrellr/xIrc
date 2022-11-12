@@ -17,6 +17,10 @@ xIrcNickCombo.h xIrcNickListEntry.h xIrcNickList.h xIrcNickQuery.h \
 xIrcNotifyQuery.h xIrcNotifyTable.h xIrcPeopleEdit.h xIrcPeopleEntry.h \
 xIrcPeopleList.h xIrcPeopleTable.h xIrcServerEdit.h xIrcServerEntry.h \
 xIrcServerList.h xIrcServerQuery.h xIrcServerTable.h xIrcSocket.h
+
+INTERFACES += servereditdialog.ui \
+           serverconnectdialog.ui
+
 INCLUDEPATH += ../libX++
 LIBS += -lX++ -L/usr/local/lib/xIrc
 DEFINES += QT2 QT3 QT_NO_ASCII_CAST

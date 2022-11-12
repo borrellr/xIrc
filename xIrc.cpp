@@ -39,6 +39,7 @@
 #include <qdialog.h>
 #include <qmessagebox.h>
 #include <qfiledialog.h>
+#include <qstring.h>
 
 #include <signal.h>
 #include <stdlib.h>
@@ -146,10 +147,11 @@ static void setDefaults()
    FILE *pfd;
    char dnam[128];
    const char *cp;
+   QString fileName("/usr/local/lib/xIrc/xIrc.defaults");
 
    if (dbg) fprintf(stdout, "main():Opening defaults\n");   
    if (dbg) fflush(stdout);
-   if ((pfd = fopen("xIrc.defaults", "r")) == NULL)
+   if ((pfd = fopen(fileName.latin1(), "r")) == NULL)
    {
       return;
    }
@@ -283,7 +285,8 @@ static void InitializeWindows()
 {
    if (dbg) fprintf(stdout, "main():ServQuery\n");   
    if (dbg) fflush(stdout);
-   ServQuery = new xServerQuery(&appRes, NULL, "Server Selection");
+//   ServQuery = new xServerQuery(&appRes, NULL, "Server Selection");
+   ServQuery = new xServerQuery(NULL, "Server Selection");
 
    if (dbg) fprintf(stdout, "main():Opening channel Query\n");   
    if (dbg) fflush(stdout);

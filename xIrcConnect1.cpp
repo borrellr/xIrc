@@ -70,8 +70,8 @@ static const char *pInitialResources[] =
 xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
                          const char *name, WFlags iFlags,
                          int width, int height, int maxLines) :
-              xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main"),
-                                                  QString("Main")),
+              xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main").latin1(),
+                                                  QString("Main").latin1()),
                       parent, name, FALSE, iFlags)
 {
    struct passwd *pPasswdEnt;
@@ -148,6 +148,7 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
    pOpenDialog = new QFileDialog(pDirOpen, QString::null, this);
    pOpenDialog->setCaption("xIrc- Dcc File Send");
 
+   initializeActions();
    InitializeMenu();
 /*
    pButtons = new xPshBtnFrame(wdtRes, this);
@@ -246,6 +247,49 @@ xIrcConnect::~xIrcConnect()
    if (dbg) fflush(stdout);
 }
 
+void xIrcConnect::initializeActions()
+{
+   showNotifyListAct = new QAction(tr("Show Folks Online"), 0, this);
+   showNotifyListAct->setStatusTip(tr("Show the Folks Online"));
+   connect(showNotifyListAct, SIGNAL(activated()), this, SLOT(showNotifyList()));
+
+   showNickActionAct = new QAction(tr("Action"), 0, this);
+   showNickActionAct->setStatusTip(tr("Show the actions"));
+   connect(showNickActionAct, SIGNAL(activated()), this, SLOT(showNickAction()));
+
+   newNickAct = new QAction(tr("Change Nick"), 0, this);
+   newNickAct->setStatusTip(tr("Change your nickname"));
+   connect(newNickAct, SIGNAL(activated()), this, SLOT(newNick()));
+
+   newServerAct = new QAction(tr("Server List"), 0, this);
+   newServerAct->setStatusTip(tr("Show the current server list"));
+   connect(newServerAct, SIGNAL(activated()), this, SLOT(newServer()));
+
+   showIgnoreAct = new QAction(tr("Ignore List"), 0, this);
+   showIgnoreAct->setStatusTip(tr("The ignore list"));
+   connect(showIgnoreAct, SIGNAL(activated()), this, SLOT(showIgnore()));
+
+   showNotifyAct = new QAction(tr("Notify List"), 0, this);
+   showNotifyAct->setStatusTip(tr("The notify list"));
+   connect(showNotifyAct, SIGNAL(activated()), this, SLOT(showNotify()));
+
+   connectServerAct = new QAction(tr("Connect Server"), 0, this);
+   connectServerAct->setStatusTip(tr("Connect to a server"));
+   connect(connectServerAct, SIGNAL(activated()), this, SLOT(newServer()));
+
+   newChannelAct = new QAction(tr("Open Channel"), 0, this);
+   newChannelAct->setStatusTip(tr("Join a channel"));
+   connect(newChannelAct, SIGNAL(activated()), this, SLOT(newChannel()));
+
+   quitIrcAct = new QAction(tr("Exit"), tr("Ctrl-Q"), this);
+   quitIrcAct->setStatusTip(tr("Exit the program"));
+   connect(quitIrcAct, SIGNAL(activated()), this, SLOT(quitIrc()));
+
+   aboutAct = new QAction(tr("About"), 0, this);
+   aboutAct->setStatusTip(tr("The about page for xIrc"));
+   connect(aboutAct, SIGNAL(activated()), this, SLOT(about()));
+}
+
 void xIrcConnect::InitializeMenu()
 {
    xWidgetResInfo wdtTmp(wdtRes, QString("menu"), QString("Menu"));
@@ -254,34 +298,34 @@ void xIrcConnect::InitializeMenu()
    pNickMenu = new QPopupMenu;
    setDefFont(pNickMenu, &wdtPopTmp);
    setDefPallet(pNickMenu, &wdtPopTmp);
-   pNickMenu->insertItem("Show Folks Online", this, SLOT(showNotifyList()));
-   pNickMenu->insertItem("Action", this, SLOT(showNickAction()));
-   pNickMenu->insertItem("Change Nick", this, SLOT(newNick()));
+   showNotifyListAct->addTo(pNickMenu);
+   showNickActionAct->addTo(pNickMenu);
+   newNickAct->addTo(pNickMenu);
    setDefFont(pNickMenu, &wdtPopTmp);
    setDefPallet(pNickMenu, &wdtPopTmp);
 
    pListMenu = new QPopupMenu;
    setDefFont(pListMenu, &wdtPopTmp);
    setDefPallet(pListMenu, &wdtPopTmp);
-   pListMenu->insertItem("Server List", this, SLOT(newServer()));
-   pListMenu->insertItem("Ignore List", this, SLOT(showIgnore()));
-   pListMenu->insertItem("Notify List", this, SLOT(showNotify()));
+   newServerAct->addTo(pListMenu);
+   showIgnoreAct->addTo(pListMenu);
+   showNotifyAct->addTo(pListMenu);
    setDefFont(pListMenu, &wdtPopTmp);
    setDefPallet(pListMenu, &wdtPopTmp);
 
    pFileMenu = new QPopupMenu;
    setDefFont(pFileMenu, &wdtPopTmp);
    setDefPallet(pFileMenu, &wdtPopTmp);
-   pFileMenu->insertItem("Connect Server", this, SLOT(newServer()));
-   pFileMenu->insertItem("Open Channel", this, SLOT(newChannel()));
+   connectServerAct->addTo(pFileMenu);
+   newChannelAct->addTo(pFileMenu);
    pFileMenu->insertSeparator();
-   pFileMenu->insertItem("Exit", this, SLOT(quitIrc()));
+   quitIrcAct->addTo(pFileMenu);
    setDefFont(pFileMenu, &wdtPopTmp);
    setDefPallet(pFileMenu, &wdtPopTmp);
 
    pHelpMenu = new QPopupMenu;
    CHECK_PTR(pHelpMenu);
-   pHelpMenu->insertItem("&About", this, SLOT(about()));
+   aboutAct->addTo(pHelpMenu);
    setDefFont(pHelpMenu, &wdtPopTmp);
    setDefPallet(pHelpMenu, &wdtPopTmp);
 
@@ -300,7 +344,7 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.3.9 \n"
+                  "Version: 2.4 \n"
                   "License: GPL\n"
                   "Copyright: 1997-2022\n\n"
                   "Maintained by Robert Borrell\n"

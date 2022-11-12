@@ -40,7 +40,7 @@ public:
    xChannelQuery(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
                  const char *pName = NULL);
    ~xChannelQuery();
-   void initClass(const char *pName);
+   void initClass(const QString &Name);
    
    const char *editText() { return(pChannel->text()); };
    void setText(const char *pText) { pChannel->setText(pText); };

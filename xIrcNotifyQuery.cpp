@@ -50,7 +50,32 @@ xIrcNotifyQuery::xIrcNotifyQuery(xWidgetResInfo *pPRes, QWidget *pParent,
    Resources->setWidgetInit(pInitialResources);
    setDefPallet(this, wdtRes);
    setDefFont(this, wdtRes);
+   initializeActions();
    initClass(pName);
+}
+
+void xIrcNotifyQuery::initializeActions()
+{
+   newListAct = new QAction(tr("New"), 0, this);
+   connect(newListAct, SIGNAL(activated()), this, SLOT(newList()));
+
+   loadListAct = new QAction(tr("Load"), 0, this);
+   connect(loadListAct, SIGNAL(activated()), this, SLOT(loadList()));
+
+   saveListAct = new QAction(tr("Save As"), 0, this);
+   connect(saveListAct, SIGNAL(activated()), this, SLOT(saveList()));
+
+   doneAct = new QAction(tr("Done"), 0, this);
+   connect(doneAct, SIGNAL(activated()), this, SLOT(reject()));
+
+   newEntryAct = new QAction(tr("New"), 0, this);
+   connect(newEntryAct, SIGNAL(activated()), this, SLOT(newEntry()));
+
+   editEntryAct = new QAction(tr("Edit"), 0, this);
+   connect(editEntryAct, SIGNAL(activated()), this, SLOT(editEntry()));
+
+   deleteEntryAct = new QAction(tr("Delete"), 0, this);
+   connect(deleteEntryAct, SIGNAL(activated()), this, SLOT(deleteEntry()));
 }
 
 void xIrcNotifyQuery::initClass(const char *pName)
@@ -80,18 +105,17 @@ void xIrcNotifyQuery::initClass(const char *pName)
    pTable = new xIrcPeopleTable(wdtRes, this, "servertable", "Notify", 10);
 
    pFileMenu = new QPopupMenu;
-   pFileMenu->insertItem("New", this, SLOT(newList()));
-   pFileMenu->insertItem("Load", this, SLOT(loadList()));
-   pFileMenu->insertItem("Save As", this, SLOT(saveList()));
-   pFileMenu->insertItem("Done", this, SLOT(reject()));
+   newListAct->addTo(pFileMenu);
+   loadListAct->addTo(pFileMenu);
+   saveListAct->addTo(pFileMenu);
+   doneAct->addTo(pFileMenu);
    setDefFont(pFileMenu, &wdtPopTmp);
    setDefPallet(pFileMenu, &wdtPopTmp);
 
-
    pNotifyMenu = new QPopupMenu();
-   pNotifyMenu->insertItem("Edit", this, SLOT(editEntry()));
-   pNotifyMenu->insertItem("New", this, SLOT(newEntry()));
-   pNotifyMenu->insertItem("Delete", this, SLOT(deleteEntry()));
+   newEntryAct->addTo(pNotifyMenu);
+   editEntryAct->addTo(pNotifyMenu);
+   deleteEntryAct->addTo(pNotifyMenu);
    setDefFont(pNotifyMenu, &wdtPopTmp);
    setDefPallet(pNotifyMenu, &wdtPopTmp);
 

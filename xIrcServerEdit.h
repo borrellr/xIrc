@@ -23,43 +23,22 @@
 #ifndef _XIRCSERVEREDIT_H
 #define _XIRCSERVEREDIT_H
 
-#include <xPshBtnFrame.h>
 #include <qlineedit.h>
-#include <xComboBox.h>
-#include <xDialog.h>
-#include <qlabel.h>
-#include <qgrid.h>
+#include <qstring.h>
+#include <qstringlist.h>
 #include "xIrcServerEntry.h"
+#include "servereditdialog.h"
 
-class xIrcServerEdit : public xDialog
+class xIrcServerEdit : public serverEditDialog
 {
-   Q_OBJECT
-   
 public:   
-   xIrcServerEdit(xWidgetResInfo *pPRes, QWidget *pParent = NULL,
-                const char *pName = NULL, xIrcServerEntry *entry = NULL);
+   xIrcServerEdit(QWidget *parent = 0, const char *name = 0);
    ~xIrcServerEdit();
-   void initClass(const char *pName);
+   void initEntry( xIrcServerEntry *e);
+   xIrcServerEntry *getEntry();
 
-   enum QryResults { Rejected, Accepted };
-
-protected slots:
-   void gotReturn();
-   void gotButton(int btn);
-   virtual void done(int results) { QDialog::done(results); };
-   
 private:
    xIrcServerEntry   *pEntry;
-//   xFrame            *pFrame;
-   QGrid             *pFrame;
-   QLineEdit         *pServer;
-   QLineEdit         *pCountry;
-   QLineEdit         *pState;
-   QLineEdit         *pCity;
-   QLineEdit         *pGroup;
-   QLineEdit         *pPort;
-   xPshBtnFrame      *pButtons;
-   xWidgetResInfo    *wdtRes;
 };
 
 #endif
