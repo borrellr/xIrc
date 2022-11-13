@@ -48,6 +48,7 @@
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
+#include "xIrcQuitDialog.h"
 
 static bool dbg = false;
 
@@ -55,7 +56,7 @@ extern xDefaults Defaults;
 extern xIrcNickQuery *NickQuery;
 extern xChannelQuery *ChanQuery;
 extern xServerQuery *ServQuery;
-extern xIrcLineEditQuery *QuitQuery;
+extern xIrcQuitDialog *QuitQuery;
 extern xIrcCommands ircResponses;
 extern QPixmap *AppPixMap;
 extern xIrcMsgDispatch Dispatcher;
@@ -288,6 +289,10 @@ void xIrcConnect::initializeActions()
    aboutAct = new QAction(tr("About"), 0, this);
    aboutAct->setStatusTip(tr("The about page for xIrc"));
    connect(aboutAct, SIGNAL(activated()), this, SLOT(about()));
+
+   aboutQtAct = new QAction(tr("About &Qt"), 0, this);
+   aboutQtAct->setStatusTip(tr("Show the Qt library's about box"));
+   connect(aboutQtAct, SIGNAL(activated()), qApp, SLOT(aboutQt()));
 }
 
 void xIrcConnect::InitializeMenu()
@@ -326,6 +331,7 @@ void xIrcConnect::InitializeMenu()
    pHelpMenu = new QPopupMenu;
    CHECK_PTR(pHelpMenu);
    aboutAct->addTo(pHelpMenu);
+   aboutQtAct->addTo(pHelpMenu);
    setDefFont(pHelpMenu, &wdtPopTmp);
    setDefPallet(pHelpMenu, &wdtPopTmp);
 
@@ -410,7 +416,7 @@ void xIrcConnect::quitIrc()
       {
          if (dbg) fprintf(stdout, "xIrcConnect::quitIrc():Disconnecting from Server\n");
          if (dbg) fflush(stdout);
-         sprintf(buf, "QUIT :%s\n", QuitQuery->text());
+         sprintf(buf, "QUIT :%s\n", QuitQuery->text().latin1());
          sendMsgToSocket(buf);
          pSocket->off();
          quitFlag = TRUE;
