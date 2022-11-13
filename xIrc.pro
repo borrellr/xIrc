@@ -7,7 +7,9 @@ xIrcMsgFrame1.cpp xIrcMsgFrame2.cpp xIrcMsgQuery.cpp xIrcNickActionQuery.cpp \
 xIrcNickCombo.cpp xIrcNickList.cpp xIrcNickListEntry.cpp xIrcNickQuery.cpp \
 xIrcNotifyQuery.cpp xIrcNotifyTable.cpp xIrcPeopleEdit.cpp xIrcPeopleEntry.cpp \
 xIrcPeopleList.cpp xIrcPeopleTable.cpp xIrcServerEdit.cpp xIrcServerEntry.cpp \
-xIrcServerList.cpp xIrcServerQuery.cpp xIrcServerTable.cpp xIrcSocket.cpp
+xIrcServerList.cpp xIrcServerQuery.cpp xIrcServerTable.cpp xIrcSocket.cpp \
+xIrcQuitDialog.cpp
+
 HEADERS += ircreply.h xIrcBanDialog.h xIrcChannelQuery.h xIrcChanNickBox.h \
 xIrcCommands.h xIrcConnectDialog.h xIrcConnect.h xIrcDccChatFrame.h \
 xIrcDccFile.h xIrcDccQuery.h xIrcDccSocket.h xIrcIgnoreQuery.h xIrcInviteBox.h \
@@ -16,10 +18,12 @@ xIrcMsgDispatch.h xIrcMsgFrame.h xIrcMsgQuery.h xIrcNickActionQuery.h \
 xIrcNickCombo.h xIrcNickListEntry.h xIrcNickList.h xIrcNickQuery.h \
 xIrcNotifyQuery.h xIrcNotifyTable.h xIrcPeopleEdit.h xIrcPeopleEntry.h \
 xIrcPeopleList.h xIrcPeopleTable.h xIrcServerEdit.h xIrcServerEntry.h \
-xIrcServerList.h xIrcServerQuery.h xIrcServerTable.h xIrcSocket.h
+xIrcServerList.h xIrcServerQuery.h xIrcServerTable.h xIrcSocket.h \
+xIrcQuitDialog.h
 
 INTERFACES += servereditdialog.ui \
-           serverconnectdialog.ui
+           serverconnectdialog.ui \
+           quitform.ui
 
 INCLUDEPATH += ../libX++
 LIBS += -lX++ -L/usr/local/lib/xIrc
