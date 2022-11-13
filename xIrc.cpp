@@ -52,6 +52,7 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
+#include "xIrcQuitDialog.h"
 #include <xResources.h>
 #include <xDefaults.h>
 #include <xMisc.h>
@@ -62,7 +63,7 @@ xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
 xIrcNickQuery *NickQuery = NULL;
 xIrcLineEditQuery *KickQuery = NULL;
-xIrcLineEditQuery *QuitQuery = NULL;
+xIrcQuitDialog *QuitQuery = NULL;
 xServerQuery *ServQuery = NULL;
 xWidgetResInfo appRes(NULL, QString("xirc"), QString("XIRC"));
 QPixmap *AppPixMap;
@@ -303,8 +304,7 @@ static void InitializeWindows()
 
    if (dbg) fprintf(stdout, "main():QuitQuery\n");   
    if (dbg) fflush(stdout);
-   QuitQuery = new xIrcLineEditQuery(&appRes, "Enter Quit Message", "", NULL,
-                                  "Quit Message", "QUITMESSAGE", &Defaults);
+   QuitQuery = new xIrcQuitDialog(Defaults);
    if (dbg) fprintf(stdout, "main():xIrcConnect\n");   
    if (dbg) fflush(stdout);
 //   xIrcServerTable *pTWindow = new xIrcServerTable(&appRes, NULL, "Server Selection Table");
