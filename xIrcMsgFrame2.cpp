@@ -30,18 +30,18 @@
 #include <qmenubar.h>
 #include <xApp.h>
 #include "xDefaults.h"
-#include "xIrcNickQuery.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcMsgFrame.h"
 #include "xIrcChannelQuery.h"
+#include "nicknameform.h"
 
 static bool dbg = false;
 
 extern xDefaults Defaults;
 extern xIrcCommands ircResponses;
 extern xChannelQuery *ChanQuery;
-extern xIrcNickQuery *NickQuery;
+extern nickNameDialog  *NickQuery;
 extern xIrcLineEditQuery *KickQuery;
 extern xIrcMsgDispatch Dispatcher;
 
@@ -159,7 +159,7 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
          *cp = '\0';
       }
       while (*cp1 && *cp1 == ':' && isspace(*cp1)) cp1++;
-      strcpy(str, NickQuery->text());
+      strcpy(str, NickQuery->text().latin1());
       for (cp = str; *cp; cp++)
          *cp = toupper(*cp);
       for (cp = tmpStr; *cp; cp++)
@@ -171,7 +171,7 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
          pMsgFrame->pWin->putString(str);
          msg.rspCode = ircResponses.code("NICK");
          msg.dstStr = "";
-         msg.msgStr = NickQuery->text();
+         msg.msgStr = NickQuery->text().latin1();
          msg.msgStr += "_";
          Dispatcher.dispatchMsg(this, SLOT(ircRespMessageIn(xIrcMessage*)), &msg);
 //         emit ircMessageOut(&msg);
@@ -192,7 +192,7 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
          }
          msg.rspCode = ircResponses.code("NICK");
          msg.dstStr = "";
-         msg.msgStr = NickQuery->text();
+         msg.msgStr = NickQuery->text().latin1();
          Dispatcher.dispatchMsg(this, SLOT(ircRespMessageIn(xIrcMessage*)), &msg);
 //         emit ircMessageOut(&msg);
       }
@@ -419,7 +419,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.msgStr += "ACTION ";
       msg.msgStr += cp1;
       msg.msgStr += "\x01";
-      sprintf(buf, "* %s %s\n", NickQuery->text(), cp1);
+      sprintf(buf, "* %s %s\n", NickQuery->text().latin1(), cp1);
       putString(buf);
    }
    else if (strcmp(pCmd, "ALIAS") == 0)

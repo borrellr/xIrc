@@ -47,12 +47,12 @@
 
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"
-#include "xIrcNickQuery.h"
 #include "xIrcNickCombo.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
 #include "xIrcQuitDialog.h"
+#include "nicknameform.h"
 #include <xResources.h>
 #include <xDefaults.h>
 #include <xMisc.h>
@@ -61,7 +61,7 @@ static bool  dbg = false;
 
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
-xIrcNickQuery *NickQuery = NULL;
+nickNameDialog *NickQuery = NULL;
 xIrcLineEditQuery *KickQuery = NULL;
 xIrcQuitDialog *QuitQuery = NULL;
 xServerQuery *ServQuery = NULL;
@@ -295,7 +295,10 @@ static void InitializeWindows()
 
    if (dbg) fprintf(stdout, "main():NickQuery\n");   
    if (dbg) fflush(stdout);
-   NickQuery = new xIrcNickQuery(&appRes, NULL, "Nickname");
+   NickQuery = new nickNameDialog();
+   QString nicks(Defaults.get("Nicks"));
+   QStringList strList = QStringList::split(' ', nicks);
+   NickQuery->insertStringList(strList);
 
    if (dbg) fprintf(stdout, "main():KickQuery\n");   
    if (dbg) fflush(stdout);
@@ -379,7 +382,7 @@ void xIrcInitialize(QApplication& app)
       else
          QMessageBox::warning(pTWindow, "Error", "You must choose a NickName");
    }
-   sprintf(buf, "xIrc - %s", NickQuery->text());
+   sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
    pTWindow->setCaption(buf);
    pTWindow->show();
    pTWindow->newServer();

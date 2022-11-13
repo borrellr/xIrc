@@ -41,7 +41,6 @@
 #include "xIrcChannelQuery.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
-#include "xIrcNickQuery.h"
 #include "xIrcDccQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcInviteBox.h"
@@ -49,11 +48,12 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 #include "xIrcQuitDialog.h"
+#include "nicknameform.h"
 
 static bool dbg = false;
 
 extern xDefaults Defaults;
-extern xIrcNickQuery *NickQuery;
+extern nickNameDialog *NickQuery;
 extern xChannelQuery *ChanQuery;
 extern xServerQuery *ServQuery;
 extern xIrcQuitDialog *QuitQuery;
@@ -470,7 +470,7 @@ void xIrcConnect::goodConnection(int sock)
    disconnect(pSocket, SIGNAL(connFailed(int)),      
               this, SLOT(failedConnection(int)));
 */
-   sprintf(buf, "NICK %s\n", NickQuery->text());
+   sprintf(buf, "NICK %s\n", NickQuery->text().latin1());
 
    sock++;
    sendMsgToSocket(buf);
@@ -504,7 +504,7 @@ void xIrcConnect::goodConnection(int sock)
          sendMsgToSocket(buf);
       }
    }
-   sprintf(buf, "xIrc - %s", NickQuery->text());
+   sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
    setCaption(buf);
    Dispatcher.setSocket(pSocket);
 }
@@ -682,24 +682,25 @@ void xIrcConnect::newServer()
 void xIrcConnect::newNick()
 {
    char buf[256];
+   int result;
 
    for (;;)
    {
-      NickQuery->exec();
-      if (NickQuery->result() == QDialog::Accepted)
+      result = NickQuery->exec();
+      if (result == QDialog::Accepted)
       {
-         nickName = NickQuery->text();
-         sprintf(buf, "NICK %s\n", NickQuery->text());
+         nickName = NickQuery->text().latin1();
+         sprintf(buf, "NICK %s\n", NickQuery->text().latin1());
          sendMsgToSocket(buf);
          break;
       }
-      else if(nickName.isEmpty() && (NickQuery->result() != Rejected))
+      else if(nickName.isEmpty() && (result != Rejected))
          QMessageBox::warning(this, "Error", "You must choose a NickName");
       else
          break;
    }
-   if(NickQuery->result() == QDialog::Accepted) {
-      sprintf(buf, "xIrc - %s", NickQuery->text());
+   if(result == QDialog::Accepted) {
+      sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
       setCaption(buf);
    }
 } 
@@ -1005,7 +1006,7 @@ void xIrcConnect::gotErrorAck(int rspCode)
       {
          if (dbg) fprintf(stdout, "xIrcConnect::gotErrorAck():Get Next Nick\n");
          if (dbg) fflush(stdout);
-         if ((cp = NickQuery->nextNick()) != NULL)
+         if ((cp = NickQuery->nextNick().latin1()) != NULL)
          {
             if (dbg) fprintf(stdout, "xIrcConnect::gotErrorAck():Got it!\n");
             if (dbg) fflush(stdout);
@@ -1022,18 +1023,18 @@ void xIrcConnect::gotErrorAck(int rspCode)
       for (;;)
       {
          NickQuery->exec();
-         if (strlen(NickQuery->text()) > 0)
+         if (!NickQuery->text().isEmpty())
          {
-            nickName = NickQuery->text();
+            nickName = NickQuery->text().latin1();
             break;
          }
          else
             QMessageBox::warning(this, "Error", "You must choose a NickName");
       }
-      sprintf(buf, "NICK %s\n", NickQuery->text());
+      sprintf(buf, "NICK %s\n", NickQuery->text().latin1());
       sendMsgToSocket(buf);
    }
-   sprintf(buf, "xIrc - %s", NickQuery->text());
+   sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
    setCaption(buf);
    if (dbg) fprintf(stdout, "xIrcConnect::gotErrorAck():Exit\n");
    if (dbg) fflush(stdout);

@@ -31,13 +31,13 @@
 #include "xResources.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcMsgFrame.h"
-#include "xIrcNickQuery.h"
 #include "xIrcSocket.h"
+#include "nicknameform.h"
 
 static bool dbg = false;
 
 extern xIrcCommands ircResponses;
-extern xIrcNickQuery *NickQuery;
+extern nickNameDialog *NickQuery;
 extern QPixmap *AppPixMap;
 extern xIrcMsgDispatch Dispatcher;
 
@@ -519,6 +519,7 @@ bool xIrcMessageFrame::procServerMsg(xIrcMessage *pMsg)
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ProcServerMsg(%s):Enter\n", name());
    if (dbg) fflush(stdout);
    
+#if 0
    for (cp = NickQuery->text(), tmpNick = ""; *cp; cp++)
       tmpNick += toupper(*cp);
    for (cp = pMsg->srcNick.latin1(), tmpSrc = ""; *cp; cp++)
@@ -527,6 +528,16 @@ bool xIrcMessageFrame::procServerMsg(xIrcMessage *pMsg)
       tmpDst += toupper(*cp);
    for (cp = (char *)name(), tmpName = ""; *cp; cp++)
       tmpName += toupper(*cp);
+#else
+   tmpNick = NickQuery->text();
+   tmpNick.upper();
+   tmpSrc = pMsg->srcNick;
+   tmpSrc.upper();
+   tmpDst = pMsg->dstStr;
+   tmpDst.upper();
+   tmpName = name();
+   tmpName.upper();
+#endif
    
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ProcServerMsg():Comparing |%s| & |%s| to |%s|\n", 
                              (const char *)tmpSrc.latin1(), (const char *)tmpDst.latin1(), 
