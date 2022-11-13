@@ -1,0 +1,164 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>nickNameDialog</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>nickNameDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>344</width>
+            <height>183</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Nickname</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>11</y>
+                <width>320</width>
+                <height>161</height>
+            </rect>
+        </property>
+        <grid>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QPushButton" row="4" column="0">
+                <property name="name">
+                    <cstring>okPushButton</cstring>
+                </property>
+                <property name="text">
+                    <string>OK</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" row="4" column="1">
+                <property name="name">
+                    <cstring>clearPushButton</cstring>
+                </property>
+                <property name="text">
+                    <string>Clear</string>
+                </property>
+            </widget>
+            <widget class="QPushButton" row="4" column="2">
+                <property name="name">
+                    <cstring>cancelPushButton</cstring>
+                </property>
+                <property name="text">
+                    <string>Cancel</string>
+                </property>
+            </widget>
+            <widget class="QComboBox" row="1" column="0" rowspan="1" colspan="3">
+                <item>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </item>
+                <property name="name">
+                    <cstring>nickNameComboBox</cstring>
+                </property>
+                <property name="editable">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLabel" row="0" column="0">
+                <property name="name">
+                    <cstring>enterNicknameLabel</cstring>
+                </property>
+                <property name="text">
+                    <string>Enter Nickname</string>
+                </property>
+            </widget>
+            <spacer row="2" column="1">
+                <property name="name">
+                    <cstring>spacer1</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Vertical</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>31</width>
+                        <height>41</height>
+                    </size>
+                </property>
+            </spacer>
+            <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
+                <property name="name">
+                    <cstring>nickNameCheckBox</cstring>
+                </property>
+                <property name="text">
+                    <string>Auto Select Nickname</string>
+                </property>
+                <property name="checked">
+                    <bool>true</bool>
+                </property>
+            </widget>
+        </grid>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>okPushButton</sender>
+        <signal>clicked()</signal>
+        <receiver>nickNameDialog</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>cancelPushButton</sender>
+        <signal>clicked()</signal>
+        <receiver>nickNameDialog</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>nickNameComboBox</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>nickNameDialog</receiver>
+        <slot>enableOkButton(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>nickNameCheckBox</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>nickNameDialog</receiver>
+        <slot>toggled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>nickNameComboBox</sender>
+        <signal>activated(int)</signal>
+        <receiver>nickNameDialog</receiver>
+        <slot>setCurrentItem(int)</slot>
+    </connection>
+    <connection>
+        <sender>clearPushButton</sender>
+        <signal>clicked()</signal>
+        <receiver>nickNameComboBox</receiver>
+        <slot>clearEdit()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="local" impldecl="in implementation">nicknameform.ui.h</include>
+</includes>
+<slots>
+    <slot>insertStringList( QStringList &amp; strList )</slot>
+    <slot returnType="QString">text() const</slot>
+    <slot>enableOkButton( const QString &amp; str )</slot>
+    <slot>toggled( bool flag )</slot>
+    <slot>setCurrentItem( int ci )</slot>
+</slots>
+<functions>
+    <function returnType="QString">nextNick() const</function>
+    <function returnType="bool">autoSelectNick()</function>
+    <function>setText( const QString &amp; str )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
