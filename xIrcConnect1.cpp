@@ -409,7 +409,7 @@ void xIrcConnect::buttonPressed(int btn)
 void xIrcConnect::quitIrc()
 {
    char buf[256];
-   
+
    if (QuitQuery->exec() != QDialog::Rejected)
    {
       if (pSocket != NULL)

@@ -9,7 +9,7 @@ class xIrcQuitDialog : public quitDialog
 {
    Q_OBJECT
 public:
-   xIrcQuitDialog(xDefaults &def);
+   xIrcQuitDialog(QWidget *parent = 0, const char *name = 0);
    ~xIrcQuitDialog(){};
 
    void setQuitMsg(QString& msg);

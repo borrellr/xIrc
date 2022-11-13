@@ -2,11 +2,9 @@
 #include <qpushbutton.h>
 #include "xIrcQuitDialog.h"
 
-xIrcQuitDialog::xIrcQuitDialog(xDefaults &def)
+xIrcQuitDialog::xIrcQuitDialog(QWidget *parent, const char *name) :
+    quitDialog(parent, name)
 {
-   QString qMsg = def.get("QuitMessage");
-   setQuitMsg(qMsg);
-   setDefaultMsg();
    connect(defaultButton, SIGNAL(clicked()), this, SLOT(setDefaultMsg()));
 }
 

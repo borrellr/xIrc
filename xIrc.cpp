@@ -304,7 +304,10 @@ static void InitializeWindows()
 
    if (dbg) fprintf(stdout, "main():QuitQuery\n");   
    if (dbg) fflush(stdout);
-   QuitQuery = new xIrcQuitDialog(Defaults);
+   QuitQuery = new xIrcQuitDialog();
+   QString qMsg(Defaults.get("QuitMessage"));
+   QuitQuery->setQuitMsg(qMsg);
+   QuitQuery->setDefaultMsg();
    if (dbg) fprintf(stdout, "main():xIrcConnect\n");   
    if (dbg) fflush(stdout);
 //   xIrcServerTable *pTWindow = new xIrcServerTable(&appRes, NULL, "Server Selection Table");
