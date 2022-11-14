@@ -52,6 +52,7 @@
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
 #include "xIrcQuitDialog.h"
+#include "xIrcKickDialog.h"
 #include "nicknameform.h"
 #include <xResources.h>
 #include <xDefaults.h>
@@ -62,7 +63,7 @@ static bool  dbg = false;
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
 nickNameDialog *NickQuery = NULL;
-xIrcLineEditQuery *KickQuery = NULL;
+xIrcKickDialog *KickQuery = NULL;
 xIrcQuitDialog *QuitQuery = NULL;
 xServerQuery *ServQuery = NULL;
 xWidgetResInfo appRes(NULL, QString("xirc"), QString("XIRC"));
@@ -302,8 +303,10 @@ static void InitializeWindows()
 
    if (dbg) fprintf(stdout, "main():KickQuery\n");   
    if (dbg) fflush(stdout);
-   KickQuery = new xIrcLineEditQuery(&appRes, "Enter Kick Message", "", NULL,
-                                  "Kick Message", "KICKMESSAGE", &Defaults);
+   KickQuery = new xIrcKickDialog();
+   QString kMsg(Defaults.get("KickMessage"));
+   KickQuery->setKickMsg(kMsg);
+   KickQuery->setDefaultMsg();
 
    if (dbg) fprintf(stdout, "main():QuitQuery\n");   
    if (dbg) fflush(stdout);

@@ -34,6 +34,7 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcMsgFrame.h"
 #include "xIrcChannelQuery.h"
+#include "xIrcKickDialog.h"
 #include "nicknameform.h"
 
 static bool dbg = false;
