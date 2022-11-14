@@ -8,7 +8,7 @@ xIrcNickCombo.cpp xIrcNickList.cpp xIrcNickListEntry.cpp \
 xIrcNotifyQuery.cpp xIrcNotifyTable.cpp xIrcPeopleEdit.cpp xIrcPeopleEntry.cpp \
 xIrcPeopleList.cpp xIrcPeopleTable.cpp xIrcServerEdit.cpp xIrcServerEntry.cpp \
 xIrcServerList.cpp xIrcServerQuery.cpp xIrcServerTable.cpp xIrcSocket.cpp \
-xIrcQuitDialog.cpp
+xIrcQuitDialog.cpp xIrcKickDialog.cpp
 
 HEADERS += ircreply.h xIrcBanDialog.h xIrcChannelQuery.h xIrcChanNickBox.h \
 xIrcCommands.h xIrcConnectDialog.h xIrcConnect.h xIrcDccChatFrame.h \
@@ -19,11 +19,12 @@ xIrcNickCombo.h xIrcNickListEntry.h xIrcNickList.h \
 xIrcNotifyQuery.h xIrcNotifyTable.h xIrcPeopleEdit.h xIrcPeopleEntry.h \
 xIrcPeopleList.h xIrcPeopleTable.h xIrcServerEdit.h xIrcServerEntry.h \
 xIrcServerList.h xIrcServerQuery.h xIrcServerTable.h xIrcSocket.h \
-xIrcQuitDialog.h
+xIrcQuitDialog.h xIrcKickDialog.h
 
 INTERFACES += servereditdialog.ui \
            serverconnectdialog.ui \
            quitform.ui \
+           kickmsgdialog.ui \
            nicknameform.ui
 
 INCLUDEPATH += ../libX++
