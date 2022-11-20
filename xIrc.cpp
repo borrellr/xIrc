@@ -292,7 +292,10 @@ static void InitializeWindows()
 
    if (dbg) fprintf(stdout, "main():Opening channel Query\n");   
    if (dbg) fflush(stdout);
-   ChanQuery = new xChannelQuery(&appRes, NULL, "Channels & People");
+   ChanQuery = new xChannelQuery();
+   QString channelStr(Defaults.get("channels"));
+   if (channelStr.isEmpty()) channelStr = "#chatzone";
+   ChanQuery->insertItems(channelStr);
 
    if (dbg) fprintf(stdout, "main():NickQuery\n");   
    if (dbg) fflush(stdout);
