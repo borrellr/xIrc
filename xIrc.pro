@@ -25,7 +25,8 @@ INTERFACES += servereditdialog.ui \
            serverconnectdialog.ui \
            quitform.ui \
            kickmsgdialog.ui \
-           nicknameform.ui
+           nicknameform.ui \
+           channeldialog.ui
 
 INCLUDEPATH += ../libX++
 LIBS += -lX++ -L/usr/local/lib/xIrc
