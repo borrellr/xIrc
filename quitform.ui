@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>quitDialog</class>
+<class>xIrcQuitDialog</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>quitDialog</cstring>
+        <cstring>xIrcQuitDialog</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -120,13 +120,13 @@
     <connection>
         <sender>okButton</sender>
         <signal>clicked()</signal>
-        <receiver>quitDialog</receiver>
+        <receiver>xIrcQuitDialog</receiver>
         <slot>accept()</slot>
     </connection>
     <connection>
         <sender>cancelButton</sender>
         <signal>clicked()</signal>
-        <receiver>quitDialog</receiver>
+        <receiver>xIrcQuitDialog</receiver>
         <slot>reject()</slot>
     </connection>
     <connection>
@@ -138,15 +138,30 @@
     <connection>
         <sender>quitLineEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>quitDialog</receiver>
+        <receiver>xIrcQuitDialog</receiver>
         <slot>enableOkButton(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>defaultButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcQuitDialog</receiver>
+        <slot>setDefaultMsg()</slot>
     </connection>
 </connections>
 <includes>
+    <include location="local" impldecl="in declaration">qstring.h</include>
     <include location="local" impldecl="in implementation">quitform.ui.h</include>
 </includes>
+<variables>
+    <variable access="private">QString quitMsg;</variable>
+</variables>
 <slots>
     <slot>enableOkButton( const QString &amp; str )</slot>
+    <slot>setDefaultMsg()</slot>
 </slots>
+<functions>
+    <function>setQuitMsg( QString &amp; qMsg )</function>
+    <function returnType="QString">text()</function>
+</functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>
