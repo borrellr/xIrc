@@ -132,8 +132,8 @@
     <connection>
         <sender>clearButton</sender>
         <signal>clicked()</signal>
-        <receiver>kickDialog</receiver>
-        <slot>clearMsg()</slot>
+        <receiver>kickLineEdit</receiver>
+        <slot>clear()</slot>
     </connection>
     <connection>
         <sender>kickLineEdit</sender>
@@ -146,7 +146,6 @@
     <include location="local" impldecl="in implementation">kickmsgdialog.ui.h</include>
 </includes>
 <slots>
-    <slot>clearMsg()</slot>
     <slot>enableOkButton( const QString &amp; str )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>

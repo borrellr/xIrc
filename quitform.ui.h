@@ -11,11 +11,6 @@
 *****************************************************************************/
 
 
-void quitDialog::clearMsg()
-{
-   quitLineEdit->setText("");
-}
-
 
 void quitDialog::enableOkButton(const QString & str )
 {

@@ -132,8 +132,8 @@
     <connection>
         <sender>clearButton</sender>
         <signal>clicked()</signal>
-        <receiver>quitDialog</receiver>
-        <slot>clearMsg()</slot>
+        <receiver>quitLineEdit</receiver>
+        <slot>clear()</slot>
     </connection>
     <connection>
         <sender>quitLineEdit</sender>
@@ -142,8 +142,10 @@
         <slot>enableOkButton(const QString&amp;)</slot>
     </connection>
 </connections>
+<includes>
+    <include location="local" impldecl="in implementation">quitform.ui.h</include>
+</includes>
 <slots>
-    <slot>clearMsg()</slot>
     <slot>enableOkButton( const QString &amp; str )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>

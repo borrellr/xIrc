@@ -11,11 +11,6 @@
 *****************************************************************************/
 
 
-void kickDialog::clearMsg()
-{
-   kickLineEdit->setText("");
-}
-
 
 void kickDialog::enableOkButton(const QString & str )
 {
