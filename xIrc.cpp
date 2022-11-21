@@ -51,7 +51,7 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
-#include "xIrcQuitDialog.h"
+#include "quitform.h"
 #include "xIrcKickDialog.h"
 #include "nicknameform.h"
 #include <xResources.h>
