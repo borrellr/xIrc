@@ -12,7 +12,25 @@
 
 
 
-void quitDialog::enableOkButton(const QString & str )
+void xIrcQuitDialog::enableOkButton(const QString & str )
 {
     okButton->setEnabled(!str.isEmpty());
+}
+
+
+void xIrcQuitDialog::setQuitMsg( QString & qMsg )
+{
+    quitMsg = qMsg;
+}
+
+
+void xIrcQuitDialog::setDefaultMsg()
+{
+    quitLineEdit->setText(quitMsg);
+}
+
+
+QString xIrcQuitDialog::text()
+{
+    return quitLineEdit->text();
 }
