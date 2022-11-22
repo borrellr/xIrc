@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>kickDialog</class>
+<class>xIrcKickDialog</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>kickDialog</cstring>
+        <cstring>xIrcKickDialog</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -120,13 +120,13 @@
     <connection>
         <sender>okButton</sender>
         <signal>clicked()</signal>
-        <receiver>kickDialog</receiver>
+        <receiver>xIrcKickDialog</receiver>
         <slot>accept()</slot>
     </connection>
     <connection>
         <sender>cancelButton</sender>
         <signal>clicked()</signal>
-        <receiver>kickDialog</receiver>
+        <receiver>xIrcKickDialog</receiver>
         <slot>reject()</slot>
     </connection>
     <connection>
@@ -138,15 +138,29 @@
     <connection>
         <sender>kickLineEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>kickDialog</receiver>
+        <receiver>xIrcKickDialog</receiver>
         <slot>enableOkButton(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>defaultButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcKickDialog</receiver>
+        <slot>setDefaultMsg()</slot>
     </connection>
 </connections>
 <includes>
     <include location="local" impldecl="in implementation">kickmsgdialog.ui.h</include>
 </includes>
+<variables>
+    <variable access="private">QString kickMsg;</variable>
+</variables>
 <slots>
     <slot>enableOkButton( const QString &amp; str )</slot>
+    <slot>setDefaultMsg()</slot>
 </slots>
+<functions>
+    <function>setKickMsg(QString&amp; qMsg)</function>
+    <function returnType="QString">text()</function>
+</functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

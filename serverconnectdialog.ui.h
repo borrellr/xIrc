@@ -9,31 +9,15 @@
 ** These will automatically be called by the form's constructor and
 ** destructor.
 *****************************************************************************/
-#include <qstring.h>
-#include "xIrcServerEntry.h"
 
-void xIrcServerEdit::enableOkButton()
-{
-   buttonOk->setEnabled(isEnable());
-}
-
-bool xIrcServerEdit::isEnable()
-{
-   return (!groupEdit->text().isEmpty() && !countryEdit->text().isEmpty() &&
-     !cityEdit->text().isEmpty() && !serverEdit->text().isEmpty() &&
-     !portEdit->text().isEmpty());
-}
-
-
-
-void xIrcServerEdit::initEntry( xIrcServerEntry *entry )
+void xIrcConnectDialog::initEntry( xIrcServerEntry *entry )
 {
    QString tmpStr;
 
    tmpStr = entry->group();
    if (!tmpStr.isEmpty())
       groupEdit->setText(tmpStr);
-
+   
    tmpStr = entry->country();
    if (!tmpStr.isEmpty())
       countryEdit->setText(tmpStr);
@@ -52,11 +36,14 @@ void xIrcServerEdit::initEntry( xIrcServerEntry *entry )
 
    tmpStr = entry->ports();
    if (!tmpStr.isEmpty())
-      portEdit->setText(tmpStr);
+   {
+      QStringList portList = QStringList::split(",", tmpStr);
+      portComboBox->insertStringList(portList);
+   }
 }
 
 
-xIrcServerEntry * xIrcServerEdit::getEntry()
+xIrcServerEntry * xIrcConnectDialog::getEntry()
 {
    xIrcServerEntry *entry = new xIrcServerEntry();
 
@@ -65,7 +52,20 @@ xIrcServerEntry * xIrcServerEdit::getEntry()
    entry->setState(stateEdit->text().latin1());
    entry->setCity(cityEdit->text().latin1());
    entry->setServer(serverEdit->text().latin1());
-   entry->setPorts(portEdit->text().latin1());
+   entry->setPorts(portComboBox->currentText().latin1());
 
    return entry;
+}
+
+
+void xIrcConnectDialog::appendLine()
+{
+   if (listItems.isEmpty()) {
+      listItems.append(portLine->text());
+   } else {
+      QStringList list = listItems.grep(portLine->text());
+      if (list.isEmpty()) {
+         listItems.append(portLine->text());
+      }
+   }
 }

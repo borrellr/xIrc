@@ -12,7 +12,25 @@
 
 
 
-void kickDialog::enableOkButton(const QString & str )
+void xIrcKickDialog::enableOkButton(const QString & str )
 {
     okButton->setEnabled(!str.isEmpty());
+}
+
+
+void xIrcKickDialog::setDefaultMsg()
+{
+   kickLineEdit->setText(kickMsg);
+}
+
+
+void xIrcKickDialog::setKickMsg( QString & qMsg )
+{
+   kickMsg = qMsg;
+}
+
+
+QString xIrcKickDialog::text()
+{
+   return kickLineEdit->text();
 }
