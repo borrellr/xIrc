@@ -50,7 +50,7 @@
 #include "xIrcNickCombo.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
-#include "xIrcChannelQuery.h"
+#include "channeldialog.h"
 #include "quitform.h"
 #include "kickmsgdialog.h"
 #include "nicknameform.h"

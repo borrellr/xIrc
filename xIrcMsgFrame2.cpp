@@ -33,7 +33,7 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcMsgFrame.h"
-#include "xIrcChannelQuery.h"
+#include "channeldialog.h"
 #include "kickmsgdialog.h"
 #include "nicknameform.h"
 
