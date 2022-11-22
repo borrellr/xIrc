@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>channelDialog</class>
+<class>xChannelQuery</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>channelDialog</cstring>
+        <cstring>xChannelQuery</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -132,13 +132,13 @@
     <connection>
         <sender>channelEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>channelDialog</receiver>
+        <receiver>xChannelQuery</receiver>
         <slot>enableButtons()</slot>
     </connection>
     <connection>
         <sender>closeButton</sender>
         <signal>clicked()</signal>
-        <receiver>channelDialog</receiver>
+        <receiver>xChannelQuery</receiver>
         <slot>reject()</slot>
     </connection>
     <connection>
@@ -150,22 +150,66 @@
     <connection>
         <sender>channelBox</sender>
         <signal>doubleClicked(QListBoxItem*)</signal>
-        <receiver>channelDialog</receiver>
+        <receiver>xChannelQuery</receiver>
         <slot>updateItems(QListBoxItem*)</slot>
     </connection>
+    <connection>
+        <sender>chatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>names()</slot>
+    </connection>
+    <connection>
+        <sender>dccChatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>dccChat()</slot>
+    </connection>
+    <connection>
+        <sender>joinButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>joinChannel()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>joinChannel()</slot>
+    </connection>
 </connections>
+<tabstops>
+    <tabstop>channelEdit</tabstop>
+    <tabstop>channelBox</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>joinButton</tabstop>
+    <tabstop>chatButton</tabstop>
+    <tabstop>dccChatButton</tabstop>
+    <tabstop>clearButton</tabstop>
+    <tabstop>closeButton</tabstop>
+</tabstops>
 <includes>
+    <include location="local" impldecl="in declaration">xIrcChannelQuery.h</include>
     <include location="local" impldecl="in implementation">channeldialog.ui.h</include>
 </includes>
+<variables>
+    <variable access="public">enum chanResults { Accepted, Rejected, Clear, Names, Join, DccChat };</variable>
+</variables>
+<signals>
+    <signal>ircMessageOut(xIrcMessage *pMsg);</signal>
+    <signal>hasResult(int results);</signal>
+</signals>
 <slots>
     <slot access="private" specifier="non virtual">enableButtons()</slot>
     <slot>updateItems( QListBoxItem * item )</slot>
+    <slot access="private">names()</slot>
+    <slot access="private">dccChat()</slot>
+    <slot access="private">joinChannel()</slot>
 </slots>
 <functions>
     <function>setText( const QString &amp; text )</function>
     <function returnType="const char *">editText()</function>
     <function specifier="non virtual">insertItems( const QString &amp; channels )</function>
-    <function specifier="non virtual">SetText( const QString &amp; text )</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

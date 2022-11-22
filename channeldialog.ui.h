@@ -13,18 +13,19 @@
 #include <qstringlist.h>
 #include <qlineedit.h>
 #include <qlistbox.h>
+#include <qmessagebox.h>
 
-void channelDialog::setText( const QString &text )
+void xChannelQuery::setText( const QString &text )
 {
    channelEdit->setText(text);
 }
 
-const char *channelDialog::editText()
+const char *xChannelQuery::editText()
 {
     return channelEdit->text().latin1();
 }
 
-void channelDialog::enableButtons()
+void xChannelQuery::enableButtons()
 {
     QString str = channelEdit->text();
     if (str.isEmpty()) {
@@ -42,7 +43,7 @@ void channelDialog::enableButtons()
     }
 }
 
-void channelDialog::insertItems( const QString &channels )
+void xChannelQuery::insertItems( const QString &channels )
 {
    QStringList strList;
    if (!channels.isEmpty()) {
@@ -54,10 +55,53 @@ void channelDialog::insertItems( const QString &channels )
    }
 }
 
-void channelDialog::updateItems(QListBoxItem *item)
+void xChannelQuery::updateItems(QListBoxItem *item)
 {
    QString text(item->text());
 
    if (!text.isEmpty())
       channelEdit->setText(text);
+}
+
+
+void xChannelQuery::names()
+{
+   QString str = channelEdit->text();
+   xIrcMessage msg;
+
+   if (!str.isEmpty()) {
+      str = str.stripWhiteSpace();
+      if (str.startsWith("#"))
+         msg.rspCode = ircResponses.code("NAMES");
+      else
+         msg.rspCode = ircResponses.code("WHOIS");
+      msg.dstStr = str.latin1();
+      msg.msgStr = "";
+      emit ircMessageOut(&msg);
+   }
+}
+
+
+void xChannelQuery::dccChat()
+{
+   QString str = channelEdit->text();
+
+   if (!str.isEmpty()) {
+      str = str.stripWhiteSpace();
+      if (str.startsWith("#"))
+         QMessageBox::warning(this, "Error", "Cannot DCC Chat to a channel");
+      else
+         emit hasResult(DccChat);
+   }
+}
+
+
+void xChannelQuery::joinChannel()
+{
+   QString str = channelEdit->text();
+
+   if (!str.isEmpty()) {
+      str = str.stripWhiteSpace();
+      emit hasResult(Accepted);
+   }
 }
