@@ -1,4 +1,4 @@
-SOURCES += xIrc.cpp xIrcBanDialog.cpp xIrcChannelQuery.cpp xIrcChanNickBox.cpp \
+SOURCES += xIrc.cpp xIrcBanDialog.cpp xIrcChanNickBox.cpp \
 xIrcCommands.cpp xIrcConnect1.cpp xIrcConnect2.cpp xIrcConnect3.cpp \
 xIrcDccChatFrame.cpp xIrcDccFile.cpp xIrcDccQuery.cpp \
 xIrcDccSocket.cpp xIrcIgnoreQuery.cpp xIrcInviteBox.cpp \
