@@ -6,18 +6,16 @@ In this enhancement, added the following:
      Qt Designer file quitform.ui along with its file quitform.ui.h.
    - Added a new help menu option called About Qt. It displays the current
      information about Qt.
-   - Added new Qt3 Designer files nicknameform.ui and nicknameform.ui.h.
+   - Added new Qt Designer files nicknameform.ui and nicknameform.ui.h.
      Removed the xIrcNickQuery.h and xIrcNickQuery.cpp files.
-   - Added new Qt3 Designer files quitform.ui and quitform.ui.h. Added new
-     subclass files xIrcQuitDialog.h and xIrcQuitDialog.cpp to replace the
+   - Added new Qt Designer files quitform.ui and quitform.ui.h to replace the
      QuitQuery object.
-   - Added new Qt3 Designer files kickmsgdialog.ui and kickmsgdialog.ui.h.
-     Add new subclass files xIrcKickDialog.h and xIrcKickDialog.cpp to replace
-     the KickQuery object.
-   - Added new Qt3 Designer files channeldialog.ui and channeldialog.ui.h.
-     Replaced existing xIrcChannelQuery.h and xIrcChannelQuery.cpp files
-     while maintaining the existing interface.  A new interface was added to
-     pass the channel data to class to populate the list box.
+   - Added new Qt Designer files kickmsgdialog.ui and kickmsgdialog.ui.h
+     to replace the KickQuery object.
+   - Added new Qt Designer files channeldialog.ui and channeldialog.ui.h
+     to replace the xChannelQuery class while maintaining the existing
+     interface.  A new interface was added to pass the channel data to class
+     to populate the list box.
 
 xIrc-2.4 - Robert Borrell <robert.borrell@gmail.com>
 ========
