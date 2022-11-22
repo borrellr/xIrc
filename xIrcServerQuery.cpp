@@ -1,7 +1,7 @@
 #include <qfiledialog.h>
 #include "xIrcServerQuery.h"
-#include "xIrcServerEdit.h"
-#include "xIrcConnectDialog.h"
+#include "servereditdialog.h"
+#include "serverconnectdialog.h"
 
 xServerQuery::xServerQuery(QWidget *parent, const char *name)
     : QDialog(parent, name)

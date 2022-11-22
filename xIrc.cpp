@@ -52,7 +52,7 @@
 #include "xIrcServerQuery.h"
 #include "xIrcChannelQuery.h"
 #include "quitform.h"
-#include "xIrcKickDialog.h"
+#include "kickmsgdialog.h"
 #include "nicknameform.h"
 #include <xResources.h>
 #include <xDefaults.h>

@@ -34,7 +34,7 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcMsgFrame.h"
 #include "xIrcChannelQuery.h"
-#include "xIrcKickDialog.h"
+#include "kickmsgdialog.h"
 #include "nicknameform.h"
 
 static bool dbg = false;
@@ -43,7 +43,7 @@ extern xDefaults Defaults;
 extern xIrcCommands ircResponses;
 extern xChannelQuery *ChanQuery;
 extern nickNameDialog  *NickQuery;
-extern xIrcLineEditQuery *KickQuery;
+extern xIrcKickDialog *KickQuery;
 extern xIrcMsgDispatch Dispatcher;
 
 bool xIrcMessageFrame::isMsg(int cmd, char *pStr)

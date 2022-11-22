@@ -41,7 +41,7 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcPeopleEdit.h"
 #include "xIrcPeopleEntry.h"
-#include "xIrcKickDialog.h"
+#include "kickmsgdialog.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
