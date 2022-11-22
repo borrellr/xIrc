@@ -38,7 +38,7 @@
 #include <qmessagebox.h>
 #include <qfiledialog.h>
 #include <xApp.h>
-#include "xIrcChannelQuery.h"
+#include "channeldialog.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
@@ -47,7 +47,7 @@
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
-#include "xIrcQuitDialog.h"
+#include "quitform.h"
 #include "nicknameform.h"
 
 static bool dbg = false;
