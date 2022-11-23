@@ -49,7 +49,9 @@ QString nickNameDialog::text() const
 void nickNameDialog::enableOkButton(const QString & str )
 {
    if (!nickNameCheckBox->isChecked()) {
-      if (!str.isEmpty())
+      if (str.isEmpty())
+         okPushButton->setEnabled(false);
+      else
          okPushButton->setEnabled(true);
    }
 }
@@ -57,7 +59,8 @@ void nickNameDialog::enableOkButton(const QString & str )
 
 void nickNameDialog::toggled( bool flag )
 {
-  QString str(nickNameComboBox->text(0));
+  QLineEdit *lEdit = nickNameComboBox->lineEdit();
+  QString str(lEdit->text());
 
   if (!flag && str.isEmpty()) {
      okPushButton->setEnabled(false);    
