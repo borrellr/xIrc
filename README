@@ -16,6 +16,8 @@ In this enhancement, added the following:
      to replace the xChannelQuery class while maintaining the existing
      interface.  A new interface was added to pass the channel data to class
      to populate the list box.
+   - Minor logic error fixes
+   - Updated version number in about function
 
 xIrc-2.4 - Robert Borrell <robert.borrell@gmail.com>
 ========
