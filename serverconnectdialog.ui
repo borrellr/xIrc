@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>serverConnectDialog</class>
+<class>xIrcConnectDialog</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>serverConnectDialog</cstring>
+        <cstring>xIrcConnectDialog</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -156,6 +156,9 @@
                 <property name="editable">
                     <bool>false</bool>
                 </property>
+                <property name="duplicatesEnabled">
+                    <bool>false</bool>
+                </property>
             </widget>
             <widget class="QLineEdit" row="4" column="1">
                 <property name="name">
@@ -212,13 +215,13 @@
     <connection>
         <sender>buttonOk</sender>
         <signal>clicked()</signal>
-        <receiver>serverConnectDialog</receiver>
+        <receiver>xIrcConnectDialog</receiver>
         <slot>accept()</slot>
     </connection>
     <connection>
         <sender>buttonCancel</sender>
         <signal>clicked()</signal>
-        <receiver>serverConnectDialog</receiver>
+        <receiver>xIrcConnectDialog</receiver>
         <slot>reject()</slot>
     </connection>
 </connections>
@@ -228,8 +231,27 @@
     <tabstop>stateEdit</tabstop>
     <tabstop>cityEdit</tabstop>
     <tabstop>serverEdit</tabstop>
+    <tabstop>portComboBox</tabstop>
     <tabstop>buttonOk</tabstop>
     <tabstop>buttonCancel</tabstop>
 </tabstops>
+<includes>
+    <include location="local" impldecl="in declaration">xIrcServerEntry.h</include>
+    <include location="global" impldecl="in declaration">qlineedit.h</include>
+    <include location="global" impldecl="in declaration">qstringlist.h</include>
+    <include location="local" impldecl="in implementation">serverconnectdialog.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">xIrcServerEntry *pEntry;</variable>
+    <variable access="private">QLineEdit *portLine;</variable>
+    <variable access="private">QStringList listItems;</variable>
+</variables>
+<slots>
+    <slot access="private">appendLine()</slot>
+</slots>
+<functions>
+    <function>initEntry( xIrcServerEntry * entry )</function>
+    <function returnType="xIrcServerEntry *">getEntry()</function>
+</functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

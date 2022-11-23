@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>serverEditDialog</class>
+<class>xIrcServerEdit</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>serverEditDialog</cstring>
+        <cstring>xIrcServerEdit</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -191,49 +191,49 @@
     <connection>
         <sender>buttonOk</sender>
         <signal>clicked()</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>accept()</slot>
     </connection>
     <connection>
         <sender>buttonCancel</sender>
         <signal>clicked()</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>reject()</slot>
     </connection>
     <connection>
         <sender>groupEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>enableOkButton()</slot>
     </connection>
     <connection>
         <sender>countryEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>enableOkButton()</slot>
     </connection>
     <connection>
         <sender>stateEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>enableOkButton()</slot>
     </connection>
     <connection>
         <sender>cityEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>enableOkButton()</slot>
     </connection>
     <connection>
         <sender>serverEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>enableOkButton()</slot>
     </connection>
     <connection>
         <sender>portEdit</sender>
         <signal>textChanged(const QString&amp;)</signal>
-        <receiver>serverEditDialog</receiver>
+        <receiver>xIrcServerEdit</receiver>
         <slot>enableOkButton()</slot>
     </connection>
 </connections>
@@ -243,17 +243,24 @@
     <tabstop>stateEdit</tabstop>
     <tabstop>cityEdit</tabstop>
     <tabstop>serverEdit</tabstop>
+    <tabstop>portEdit</tabstop>
     <tabstop>buttonOk</tabstop>
     <tabstop>buttonCancel</tabstop>
 </tabstops>
 <includes>
+    <include location="local" impldecl="in declaration">xIrcServerEntry.h</include>
     <include location="local" impldecl="in implementation">servereditdialog.ui.h</include>
 </includes>
+<variables>
+    <variable access="private">xIrcServerEntry *pEntry;</variable>
+</variables>
 <slots>
     <slot>enableOkButton()</slot>
 </slots>
 <functions>
     <function returnType="bool">isEnable()</function>
+    <function>initEntry( xIrcServerEntry * entry )</function>
+    <function returnType="xIrcServerEntry *">getEntry()</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

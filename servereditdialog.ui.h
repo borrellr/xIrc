@@ -12,15 +12,60 @@
 #include <qstring.h>
 #include "xIrcServerEntry.h"
 
-void serverEditDialog::enableOkButton()
+void xIrcServerEdit::enableOkButton()
 {
    buttonOk->setEnabled(isEnable());
 }
 
-bool serverEditDialog::isEnable()
+bool xIrcServerEdit::isEnable()
 {
    return (!groupEdit->text().isEmpty() && !countryEdit->text().isEmpty() &&
      !cityEdit->text().isEmpty() && !serverEdit->text().isEmpty() &&
      !portEdit->text().isEmpty());
 }
 
+
+
+void xIrcServerEdit::initEntry( xIrcServerEntry *entry )
+{
+   QString tmpStr;
+
+   tmpStr = entry->group();
+   if (!tmpStr.isEmpty())
+      groupEdit->setText(tmpStr);
+
+   tmpStr = entry->country();
+   if (!tmpStr.isEmpty())
+      countryEdit->setText(tmpStr);
+
+   tmpStr = entry->state();
+   if (!tmpStr.isEmpty())
+      stateEdit->setText(tmpStr);
+
+   tmpStr = entry->city();
+   if (!tmpStr.isEmpty())
+      cityEdit->setText(tmpStr);
+
+   tmpStr = entry->server();
+   if (!tmpStr.isEmpty())
+      serverEdit->setText(tmpStr);
+
+   tmpStr = entry->ports();
+   if (!tmpStr.isEmpty())
+      portEdit->setText(tmpStr);
+}
+
+
+xIrcServerEntry * xIrcServerEdit::getEntry()
+{
+   xIrcServerEntry *entry = new xIrcServerEntry();
+
+   entry->setGroup(groupEdit->text().latin1());
+   entry->setCountry(countryEdit->text().latin1());
+   entry->setState(stateEdit->text().latin1());
+   entry->setCity(cityEdit->text().latin1());
+   entry->setServer(serverEdit->text().latin1());
+   entry->setPorts(portEdit->text().latin1());
+
+   return entry;
+}

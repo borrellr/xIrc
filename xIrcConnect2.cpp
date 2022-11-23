@@ -43,7 +43,7 @@
 #include <qfiledialog.h>
 #include <xApp.h>
 #include "xIrcLineEditQuery.h"
-#include "xIrcChannelQuery.h"
+#include "channeldialog.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
 #include "xIrcServerQuery.h"

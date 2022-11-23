@@ -41,12 +41,13 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcPeopleEdit.h"
 #include "xIrcPeopleEntry.h"
+#include "kickmsgdialog.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
 static bool  dbg = false;
 
-extern xIrcLineEditQuery *KickQuery;
+extern xIrcKickDialog *KickQuery;
 extern xIrcCommands ircResponses;
 extern xIrcMsgDispatch Dispatcher;
 

@@ -47,11 +47,13 @@
 
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"
-#include "xIrcNickQuery.h"
 #include "xIrcNickCombo.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcServerQuery.h"
-#include "xIrcChannelQuery.h"
+#include "channeldialog.h"
+#include "quitform.h"
+#include "kickmsgdialog.h"
+#include "nicknameform.h"
 #include <xResources.h>
 #include <xDefaults.h>
 #include <xMisc.h>
@@ -60,9 +62,9 @@ static bool  dbg = false;
 
 xIrcConnect *pTWindow = NULL;
 xChannelQuery *ChanQuery = NULL;
-xIrcNickQuery *NickQuery = NULL;
-xIrcLineEditQuery *KickQuery = NULL;
-xIrcLineEditQuery *QuitQuery = NULL;
+nickNameDialog *NickQuery = NULL;
+xIrcKickDialog *KickQuery = NULL;
+xIrcQuitDialog *QuitQuery = NULL;
 xServerQuery *ServQuery = NULL;
 xWidgetResInfo appRes(NULL, QString("xirc"), QString("XIRC"));
 QPixmap *AppPixMap;
@@ -290,21 +292,31 @@ static void InitializeWindows()
 
    if (dbg) fprintf(stdout, "main():Opening channel Query\n");   
    if (dbg) fflush(stdout);
-   ChanQuery = new xChannelQuery(&appRes, NULL, "Channels & People");
+   ChanQuery = new xChannelQuery();
+   QString channelStr(Defaults.get("channels"));
+   if (channelStr.isEmpty()) channelStr = "#chatzone";
+   ChanQuery->insertItems(channelStr);
 
    if (dbg) fprintf(stdout, "main():NickQuery\n");   
    if (dbg) fflush(stdout);
-   NickQuery = new xIrcNickQuery(&appRes, NULL, "Nickname");
+   NickQuery = new nickNameDialog();
+   QString nicks(Defaults.get("Nicks"));
+   QStringList strList = QStringList::split(' ', nicks);
+   NickQuery->insertStringList(strList);
 
    if (dbg) fprintf(stdout, "main():KickQuery\n");   
    if (dbg) fflush(stdout);
-   KickQuery = new xIrcLineEditQuery(&appRes, "Enter Kick Message", "", NULL,
-                                  "Kick Message", "KICKMESSAGE", &Defaults);
+   KickQuery = new xIrcKickDialog();
+   QString kMsg(Defaults.get("KickMessage"));
+   KickQuery->setKickMsg(kMsg);
+   KickQuery->setDefaultMsg();
 
    if (dbg) fprintf(stdout, "main():QuitQuery\n");   
    if (dbg) fflush(stdout);
-   QuitQuery = new xIrcLineEditQuery(&appRes, "Enter Quit Message", "", NULL,
-                                  "Quit Message", "QUITMESSAGE", &Defaults);
+   QuitQuery = new xIrcQuitDialog();
+   QString qMsg(Defaults.get("QuitMessage"));
+   QuitQuery->setQuitMsg(qMsg);
+   QuitQuery->setDefaultMsg();
    if (dbg) fprintf(stdout, "main():xIrcConnect\n");   
    if (dbg) fflush(stdout);
 //   xIrcServerTable *pTWindow = new xIrcServerTable(&appRes, NULL, "Server Selection Table");
@@ -376,7 +388,7 @@ void xIrcInitialize(QApplication& app)
       else
          QMessageBox::warning(pTWindow, "Error", "You must choose a NickName");
    }
-   sprintf(buf, "xIrc - %s", NickQuery->text());
+   sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
    pTWindow->setCaption(buf);
    pTWindow->show();
    pTWindow->newServer();

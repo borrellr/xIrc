@@ -38,24 +38,25 @@
 #include <qmessagebox.h>
 #include <qfiledialog.h>
 #include <xApp.h>
-#include "xIrcChannelQuery.h"
+#include "channeldialog.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
-#include "xIrcNickQuery.h"
 #include "xIrcDccQuery.h"
 #include "xIrcServerQuery.h"
 #include "xIrcInviteBox.h"
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
+#include "quitform.h"
+#include "nicknameform.h"
 
 static bool dbg = false;
 
 extern xDefaults Defaults;
-extern xIrcNickQuery *NickQuery;
+extern nickNameDialog *NickQuery;
 extern xChannelQuery *ChanQuery;
 extern xServerQuery *ServQuery;
-extern xIrcLineEditQuery *QuitQuery;
+extern xIrcQuitDialog *QuitQuery;
 extern xIrcCommands ircResponses;
 extern QPixmap *AppPixMap;
 extern xIrcMsgDispatch Dispatcher;
@@ -288,6 +289,10 @@ void xIrcConnect::initializeActions()
    aboutAct = new QAction(tr("About"), 0, this);
    aboutAct->setStatusTip(tr("The about page for xIrc"));
    connect(aboutAct, SIGNAL(activated()), this, SLOT(about()));
+
+   aboutQtAct = new QAction(tr("About &Qt"), 0, this);
+   aboutQtAct->setStatusTip(tr("Show the Qt library's about box"));
+   connect(aboutQtAct, SIGNAL(activated()), qApp, SLOT(aboutQt()));
 }
 
 void xIrcConnect::InitializeMenu()
@@ -326,6 +331,7 @@ void xIrcConnect::InitializeMenu()
    pHelpMenu = new QPopupMenu;
    CHECK_PTR(pHelpMenu);
    aboutAct->addTo(pHelpMenu);
+   aboutQtAct->addTo(pHelpMenu);
    setDefFont(pHelpMenu, &wdtPopTmp);
    setDefPallet(pHelpMenu, &wdtPopTmp);
 
@@ -344,7 +350,7 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.4 \n"
+                  "Version: 2.4.1 \n"
                   "License: GPL\n"
                   "Copyright: 1997-2022\n\n"
                   "Maintained by Robert Borrell\n"
@@ -403,14 +409,14 @@ void xIrcConnect::buttonPressed(int btn)
 void xIrcConnect::quitIrc()
 {
    char buf[256];
-   
+
    if (QuitQuery->exec() != QDialog::Rejected)
    {
       if (pSocket != NULL)
       {
          if (dbg) fprintf(stdout, "xIrcConnect::quitIrc():Disconnecting from Server\n");
          if (dbg) fflush(stdout);
-         sprintf(buf, "QUIT :%s\n", QuitQuery->text());
+         sprintf(buf, "QUIT :%s\n", QuitQuery->text().latin1());
          sendMsgToSocket(buf);
          pSocket->off();
          quitFlag = TRUE;
@@ -464,7 +470,7 @@ void xIrcConnect::goodConnection(int sock)
    disconnect(pSocket, SIGNAL(connFailed(int)),      
               this, SLOT(failedConnection(int)));
 */
-   sprintf(buf, "NICK %s\n", NickQuery->text());
+   sprintf(buf, "NICK %s\n", NickQuery->text().latin1());
 
    sock++;
    sendMsgToSocket(buf);
@@ -498,7 +504,7 @@ void xIrcConnect::goodConnection(int sock)
          sendMsgToSocket(buf);
       }
    }
-   sprintf(buf, "xIrc - %s", NickQuery->text());
+   sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
    setCaption(buf);
    Dispatcher.setSocket(pSocket);
 }
@@ -676,24 +682,25 @@ void xIrcConnect::newServer()
 void xIrcConnect::newNick()
 {
    char buf[256];
+   int result;
 
    for (;;)
    {
-      NickQuery->exec();
-      if (NickQuery->result() == QDialog::Accepted)
+      result = NickQuery->exec();
+      if (result == QDialog::Accepted)
       {
-         nickName = NickQuery->text();
-         sprintf(buf, "NICK %s\n", NickQuery->text());
+         nickName = NickQuery->text().latin1();
+         sprintf(buf, "NICK %s\n", NickQuery->text().latin1());
          sendMsgToSocket(buf);
          break;
       }
-      else if(nickName.isEmpty() && (NickQuery->result() != Rejected))
+      else if(nickName.isEmpty() && (result != Rejected))
          QMessageBox::warning(this, "Error", "You must choose a NickName");
       else
          break;
    }
-   if(NickQuery->result() == QDialog::Accepted) {
-      sprintf(buf, "xIrc - %s", NickQuery->text());
+   if(result == QDialog::Accepted) {
+      sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
       setCaption(buf);
    }
 } 
@@ -999,7 +1006,7 @@ void xIrcConnect::gotErrorAck(int rspCode)
       {
          if (dbg) fprintf(stdout, "xIrcConnect::gotErrorAck():Get Next Nick\n");
          if (dbg) fflush(stdout);
-         if ((cp = NickQuery->nextNick()) != NULL)
+         if ((cp = NickQuery->nextNick().latin1()) != NULL)
          {
             if (dbg) fprintf(stdout, "xIrcConnect::gotErrorAck():Got it!\n");
             if (dbg) fflush(stdout);
@@ -1016,18 +1023,18 @@ void xIrcConnect::gotErrorAck(int rspCode)
       for (;;)
       {
          NickQuery->exec();
-         if (strlen(NickQuery->text()) > 0)
+         if (!NickQuery->text().isEmpty())
          {
-            nickName = NickQuery->text();
+            nickName = NickQuery->text().latin1();
             break;
          }
          else
             QMessageBox::warning(this, "Error", "You must choose a NickName");
       }
-      sprintf(buf, "NICK %s\n", NickQuery->text());
+      sprintf(buf, "NICK %s\n", NickQuery->text().latin1());
       sendMsgToSocket(buf);
    }
-   sprintf(buf, "xIrc - %s", NickQuery->text());
+   sprintf(buf, "xIrc - %s", NickQuery->text().latin1());
    setCaption(buf);
    if (dbg) fprintf(stdout, "xIrcConnect::gotErrorAck():Exit\n");
    if (dbg) fflush(stdout);

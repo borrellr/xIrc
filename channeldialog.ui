@@ -1,0 +1,215 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>xChannelQuery</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>xChannelQuery</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>350</width>
+            <height>325</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>People and Channels</string>
+    </property>
+    <property name="focusPolicy">
+        <enum>StrongFocus</enum>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>11</x>
+                <y>11</y>
+                <width>320</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1</cstring>
+                </property>
+                <property name="text">
+                    <string>Enter Channel or Nickname:</string>
+                </property>
+            </widget>
+            <widget class="QLineEdit">
+                <property name="name">
+                    <cstring>channelEdit</cstring>
+                </property>
+            </widget>
+            <widget class="QListBox">
+                <property name="name">
+                    <cstring>channelBox</cstring>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout1</cstring>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QPushButton" row="1" column="2">
+                        <property name="name">
+                            <cstring>closeButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Close</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="1">
+                        <property name="name">
+                            <cstring>joinButton</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="text">
+                            <string>Join</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="0">
+                        <property name="name">
+                            <cstring>okButton</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="text">
+                            <string>OK</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="2">
+                        <property name="name">
+                            <cstring>chatButton</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="text">
+                            <string>Chat</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="1">
+                        <property name="name">
+                            <cstring>clearButton</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="text">
+                            <string>Clear</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="0">
+                        <property name="name">
+                            <cstring>dccChatButton</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="text">
+                            <string>DCC Chat</string>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>channelEdit</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>enableButtons()</slot>
+    </connection>
+    <connection>
+        <sender>closeButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>clearButton</sender>
+        <signal>clicked()</signal>
+        <receiver>channelEdit</receiver>
+        <slot>clear()</slot>
+    </connection>
+    <connection>
+        <sender>channelBox</sender>
+        <signal>doubleClicked(QListBoxItem*)</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>updateItems(QListBoxItem*)</slot>
+    </connection>
+    <connection>
+        <sender>chatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>names()</slot>
+    </connection>
+    <connection>
+        <sender>dccChatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>dccChat()</slot>
+    </connection>
+    <connection>
+        <sender>joinButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>joinChannel()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xChannelQuery</receiver>
+        <slot>joinChannel()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>channelEdit</tabstop>
+    <tabstop>channelBox</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>joinButton</tabstop>
+    <tabstop>chatButton</tabstop>
+    <tabstop>dccChatButton</tabstop>
+    <tabstop>clearButton</tabstop>
+    <tabstop>closeButton</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in declaration">xIrcChannelQuery.h</include>
+    <include location="local" impldecl="in implementation">channeldialog.ui.h</include>
+</includes>
+<variables>
+    <variable access="public">enum chanResults { Accepted, Rejected, Clear, Names, Join, DccChat };</variable>
+</variables>
+<signals>
+    <signal>ircMessageOut(xIrcMessage *pMsg);</signal>
+    <signal>hasResult(int results);</signal>
+</signals>
+<slots>
+    <slot access="private" specifier="non virtual">enableButtons()</slot>
+    <slot>updateItems( QListBoxItem * item )</slot>
+    <slot access="private">names()</slot>
+    <slot access="private">dccChat()</slot>
+    <slot access="private">joinChannel()</slot>
+</slots>
+<functions>
+    <function>setText( const QString &amp; text )</function>
+    <function returnType="const char *">editText()</function>
+    <function specifier="non virtual">insertItems( const QString &amp; channels )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
