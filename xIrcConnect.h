@@ -172,6 +172,7 @@ private:
    QAction *newChannelAct;
    QAction *quitIrcAct;
    QAction *aboutAct;
+   QAction *aboutQtAct;
 };
 
 #endif
