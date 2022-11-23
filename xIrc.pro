@@ -32,4 +32,5 @@ INCLUDEPATH += ../libX++
 LIBS += -lX++ -L/usr/local/lib/xIrc
 DEFINES += QT2 QT3 QT_NO_ASCII_CAST
 CONFIG += qt warn_on release
+QMAKE_CXXFLAGS += -fpermissive -Wwrite-strings
 TARGET += xIrc

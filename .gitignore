@@ -1,11 +1,24 @@
-
 *.un~
 AUTHORS~
 ChangeLog~
 README~
-libX++/moc_xDialog.cpp
-moc_servereditdialog.cpp
 NEWS~
 INSTALL~
 xIrcServerList.cpp~
 README - Shortcut.lnk
+moc_*
+*.o
+Makefile
+channeldialog.cpp
+channeldialog.h
+kickmsgdialog.cpp
+kickmsgdialog.h
+nicknameform.cpp
+nicknameform.h
+quitform.cpp
+quitform.h
+serverconnectdialog.cpp
+serverconnectdialog.h
+servereditdialog.cpp
+servereditdialog.h
+xIrc

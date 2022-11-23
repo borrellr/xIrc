@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <qfiledialog.h>
 #include "xIrcServerQuery.h"
 #include "servereditdialog.h"
