@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <qt.h>
 #include <qfiledialog.h>
-#include "xIrcPeopleEdit.h"
+#include "peopleedit.h"
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 
@@ -238,8 +238,10 @@ void xIrcIgnoreQuery::saveList()
 void xIrcIgnoreQuery::newEntry()
 {
    xIrcPeopleEntry e("", "", "", 1);
+   QString n("Ignore Entry Edit");
 
-   xIrcPeopleEdit editDlg(wdtRes, NULL, "Ignore Entry Edit", &e);
+   xIrcPeopleEdit editDlg;
+   editDlg.initEntry(&e, n);
    if (editDlg.exec() == QDialog::Accepted)
       pTable->add(e);
    pTable->showRows(pTable->currentRow());
@@ -249,7 +251,9 @@ void xIrcIgnoreQuery::editEntry(int entry)
 {
    if (pTable->entry(entry) != NULL)
    {
-      xIrcPeopleEdit editDlg(wdtRes, NULL, "Ignore Entry Edit", pTable->entry(entry));
+      QString n("Ignore Entry Edit");
+      xIrcPeopleEdit editDlg;
+      editDlg.initEntry(pTable->entry(entry), n);
       editDlg.exec();
       pTable->showRows(pTable->currentRow());
    }
@@ -261,8 +265,9 @@ void xIrcIgnoreQuery::editEntry()
 {
    if (pTable->entry(pTable->selectedRow()) != NULL)
    {
-      xIrcPeopleEdit editDlg(wdtRes, NULL, "Ignore", 
-                             pTable->entry(pTable->selectedRow()));
+      QString n("Ignore");
+      xIrcPeopleEdit editDlg;
+      editDlg.initEntry(pTable->entry(pTable->selectedRow()), n);
       editDlg.exec();
       pTable->showRows(pTable->currentRow());
    }

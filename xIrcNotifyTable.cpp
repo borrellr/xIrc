@@ -27,7 +27,6 @@
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcNotifyTable.h"
-#include "xIrcPeopleEdit.h"
 
 static bool dbg = false;
                     
