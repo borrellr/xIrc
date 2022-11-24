@@ -8,6 +8,7 @@ xIrcServerList.cpp~
 README - Shortcut.lnk
 moc_*
 *.o
+*~
 Makefile
 channeldialog.cpp
 channeldialog.h
@@ -22,3 +23,5 @@ serverconnectdialog.h
 servereditdialog.cpp
 servereditdialog.h
 xIrc
+peopleedit.cpp
+peopleedit.h
