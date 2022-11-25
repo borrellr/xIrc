@@ -40,7 +40,7 @@
 #include "xIrcMsgQuery.h"
 #include "xIrcDccChatFrame.h"
 #include "xIrcDccFile.h"
-#include "xIrcNickActionQuery.h"
+#include "nickaction.h"
 #include "xIrcBanDialog.h"
 
 class xIrcConnect : public xDialog
