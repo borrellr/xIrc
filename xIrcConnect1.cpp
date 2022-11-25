@@ -129,7 +129,7 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
    if (dbg) fprintf(stdout, "xIrcConnect::xIrcConnect():Creating NickAction\n");
    if (dbg) fflush(stdout);
    pNickAction = NULL;
-   pNickAction = new xIrcNickActionQuery(wdtPrv);
+   pNickAction = new xIrcNickActionQuery();
 
    pIgnore = new xIrcIgnoreQuery(wdtPrv);
    pNotify = new xIrcNotifyQuery(wdtPrv);
