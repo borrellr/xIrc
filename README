@@ -5,6 +5,8 @@ In this release included the following:
      and xIrcPeopleEdit.cpp.
    - Created nickaction.ui and nickaction.ui.h to replace xIrcNickActionQuery.h
      and xIrcNickActionQuery.cpp.
+   - Created bandialog.ui and bandialog.ui.h to replace xIrcBanDialog.h and
+     xIrcBanDialog.cpp.
 
 xIrc-2.4.1 - Robert Borrell <robert.borrell@gmail.com>
 ==========
