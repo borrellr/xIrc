@@ -1,3 +1,11 @@
+xIrc-2.4.2 - Robert Borerll <robert.borrell@gmail.com>
+==========
+In this release included the following:
+   - Created peopleedit.ui and peopleedit.ui.h to replace xIrcPeopleEdit.h
+     and xIrcPeopleEdit.cpp.
+   - Created nickaction.ui and nickaction.ui.h to replace xIrcNickActionQuery.h
+     and xIrcNickActionQuery.cpp.
+
 xIrc-2.4.1 - Robert Borrell <robert.borrell@gmail.com>
 ==========
 In this enhancement, added the following:
