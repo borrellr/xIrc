@@ -41,7 +41,7 @@
 #include "xIrcDccChatFrame.h"
 #include "xIrcDccFile.h"
 #include "nickaction.h"
-#include "xIrcBanDialog.h"
+#include "bandialog.h"
 
 class xIrcConnect : public xDialog
 {

@@ -125,7 +125,9 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
 
    if (dbg) fprintf(stdout, "xIrcConnect::xIrcConnect():Creating BanBox\n");
    if (dbg) fflush(stdout);
-   pBanBox = new xIrcBanDialog(wdtPrv);
+   pBanBox = new xIrcBanDialog();
+   QString str(Defaults.get("BANNED"));
+   pBanBox->setDefaultMsg(str);
    if (dbg) fprintf(stdout, "xIrcConnect::xIrcConnect():Creating NickAction\n");
    if (dbg) fflush(stdout);
    pNickAction = NULL;
