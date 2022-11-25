@@ -1,0 +1,401 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>xIrcNickActionQuery</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>xIrcNickActionQuery</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>376</width>
+            <height>360</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>NickAction</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>20</y>
+                <width>316</width>
+                <height>320</height>
+            </rect>
+        </property>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout1</cstring>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>channelLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Channel:&lt;/p&gt;</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="0">
+                        <property name="name">
+                            <cstring>nickLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Nick:&lt;/p&gt;</string>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="1" column="1">
+                        <property name="name">
+                            <cstring>channelEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="0" column="1">
+                        <property name="name">
+                            <cstring>nickEdit</cstring>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout2</cstring>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QPushButton" row="5" column="1">
+                        <property name="name">
+                            <cstring>ignoreButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Ignore</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="0">
+                        <property name="name">
+                            <cstring>whoButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Who</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="3" column="1">
+                        <property name="name">
+                            <cstring>kickButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Kick</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="1">
+                        <property name="name">
+                            <cstring>whoisButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>WhoIs</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="2">
+                        <property name="name">
+                            <cstring>fileSendButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>File Send</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="1">
+                        <property name="name">
+                            <cstring>privChatButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Priv Chat</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="0">
+                        <property name="name">
+                            <cstring>dccChatButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>DCC Chat</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="5" column="2">
+                        <property name="name">
+                            <cstring>closeButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Close</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="3" column="0">
+                        <property name="name">
+                            <cstring>banButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Ban</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="2" column="2">
+                        <property name="name">
+                            <cstring>userinfoButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>User Info</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="2" column="1">
+                        <property name="name">
+                            <cstring>takeopsButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Take Ops</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="4" column="1">
+                        <property name="name">
+                            <cstring>fingerButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Finger </string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="4" column="2">
+                        <property name="name">
+                            <cstring>versionButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Version</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="3" column="2">
+                        <property name="name">
+                            <cstring>timeButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Time</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="2">
+                        <property name="name">
+                            <cstring>whowasButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>WhoWas</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="2" column="0">
+                        <property name="name">
+                            <cstring>giveopsButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Give Ops</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="4" column="0">
+                        <property name="name">
+                            <cstring>pingButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Ping</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="5" column="0">
+                        <property name="name">
+                            <cstring>notifyButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Notify</string>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>closeButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>banButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>banAct()</slot>
+    </connection>
+    <connection>
+        <sender>dccChatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>dccChatAct()</slot>
+    </connection>
+    <connection>
+        <sender>fileSendButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>fileSendAct()</slot>
+    </connection>
+    <connection>
+        <sender>fingerButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>fingerAct()</slot>
+    </connection>
+    <connection>
+        <sender>giveopsButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>giveopsAct()</slot>
+    </connection>
+    <connection>
+        <sender>ignoreButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>ignoreAct()</slot>
+    </connection>
+    <connection>
+        <sender>kickButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>kickAct()</slot>
+    </connection>
+    <connection>
+        <sender>notifyButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>notfyAct()</slot>
+    </connection>
+    <connection>
+        <sender>pingButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>pingAct()</slot>
+    </connection>
+    <connection>
+        <sender>privChatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>privchatAct()</slot>
+    </connection>
+    <connection>
+        <sender>takeopsButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>takeopsAct()</slot>
+    </connection>
+    <connection>
+        <sender>timeButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>timeAct()</slot>
+    </connection>
+    <connection>
+        <sender>userinfoButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>userinfoAct()</slot>
+    </connection>
+    <connection>
+        <sender>versionButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>versionAct()</slot>
+    </connection>
+    <connection>
+        <sender>whoButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>whoAct()</slot>
+    </connection>
+    <connection>
+        <sender>whoisButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>whoisAct()</slot>
+    </connection>
+    <connection>
+        <sender>whowasButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcNickActionQuery</receiver>
+        <slot>whowasAct()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>nickEdit</tabstop>
+    <tabstop>channelEdit</tabstop>
+    <tabstop>dccChatButton</tabstop>
+    <tabstop>privChatButton</tabstop>
+    <tabstop>fileSendButton</tabstop>
+    <tabstop>whoButton</tabstop>
+    <tabstop>whoisButton</tabstop>
+    <tabstop>whowasButton</tabstop>
+    <tabstop>giveopsButton</tabstop>
+    <tabstop>takeopsButton</tabstop>
+    <tabstop>userinfoButton</tabstop>
+    <tabstop>banButton</tabstop>
+    <tabstop>kickButton</tabstop>
+    <tabstop>timeButton</tabstop>
+    <tabstop>pingButton</tabstop>
+    <tabstop>fingerButton</tabstop>
+    <tabstop>versionButton</tabstop>
+    <tabstop>notifyButton</tabstop>
+    <tabstop>ignoreButton</tabstop>
+    <tabstop>closeButton</tabstop>
+</tabstops>
+<includes>
+    <include location="global" impldecl="in declaration">qstring.h</include>
+    <include location="global" impldecl="in declaration">qlineedit.h</include>
+    <include location="global" impldecl="in declaration">xMultiLineFrame.h</include>
+    <include location="local" impldecl="in implementation">nickaction.ui.h</include>
+</includes>
+<variables>
+    <variable access="public">enum { DccChat, WhoIs, Ping, GiveOps, TakeOps, PrivChat, WhoWas, Kick, UserInfo, Time, Finger, Version, Who, Ban, Close, Ignore, Notify, FileSend };</variable>
+    <variable access="private">xMultiLineTextSelection txtSel;</variable>
+</variables>
+<signals>
+    <signal>done(xMultiLineTextSelection);</signal>
+</signals>
+<slots>
+    <slot access="protected">wakeUp( const char * pNick )</slot>
+    <slot access="protected">wakeUp( xMultiLineTextSelection text )</slot>
+    <slot>banAct()</slot>
+    <slot>dccChatAct()</slot>
+    <slot>fileSendAct()</slot>
+    <slot>fingerAct()</slot>
+    <slot>giveopsAct()</slot>
+    <slot>ignoreAct()</slot>
+    <slot>kickAct()</slot>
+    <slot>notfyAct()</slot>
+    <slot>pingAct()</slot>
+    <slot>privchatAct()</slot>
+    <slot>takeopsAct()</slot>
+    <slot>timeAct()</slot>
+    <slot>userinfoAct()</slot>
+    <slot>versionAct()</slot>
+    <slot>whoAct()</slot>
+    <slot>whoisAct()</slot>
+    <slot>whowasAct()</slot>
+</slots>
+<functions>
+    <function returnType="const char *">nick()</function>
+    <function returnType="const char *">chan()</function>
+    <function>setNick( const char * pStr )</function>
+    <function>setChan( const char * pStr )</function>
+    <function access="private">buttonPressed( int id )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
