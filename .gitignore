@@ -9,6 +9,7 @@ README - Shortcut.lnk
 moc_*
 *.o
 *~
+TODO
 Makefile
 channeldialog.cpp
 channeldialog.h
@@ -25,3 +26,5 @@ servereditdialog.h
 xIrc
 peopleedit.cpp
 peopleedit.h
+nickaction.cpp
+nickaction.h
