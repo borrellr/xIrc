@@ -34,8 +34,16 @@
 #include <xResources.h>
 #include "xIrcSocket.h"
 #include "xIrcCommands.h"
-#include "xIrcChanNickBox.h"
+#include "channickbox.h"
+#include "xIrcNickListEntry.h"
 
+#define xCN_Whois   1
+#define xCN_Query   2
+#define xCN_Invite  3
+#define xCN_Kick    4
+#define xCN_Clear   5
+#define xCN_Ping    6
+#define xCN_Close   7
 
 class xIrcLineEdit : public QLineEdit
 {

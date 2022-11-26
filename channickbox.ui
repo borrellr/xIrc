@@ -1,0 +1,230 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>xIrcChanNickBox</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>xIrcChanNickBox</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>352</width>
+            <height>453</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>ChanNick</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout5</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>330</width>
+                <height>430</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout1</cstring>
+                </property>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>whoisButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Who Is</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>chatButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Chat</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>pingButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Ping</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>inviteButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Invite</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>kickButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Kick</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>clearButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Clear</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>closeButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Close</string>
+                        </property>
+                    </widget>
+                </vbox>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout4</cstring>
+                </property>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel1</cstring>
+                        </property>
+                        <property name="frameShape">
+                            <enum>NoFrame</enum>
+                        </property>
+                        <property name="frameShadow">
+                            <enum>Plain</enum>
+                        </property>
+                        <property name="text">
+                            <string>Select a Nick:</string>
+                        </property>
+                        <property name="buddy" stdset="0">
+                            <cstring>lineEdit1</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit">
+                        <property name="name">
+                            <cstring>nickEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QListBox">
+                        <property name="name">
+                            <cstring>nickListBox</cstring>
+                        </property>
+                    </widget>
+                </vbox>
+            </widget>
+        </hbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>closeButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>clearButton</sender>
+        <signal>clicked()</signal>
+        <receiver>nickEdit</receiver>
+        <slot>clear()</slot>
+    </connection>
+    <connection>
+        <sender>clearButton</sender>
+        <signal>clicked()</signal>
+        <receiver>nickListBox</receiver>
+        <slot>clear()</slot>
+    </connection>
+    <connection>
+        <sender>chatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>chatSlot()</slot>
+    </connection>
+    <connection>
+        <sender>inviteButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>inviteSlot()</slot>
+    </connection>
+    <connection>
+        <sender>kickButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>kickSlot()</slot>
+    </connection>
+    <connection>
+        <sender>pingButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>pingSlot()</slot>
+    </connection>
+    <connection>
+        <sender>whoisButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>whoisSlot()</slot>
+    </connection>
+    <connection>
+        <sender>nickListBox</sender>
+        <signal>clicked(QListBoxItem*)</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>gotSelected(QListBoxItem*)</slot>
+    </connection>
+    <connection>
+        <sender>nickEdit</sender>
+        <signal>returnPressed()</signal>
+        <receiver>xIrcChanNickBox</receiver>
+        <slot>gotReturned()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in declaration">qstringlist.h</include>
+    <include location="global" impldecl="in declaration">qlistbox.h</include>
+    <include location="local" impldecl="in implementation">channickbox.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">QStringList nickStrList;</variable>
+</variables>
+<signals>
+    <signal>buttonPressed(int action);</signal>
+    <signal>nickSelected(const char *pNick);</signal>
+</signals>
+<slots>
+    <slot access="private">whoisSlot()</slot>
+    <slot access="private">chatSlot()</slot>
+    <slot access="private">pingSlot()</slot>
+    <slot access="private">inviteSlot()</slot>
+    <slot access="private">kickSlot()</slot>
+    <slot>gotSelected( QListBoxItem * item )</slot>
+    <slot>gotReturned()</slot>
+</slots>
+<functions>
+    <function returnType="bool">is( const char * pName )</function>
+    <function>setNicks( const char * pNames )</function>
+    <function>clear()</function>
+    <function returnType="const char *">text()</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

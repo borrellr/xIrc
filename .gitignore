@@ -30,3 +30,5 @@ nickaction.cpp
 nickaction.h
 bandialog.cpp
 bandialog.h
+channickbox.cpp
+channickbox.h

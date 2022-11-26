@@ -716,7 +716,8 @@ void xIrcMessageFrame::nickButtonPressed(int iBtn)
       if (dbg) fflush(stdout);
       pNicks->hide();
    }
-   if (strlen(pNicks->text()) == 0 && (pEntry = pNicks->selected()) != NULL)
+
+   if (strlen(pNicks->text()) == 0 )
    {
       if (dbg) fprintf(stdout, "xIrcMessageFrame::nickButtonPressed():Found Selected Nick\n");
       if (dbg) fflush(stdout);
