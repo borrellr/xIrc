@@ -26,7 +26,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <string>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -890,9 +889,8 @@ void xIrcConnect::sendMessage(xIrcMessage *pMsg)
 void xIrcConnect::recvMessage(xIrcMessage *pMsg)
 {
    xIrcMessage msgOut;
-   std::string tmpStr = "PING";
    
-   if (isMsg(pMsg->rspCode, tmpStr.data()))
+   if (isMsg(pMsg->rspCode, "PING"))
    {
       msgOut.rspCode = ircResponses.code("PONG");
       msgOut.dstStr = "";
