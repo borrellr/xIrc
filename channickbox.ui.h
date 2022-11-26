@@ -62,10 +62,19 @@ bool xIrcChanNickBox::is( const char *pName )
 
 void xIrcChanNickBox::setNicks( const char *pNames )
 {
+   QString capText(chanName);
    QString nicksStr(pNames);
+
    if (!nickStrList.isEmpty()) nickStrList.clear();
    nickStrList = QStringList::split(" ", nicksStr);
+   nickListBox->clear();
    nickListBox->insertStringList(nickStrList);
+   if (!capText.isEmpty()) {
+      QString num;
+      num.setNum(nickStrList.count(), 10);
+      capText += " " + num + " members";
+      setCaption(capText);
+   }
 }
 
 
@@ -104,4 +113,10 @@ const char * xIrcChanNickBox::text()
          retStr = str.latin1();
    }
    return retStr;
+}
+
+void xIrcChanNickBox::setChanName( const char *cn )
+{
+   chanName = cn;
+   setCaption(chanName);
 }

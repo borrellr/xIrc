@@ -206,6 +206,7 @@
 </includes>
 <variables>
     <variable access="private">QStringList nickStrList;</variable>
+    <variable access="private">QString chanName;</variable>
 </variables>
 <signals>
     <signal>buttonPressed(int action);</signal>
@@ -225,6 +226,7 @@
     <function>setNicks( const char * pNames )</function>
     <function>clear()</function>
     <function returnType="const char *">text()</function>
+    <function>setChanName( const char * cn )</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

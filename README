@@ -7,6 +7,8 @@ In this release included the following:
      and xIrcNickActionQuery.cpp.
    - Created bandialog.ui and bandialog.ui.h to replace xIrcBanDialog.h and
      xIrcBanDialog.cpp.
+   - Created channickbox.ui and channickbox.ui.h to replace xIrcChanNickBox.h
+     and xIrcChanNickBox.cpp.
 
 xIrc-2.4.1 - Robert Borrell <robert.borrell@gmail.com>
 ==========
