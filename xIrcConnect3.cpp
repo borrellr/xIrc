@@ -314,7 +314,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
                      else
                      {
                         char buf[256];
-                        sprintf("Error making connection:%s", strerror(err));
+                        sprintf(buf, "Error making connection:%s", strerror(err));
                         QMessageBox::warning(this, "Error", buf);
                         delete pDccFileFrame;
                      }

@@ -158,7 +158,7 @@ private:
    int                  resizeCnt;   
    xWidgetResInfo       *wdtRes;
    xWidgetResInfo       *wdtPrv;
-   bool  isMsg(int cmd, char *pStr);
+   bool  isMsg(int cmd, const char *pStr);
    void InitializeMenu();
    void joinChannel(const char *);
    void initializeActions();

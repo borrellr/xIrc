@@ -28,7 +28,7 @@ static bool dbg = false;
 
 xIrcInviteBox::xIrcInviteBox(xWidgetResInfo *pPRes, QWidget *pParent, 
                              const char *pName, QObject *pReceiver, 
-                             char *pSlot, xIrcMessage *pMsg) :
+                             const char *pSlot, xIrcMessage *pMsg) :
             xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("invitedialog"),
                                                 QString("InviteDialog")),
                     pParent, pName)

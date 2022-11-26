@@ -46,7 +46,7 @@ extern nickNameDialog  *NickQuery;
 extern xIrcKickDialog *KickQuery;
 extern xIrcMsgDispatch Dispatcher;
 
-bool xIrcMessageFrame::isMsg(int cmd, char *pStr)
+bool xIrcMessageFrame::isMsg(int cmd, const char *pStr)
 { 
    return(ircResponses.is(cmd, pStr));
 }

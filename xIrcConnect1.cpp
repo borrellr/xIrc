@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -871,7 +872,7 @@ void xIrcConnect::newChannel()
    ChanQuery->show();
 }
 
-bool xIrcConnect::isMsg(int cmd, char *pStr)
+bool xIrcConnect::isMsg(int cmd, const char *pStr)
 {
    return(ircResponses.is(cmd, pStr));
 }
@@ -889,8 +890,9 @@ void xIrcConnect::sendMessage(xIrcMessage *pMsg)
 void xIrcConnect::recvMessage(xIrcMessage *pMsg)
 {
    xIrcMessage msgOut;
+   std::string tmpStr = "PING";
    
-   if (isMsg(pMsg->rspCode, "PING"))
+   if (isMsg(pMsg->rspCode, tmpStr.data()))
    {
       msgOut.rspCode = ircResponses.code("PONG");
       msgOut.dstStr = "";

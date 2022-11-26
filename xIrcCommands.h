@@ -33,7 +33,7 @@ public:
    int         code(const char *pCmd);
    char        *name(int cmd);
    const char  *text(int cmd);
-   bool        is(int cmd, char *pStr)
+   bool        is(int cmd, const char *pStr)
    {
       return((strcmp(name(cmd), pStr) == 0) ? TRUE : FALSE);
    };

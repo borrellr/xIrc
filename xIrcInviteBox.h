@@ -36,7 +36,7 @@ class xIrcInviteBox : public xDialog
 public:
    xIrcInviteBox(xWidgetResInfo *pPRes, QWidget *pParent, 
                  const char *pName, QObject *pReceiver, 
-                 char *pSlot, xIrcMessage *pMsg);
+                 const char *pSlot, xIrcMessage *pMsg);
    ~xIrcInviteBox()
    {
       disconnect(pButton, SIGNAL(clicked(int)), this, SLOT(buttonClicked(int)));

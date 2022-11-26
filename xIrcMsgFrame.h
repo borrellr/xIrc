@@ -120,7 +120,7 @@ protected:
    };
    virtual void resizeEvent(QResizeEvent *pEvt);
    void procCommand(const char *pStr);
-   bool isMsg(int cmd, char *pStr);
+   bool isMsg(int cmd, const char *pStr);
 
 private:
    QMenuBar          *pMenu;
