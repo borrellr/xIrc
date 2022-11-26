@@ -450,10 +450,11 @@ void xIrcConnect::goodConnection(int sock)
    xIrcMessageFrame *pMsgFrame;
    QString strTmp;
    char buf[256];
-   int x;
+//   int x;
 
    if (dbg) fprintf(stdout, "xIrcConnect::goodConnection():Success!!!\n");
    if (dbg) fflush(stdout);
+#if 0
    if (dbg)
    {
       struct sockaddr_in addr;
@@ -463,6 +464,7 @@ void xIrcConnect::goodConnection(int sock)
                       inet_ntoa(addr.sin_addr), 
                       htonl(addr.sin_addr.s_addr), addr.sin_port);
    }
+#endif
    pSocketBox->connected(QString("Connected: Waiting Response from Host").latin1());
 // pMainWin->pWin->putString("Connected!!!\n");
 
@@ -497,7 +499,7 @@ void xIrcConnect::goodConnection(int sock)
                                       ServQuery->server(), pRealName);
    sendMsgToSocket(buf);
 
-   for (x = 0, pMsgFrame = pIrcMsgFrames; pMsgFrame != NULL; pMsgFrame = pMsgFrame->next())
+   for (pMsgFrame = pIrcMsgFrames; pMsgFrame != NULL; pMsgFrame = pMsgFrame->next())
    {
       cp = (char *)pMsgFrame->name();
       if (strlen(cp) > 0 && *cp == '#')
@@ -982,8 +984,8 @@ void xIrcConnect::showResponse(xIrcMessage *pMsg)
 void xIrcConnect::showError(xIrcMessage *pMsg)
 {
    int rspCode = pMsg->rspCode;
-   if (dbg) fprintf(stdout, "xIrcConnect::showError():Enter:pMsg = %d\n", (int)pMsg);
-   if (dbg) fflush(stdout);
+//   if (dbg) fprintf(stdout, "xIrcConnect::showError():Enter:pMsg = %d\n", (int)pMsg);
+//   if (dbg) fflush(stdout);
    if (rspCode == 431 || rspCode == 432 || rspCode == 433)
       gotErrorAck(rspCode);
    else

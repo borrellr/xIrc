@@ -581,39 +581,39 @@ QString translateMessage(const char *cp, xIrcSocket *pSocket, xIrcMessage *pMsg)
       }
       else if (*cp == ('B' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[(int)*cp] = (attrList[(int)*cp] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
-         if (attrList[*cp] == 1)
+             *cp, attrList[(int)*cp]);
+         if (attrList[(int)*cp] == 1)
             rv += "[B]";
          else
             rv += "[/B]";
       }
       else if (*cp == ('V' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[(int)*cp] = (attrList[(int)*cp] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
-         if (attrList[*cp] == 1)
+             *cp, attrList[(int)*cp]);
+         if (attrList[(int)*cp] == 1)
             rv += "[V]";
          else
             rv += "[/V]";
       }
       else if (*cp == ('_' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[(int)*cp] = (attrList[(int)*cp] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
-         if (attrList[*cp] == 1)
+             *cp, attrList[(int)*cp]);
+         if (attrList[(int)*cp] == 1)
             rv += "[U]";
          else
             rv += "[/U]";
       }
       else if (*cp == ('O' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[(int)*cp] = (attrList[(int)*cp] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
+             *cp, attrList[(int)*cp]);
          if (dbg) fflush(stderr);
          rv += "[N]";
          memset(attrList, 0, sizeof(int)*256);

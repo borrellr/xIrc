@@ -132,7 +132,7 @@ static const char *pInitialResources[] =
    NULL
 };
 
-char *version = "$Name:  $";
+//char *version = "$Name:  $";
 static XrmOptionDescList opts = NULL;
 
 static const char *defaultSpecHandler(QString strSeq)

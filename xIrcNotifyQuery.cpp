@@ -449,10 +449,12 @@ bool xIrcNotifyQuery::gotNotification(xIrcMessage *pMsg)
                (const char *)pEntry->mask().latin1());
             if (pEntry->message() != NULL && !pEntry->message().isEmpty())
             {
+#if 0
                if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Sending Message %d:|%s|\n",
                                     (int)((const char *)pEntry->message().latin1()),
                                     (const char *)pEntry->message().latin1());
                if (dbg) fflush(stdout);
+#endif
                msg.rspCode = ircResponses.code("PRIVMSG");
                msg.dstStr = getNick(pMsg);
                msg.msgStr = pEntry->message();

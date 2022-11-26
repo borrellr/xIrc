@@ -179,7 +179,7 @@ char *xIrcServerEntry::parseState(char *p, QString &s)
    char *p1;
 
    s = "";
-   p1 = strstr((const char *)p, "SERVER:");
+   p1 = strstr(p, "SERVER:");
    if (dbg) fprintf(stdout, "xIrcServerEntry::parseState():p = |%s|\n", p);
    if (dbg) fprintf(stdout, "xIrcServerEntry::parseState():strstr = |%s|\n", p1);
    if (dbg) fflush(stdout);
@@ -200,7 +200,7 @@ char *xIrcServerEntry::parseCity(char *p, QString &s)
    char *p1;
 
    s = "";
-   p1 = strstr((const char *)p, "SERVER:");
+   p1 = strstr(p, "SERVER:");
    if (p1 != NULL)
    {
       for (;*p != '\0' && p != p1; p++)

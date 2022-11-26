@@ -515,7 +515,7 @@ void xIrcMessageFrame::putString(const char *pStr)
 bool xIrcMessageFrame::procServerMsg(xIrcMessage *pMsg)
 {
    QString tmpDst, tmpSrc, tmpNick, tmpName;
-   const char *cp;
+//   const char *cp;
    bool rv = FALSE, b = FALSE;
    
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ProcServerMsg(%s):Enter\n", name());
