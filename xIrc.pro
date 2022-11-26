@@ -32,7 +32,7 @@ INTERFACES += servereditdialog.ui \
            bandialog.ui \
            channickbox.ui
 
-INCLUDEPATH += ../libX++
+INCLUDEPATH += /usr/local/include/libX
 LIBS += -lX++ -L/usr/local/lib/xIrc
 DEFINES += QT2 QT3 QT_NO_ASCII_CAST
 CONFIG += qt warn_on release
