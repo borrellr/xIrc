@@ -32,3 +32,5 @@ bandialog.cpp
 bandialog.h
 channickbox.cpp
 channickbox.h
+invitebox.cpp
+invitebox.h

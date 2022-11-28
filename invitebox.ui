@@ -1,0 +1,125 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>xIrcInviteBox</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>xIrcInviteBox</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>314</width>
+            <height>130</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Invitation</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>20</y>
+                <width>274</width>
+                <height>90</height>
+            </rect>
+        </property>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLineEdit">
+                <property name="name">
+                    <cstring>inviteEdit</cstring>
+                </property>
+                <property name="acceptDrops">
+                    <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout1</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>acceptButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Accept</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>chatButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Chat</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>rejectButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Reject</string>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>acceptButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcInviteBox</receiver>
+        <slot>acceptSlot()</slot>
+    </connection>
+    <connection>
+        <sender>chatButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcInviteBox</receiver>
+        <slot>chatSlot()</slot>
+    </connection>
+    <connection>
+        <sender>rejectButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcInviteBox</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in implementation">qlineedit.h</include>
+    <include location="global" impldecl="in implementation">qpushbutton.h</include>
+    <include location="global" impldecl="in implementation">qstring.h</include>
+    <include location="global" impldecl="in implementation">qstringlist.h</include>
+    <include location="local" impldecl="in declaration">xIrcSocket.h</include>
+    <include location="local" impldecl="in implementation">invitebox.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">QString strChannel;</variable>
+    <variable access="private">QString strNick;</variable>
+</variables>
+<signals>
+    <signal>acknowledged(QString channel);</signal>
+</signals>
+<slots>
+    <slot access="private">acceptSlot()</slot>
+    <slot access="private">chatSlot()</slot>
+</slots>
+<functions>
+    <function>initInviteBox( QObject * pReceiver, const QString &amp; newSlot, xIrcMessage * pMsg )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

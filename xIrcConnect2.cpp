@@ -47,7 +47,7 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
 #include "xIrcServerQuery.h"
-#include "xIrcInviteBox.h"
+#include "invitebox.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
@@ -375,9 +375,8 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
    {
       if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():Got invitation!\n");
       if (dbg) fflush(stdout);
-      xIrcInviteBox *pIB = new xIrcInviteBox(wdtPrv, NULL, "Invite", this, 
-                                             SLOT(acceptInvite(QString)),
-                                             pMsg);
+      xIrcInviteBox *pIB = new xIrcInviteBox(this);
+      pIB->initInviteBox(this, SLOT(acceptInvite(QString)), pMsg);
       pIB->show();
       return;
    }

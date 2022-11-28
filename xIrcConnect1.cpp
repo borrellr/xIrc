@@ -43,7 +43,6 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
 #include "xIrcServerQuery.h"
-#include "xIrcInviteBox.h"
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"

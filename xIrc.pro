@@ -1,7 +1,7 @@
 SOURCES += xIrc.cpp \
 xIrcCommands.cpp xIrcConnect1.cpp xIrcConnect2.cpp xIrcConnect3.cpp \
 xIrcDccChatFrame.cpp xIrcDccFile.cpp xIrcDccQuery.cpp \
-xIrcDccSocket.cpp xIrcIgnoreQuery.cpp xIrcInviteBox.cpp \
+xIrcDccSocket.cpp xIrcIgnoreQuery.cpp \
 xIrcMircServerParse.cpp xIrcMsgDispatch.cpp xIrcMsgDispatchEntry.cpp \
 xIrcMsgFrame1.cpp xIrcMsgFrame2.cpp xIrcMsgQuery.cpp \
 xIrcNickCombo.cpp xIrcNickList.cpp xIrcNickListEntry.cpp \
@@ -12,7 +12,7 @@ xIrcServerList.cpp xIrcServerQuery.cpp xIrcServerTable.cpp xIrcSocket.cpp
 
 HEADERS += ircreply.h xIrcChannelQuery.h \
 xIrcCommands.h xIrcConnect.h xIrcDccChatFrame.h \
-xIrcDccFile.h xIrcDccQuery.h xIrcDccSocket.h xIrcIgnoreQuery.h xIrcInviteBox.h \
+xIrcDccFile.h xIrcDccQuery.h xIrcDccSocket.h xIrcIgnoreQuery.h \
 xIrcLineEditQuery.h xIrcMircServerParse.h xIrcMsgDispatchEntry.h \
 xIrcMsgDispatch.h xIrcMsgFrame.h xIrcMsgQuery.h \
 xIrcNickCombo.h xIrcNickListEntry.h xIrcNickList.h \
@@ -30,7 +30,8 @@ INTERFACES += servereditdialog.ui \
            peopleedit.ui \
            nickaction.ui \
            bandialog.ui \
-           channickbox.ui
+           channickbox.ui \
+           invitebox.ui
 
 INCLUDEPATH += /usr/local/include/libX
 LIBS += -lX++ -L/usr/local/lib/xIrc
