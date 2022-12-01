@@ -55,7 +55,7 @@ void xIrcMessageFrame::modeRespIn(xIrcMessage *pMsg)
    const char *str;
    QString strTmp = "";
    
-   str = pMsg->msgStr;
+   str = pMsg->msgStr.latin1();
    if (dbg) fprintf(stdout, "xIrcMessageFrame::modeRespIn():Mode = %d\n", str[1]);
    if (dbg) fflush(stdout);
    switch (str[1])
@@ -63,10 +63,10 @@ void xIrcMessageFrame::modeRespIn(xIrcMessage *pMsg)
       case 'o':
          if (str[0] == '+')
             strTmp.sprintf("[B]Operator status given to %s by %s\n",
-                           &str[3], (const char *)pMsg->srcNick);
+                           &str[3], (const char *)pMsg->srcNick.latin1());
          else
             strTmp.sprintf("[B]Operator status taken from %s by %s\n",
-                           &str[3], (const char *)pMsg->srcNick);
+                           &str[3], (const char *)pMsg->srcNick.latin1());
          break;
          
       case 'p':
@@ -79,9 +79,9 @@ void xIrcMessageFrame::modeRespIn(xIrcMessage *pMsg)
       
       default:
          strTmp.sprintf("[B]%s changed Mode to %s\n",
-                        (const char *)pMsg->srcNick, str);
+                        (const char *)pMsg->srcNick.latin1(), str);
    }
-   pMsgFrame->pWin->putString(strTmp);
+   pMsgFrame->pWin->putString(strTmp.latin1());
 }
 
 void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
@@ -105,13 +105,13 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
 
       if (dbg) fprintf(stdout, "xIrcMessageFrame::ircRespMessageIn():Testing Names response\n");
       if (dbg) fflush(stdout);
-      for (cp = pMsg->dstStr, tmpDst = ""; *cp; cp++)
+      for (cp = pMsg->dstStr.latin1(), tmpDst = ""; *cp; cp++)
          tmpDst += toupper(*cp);
       for (cp = (char *)name(), tmpName = ""; *cp; cp++)
          tmpName += toupper(*cp);
-      if (strcmp(tmpName, tmpDst) == 0 && pNicks && pNicks->isVisible())
+      if (strcmp(tmpName.latin1(), tmpDst.latin1()) == 0 && pNicks && pNicks->isVisible())
       {
-         pNicks->setNicks(pMsg->msgStr);
+         pNicks->setNicks(pMsg->msgStr.latin1());
          return;
       }
    }
@@ -120,38 +120,38 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ircRespMessageIn():Done simplifying WS\n");
    if (dbg) fflush(stdout);
    
-   if (isMsg(pMsg->rspCode, "MODE"))
+   if (isMsg(pMsg->rspCode, (char *)"MODE"))
    {
       if (dbg) fprintf(stdout, "xIrcMessageFrame::ircRespMessageIn():MODE Response!!!\n");
       if (dbg) fflush(stdout);
       modeRespIn(pMsg);
    }
-   else if (isMsg(pMsg->rspCode, "JOIN"))
+   else if (isMsg(pMsg->rspCode, (char *)"JOIN"))
    {
       sprintf(str, "[B]*** %s (%s) has joined the channel\n",
-                    (const char *)pMsg->srcNick, (const char *)pMsg->srcAddr);
+                    (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->srcAddr.latin1());
       pMsgFrame->pWin->putString(str);
    }
-   else if (isMsg(pMsg->rspCode, "PART"))
+   else if (isMsg(pMsg->rspCode, (char *)"PART"))
    {
-      sprintf(str, "[B]*** %s has left the channel\n", (const char *)pMsg->srcNick);
+      sprintf(str, "[B]*** %s has left the channel\n", (const char *)pMsg->srcNick.latin1());
       pMsgFrame->pWin->putString(str);
    }
-   else if (isMsg(pMsg->rspCode, "NOTICE"))
+   else if (isMsg(pMsg->rspCode, (char *)"NOTICE"))
    {
       sprintf(str, "[B]NOTICE[/B]:%s- %s\n", 
-              (const char *)pMsg->srcNick, (const char *)pMsg->msgStr);
+              (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->msgStr.latin1());
       pMsgFrame->pWin->putString(str);
    }
-   else if (isMsg(pMsg->rspCode, "NICK"))
+   else if (isMsg(pMsg->rspCode, (char *)"NICK"))
    {
       sprintf(str, "[B]*** %s is now known as %s\n",
-              (const char *)pMsg->srcNick, (const char *)pMsg->dstStr);
+              (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->dstStr.latin1());
       pMsgFrame->pWin->putString(str);
    }
-   else if (isMsg(pMsg->rspCode, "KICK"))
+   else if (isMsg(pMsg->rspCode, (char *)"KICK"))
    {
-      pStr = pMsg->msgStr;
+      pStr = pMsg->msgStr.latin1();
       while (isspace(*pStr)) pStr++;
       for (cp = tmpStr, cp1 = pStr; *cp1 && *cp1 != ':' && !isspace(*cp1); cp1++)
       {
@@ -167,7 +167,7 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
       if (strcmp(tmpStr, str) == 0)
       {
          sprintf(str, "[B]*** You have been kicked by %s!!! (%s)\n",
-                 (const char *)pMsg->srcNick, cp1);
+                 (const char *)pMsg->srcNick.latin1(), cp1);
          pMsgFrame->pWin->putString(str);
          msg.rspCode = ircResponses.code("NICK");
          msg.dstStr = "";
@@ -199,9 +199,9 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
       else
       {
          sprintf(str, "[B]*** %s has been kicked by %s!!! (%s)\n",
-                 tmpStr, (const char *)pMsg->srcNick, cp1);
+                 tmpStr, (const char *)pMsg->srcNick.latin1(), cp1);
          pMsgFrame->pWin->putString(str);
-         for (cp = str, cp1 = pMsg->msgStr; *cp1 && !isspace(*cp1); cp1++, cp)
+         for (cp = str, cp1 = pMsg->msgStr.latin1(); *cp1 && !isspace(*cp1); cp1++)
          {
             *(cp++) = *cp1;
             *cp = '\0';
@@ -216,29 +216,29 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
          }
       }
    }
-   else if (isMsg(pMsg->rspCode, "QUIT"))
+   else if (isMsg(pMsg->rspCode, (char *)"QUIT"))
    {
       sprintf(str, "[B]*** %s <%s> has quit!! (%s)\n",
-                    (const char *)pMsg->srcNick, (const char *)pMsg->srcAddr, (const char *)pMsg->msgStr);
+                    (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->srcAddr.latin1(), (const char *)pMsg->msgStr.latin1());
       pMsgFrame->pWin->putString(str);
    }
-   else if (isMsg(pMsg->rspCode, "TOPIC"))
+   else if (isMsg(pMsg->rspCode, (char *)"TOPIC"))
    {
       sprintf(str, "[B]*** %s has changed the topic to: %s\n",
-                    (const char *)pMsg->srcNick, (const char *)pMsg->msgStr);
+                    (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->msgStr.latin1());
       pMsgFrame->pWin->putString(str);
    }
    else if (pMsg->rspCode == 353)
    {
       sprintf(str, "Members of %s: %s\n",
-                   (const char *)pMsg->dstStr,
-                   (const char *)pMsg->msgStr);
+                   (const char *)pMsg->dstStr.latin1(),
+                   (const char *)pMsg->msgStr.latin1());
       pMsgFrame->pWin->putString(str);
    }
    else if (pMsg->rspCode == 322)
    {
       sprintf(str, "Chan: [B]%s[/B] : %s\n", 
-                  (const char *)pMsg->dstStr, (const char *)pMsg->msgStr); 
+                  (const char *)pMsg->dstStr.latin1(), (const char *)pMsg->msgStr.latin1()); 
       pMsgFrame->pWin->putString(str);
    }
    else
@@ -246,7 +246,7 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
       if (dbg) fprintf(stdout, "xIrcMessageFrame::ircRespMessageIn():Building response!\n");
       if (dbg) fflush(stdout);
       sprintf(str, "%s: %s: %s\n", ircResponses.text(pMsg->rspCode), 
-             (const char *)pMsg->dstStr, (const char *)pMsg->msgStr);
+             (const char *)pMsg->dstStr.latin1(), (const char *)pMsg->msgStr.latin1());
       if (dbg) fprintf(stdout, "xIrcMessageFrame::ircRespMessageIn():string = |%s|!\n", str);
       if (dbg) fflush(stdout);
       pMsgFrame->pWin->putString(str);
@@ -260,7 +260,7 @@ void xIrcMessageFrame::doSpecial(xIrcMessage *pMsg)
    char str[1024], str1[1024];
    char *cp1;
    
-   for (cp = (const char *)pMsg->msgStr, cp1 = str; *cp; cp++)
+   for (cp = (const char *)pMsg->msgStr.latin1(), cp1 = str; *cp; cp++)
       if (*cp >= ' ')
       {
          *(cp1++) = *cp;
@@ -269,28 +269,28 @@ void xIrcMessageFrame::doSpecial(xIrcMessage *pMsg)
 
    if (pMsg->pmsgTyp == ipmAction)
    {
-      sprintf(str1, "* %s %s", (const char *)pMsg->srcNick, str);
+      sprintf(str1, "* %s %s", (const char *)pMsg->srcNick.latin1(), str);
       pMsgFrame->pWin->putString(str1);
    }
    else if (pMsg->pmsgTyp == ipmPing)
    {      
-      if (isMsg(pMsg->rspCode, "NOTICE"))
+      if (isMsg(pMsg->rspCode, (char *)"NOTICE"))
       {
          long pingTime = time(NULL) - atol(str);
          long pingMins = pingTime / 60;
          long pingSecs = pingTime % 60;
          if (pingMins > 0)
             sprintf(str1, "*** Ping from %s: %ld:%02ld minutes\n", 
-                           (const char *)pMsg->srcNick,
+                           (const char *)pMsg->srcNick.latin1(),
                            pingMins, pingSecs);
          else
             sprintf(str1, "*** Ping from %s: %ld seconds\n", 
-                           (const char *)pMsg->srcNick, pingSecs);
+                           (const char *)pMsg->srcNick.latin1(), pingSecs);
          pMsgFrame->pWin->putString(str1);
       }
-      else if (isMsg(pMsg->rspCode, "PRIVMSG"))
+      else if (isMsg(pMsg->rspCode, (char *)"PRIVMSG"))
       {
-         sprintf(str1, "*** Pinged by %s\n", (const char *)pMsg->srcNick);
+         sprintf(str1, "*** Pinged by %s\n", (const char *)pMsg->srcNick.latin1());
          pMsgFrame->pWin->putString(str1);
          msg.rspCode = ircResponses.code("NOTICE");
          msg.dstStr = pMsg->srcNick;
@@ -353,27 +353,27 @@ void xIrcMessageFrame::ircPrivMessageIn(xIrcMessage *pMsg)
    
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Got new message in!\n");
    if (dbg) fflush(stdout);
-   pIn = pMsg->msgStr;
+   pIn = pMsg->msgStr.latin1();
    if (*pIn < 2 || (pMsg->pmsgTyp != ipmUnknown && pMsg->pmsgTyp != ipmMessage))
       doSpecial(pMsg);
    else
    {
-      if (isMsg(pMsg->rspCode, "PRIVMSG"))
+      if (isMsg(pMsg->rspCode, (char *)"PRIVMSG"))
       {
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Formating Priv Message\n");
          if (dbg) fflush(stdout);
-         sprintf(msgBuf, "<%s> %s", (const char *)pMsg->srcNick, (const char *)pMsg->msgStr);
+         sprintf(msgBuf, "<%s> %s", (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->msgStr.latin1());
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Sending |%s| to TermWin\n", msgBuf);
          if (dbg) fflush(stdout);
          pMsgFrame->pWin->putString(msgBuf);
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Done\n");
          if (dbg) fflush(stdout);
       }
-      else if (isMsg(pMsg->rspCode, "NOTICE"))
+      else if (isMsg(pMsg->rspCode, (char *)"NOTICE"))
       {
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Formating Priv Message\n");
          if (dbg) fflush(stdout);
-         sprintf(msgBuf, "<%s> NOTICE: %s", (const char *)pMsg->srcNick, (const char *)pMsg->msgStr);
+         sprintf(msgBuf, "<%s> NOTICE: %s", (const char *)pMsg->srcNick.latin1(), (const char *)pMsg->msgStr.latin1());
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Sending |%s| to TermWin\n", msgBuf);
          if (dbg) fflush(stdout);
          pMsgFrame->pWin->putString(msgBuf);
@@ -384,7 +384,7 @@ void xIrcMessageFrame::ircPrivMessageIn(xIrcMessage *pMsg)
       {
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Formating Unknow message\n");
          if (dbg) fflush(stdout);
-         sprintf(msgBuf, "<%s> Unknown: ipmTyp = %d, msg = %s", (const char *)pMsg->srcNick, pMsg->pmsgTyp, (const char *)pMsg->msgStr);
+         sprintf(msgBuf, "<%s> Unknown: ipmTyp = %d, msg = %s", (const char *)pMsg->srcNick.latin1(), pMsg->pmsgTyp, (const char *)pMsg->msgStr.latin1());
          if (dbg) fprintf(stdout, "xIrcMessageFrame::ircMessageIn():Sending |%s| to TermWin\n", msgBuf);
          if (dbg) fflush(stdout);
          pMsgFrame->pWin->putString(msgBuf);
@@ -446,7 +446,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.msgStr = "\x01";
       msg.msgStr += "VERSION";
       msg.msgStr += "\x01";
-      sprintf(buf, "*** Version command sent to %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "*** Version command sent to %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "USERINFO") == 0)
@@ -459,7 +459,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.msgStr = "\x01";
       msg.msgStr += "USERINFO";
       msg.msgStr += "\x01";
-      sprintf(buf, "*** UserInfo command sent to %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "*** UserInfo command sent to %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "CLIENTINFO") == 0)
@@ -483,7 +483,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
             msg.msgStr += buf;
          }
          msg.msgStr += "\x01";
-         sprintf(buf, "*** ClientInfo command sent to %s\n", (const char *)msg.dstStr);
+         sprintf(buf, "*** ClientInfo command sent to %s\n", (const char *)msg.dstStr.latin1());
          pMsgFrame->pWin->putString(buf);
       }
       else
@@ -520,7 +520,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.msgStr = "\x01";
       msg.msgStr += "FINGER";
       msg.msgStr += "\x01";
-      sprintf(buf, "*** Finger command sent to %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "*** Finger command sent to %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "SOURCE") == 0)
@@ -533,7 +533,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.msgStr = "\x01";
       msg.msgStr += "SOURCE";
       msg.msgStr += "\x01";
-      sprintf(buf, "*** Source command sent to %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "*** Source command sent to %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "TIME") == 0)
@@ -546,7 +546,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.msgStr = "\x01";
       msg.msgStr += "TIME";
       msg.msgStr += "\x01";
-      sprintf(buf, "*** Time command sent to %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "*** Time command sent to %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "PING") == 0)
@@ -561,7 +561,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.msgStr += "PING ";
       msg.msgStr += buf1;
       msg.msgStr += "\x01";
-      sprintf(buf, "*** Ping command sent to %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "*** Ping command sent to %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "NAMES") == 0)
@@ -579,7 +579,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       else
          msg.dstStr = name();
       msg.msgStr = "";
-      sprintf(buf, "/Names: %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "/Names: %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "KICK") == 0)
@@ -600,7 +600,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
          msg.msgStr = cp2;
       else
          msg.msgStr = "";
-      sprintf(buf, "/Kick: %s\n", (const char *)msg.msgStr);
+      sprintf(buf, "/Kick: %s\n", (const char *)msg.msgStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "TOPIC") == 0)
@@ -621,7 +621,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       }
       else
          msg.msgStr = "";
-      sprintf(buf, "/Topic: %s\n", (const char *)msg.msgStr);
+      sprintf(buf, "/Topic: %s\n", (const char *)msg.msgStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "INVITE") == 0)
@@ -639,7 +639,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.dstStr += " ";
       msg.dstStr += buf;
       msg.msgStr = cp2;
-      sprintf(buf, "/Invite: %s\n", (const char *)msg.msgStr);
+      sprintf(buf, "/Invite: %s\n", (const char *)msg.msgStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "MODE") == 0)
@@ -649,7 +649,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.dstStr += " ";
       msg.dstStr += cp1;
       msg.msgStr = "";
-      sprintf(buf, "/Mode: %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "/Mode: %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "NICK") == 0)
@@ -658,7 +658,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.dstStr = cp1;
       msg.msgStr = "";
       NickQuery->setText(cp1);
-      sprintf(buf, "/Nick: %s\n", (const char *)msg.dstStr);
+      sprintf(buf, "/Nick: %s\n", (const char *)msg.dstStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "QUIT") == 0)
@@ -666,7 +666,7 @@ void xIrcMessageFrame::procCommand(const char *pStr)
       msg.rspCode = ircResponses.code("QUIT");
       msg.dstStr = " ";
       msg.msgStr = cp1;
-      sprintf(buf, "/Quit: %s\n", (const char *)msg.msgStr);
+      sprintf(buf, "/Quit: %s\n", (const char *)msg.msgStr.latin1());
       pMsgFrame->pWin->putString(buf);
    }
    else if (strcmp(pCmd, "AWAY") == 0)
@@ -679,14 +679,14 @@ void xIrcMessageFrame::procCommand(const char *pStr)
          msg.msgStr = ":";
          msg.msgStr += cp1;
       }
-      sprintf(buf, "/Away: %s\n", (const char *)msg.msgStr);
+      sprintf(buf, "/Away: %s\n", (const char *)msg.msgStr.latin1());
       putString(buf);
    }
    else if ((msg.rspCode = ircResponses.code(pCmd)) != IRCRESP_Unknown)
    {
       msg.dstStr = cp1;
       msg.msgStr = "";
-      sprintf(buf, "/%s: %s\n", pCmd, (const char *)msg.dstStr);
+      sprintf(buf, "/%s: %s\n", pCmd, (const char *)msg.dstStr.latin1());
       putString(buf);
    }
    else
@@ -776,7 +776,7 @@ void xIrcMessageFrame::nickButtonPressed(int iBtn)
             msg.msgStr += "PING ";
             msg.msgStr += buf;
             msg.msgStr += "\x01";
-            sprintf(buf, "*** Ping command sent to %s\n", (const char *)msg.dstStr);
+            sprintf(buf, "*** Ping command sent to %s\n", (const char *)msg.dstStr.latin1());
             pMsgFrame->pWin->putString(buf);
             break;
 

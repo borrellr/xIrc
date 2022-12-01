@@ -47,11 +47,7 @@ xIrcBanDialog::xIrcBanDialog(xWidgetResInfo *pPRes, QWidget *pParent,
    else
       setCaption("Ban");
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    pEditFrame = new xFrame(wdtRes, this);
    pEditFrame->setFrameStyle(QFrame::Panel | QFrame::Raised);
 
@@ -124,7 +120,7 @@ void xIrcBanDialog::gotButton(int btn)
       case Kick:
       case Accepted:
          if (dbg) fprintf(stdout, "xIrcBanDialog::gotButton():Accepting??\n\r");
-         if (strlen(pMask->text()) == 0)
+         if (strlen(pMask->text().latin1()) == 0)
          {
             QMessageBox::warning(this, "Error", "No Ban Mask Specified");
             return;

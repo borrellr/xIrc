@@ -262,7 +262,7 @@ xIrcMsgDispatchEntry::xIrcMsgDispatchEntry(QObject *pObj, const char *pSlot,
          if (dbg) fflush(stdout);
          accepted = 1;
          if (pObject != NULL)
-            connect(this, SIGNAL(gotResponse(xIrcMessage*)), pObject, (const char*)slot);
+            connect(this, SIGNAL(gotResponse(xIrcMessage*)), pObject, (const char*)slot.latin1());
       }
       else
          accepted = 0;

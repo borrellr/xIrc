@@ -70,11 +70,7 @@ void xIrcNotifyQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
 
    whoSent = FALSE;
 
@@ -125,7 +121,7 @@ void xIrcNotifyQuery::initClass(const char *pName)
       pFn = ".xIrc.notify";
    serverFile += '/';
    serverFile += pFn;
-   pTable->readFile(serverFile);
+   pTable->readFile(serverFile.latin1());
 
    pPeople = NULL;
    if (pTable->list()->count() > 0)
@@ -221,7 +217,7 @@ void xIrcNotifyQuery::saveList()
 
    fileName = QFileDialog::getSaveFileName(pPath + "/" + pFn, pFilt, this);
    if (!fileName.isNull())
-      pTable->writeFile(fileName);
+      pTable->writeFile(fileName.latin1());
 }
 
 void xIrcNotifyQuery::newEntry()
@@ -284,7 +280,7 @@ void xIrcNotifyQuery::loadList()
    if ((pFilt = Resources->get(wdtRes, "filter", "Filter")) == NULL)
       pFilt = ".xIrc*";
    fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   pTable->readFile(fileName);
+   pTable->readFile(fileName.latin1());
    pTable->showRows(pTable->currentRow());
 }
 
@@ -294,10 +290,10 @@ QString xIrcNotifyQuery::getNick(xIrcMessage *pMsg)
    const char *cp, *cp1;
 
    if (dbg) fprintf(stdout, "xIrcNotifyQuery::getNick():Gleening Nick from: |%s|\n",
-                             (const char *)pMsg->msgStr);
+                             (const char *)pMsg->msgStr.latin1());
    if (dbg) fflush(stdout);
-   cp = pMsg->msgStr;
-   cp1 = pMsg->dstStr;
+   cp = pMsg->msgStr.latin1();
+   cp1 = pMsg->dstStr.latin1();
    if (*cp1 == '#')
    {
       if (dbg) fprintf(stdout, "xIrcNotifyQuery::getNick():Skipping Username: |%s|\n",
@@ -388,22 +384,22 @@ bool xIrcNotifyQuery::gotNotification(xIrcMessage *pMsg)
       rv = TRUE;
 
       QString str;
-      cp = pMsg->dstStr;
+      cp = pMsg->dstStr.latin1();
       if (pMsg->rspCode == 352)
       {
          if (*cp != '#')
          {
             str = pMsg->dstStr;
-            cp = pMsg->msgStr;
+            cp = pMsg->msgStr.latin1();
          }
          else
          {
-            for (cp = pMsg->msgStr; *cp != ' '; cp++)
+            for (cp = pMsg->msgStr.latin1(); *cp != ' '; cp++)
                str += *cp;
-            for (cp = pMsg->msgStr; *cp == ' '; cp++);
+            for (cp = pMsg->msgStr.latin1(); *cp == ' '; cp++);
          }
          str += "@";
-         for (cp = pMsg->msgStr; *cp != ' '; cp++)
+         for (cp = pMsg->msgStr.latin1(); *cp != ' '; cp++)
             str += *cp;
          pEntry = pTable->entry(pMsg);
          if (pEntry != NULL)
@@ -412,25 +408,25 @@ bool xIrcNotifyQuery::gotNotification(xIrcMessage *pMsg)
             if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Current State = %d\n",
                                     pEntry->state());
             if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Setting realNick to: |%s|\n",
-                                    (const char *)realNick);
+                                    (const char *)realNick.latin1());
             if (dbg) fflush(stdout);
-            pEntry->setRealNick(realNick);
+            pEntry->setRealNick(realNick.latin1());
          }
          if (pEntry != NULL && pEntry->state() == 1)
          {
             char buf[256];
             
             sprintf(buf, "\x02%s (%s) Has Arrived!!\n",
-               (const char *)pEntry->realNick(),
-               (const char *)pEntry->mask());
+               (const char *)pEntry->realNick().latin1(),
+               (const char *)pEntry->mask().latin1());
             pTWindow->putWindow(buf);
 
-            if (pEntry->message() != NULL && strlen(pEntry->message()) > 0)
+            if (pEntry->message() != NULL && strlen(pEntry->message().latin1()) > 0)
             {
-               if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Sending Message %d:|%s|\n",
-                                    (int)((const char *)pEntry->message()),
-                                    (const char *)pEntry->message());
-               if (dbg) fflush(stdout);
+//               if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Sending Message %1:|%s|\n",
+//                                    (int)((const char *)pEntry->message().latin1()),
+//                                    (const char *)pEntry->message().latin1());
+//               if (dbg) fflush(stdout);
                msg.rspCode = ircResponses.code("PRIVMSG");
                msg.dstStr = getNick(pMsg);
                msg.msgStr = pEntry->message();
@@ -469,8 +465,8 @@ bool xIrcNotifyQuery::gotNotification(xIrcMessage *pMsg)
             {
                char buf[256];
                sprintf(buf, "\x02%s (%s) Has Left!!\n",
-                       (const char *)pEntry->realNick(),
-                       (const char *)pEntry->mask());
+                       (const char *)pEntry->realNick().latin1(),
+                       (const char *)pEntry->mask().latin1());
                pTWindow->putWindow(buf);
             }
             pEntry->setState(0);
@@ -521,9 +517,9 @@ bool xIrcNotifyQuery::gotNotification(xIrcMessage *pMsg)
                pPeople->current()->setState(1);
 
             if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Nick = |%s|\n",
-                                     (const char *)pPeople->current()->nick());
+                                     (const char *)pPeople->current()->nick().latin1());
             if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Mask = |%s|\n",
-                                     (const char *)pPeople->current()->mask());
+                                     (const char *)pPeople->current()->mask().latin1());
             if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Flag = %d\n",
                                      pPeople->current()->flag());
 
@@ -534,9 +530,9 @@ bool xIrcNotifyQuery::gotNotification(xIrcMessage *pMsg)
             {
                strTmp = pPeople->current()->mask();
                if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Sending 'WHO %s'\n",
-                                       (const char *)strTmp);
+                                       (const char *)strTmp.latin1());
                if (dbg) fflush(stdout);
-               for (ch = ' ', cp = strTmp; *cp != '\0'; cp++)
+               for (ch = ' ', cp = strTmp.latin1(); *cp != '\0'; cp++)
                {
                   if (ch == '@')
                      strNick += *cp;

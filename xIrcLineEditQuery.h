@@ -42,7 +42,7 @@ public:
 
    const char *text() {
       s = parseLine(xLineEditQuery::text(), TRUE, FALSE);
-      return(s.isNull() ? "" : (const char *)s); 
+      return(s.isNull() ? "" : (const char *)s.latin1()); 
    };
 
 private:

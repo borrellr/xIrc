@@ -50,21 +50,18 @@ xIrcNickQuery::xIrcNickQuery(xWidgetResInfo *pPRes, QWidget *pParent,
    if (pName)
       setCaption(pName);
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    pNick = new xEditList(wdtRes, this);
    pNick->setMargins(5, 5);
    pNick->setFrameStyle(QFrame::Panel | QFrame::Raised);
    if (dbg) fprintf(stdout, "xIrcNickQuery::xIrcNickQuery():Setting Label text\n\r");
    pNick->setLabel("Enter Nick");
-   if ((cp = (char *)Defaults.get("NICKS")) == NULL || strlen(cp) == 0)
+   if ((cp = (char *)Defaults.get("NICKS")) == NULL || strlen(cp) == 0) {
       if ((cp = (char *)Defaults.get("NICK")) == NULL || strlen(cp) == 0)
-         cp = "Who-Am-I";
+         cp = (char *)"Who-Am-I";
       else
          QMessageBox::warning(this, "Warning:", "Obsolete Definition used: New Definition is NICKS");
+   }
    pNick->insertItems(cp);
    pNick->setCurrentItem(0);
 

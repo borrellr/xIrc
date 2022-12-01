@@ -61,13 +61,8 @@ typedef struct
    QString           rawMsg;
 } xIrcMessage;
 
-#ifdef QT2
 typedef QList<xIrcMessage>           xIrcMessageListBase;
 typedef QListIterator<xIrcMessage>   xIrcMessageListIterator;
-#else
-typedef QListT<xIrcMessage>           xIrcMessageListBase;
-typedef QListIteratorT<xIrcMessage>   xIrcMessageListIterator;
-#endif
 
 class xIrcMessageList : public xIrcMessageListBase
 {
@@ -114,7 +109,7 @@ public slots:
    void sendIrcServerMessage(xIrcMessage *pMsg);
       
 protected slots:
-   virtual void socketError(int err);
+//   virtual void socketError(int err);
 
 private slots:
    void rawSocketDataIn(char *pText);

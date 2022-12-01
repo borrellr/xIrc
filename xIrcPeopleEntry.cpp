@@ -43,10 +43,10 @@ xIrcPeopleEntry::xIrcPeopleEntry(xIrcMessage *pMsg, bool atAround)
       ** any spaces in the middle (Namely get the 3rd field of msgStr
       */
       if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Gleening Nick from: |%s|\n",
-                                (const char *)pMsg->msgStr);
+                                (const char *)pMsg->msgStr.latin1());
       if (dbg) fflush(stdout);
-      cp = pMsg->msgStr;
-      cp1 = pMsg->dstStr;
+      cp = pMsg->msgStr.latin1();
+      cp1 = pMsg->dstStr.latin1();
       if (*cp1 == '#')
       {
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Skipping Username: |%s|\n",
@@ -83,19 +83,19 @@ xIrcPeopleEntry::xIrcPeopleEntry(xIrcMessage *pMsg, bool atAround)
          Nick += *cp;
       Mask = buildMask(pMsg, atAround);
    }
-   else if (ircResponses.is(pMsg->rspCode, "NOTICE") ||
-            ircResponses.is(pMsg->rspCode, "PRIVMSG"))
+   else if (ircResponses.is(pMsg->rspCode, (char *)"NOTICE") ||
+            ircResponses.is(pMsg->rspCode, (char *)"PRIVMSG"))
    {
       Nick = pMsg->srcNick;
       Mask = "";
-      for (cp = pMsg->srcAddr; *cp != '@'; cp++)
+      for (cp = pMsg->srcAddr.latin1(); *cp != '@'; cp++)
          Mask += *cp;
       if (atAround == TRUE)
          Mask += "@*";
       else
          Mask += " *";
-      for (cp = pMsg->srcAddr; *cp != '.'; cp++);
-      for (cp = pMsg->srcAddr; *cp; cp++);
+      for (cp = pMsg->srcAddr.latin1(); *cp != '.'; cp++);
+      for (cp = pMsg->srcAddr.latin1(); *cp; cp++);
          Mask += *cp;
    }
    Flag = 1;
@@ -112,11 +112,11 @@ xIrcPeopleEntry::xIrcPeopleEntry(const char *pNick, const char *pMask, const cha
    State = 0;
 
    if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Nick = |%s|\n",
-                             (const char *)Nick);
+                             (const char *)Nick.latin1());
    if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Mask = |%s|\n",
-                             (const char *)Mask);
+                             (const char *)Mask.latin1());
    if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Message = |%s|\n",
-                             (const char *)Message);
+                             (const char *)Message.latin1());
    if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Flag = |%d|\n",
                              Flag);
 }
@@ -129,14 +129,14 @@ xIrcPeopleEntry::xIrcPeopleEntry(xIrcPeopleEntry &e)
    Flag = e.flag();
    State = 0;
    if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Nick = |%s|\n",
-                             (const char *)Nick);
+                             (const char *)Nick.latin1());
    if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Mask = |%s|\n",
-                             (const char *)Mask);
+                             (const char *)Mask.latin1());
 }
 
 int xIrcPeopleEntry::compare(xIrcPeopleEntry *e)
 {
-   return(stricmp(Nick, e->nick()));
+   return(qstricmp(Nick.latin1(), e->nick().latin1()));
 }
 
 bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
@@ -155,7 +155,7 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
          reMask.setCaseSensitive(FALSE);
          QString tmpMask(buildMask(pMsg));
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Addr: |%s| == |%s|?\n",
-                         (const char *)tmpMask, (const char *)Mask);
+                         (const char *)tmpMask.latin1(), (const char *)Mask.latin1());
          if (dbg) fflush(stdout);
          if (reMask.match(tmpMask) >= 0)
             rv = TRUE;
@@ -172,10 +172,10 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
          ** If the destination is a channel name, the 4th field of the message
          ** string has the nick
          */
-         cp = pMsg->dstStr;
+         cp = pMsg->dstStr.latin1();
          if (*cp == '#')
          {
-            for (cp = pMsg->msgStr; *cp != ' '; cp++);
+            for (cp = pMsg->msgStr.latin1(); *cp != ' '; cp++);
             for (; *cp == ' '; cp++);
 
             for (; *cp != ' '; cp++);
@@ -191,8 +191,8 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
          for (; *cp != '\0' && *cp != ' '; cp++)
             tmpNick += *cp;
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Nick: |%s| == |%s|?\n",
-                         (const char *)tmpNick, (const char *)Nick);
-         if (stricmp(tmpNick, Nick) == 0)
+                         (const char *)tmpNick.latin1(), (const char *)Nick.latin1());
+         if (qstricmp(tmpNick.latin1(), Nick.latin1()) == 0)
             rv = TRUE;
       }
    }
@@ -207,7 +207,7 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
       if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By nick\n");
       if (dbg) fflush(stdout);
       QString tmpNick;
-      for (cp = pMsg->rawMsg; *cp != ' '; cp++);
+      for (cp = pMsg->rawMsg.latin1(); *cp != ' '; cp++);
       for (; *cp == ' '; cp++);
       for (; *cp != ' '; cp++);
       for (; *cp == ' '; cp++);
@@ -220,7 +220,7 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
          tmpNick += toupper(*cp);
 
       if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Nick: |%s| == |%s|?\n",
-                      (const char *)tmpNick, (const char *)Nick);
+                      (const char *)tmpNick.latin1(), (const char *)Nick.latin1());
       if (byAddr >= 0)
       {
          tmpMask = Mask.upper();
@@ -230,25 +230,25 @@ bool xIrcPeopleEntry::is(xIrcMessage *pMsg, int byAddr)
       else if (tmpNick == Nick)
          rv = TRUE;
    }
-   else if (ircResponses.is(pMsg->rspCode, "NOTICE") ||
-            ircResponses.is(pMsg->rspCode, "PRIVMSG"))
+   else if (ircResponses.is(pMsg->rspCode, (char *)"NOTICE") ||
+            ircResponses.is(pMsg->rspCode, (char *)"PRIVMSG"))
    {
       if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():Testing Notice or PrivMsg\n");
       if (dbg) fflush(stdout);
       if (byAddr < 0)
       {
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Nick: |%s| == |%s|?\n",
-                         (const char *)pMsg->srcNick, (const char *)Nick);
+                         (const char *)pMsg->srcNick.latin1(), (const char *)Nick.latin1());
          if (dbg) fflush(stdout);
-         if (stricmp(Nick, pMsg->srcNick) == 0)
+         if (qstricmp(Nick.latin1(), pMsg->srcNick.latin1()) == 0)
             rv = TRUE;
       }
       else
       {
          const char *cp, *cp1;
 
-         cp = pMsg->srcAddr;
-         cp1 = Mask;
+         cp = pMsg->srcAddr.latin1();
+         cp1 = Mask.latin1();
          if (dbg) fprintf(stdout, "xIrcPeopleEntry::is():By Nick: |%s| == |%s|?\n",
                          cp, cp1);
          if (dbg) fflush(stdout);
@@ -303,15 +303,15 @@ QString xIrcPeopleEntry::buildMask(xIrcMessage *pMsg, bool atAround)
 
    if (pMsg->rspCode == 352)
    {
-      cp = pMsg->dstStr;
+      cp = pMsg->dstStr.latin1();
       if (*cp != '#')
       {
          rv += pMsg->dstStr;
-         for (cp = pMsg->msgStr; *cp == ' '; cp++);
+         for (cp = pMsg->msgStr.latin1(); *cp == ' '; cp++);
       }
       else
       {
-         for (cp = pMsg->msgStr; *cp == ' '; cp++);
+         for (cp = pMsg->msgStr.latin1(); *cp == ' '; cp++);
          for (; *cp != ' '; cp++)
             rv += *cp;
       }

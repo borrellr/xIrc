@@ -26,13 +26,8 @@
 #include <qlist.h>
 #include "xIrcPeopleEntry.h"
 
-#ifdef QT2
 typedef QList<xIrcPeopleEntry>           xIrcPeopleListBase;
 typedef QListIterator<xIrcPeopleEntry>   xIrcPeopleListIterator;
-#else
-typedef QListT<xIrcPeopleEntry>           xIrcPeopleListBase;
-typedef QListIteratorT<xIrcPeopleEntry>   xIrcPeopleListIterator;
-#endif
 
 class xIrcPeopleList : public xIrcPeopleListBase
 {
@@ -50,10 +45,6 @@ public:
    void add(xIrcPeopleList &list);
    void add(xIrcPeopleEntry &entry);
 
-#ifndef QT2
-private:
-   int compareItems(GCI e1, GCI e2) { return (((xIrcPeopleEntry*)e1)->compare((xIrcPeopleEntry*)e2)); };
-#endif
 };
 
 #endif

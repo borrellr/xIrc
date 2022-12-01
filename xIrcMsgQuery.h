@@ -63,13 +63,8 @@ private:
    void initClass(QWidget *pParent, const char *pName);
 };
 
-#ifdef QT2
 typedef QList<xIrcMsgQuery>           xIrcMsgQueryListBase;
 typedef QListIterator<xIrcMsgQuery>   xIrcMsgQueryListIterator;
-#else
-typedef QListT<xIrcMsgQuery>           xIrcMsgQueryListBase;
-typedef QListIteratorT<xIrcMsgQuery>   xIrcMsgQueryListIterator;
-#endif
 
 class xIrcMsgQueryList : public xIrcMsgQueryListBase
 {

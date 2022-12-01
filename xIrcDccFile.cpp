@@ -220,7 +220,7 @@ int xIrcDccFile::accept(int _fd)
       sprintf(buf1, "%s:%d", inet_ntoa(addr.sin_addr), addr.sin_port);
       if (dbg) 
       {
-         fprintf(stdout, "xIrcDccFile::accept():got socket name (%s) %ld:%d\n",
+         fprintf(stdout, "xIrcDccFile::accept():got socket name (%s) %u:%d\n",
                                 inet_ntoa(addr.sin_addr),
                                 htonl(addr.sin_addr.s_addr),
                                 addr.sin_port);
@@ -358,13 +358,13 @@ void xIrcDccFile::socketIn(xSocketBuffer sb)
       {
          dataAckTmp = dataAckTmp * 256;
          dataAckTmp += *sb.buf;
-         if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn(): dataAckTmp = 0x%x, BCnt = %d, sb = 0x%x, sizof(long) = %d\n",
+         if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn(): dataAckTmp = 0x%x, BCnt = %d, sb = 0x%x, sizof(long) = %lu\n",
                               dataAckTmp, dataAckBCnt, *sb.buf, sizeof(long));
          if (dbg > 3) fflush(stdout);
          sb.buf++;
          if (++dataAckBCnt == 4)
          {
-            if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn(): ntohl:dataAckTmp = 0x%lx, BCnt = %d, dataAckCnt = 0x%x\n",
+            if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn(): ntohl:dataAckTmp = 0x%u, BCnt = %d, dataAckCnt = 0x%x\n",
                                  ntohl(dataAckTmp), dataAckBCnt, dataAckCnt);
             if (dbg > 3) fflush(stdout);
             if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn():Got an Ack!\n");

@@ -37,7 +37,7 @@ public:
 
    bool is(const char *pName, bool byNick = TRUE);
    const char *getNick(bool fullName = FALSE);
-   const char *getAddr() { return(addr); };
+   const char *getAddr() { return(addr.latin1()); };
    void setNick(const char *pNick);
    void setAddr(const char *pAddr);
    xIrcNickListEntry  *next() { return(pNext); };

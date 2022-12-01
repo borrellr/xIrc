@@ -141,34 +141,34 @@ void xIrcSocket::parseMsgSpecial(xIrcMessage *pMsg, const char *pStr,
    while (*pStr && !isspace(*pStr) && *pStr >= ' ')
       tmpStr += toupper(*(pStr++));
 
-   if (strcmp(tmpStr, "PING") == 0)
+   if (strcmp(tmpStr.latin1(), "PING") == 0)
       msg.pmsgTyp = ipmPing;
-   else if (strcmp(tmpStr, "ACTION") == 0) 
+   else if (strcmp(tmpStr.latin1(), "ACTION") == 0) 
       msg.pmsgTyp = ipmAction;
-   else if (strcmp(tmpStr, "VERSION") == 0) 
+   else if (strcmp(tmpStr.latin1(), "VERSION") == 0) 
       msg.pmsgTyp = ipmVersion;
-   else if (strcmp(tmpStr, "USERINFO") == 0) 
+   else if (strcmp(tmpStr.latin1(), "USERINFO") == 0) 
       msg.pmsgTyp = ipmUserInfo;
-   else if (strcmp(tmpStr, "CLIENTINFO") == 0) 
+   else if (strcmp(tmpStr.latin1(), "CLIENTINFO") == 0) 
       msg.pmsgTyp = ipmClientInfo;
-   else if (strcmp(tmpStr, "SOURCE") == 0) 
+   else if (strcmp(tmpStr.latin1(), "SOURCE") == 0) 
       msg.pmsgTyp = ipmSource;
-   else if (strcmp(tmpStr, "FINGER") == 0) 
+   else if (strcmp(tmpStr.latin1(), "FINGER") == 0) 
       msg.pmsgTyp = ipmFinger;
-   else if (strcmp(tmpStr, "ERRMSG") == 0) 
+   else if (strcmp(tmpStr.latin1(), "ERRMSG") == 0) 
       msg.pmsgTyp = ipmErrMsg;
-   else if (strcmp(tmpStr, "TIME") == 0) 
+   else if (strcmp(tmpStr.latin1(), "TIME") == 0) 
       msg.pmsgTyp = ipmTime;
-   else if (strcmp(tmpStr, "DCC") == 0)
+   else if (strcmp(tmpStr.latin1(), "DCC") == 0)
    {
       pSave1 = pStr;
       while (*pStr && isspace(*pStr)) pStr++;
       tmpStr = "";
       while (*pStr && !isspace(*pStr))
          tmpStr += toupper(*(pStr++));
-      if (strcmp(tmpStr, "SEND") == 0)
+      if (strcmp(tmpStr.latin1(), "SEND") == 0)
          msg.pmsgTyp = ipmDCCSend;
-      else if (strcmp(tmpStr, "CHAT") == 0)
+      else if (strcmp(tmpStr.latin1(), "CHAT") == 0)
          msg.pmsgTyp = ipmDCCChat;
       else
       {
@@ -188,7 +188,7 @@ void xIrcSocket::parseMsgSpecial(xIrcMessage *pMsg, const char *pStr,
          tmpStr += *(pStr++);
       if (dbg) fprintf(stderr, "xIrcSocket::parseMsgSpecial(): Translating attributes in message\n");
       if (dbg) fflush(stderr);
-      msg.msgStr = translateMessage(tmpStr, this, &msg);
+      msg.msgStr = translateMessage(tmpStr.latin1(), this, &msg);
       if (*pStr == '\x01')
           pStr++;
    
@@ -214,7 +214,7 @@ void xIrcSocket::socketDataIn(QString msgStr)
    QString strTmp;
    bool isNumber;
    const char *cp;
-   const char *pText = msgStr;
+   const char *pText = msgStr.latin1();
    int x;
    
    if (dbg) fprintf(stderr, "xIrcSocket::socketDataIn(): Enter\n");
@@ -251,7 +251,7 @@ void xIrcSocket::socketDataIn(QString msgStr)
       {
          if (dbg) fprintf(stderr, "xIrcSocket::socketDataIn(): Response was a string\n");
          if (dbg) fflush(stderr);
-         msg.rspCode = ircResponses.code(strTmp);
+         msg.rspCode = ircResponses.code(strTmp.latin1());
       }
       strTmp = "";
    }
@@ -294,7 +294,7 @@ void xIrcSocket::socketDataIn(QString msgStr)
       {
          if (dbg) fprintf(stderr, "xIrcSocket::socketDataIn(): Response was a string\n");
          if (dbg) fflush(stderr);
-         msg.rspCode = ircResponses.code(strTmp);
+         msg.rspCode = ircResponses.code(strTmp.latin1());
       }
       strTmp = "";
    }
@@ -353,8 +353,8 @@ void xIrcSocket::socketDataIn(QString msgStr)
    /*
    ** Send the message, if any, to the receiver!
    */
-   if ((!ircResponses.is(msg.rspCode, "PRIVMSG") && !ircResponses.is(msg.rspCode, "NOTICE")) ||
-        strlen(strTmp) > 1)
+   if ((!ircResponses.is(msg.rspCode, (char *)"PRIVMSG") && !ircResponses.is(msg.rspCode, (char *)"NOTICE")) ||
+        strlen(strTmp.latin1()) > 1)
    {
       msg.pmsgTyp = ipmMessage;
       msg.msgStr = strTmp;
@@ -389,7 +389,7 @@ void xIrcSocket::rawSocketDataIn(char *pText)
 //            emit socketDataOut(socketBuffer);
 //            emit socketDataOut(tmpBuf);
             if (dbg > 3) fprintf(stderr, "xIrcSocket::rawSocketDataIn():socketBuffer set to |%s|\n",
-                                 (const char *)socketBuffer);
+                                 (const char *)socketBuffer.latin1());
             if (dbg > 3) fflush(stderr);
             socketBuffer += *pText;
          }
@@ -404,7 +404,7 @@ void xIrcSocket::rawSocketDataIn(char *pText)
 //            emit socketDataOut(tmpBuf);
 //            emit socketDataOut(socketBuffer);
             if (dbg > 3) fprintf(stderr, "xIrcSocket::rawSocketDataIn():socketBuffer set to |%s|\n",
-                                 (const char *)socketBuffer);
+                                 (const char *)socketBuffer.latin1());
             if (dbg > 3) fflush(stderr);
          }
          if (*pText != '\r')
@@ -427,16 +427,16 @@ void xIrcSocket::rawSocketDataIn(char *pText)
 //            emit socketDataOut(socketBuffer);
 //            emit socketDataOut(tmpBuf);
             if (dbg > 3) fprintf(stderr, "xIrcSocket::rawSocketDataIn():socketBuffer set to |%s|\n",
-                                 (const char *)socketBuffer);
+                                 (const char *)socketBuffer.latin1());
             if (dbg > 3) fflush(stderr);
          }
       }
    }
-   if (strlen(tmpBuf) > 0)
+   if (strlen(tmpBuf.latin1()) > 0)
       emit socketDataOut(tmpBuf);
 
    if (dbg > 4) fprintf(stderr, "xIrcSocket::rawSocketDataIn():socketBuffer left as |%s|\n",
-                        (const char *)socketBuffer);
+                        (const char *)socketBuffer.latin1());
    if (dbg > 4) fflush(stderr);
    if (dbg > 3) fprintf(stderr, "xIrcSocket::rawSocketDataIn(): Exit\n");
    if (dbg > 3) fflush(stderr);
@@ -449,49 +449,51 @@ void xIrcSocket::sendIrcServerMessage(xIrcMessage *pMsg)
    if (dbg > 2) fprintf(stderr, "xIrcSocket::sendIrcServerMessage(): Sending message\n");
    if (dbg > 2) fprintf(stderr, "xIrcSocket::sendIrcServerMessage(): Response code = %d\n", pMsg->rspCode);
    if (dbg > 2) fprintf(stderr, "xIrcSocket::sendIrcServerMessage(): Destination =  |%s|\n",
-                                (const char *)pMsg->dstStr);
+                                (const char *)pMsg->dstStr.latin1());
    if (dbg > 2) fflush(stderr);
    
    msgStr = ircResponses.name(pMsg->rspCode);
-   if (strlen(msgStr) == 0)
+   if (strlen(msgStr.latin1()) == 0)
    {
       msgStr.setNum(pMsg->rspCode);
    }
    msgStr += ' ';
-   if (strlen((const char *)pMsg->dstStr) > 0)
+   if (strlen((const char *)pMsg->dstStr.latin1()) > 0)
    {
       msgStr += pMsg->dstStr;
-      if (strlen((const char *)pMsg->msgStr) > 0)
+      if (strlen((const char *)pMsg->msgStr.latin1()) > 0)
          msgStr += " :";
    }
-   if (strlen((const char *)pMsg->msgStr) > 0)
+   if (strlen((const char *)pMsg->msgStr.latin1()) > 0)
       msgStr += pMsg->msgStr;
    msgStr += '\n';
-   if (dbg > 2) fprintf(stderr, "xIrcSocket::sendIrcServerMessage(): Sending message %s\n", (const char *)msgStr);
+   if (dbg > 2) fprintf(stderr, "xIrcSocket::sendIrcServerMessage(): Sending message %s\n", (const char *)msgStr.latin1());
    if (dbg > 2) fflush(stderr);
-   emit sendToServer((const char *)msgStr);
+   emit sendToServer((const char *)msgStr.latin1());
    if (dbg > 2) fprintf(stderr, "xIrcSocket::sendIrcServerMessage(): Message sent\n");
    if (dbg > 2) fflush(stderr);
 }
 
+/*
 void xIrcSocket::socketError(int err)
 {
    err = 0;
 }
+*/
 
 bool xIrcMessageList::is(xIrcMessage *pMsg)
 {
    xIrcMessage *pMsg1;
 
    if (dbg) fprintf(stderr,"xIrcMessageList::is(%s): Enter\n",
-                           (const char *)pMsg->srcNick);
+                           (const char *)pMsg->srcNick.latin1());
    if (dbg) fflush(stderr);
    if ((pMsg1 = at(0)) != NULL)
    {
       if (dbg) fprintf(stderr, "xIrcMessageList::is(%s): Testing\n",
-                              (const char *)pMsg1->srcNick);
+                              (const char *)pMsg1->srcNick.latin1());
       if (dbg) fflush(stderr);
-      if (strcmp(pMsg->srcNick, pMsg1->srcNick) == 0)
+      if (strcmp(pMsg->srcNick.latin1(), pMsg1->srcNick.latin1()) == 0)
       {
          if (dbg) fprintf(stderr,"xIrcMessageList::is(): Exit- Passed!\n");
          if (dbg) fflush(stderr);
@@ -517,8 +519,8 @@ QString translateMessage(const char *cp, xIrcSocket *pSocket, xIrcMessage *pMsg)
       ** Handle any CTCP requests
       */
       if (pSocket != NULL && pMsg != NULL && 
-          (ircResponses.is(pMsg->rspCode, "PRIVMSG") ||
-           ircResponses.is(pMsg->rspCode, "NOTICE")) &&
+          (ircResponses.is(pMsg->rspCode, (char *)"PRIVMSG") ||
+           ircResponses.is(pMsg->rspCode, (char *)"NOTICE")) &&
           *cp == 0x01)
          pSocket->parseMsgSpecial(pMsg, ++cp, &cp);
       /*
@@ -543,7 +545,7 @@ QString translateMessage(const char *cp, xIrcSocket *pSocket, xIrcMessage *pMsg)
             QString s;
             while (*cp != ('F' - '\x40') )
                s += *(cp++);
-            if (strlen(s) == 0)
+            if (strlen(s.latin1()) == 0)
             {
                rv += '/';
                rv += attr;
@@ -582,39 +584,39 @@ QString translateMessage(const char *cp, xIrcSocket *pSocket, xIrcMessage *pMsg)
       }
       else if (*cp == ('B' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[int(*cp)] = (attrList[int(*cp)] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
-         if (attrList[*cp] == 1)
+             *cp, attrList[int(*cp)]);
+         if (attrList[int(*cp)] == 1)
             rv += "[B]";
          else
             rv += "[/B]";
       }
       else if (*cp == ('V' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[int(*cp)] = (attrList[int(*cp)] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
-         if (attrList[*cp] == 1)
+             *cp, attrList[int(*cp)]);
+         if (attrList[int(*cp)] == 1)
             rv += "[V]";
          else
             rv += "[/V]";
       }
       else if (*cp == ('_' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[int(*cp)] = (attrList[int(*cp)] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
-         if (attrList[*cp] == 1)
+             *cp, attrList[int(*cp)]);
+         if (attrList[int(*cp)] == 1)
             rv += "[U]";
          else
             rv += "[/U]";
       }
       else if (*cp == ('O' - '\x40'))
       {
-         attrList[*cp] = (attrList[*cp] == 1) ? 0 : 1;
+         attrList[int(*cp)] = (attrList[int(*cp)] == 1) ? 0 : 1;
          if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(): attrList[%d] = %d\n",
-             *cp, attrList[*cp]);
+             *cp, attrList[int(*cp)]);
          if (dbg) fflush(stderr);
          rv += "[N]";
          memset(attrList, 0, sizeof(int)*256);
@@ -685,7 +687,7 @@ QString translateMessage(const char *cp, xIrcSocket *pSocket, xIrcMessage *pMsg)
       else if (*cp != '\r' && *cp != '\x01')
          rv += *cp;
    }
-   if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(\"%s\"): Exit\n", (const char*)rv);
+   if (dbg) fprintf(stderr,"xIrcSocket::translateMessage(\"%s\"): Exit\n", (const char*)rv.latin1());
    if (dbg) fflush(stderr);
    return(rv);
 }
@@ -790,16 +792,16 @@ QString parseAttr(const char **p, bool mircColors, bool ctcp2)
             else
                bgColor += *(cp++);
             if (dbg) fprintf(stderr, "xIrcmessageFrame::parseAttr():fgColor = |%s|\n", 
-                             (const char*)fgColor);
+                             (const char*)fgColor.latin1());
             if (dbg) fprintf(stderr, "xIrcmessageFrame::parseAttr():bgColor = |%s|\n", 
-                             (const char*)bgColor);
+                             (const char*)bgColor.latin1());
             if (dbg) fflush(stderr);
 
             if (mircColors == TRUE)
             {
                if (fgColor != "-" && fgColor != ".")
                {
-                  const char *pFg = fgColor;
+                  const char *pFg = fgColor.latin1();
                   int fg;
                   QString f;
                   rv += 'C' - 0x40;
@@ -811,7 +813,7 @@ QString parseAttr(const char **p, bool mircColors, bool ctcp2)
                }
                if (fgColor != "-" && fgColor != "." && bgColor != "-")
                {
-                  const char *pBg = bgColor;
+                  const char *pBg = bgColor.latin1();
                   int bg;
                   QString f;
                   if (*pBg != '.')
@@ -836,7 +838,7 @@ QString parseAttr(const char **p, bool mircColors, bool ctcp2)
    }
    *p = cp;
    if (dbg) fprintf(stderr, "xIrcmessageFrame::parseAttr(%s):Exit, remaining line |%s|\n",
-                    (const char*)rv, cp);
+                    (const char*)rv.latin1(), cp);
    if (dbg) fflush(stderr);
    return(rv);
 }

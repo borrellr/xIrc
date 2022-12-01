@@ -54,11 +54,7 @@ void xChannelQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
       
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    setMargins(0, 0);
    setWidgetSpacing(0);
    if ((pChannel = new xEditList(wdtRes, this)) != NULL)
@@ -67,7 +63,7 @@ void xChannelQuery::initClass(const char *pName)
       pChannel->setMargins(5, 5);
       pChannel->setFrameStyle(QFrame::Panel | QFrame::Raised);
       if ((cp = (char *)Defaults.get("CHANNELS")) == NULL || strlen(cp) == 0)
-         cp = "#chatzone";
+         cp = (char *)"#chatzone";
       pChannel->insertItems(cp);
       pChannel->setLabel("Enter Channel or Nick Name");
       pChannel->setCurrentItem(0);
@@ -142,10 +138,12 @@ void xChannelQuery::buttonPressed(int results)
 
          case Names:
             if (strlen(cp = pChannel->text()) == 0)
+            {
                if ((x = pChannel->currentItem()) >= 0)
                   cp = pChannel->string(x);
                else
                   break;
+            }
             while (isspace(*cp)) cp++;
             if (*cp == '#')
                msg.rspCode = ircResponses.code("NAMES");
@@ -159,6 +157,7 @@ void xChannelQuery::buttonPressed(int results)
 
          case DccChat:
             if (strlen(cp = pChannel->text()) == 0)
+            {
                if ((x = pChannel->currentItem()) >= 0)
                {
                   pChannel->setText(pChannel->string(x));
@@ -166,6 +165,7 @@ void xChannelQuery::buttonPressed(int results)
                }
                else
                   break;
+            }
             while (isspace(*cp)) cp++;
             if (*cp == '#')
                QMessageBox::warning(this, "Error", "Cannot DCC Chat to a channel");

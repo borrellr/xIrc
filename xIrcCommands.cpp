@@ -42,15 +42,15 @@ typedef struct
 
 static xIrcResponse rspList[] =
 {
-   { 301, "Away: " },
-   { 324, "Channel Mode: " },
-   { 331, "" },
-   { 332, "Topic: " },
-   { 333, "Channel Creator: " },
-   { 341, "Inviting: " },
-   { 353, "Channel Members: " },
-   { 367, "Banned: " },
-   { 0, "" }
+   { 301, (const char *)"Away: " },
+   { 324, (const char *)"Channel Mode: " },
+   { 331, (const char *)"" },
+   { 332, (const char *)"Topic: " },
+   { 333, (const char *)"Channel Creator: " },
+   { 341, (const char *)"Inviting: " },
+   { 353, (const char *)"Channel Members: " },
+   { 367, (const char *)"Banned: " },
+   { 0, (const char *)"" }
 };
 
 //
@@ -58,31 +58,31 @@ static xIrcResponse rspList[] =
 // from the server. It must stay in synch with the values set
 // in the include file!!
 //
-static char *commandList[] = 
+static const char *commandList[] = 
 {
-   "AWAY",
-   "INVITE",
-   "JOIN",
-   "KICK",
-   "LIST",
-   "MODE",
-   "NAMES",
-   "NICK",
-   "NOTICE",
-   "PART",
-   "PING",
-   "PONG",
-   "PRIVMSG",
-   "QUIT",
-   "TOPIC",
-   "VERSION",
-   "WHO",
-   "WHOIS",
-   "WHOWAS",
-   "FLUSH",
-   "NOTE",
-   "LINKS",
-   "MAP",
+   (char *)"AWAY",
+   (char *)"INVITE",
+   (char *)"JOIN",
+   (char *)"KICK",
+   (char *)"LIST",
+   (char *)"MODE",
+   (char *)"NAMES",
+   (char *)"NICK",
+   (char *)"NOTICE",
+   (char *)"PART",
+   (char *)"PING",
+   (char *)"PONG",
+   (char *)"PRIVMSG",
+   (char *)"QUIT",
+   (char *)"TOPIC",
+   (char *)"VERSION",
+   (char *)"WHO",
+   (char *)"WHOIS",
+   (char *)"WHOWAS",
+   (char *)"FLUSH",
+   (char *)"NOTE",
+   (char *)"LINKS",
+   (char *)"MAP",
    NULL
 };
 
@@ -149,7 +149,7 @@ const char *xIrcCommands::text(int cmd)
    {
       sprintf(buf, "%d::", cmd);
       tmpStr = buf;
-      rv = tmpStr;
+      rv = tmpStr.latin1();
    }
    return(rv);
 }

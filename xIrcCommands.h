@@ -39,7 +39,7 @@ public:
    };
    
 private:
-   char  **commandList;
+   const char  **commandList;
 };
 
 #define IRCRESP_First     20

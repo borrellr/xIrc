@@ -22,10 +22,13 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qfiledialog.h>
 #include "xIrcServerEdit.h"
 #include "xIrcServerQuery.h"
 #include "xDefaults.h"
+
+#define XIRCRESOURCEPATH "/usr/local/lib/xIrc"
 
 static int dbg = 0;
                     
@@ -64,11 +67,7 @@ void xServerQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
    pLabel = new QLabel(this);
    pTable = new xIrcServerTable(wdtRes, this, "servertable", 10);
 
@@ -112,7 +111,7 @@ void xServerQuery::initClass(const char *pName)
       pFn = ".servers";
    serverFile += '/';
    serverFile += pFn;
-   pTable->readFile(serverFile);
+   pTable->readFile(serverFile.latin1());
    
    pButtons = new xPshBtnFrame(wdtRes, this);
    pButtons->setFrameStyle(QFrame::Panel | QFrame::Raised);
@@ -241,7 +240,7 @@ void xServerQuery::doConnect(int status)
       if (dbg) fflush(stdout);
       Port = pConnect->port();
       if (dbg) fprintf(stdout, "xServerQuery::doConnect():Port = |%s|\n",
-                       (const char *)Port);
+                       (const char *)Port.latin1());
       if (dbg) fflush(stdout);
    }
    if (dbg) fprintf(stdout, "xServerQuery::doConnect():Exit\n");
@@ -273,8 +272,8 @@ void xServerQuery::importList()
       pFilt = "*.ini";
 
    fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   if (strlen(fileName) > 0)
-      pTable->import(fileName);
+   if (strlen(fileName.latin1()) > 0)
+      pTable->import(fileName.latin1());
 }
 
 void xServerQuery::saveList()
@@ -290,8 +289,8 @@ void xServerQuery::saveList()
       pFilt = ".*";
 
    fileName = QFileDialog::getSaveFileName(pPath + "/" + pFn, pFilt, this);
-   if (strlen(fileName) > 0)
-      pTable->writeFile(fileName);
+   if (strlen(fileName.latin1()) > 0)
+      pTable->writeFile(fileName.latin1());
 }
 
 void xServerQuery::editEntry()
@@ -329,7 +328,7 @@ void xServerQuery::loadList()
    if ((pFilt = Resources->get(wdtRes, "filter", "Filter")) == NULL)
       pFilt = ".*";
    fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   pTable->readFile(fileName);
+   pTable->readFile(fileName.latin1());
    pTable->showRows(pTable->currentRow());
 }
 

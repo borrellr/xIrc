@@ -11,3 +11,7 @@ xIrc.ps
 xIrc.tex
 xIrc.xpm
 xIrc
+*.o
+moc_*
+Makefile
+*.dat

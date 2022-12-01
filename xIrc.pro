@@ -83,7 +83,7 @@ SOURCES += xIrc.cpp \
 
 INCLUDEPATH += ../libX
 LIBS += -lX++ -L../libX
-DEFINES += QT2 QT3 QT_NO_ASCII_CAST
+DEFINES += QT_NO_ASCII_CAST
 CONFIG += qt warn_on release
 QMAKE_CXXFLAGS += -fpermissive
 TARGET += xIrc

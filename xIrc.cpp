@@ -20,6 +20,7 @@
 ** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 **
  ***************************************************************************/
+#include <qt.h>
 #include <qapplication.h>
 
 #include <qpainter.h>
@@ -58,6 +59,8 @@
 #include <xDefaults.h>
 #include <xMisc.h>
 
+#define XIRCRESOURCEPATH "/usr/local/lib/xIrc"
+
 static int dbg = 0;
 
 xIrcConnect *pTWindow = NULL;
@@ -74,11 +77,7 @@ xIrcMsgDispatch Dispatcher;
 xDefaults Defaults;
 xApplication *pApp = NULL;
 
-#ifdef QT2
 QEvent qEvt(QEvent::User);
-#else
-QEvent qEvt(-1);
-#endif
 
 static const char *pInitialResources[] =
 {
@@ -137,22 +136,22 @@ static const char *pInitialResources[] =
    NULL
 };
 
-char *version = "$Name:  $";
+char *version = (char *)"$Name:  $";
 static XrmOptionDescList opts = NULL;
 
 static const char *defaultSpecHandler(QString strSeq)
 {
    static QString rv;
-   const char *cp = strSeq;
+   const char *cp = strSeq.latin1();
 
    rv = parseAttr(&cp, TRUE, FALSE);
-   return((const char *)rv);
+   return((const char *)rv.latin1());
 }
 
 static void sigpipe(int s)
 {
-   s = 0;
    if (dbg) fprintf(stdout, "*** Got SIGPIPE!\n");
+   if (dbg) fprintf(stdout, "*** value %d\n", s);
 }
 
 class MyApp : public xApplication
@@ -238,32 +237,20 @@ static void setFonts(xResources *r, xApplication *a)
    char fontWeight[80], fontSize[80];
    const char *ccp1, *ccp2, *ccp3;
 
-   ccp1 = Resources->get(&appRes, "font.family", "Font.Family");
-   ccp2 = Resources->get(&appRes, "font.weight", "Font.Weight");
-   ccp3 = Resources->get(&appRes, "font.size", "Font.Size");
+   ccp1 = r->get(&appRes, "font.family", "Font.Family");
+   ccp2 = r->get(&appRes, "font.weight", "Font.Weight");
+   ccp3 = r->get(&appRes, "font.size", "Font.Size");
 
    if (ccp1 == NULL)
-#ifdef QT2
-      ccp1 = a->font().family();
-#else
-      ccp1 = a->font()->family();
-#endif
+      ccp1 = a->font().family().latin1();
    if (ccp2 == NULL)
    {
-#ifdef QT2
       sprintf(fontWeight, "%d", a->font().weight());
-#else
-      sprintf(fontWeight, "%d", a->font()->weight());
-#endif
       ccp2 = fontWeight;
    }
    if (ccp3 == NULL)
    {
-#ifdef QT2
       sprintf(fontSize, "%d", a->font().pointSize());
-#else
-      sprintf(fontSize, "%d", a->font()->pointSize());
-#endif
       ccp3 = fontSize;
    }
 
@@ -272,7 +259,7 @@ static void setFonts(xResources *r, xApplication *a)
 
 static void setPixMap()
 {
-   const char *ccp1, *ccp2, *ccp3;
+   const char *ccp1, *ccp2;
    char *cp, tmpBuf[512], pmBuf[256];
 
    if (dbg) fprintf(stdout, "main():Getting Pixmap file name\n");   

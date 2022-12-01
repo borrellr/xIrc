@@ -65,11 +65,7 @@ void xIrcMsgQuery::initClass(QWidget *pParent, const char *pName)
    pParent = pParent;
    pName = pName;
       
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    
    if ((ccp = Resources->get(wdtRes, "Columns", "Columns")) == NULL)
       cols = 40;
@@ -140,13 +136,13 @@ void xIrcMsgQuery::add(xIrcMessage *pmsg)
    strTmp = "<";
    strTmp += pmsg->srcNick;
    strTmp += "> ";
-   for (cp = pmsg->msgStr; *cp; cp++)
+   for (cp = pmsg->msgStr.latin1(); *cp; cp++)
    {
       if (*cp != '\n' && *cp != '\r')
          strTmp += *cp;
    }
 
-   pMsg->pWin->putString(strTmp);
+   pMsg->pWin->putString(strTmp.latin1());
    pApp->beep();
 
    if (dbg) fprintf(stdout, "xIrcMsgQuery::setupQuery():Exit\n");
@@ -155,9 +151,9 @@ void xIrcMsgQuery::add(xIrcMessage *pmsg)
 
 xIrcMsgQuery::~xIrcMsgQuery()
 {
-   if (dbg) fprintf(stdout, "xIrcMsgQuery::~xIrcMsgQuery(0x%x):Enter\n",
-                            (unsigned int)this);
-   if (dbg) fflush(stdout);
+//   if (dbg) fprintf(stdout, "xIrcMsgQuery::~xIrcMsgQuery(0x%x):Enter\n",
+//                            (unsigned int)this);
+//   if (dbg) fflush(stdout);
    if (pMsg)
       delete pMsg;
    if (pButtons)
@@ -173,14 +169,14 @@ xIrcMsgQuery *xIrcMsgQueryList::find(xIrcMessage *pMsg)
    if (dbg) fflush(stdout);
    for (p = first(); p != NULL; p = next())
    {
-      if (dbg) fprintf(stdout, "xIrcMsgQueryList::find():Testing 0x%x\n",
-                       (unsigned int)p);
-      if (dbg) fflush(stdout);
+//      if (dbg) fprintf(stdout, "xIrcMsgQueryList::find():Testing 0x%x\n",
+//                       (unsigned int)p);
+//      if (dbg) fflush(stdout);
       if (p->is(pMsg))
          break;
    }
-   if (dbg) fprintf(stdout, "xIrcMsgQueryList::find():Exit(0x%x)\n",
-                    (unsigned int)p);
+//   if (dbg) fprintf(stdout, "xIrcMsgQueryList::find():Exit(0x%x)\n",
+//                    (unsigned int)p);
    return(p);
 };
 
@@ -189,7 +185,7 @@ void xIrcMsgQuery::haveTextSelection(xMultiLineTextSelection msg)
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():Enter\n");
    if (dbg) fflush(stdout);
    if (dbg) fprintf(stdout, "xIrcMessageFrame::havetextSelection():winName = |%s|, text = |%s|\n",
-                             (const char *)msg.winName, (const char *)msg.text);
+                             (const char *)msg.winName.latin1(), (const char *)msg.text.latin1());
    if (dbg) fflush(stdout);
    emit textSelected(msg);
 }

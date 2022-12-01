@@ -22,6 +22,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <qt.h>
 #include <qfiledialog.h>
 #include "xIrcPeopleEdit.h"
 #include "xIrcIgnoreQuery.h"
@@ -65,11 +66,7 @@ void xIrcIgnoreQuery::initClass(const char *pName)
    if (pName)
       setCaption(pName);
 
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);
-#endif
    pLabel = new QLabel(this);
    pTable = new xIrcPeopleTable(wdtRes, this, "servertable", "Ignore", 10);
 
@@ -114,7 +111,7 @@ void xIrcIgnoreQuery::initClass(const char *pName)
       pFn = ".xIrc.ignore";
    serverFile += '/';
    serverFile += pFn;
-   pTable->readFile(serverFile);
+   pTable->readFile(serverFile.latin1());
    
    pButtons = new xPshBtnFrame(wdtRes, this);
    pButtons->setFrameStyle(QFrame::Panel | QFrame::Raised);
@@ -203,7 +200,7 @@ void xIrcIgnoreQuery::saveList()
 
    fileName = QFileDialog::getSaveFileName(pPath + "/" + pFn, pFilt, this);
    if (!fileName.isNull())
-      pTable->writeFile(fileName);
+      pTable->writeFile(fileName.latin1());
 }
 
 void xIrcIgnoreQuery::newEntry()
@@ -266,7 +263,7 @@ void xIrcIgnoreQuery::loadList()
    if ((pFilt = Resources->get(wdtRes, "filter", "Filter")) == NULL)
       pFilt = ".xIrc*";
    fileName = QFileDialog::getOpenFileName(pPath + "/" + pFn, pFilt, this);
-   pTable->readFile(fileName);
+   pTable->readFile(fileName.latin1());
    pTable->showRows(pTable->currentRow());
 }
 

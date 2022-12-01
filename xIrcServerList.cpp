@@ -50,30 +50,30 @@ xIrcServerList::xIrcServerList(xIrcServerList &list, xIrcServerEntry *entry)
    countryRE.setWildcard(TRUE);
    groupRE.setWildcard(TRUE);
 
-   if (entry != NULL && strlen(entry->group()) > 0)
+   if (entry != NULL && strlen(entry->group().latin1()) > 0)
       groupRE = entry->group();
    else
-      groupRE = "*";
+      groupRE = QString("*");
 
-   if (entry != NULL && strlen(entry->country()) > 0)
+   if (entry != NULL && strlen(entry->country().latin1()) > 0)
       countryRE = entry->country();
    else
-      countryRE = "*";
+      countryRE = QString("*");
 
-   if (entry != NULL && strlen(entry->state()) > 0)
+   if (entry != NULL && strlen(entry->state().latin1()) > 0)
       stateRE = entry->state();
    else
-      stateRE = "*";
+      stateRE = QString("*");
 
-   if (entry != NULL && strlen(entry->city()) > 0)
+   if (entry != NULL && strlen(entry->city().latin1()) > 0)
       cityRE = entry->city();
    else
-      cityRE = "*";
+      cityRE = QString("*");
 
-   if (entry != NULL && strlen(entry->city()) > 0)
+   if (entry != NULL && strlen(entry->server().latin1()) > 0)
       serverRE = entry->server();
    else
-      serverRE = "*";
+      serverRE = QString("*");
       
    for (; si.current() != NULL; ++si)
    {
@@ -142,7 +142,7 @@ int xIrcServerList::readFile(const char *fn)
                break;
          }
       }
-      xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
+      xIrcServerEntry e(groupStr.latin1(), countryStr.latin1(), stateStr.latin1(), cityStr.latin1(), serverStr.latin1(), portsStr.latin1());
       add(e);
    }
    return(0);
@@ -162,12 +162,12 @@ int xIrcServerList::writeFile(const char *fn)
    for (; si.current() != NULL; ++si)
    {
       sprintf(buf, "%s:%s:%s:%s:%s:%s\n", 
-                  (const char *)si.current()->group(),    
-                  (const char *)si.current()->country(),    
-                  (const char *)si.current()->state(),    
-                  (const char *)si.current()->city(),    
-                  (const char *)si.current()->server(),    
-                  (const char *)si.current()->ports());
+                  (const char *)si.current()->group().latin1(),
+                  (const char *)si.current()->country().latin1(),
+                  (const char *)si.current()->state().latin1(),
+                  (const char *)si.current()->city().latin1(),
+                  (const char *)si.current()->server().latin1(),
+                  (const char *)si.current()->ports().latin1());
       fputs(buf,fp);
    }
    fclose(fp);

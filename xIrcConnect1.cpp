@@ -30,6 +30,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <qt.h>
 #include <qglobal.h>
 #include <qapplication.h>
 #include <qkeycode.h>
@@ -48,6 +49,7 @@
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
+#define VERSION "2.3.8"
 //static int dbg = 0;
 #define dbg 0
 
@@ -68,21 +70,12 @@ static const char *pInitialResources[] =
    NULL
 };
 
-#ifdef QT2
 xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
                          const char *name, WFlags iFlags,
                          int width, int height, int maxLines) :
               xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main"),
                                                   QString("Main")),
                       parent, name, FALSE, iFlags)
-#else
-xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
-                         const char *name, WFlags iFlags,
-                         int width, int height, int maxLines) :
-              xDialog(wdtRes = new xWidgetResInfo(pPRes, QString("main"),
-                                                  QString("Main")),
-                      parent, name, 0)
-#endif
 {
    struct passwd *pPasswdEnt;
    char buf[80];
@@ -121,11 +114,7 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
    pMainWin = new xMultiLineFrame(wdtRes, this, NULL, width, height, maxLines);
    if (AppPixMap != NULL)
       setIcon(*AppPixMap);
-#ifdef QT2
    setFocusPolicy(StrongFocus);
-#else
-   setAcceptFocus(TRUE);   
-#endif
    pPasswdEnt = getpwuid(getuid());
    userName = pPasswdEnt->pw_name;
    realName = pPasswdEnt->pw_gecos;
@@ -412,7 +401,7 @@ void xIrcConnect::goodConnection(int sock)
    xIrcMessageFrame *pMsgFrame;
    QString strTmp;
    char buf[256];
-   int x;
+//   int x;
 
    if (dbg) fprintf(stdout, "xIrcConnect::goodConnection():Success!!!\n");
    if (dbg) fflush(stdout);
@@ -421,11 +410,11 @@ void xIrcConnect::goodConnection(int sock)
       struct sockaddr_in addr;
       addr = pSocket->socketName();
 
-      fprintf(stdout, "xIrcConnect::goodConnection():My IP is:%s (%ld %d)\n",
+/*      fprintf(stdout, "xIrcConnect::goodConnection():My IP is:%s (%ld %d)\n",
                       inet_ntoa(addr.sin_addr), 
-                      htonl(addr.sin_addr.s_addr), addr.sin_port);
+                      htonl(addr.sin_addr.s_addr), addr.sin_port);*/
    }
-   pSocketBox->connected(QString("Connected: Waiting Response from Host"));
+   pSocketBox->connected(QString("Connected: Waiting Response from Host").latin1());
 // pMainWin->pWin->putString("Connected!!!\n");
 
 /*
@@ -439,17 +428,17 @@ void xIrcConnect::goodConnection(int sock)
    sock++;
    sendMsgToSocket(buf);
    if ((pRealName = Defaults.get("REALNAME")) == NULL)
-      pRealName = realName;
+      pRealName = realName.latin1();
    if ((cp = Defaults.get("EMAIL_ADDR")) == NULL)
    {
       pHostName = "dummy.hostname.org";
-      pUserName = userName;
+      pUserName = userName.latin1();
    }
    else
    {
       for (strTmp = ""; *cp && *cp != '@'; cp++)
          strTmp += *cp;
-      pUserName = strTmp;
+      pUserName = strTmp.latin1();
       if (*cp)
          pHostName = ++cp;
       else
@@ -459,7 +448,7 @@ void xIrcConnect::goodConnection(int sock)
                                       ServQuery->server(), pRealName);
    sendMsgToSocket(buf);
 
-   for (x = 0, pMsgFrame = pIrcMsgFrames; pMsgFrame != NULL; pMsgFrame = pMsgFrame->next())
+   for (pMsgFrame = pIrcMsgFrames; pMsgFrame != NULL; pMsgFrame = pMsgFrame->next())
    {
       cp = (char *)pMsgFrame->name();
       if (strlen(cp) > 0 && *cp == '#')
@@ -656,7 +645,7 @@ void xIrcConnect::newNick()
          sendMsgToSocket(buf);
          break;
       }
-      else if((strlen(nickName) == 0) && (NickQuery->result() != Rejected))
+      else if((strlen(nickName.latin1()) == 0) && (NickQuery->result() != Rejected))
          QMessageBox::warning(this, "Error", "You must choose a NickName");
       else
          break;
@@ -848,7 +837,7 @@ void xIrcConnect::recvMessage(xIrcMessage *pMsg)
 {
    xIrcMessage msgOut;
    
-   if (isMsg(pMsg->rspCode, "PING"))
+   if (isMsg(pMsg->rspCode, (char *)"PING"))
    {
       msgOut.rspCode = ircResponses.code("PONG");
       msgOut.dstStr = "";
@@ -874,29 +863,29 @@ void xIrcConnect::showResponse(xIrcMessage *pMsg)
 
    switch(pMsg->rspCode) {
    case 25:
-      sprintf(buf, "*** Mode Change \"%s\"", (const char*)pMsg->msgStr);
+      sprintf(buf, "*** Mode Change \"%s\"", (const char*)pMsg->msgStr.latin1());
       break;
    case 27:
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStr2 = "*** " + pMsg->srcNick + " is now known as " + tmpStrList[1];
-      sprintf(buf, "%s", (const char*)tmpStr2);
+      sprintf(buf, "%s", (const char*)tmpStr2.latin1());
       break;
    case 29:
-      sprintf(buf, "*** Left Channel %s", (const char*)pMsg->dstStr);
+      sprintf(buf, "*** Left Channel %s", (const char*)pMsg->dstStr.latin1());
       break;
    case 33:
       tmpStr = pMsg->rawMsg;
       pos = tmpStr.find(":", 1);
       tmpStr.remove(0, ++pos);
       tmpStr2 = "*** Signoff " + pMsg->srcNick + ": " + tmpStr;
-      sprintf(buf, "%s", (const char*)tmpStr2);
+      sprintf(buf, "%s", (const char*)tmpStr2.latin1());
       break;
    case 311:
       tmpStrList = QStringList::split(":",  pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " is " + tmpStrList1[4] + "@";
       tmpStr2 += tmpStrList1[5] + "(" + tmpStrList[1] + ")";
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 312:
       tmpStr = pMsg->rawMsg;
@@ -905,36 +894,36 @@ void xIrcConnect::showResponse(xIrcMessage *pMsg)
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** on irc server " + tmpStrList1[4] + "(" + tmpStr + ")";
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 314:
       tmpStrList = QStringList::split(":",  pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " was " + tmpStrList1[4] + "@";
       tmpStr2 += tmpStrList1[5] + "(" + tmpStrList[1] + ")";
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 318:
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " " + tmpStrList[1];
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 319:
       tmpStr = pMsg->rawMsg;
       pos = tmpStr.find(":", 1);
       tmpStr.remove(0, ++pos);
       tmpStr2 = "*** on irc channel(s) : " + tmpStr;
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    case 369:
       tmpStrList = QStringList::split(":", pMsg->rawMsg);
       tmpStrList1 = QStringList::split(" ", tmpStrList[0]);
       tmpStr2 = "*** " + tmpStrList1[3] + " " + tmpStrList[1];
-      sprintf(buf, "%s", (const char *)tmpStr2);
+      sprintf(buf, "%s", (const char *)tmpStr2.latin1());
       break;
    default:
-      sprintf(buf, "*** %s", (const char *)pMsg->msgStr);
+      sprintf(buf, "*** %s", (const char *)pMsg->msgStr.latin1());
    }
    pMainWin->pWin->putString(buf);
 }
@@ -942,8 +931,8 @@ void xIrcConnect::showResponse(xIrcMessage *pMsg)
 void xIrcConnect::showError(xIrcMessage *pMsg)
 {
    int rspCode = pMsg->rspCode;
-   if (dbg) fprintf(stdout, "xIrcConnect::showError():Enter:pMsg = %d\n", (int)pMsg);
-   if (dbg) fflush(stdout);
+//   if (dbg) fprintf(stdout, "xIrcConnect::showError():Enter:pMsg = %d\n", (int)pMsg);
+//   if (dbg) fflush(stdout);
    if (rspCode == 431 || rspCode == 432 || rspCode == 433)
       gotErrorAck(rspCode);
    else

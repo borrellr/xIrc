@@ -51,13 +51,8 @@ private:
    int         *pResponseList;
 };
 
-#ifdef QT2
 typedef QList<xIrcMsgDispatchEntry>            xIrcMsgDispatchListBase;
 typedef QListIterator<xIrcMsgDispatchEntry>    xIrcMsgDispatchListIterator;
-#else
-typedef QListT<xIrcMsgDispatchEntry>            xIrcMsgDispatchListBase;
-typedef QListIteratorT<xIrcMsgDispatchEntry>    xIrcMsgDispatchListIterator;
-#endif
 
 class xIrcMsgDispatchList : public xIrcMsgDispatchListBase
 {
