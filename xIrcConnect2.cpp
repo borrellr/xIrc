@@ -46,7 +46,6 @@
 #include "channeldialog.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
-#include "xIrcServerQuery.h"
 #include "invitebox.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"

@@ -1,8 +1,11 @@
 #include <stdlib.h>
+#include <qfile.h>
+#include <qmemarray.h>
 #include <qfiledialog.h>
 #include "xIrcServerQuery.h"
 #include "servereditdialog.h"
 #include "serverconnectdialog.h"
+
 
 xServerQuery::xServerQuery(QWidget *parent, const char *name)
     : QDialog(parent, name)
@@ -22,7 +25,7 @@ xServerQuery::~xServerQuery()
 void xServerQuery::initClass()
 {
    serverList = new xIrcServerList();
-   pTable = new xIrcServerTable(this);
+   pTable = new QTable(this);
    pMenuBar = new QMenuBar(this);
 
    QRect r(0,0,400,400);
@@ -31,6 +34,7 @@ void xServerQuery::initClass()
    pLayout->setMenuBar(pMenuBar);
    pLayout->add(pTable);
    pServerEntry = NULL;
+   initTable();
 }
 
 void xServerQuery::initActions()
@@ -96,7 +100,7 @@ void xServerQuery::initLoadData()
       return;
    }
 //   serverList->showEntries();
-   pTable->loadTable(serverList);
+   loadTable(serverList);
 }
 
 void xServerQuery::newList()
@@ -105,7 +109,7 @@ void xServerQuery::newList()
       delete serverList;
    serverList = new xIrcServerList();
 
-   pTable->clearTable();
+   clearTable();
 }
 
 void xServerQuery::importList()
@@ -130,7 +134,7 @@ void xServerQuery::newEntry()
    if (newEdit->exec()) {
       xIrcServerEntry *result = newEdit->getEntry();
       serverList->add(*result);
-      pTable->addEntry(*result);
+      addEntry(*result);
    }
 }
 
@@ -139,8 +143,8 @@ void xServerQuery::editEntry()
    xIrcServerEdit *modEdit = new xIrcServerEdit(this);
 
    int row = pTable->currentRow();
-   pTable->getRowData(row);
-   xIrcServerEntry *currEntry = pTable->getCurrentEntry();
+   getRowData(row);
+   xIrcServerEntry *currEntry = getCurrentEntry();
 //   currEntry->showEntries();
 
    modEdit->initEntry(serverList->findEntry(currEntry));
@@ -149,18 +153,18 @@ void xServerQuery::editEntry()
       xIrcServerEntry *result = modEdit->getEntry(); 
       serverList->replaceEntry(currEntry, result);
 //      serverList->showEntries();
-      pTable->replaceEntry(row, result);
+      replaceEntry(row, result);
    }
 }
 
 void xServerQuery::deleteEntry()
 {
    int row = pTable->currentRow();
-   pTable->getRowData(row);
-   xIrcServerEntry *currEntry = pTable->getCurrentEntry();
+   getRowData(row);
+   xIrcServerEntry *currEntry = getCurrentEntry();
 //   currEntry->showEntries();
    pTable->removeRow(row);
-   pTable->decCurNumRows();
+   decCurNumRows();
    serverList->removeEntry(currEntry);
 }
 
@@ -179,8 +183,8 @@ void xServerQuery::loadList()
          return;
       }
       //serverList->showEntries();
-      //pTable->loadTable(serverList);
-      pTable->readFile(fileName);
+      //loadTable(serverList);
+      readTableFile(fileName);
    }
 }
 
@@ -188,8 +192,8 @@ void xServerQuery::connectServer()
 {
    xIrcConnectDialog *conServer = new xIrcConnectDialog(this);
    int row = pTable->currentRow();
-   pTable->getRowData(row);
-   xIrcServerEntry *currEntry = pTable->getCurrentEntry();
+   getRowData(row);
+   xIrcServerEntry *currEntry = getCurrentEntry();
    conServer->initEntry(serverList->findEntry(currEntry));
    conServer->show();
    conServer->raise();
@@ -206,7 +210,149 @@ void xServerQuery::disconnectServer()
    done(Disconnect);
 }
 
-void xServerQuery::reject()
+void xServerQuery::initTable()
 {
-   QDialog::reject();
+   pTable->setNumRows(0);
+   pTable->setNumCols(0);
+   pTable->setNumRows(NumRows);
+   pTable->setNumCols(NumCols);
+//   void addEntry(xIrcServerEntry &e);
+   pTable->horizontalHeader()->setLabel(0, "Group");
+   pTable->horizontalHeader()->setLabel(1, "Country");
+   pTable->horizontalHeader()->setLabel(2, "State");
+   pTable->horizontalHeader()->setLabel(3, "City");
+   pTable->horizontalHeader()->setLabel(4, "Server");
+   pTable->selectRow(0);
+   setCurNumRows(0);
+}
+
+void xServerQuery::loadTable(xIrcServerList *srvList)
+{
+    xIrcServerListIterator si(*srvList);
+
+    while (si.current() != NULL) {
+       addEntry(*si.current());
+       ++si;
+    }
+    pTable->adjustColumn(4);
+}
+
+void xServerQuery::getRowData(int row)
+{
+   findEntry.setGroup(pTable->text(row, 0).latin1());
+   findEntry.setCountry(pTable->text(row, 1).latin1());
+   findEntry.setState(pTable->text(row, 2).latin1());
+   findEntry.setCity(pTable->text(row, 3).latin1());
+   findEntry.setServer(pTable->text(row, 4).latin1());
+//   findEntry.showEntries();
+}
+
+void xServerQuery::clearTable()
+{
+   int max = pTable->numRows();
+   QMemArray<int> f(max);
+
+   for (int i = 0; i < max; i++)
+       f[i] = i;
+
+   pTable->removeRows(f);
+   pTable->setNumRows(20);
+   setCurNumRows(0);
+}
+
+void xServerQuery::addEntry(xIrcServerEntry &entry)
+{
+   QString tmpStr;
+   int row = getCurNumRows();
+   int col = 0;
+
+   if (row == pTable->numRows())
+      pTable->setNumRows(row + 1);
+
+   tmpStr = entry.group();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = entry.country();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = entry.state();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = entry.city();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = entry.server();
+   pTable->setText(row, col, tmpStr);
+
+   row++;
+   setCurNumRows(row);
+}
+
+void xServerQuery::replaceEntry(int row, xIrcServerEntry *modEntry)
+{
+   QString tmpStr;
+   int col = 0;
+
+   tmpStr = modEntry->group();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = modEntry->country();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = modEntry->state();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = modEntry->city();
+   pTable->setText(row, col, tmpStr);
+   ++col;
+
+   tmpStr = modEntry->server();
+   pTable->setText(row, col, tmpStr);
+}
+
+bool xServerQuery::readTableFile(const QString &fn)
+{
+   QFile f(fn);
+
+   if (!f.exists()) {
+       qWarning("File %s does not exists\n", fn.latin1());
+       return false;
+   }
+
+   if (!f.open(IO_ReadOnly)) {
+      qWarning("File %s is not readonly\n", fn.latin1());
+      return false;
+   }
+
+   QTextStream stream(&f);
+   QString line;
+   QString groupStr, countryStr, stateStr, cityStr, serverStr, portsStr;
+   QStringList dataLines;
+
+   while ( !stream.atEnd()) {
+      line = stream.readLine();
+      if (!line.isEmpty()) {
+         dataLines = QStringList::split(":", line);
+         if (dataLines.count() == 6) {
+            groupStr = dataLines[0];
+            countryStr = dataLines[1];
+            stateStr = dataLines[2];
+            cityStr = dataLines[3];
+            serverStr = dataLines[4];
+            portsStr = dataLines[5];
+            xIrcServerEntry e(groupStr, countryStr, stateStr, cityStr, serverStr, portsStr);
+            addEntry(e);
+         }
+         dataLines.clear();
+      }
+   }
+   f.close();
+   return true;
 }

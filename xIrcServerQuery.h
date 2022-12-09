@@ -7,9 +7,10 @@
 #include <qpopmenu.h>
 #include <qaction.h>
 #include <qstring.h>
+#include <qstringlist.h>
+#include <qtable.h>
 #include "xIrcServerEntry.h"
 #include "xIrcServerList.h"
-#include "xIrcServerTable.h"
 
 class xServerQuery : public QDialog
 {
@@ -24,7 +25,7 @@ public:
 signals:
    void msgToSocket(const char *pBuf);
 
-public slots:
+private slots:
    void newList();
    void importList();
    void saveList();
@@ -34,16 +35,26 @@ public slots:
    void loadList();
    void connectServer();
    void disconnectServer();
-   void reject();
-
-protected slots:
-   virtual void done(int results) { QDialog::done(results); };
+   void getRowData(int rows);
 
 private:
    void initClass();
    void initActions();
    void initMenus();
    void initLoadData();
+   void loadTable(xIrcServerList *srvList);
+   void clearTable();
+   void addEntry(xIrcServerEntry &e);
+   int curNumRows;
+   void setCurNumRows(int rows) { curNumRows = rows; };
+    int getCurNumRows() { return curNumRows; };
+   void incCurNumRows() { ++curNumRows; };
+   void decCurNumRows() { --curNumRows; };
+   xIrcServerEntry findEntry;
+   xIrcServerEntry *getCurrentEntry() { return &findEntry; };
+   void replaceEntry(int r, xIrcServerEntry *e);
+   void initTable();
+   bool readTableFile(const QString &fn);
 
    QString connServer;
    QString connPort;
@@ -53,7 +64,9 @@ private:
    QPopupMenu        *pServerMenu;
    xIrcServerEntry   *pServerEntry;
    xIrcServerList    *serverList;
-   xIrcServerTable   *pTable;
+   QTable            *pTable;
+   enum { NumRows = 20, NumCols = 5 };
+   enum { Group, Country, State, City, Server, Ports, Max };
 
    QAccel  *pAccel;
    QAction *newListAct;
