@@ -248,19 +248,15 @@
     <tabstop>buttonCancel</tabstop>
 </tabstops>
 <includes>
-    <include location="local" impldecl="in declaration">xIrcServerEntry.h</include>
     <include location="local" impldecl="in implementation">servereditdialog.ui.h</include>
 </includes>
-<variables>
-    <variable access="private">xIrcServerEntry *pEntry;</variable>
-</variables>
 <slots>
     <slot>enableOkButton()</slot>
 </slots>
 <functions>
     <function returnType="bool">isEnable()</function>
-    <function>initEntry( xIrcServerEntry * entry )</function>
-    <function returnType="xIrcServerEntry *">getEntry()</function>
+    <function>initEntry( const QString &amp; entry )</function>
+    <function returnType="const QString &amp;">getEntry()</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

@@ -10,7 +10,9 @@
 ** destructor.
 *****************************************************************************/
 #include <qstring.h>
-#include "xIrcServerEntry.h"
+#include <qstringlist.h>
+
+enum { Group, Country, State, City, Server, Ports, Max };
 
 void xIrcServerEdit::enableOkButton()
 {
@@ -19,53 +21,70 @@ void xIrcServerEdit::enableOkButton()
 
 bool xIrcServerEdit::isEnable()
 {
-   return (!groupEdit->text().isEmpty() && !countryEdit->text().isEmpty() &&
-     !cityEdit->text().isEmpty() && !serverEdit->text().isEmpty() &&
+   return (!groupEdit->text().isEmpty() && !serverEdit->text().isEmpty() &&
      !portEdit->text().isEmpty());
 }
 
 
 
-void xIrcServerEdit::initEntry( xIrcServerEntry *entry )
+void xIrcServerEdit::initEntry(const QString &entry )
 {
    QString tmpStr;
+   QStringList tmpList;
 
-   tmpStr = entry->group();
-   if (!tmpStr.isEmpty())
+   tmpList = QStringList::split(":", entry);
+
+   tmpStr = tmpList[Group];
+   if (tmpStr.isEmpty())
+      groupEdit->clear();
+   else
       groupEdit->setText(tmpStr);
 
-   tmpStr = entry->country();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[Country];
+   if (tmpStr.isEmpty())
+      countryEdit->clear();
+   else
       countryEdit->setText(tmpStr);
 
-   tmpStr = entry->state();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[State];
+   if (tmpStr.isEmpty())
+      stateEdit->clear();
+   else
       stateEdit->setText(tmpStr);
 
-   tmpStr = entry->city();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[City];
+   if (tmpStr.isEmpty())
+      cityEdit->clear();
+   else
       cityEdit->setText(tmpStr);
 
-   tmpStr = entry->server();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[Server];
+   if (tmpStr.isEmpty())
+      serverEdit->clear();
+   else
       serverEdit->setText(tmpStr);
 
-   tmpStr = entry->ports();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[Ports];
+   if (tmpStr.isEmpty())
+      portEdit->clear();
+   else
       portEdit->setText(tmpStr);
 }
 
 
-xIrcServerEntry * xIrcServerEdit::getEntry()
+const QString &xIrcServerEdit::getEntry()
 {
-   xIrcServerEntry *entry = new xIrcServerEntry();
+   QStringList entry;
+   QString *retStr = new QString();
 
-   entry->setGroup(groupEdit->text().latin1());
-   entry->setCountry(countryEdit->text().latin1());
-   entry->setState(stateEdit->text().latin1());
-   entry->setCity(cityEdit->text().latin1());
-   entry->setServer(serverEdit->text().latin1());
-   entry->setPorts(portEdit->text().latin1());
+   entry.append(groupEdit->text());
+   entry.append(countryEdit->text());
+   entry.append(stateEdit->text());
+   entry.append(cityEdit->text());
+   entry.append(serverEdit->text());
+   entry.append(portEdit->text());
 
-   return entry;
+   *retStr = entry.join(":");
+
+   return *retStr;
 }

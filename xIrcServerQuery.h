@@ -9,8 +9,6 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qtable.h>
-#include "xIrcServerEntry.h"
-#include "xIrcServerList.h"
 
 class xServerQuery : public QDialog
 {
@@ -35,35 +33,33 @@ private slots:
    void loadList();
    void connectServer();
    void disconnectServer();
-   void getRowData(int rows);
+   const QString &getRowData(int rows);
 
 private:
    void initClass();
    void initActions();
    void initMenus();
    void initLoadData();
-   void loadTable(xIrcServerList *srvList);
+   void loadTable();
    void clearTable();
-   void addEntry(xIrcServerEntry &e);
+   void addEntry(const QString &e);
    int curNumRows;
    void setCurNumRows(int rows) { curNumRows = rows; };
     int getCurNumRows() { return curNumRows; };
    void incCurNumRows() { ++curNumRows; };
    void decCurNumRows() { --curNumRows; };
-   xIrcServerEntry findEntry;
-   xIrcServerEntry *getCurrentEntry() { return &findEntry; };
-   void replaceEntry(int r, xIrcServerEntry *e);
+   void replaceEntry(int r, const QString &e);
    void initTable();
    bool readTableFile(const QString &fn);
+   bool writeFile(const QString &fn);
 
+   QStringList serverList;
    QString connServer;
    QString connPort;
    QLayout           *pLayout;
    QMenuBar          *pMenuBar;
    QPopupMenu        *pFileMenu;
    QPopupMenu        *pServerMenu;
-   xIrcServerEntry   *pServerEntry;
-   xIrcServerList    *serverList;
    QTable            *pTable;
    enum { NumRows = 20, NumCols = 5 };
    enum { Group, Country, State, City, Server, Ports, Max };

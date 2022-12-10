@@ -2,23 +2,23 @@ SOURCES += xIrc.cpp \
 xIrcCommands.cpp xIrcConnect1.cpp xIrcConnect2.cpp xIrcConnect3.cpp \
 xIrcDccChatFrame.cpp xIrcDccFile.cpp xIrcDccQuery.cpp \
 xIrcDccSocket.cpp xIrcIgnoreQuery.cpp \
-xIrcMircServerParse.cpp xIrcMsgDispatch.cpp xIrcMsgDispatchEntry.cpp \
+xIrcMsgDispatch.cpp xIrcMsgDispatchEntry.cpp \
 xIrcMsgFrame1.cpp xIrcMsgFrame2.cpp xIrcMsgQuery.cpp \
 xIrcNickCombo.cpp xIrcNickList.cpp xIrcNickListEntry.cpp \
 xIrcNotifyQuery.cpp xIrcNotifyTable.cpp xIrcPeopleEntry.cpp \
-xIrcPeopleList.cpp xIrcPeopleTable.cpp xIrcServerEntry.cpp \
-xIrcServerList.cpp xIrcServerQuery.cpp xIrcSocket.cpp
+xIrcPeopleList.cpp xIrcPeopleTable.cpp \
+xIrcServerQuery.cpp xIrcSocket.cpp
 
 
 HEADERS += ircreply.h xIrcChannelQuery.h \
 xIrcCommands.h xIrcConnect.h xIrcDccChatFrame.h \
 xIrcDccFile.h xIrcDccQuery.h xIrcDccSocket.h xIrcIgnoreQuery.h \
-xIrcLineEditQuery.h xIrcMircServerParse.h xIrcMsgDispatchEntry.h \
+xIrcLineEditQuery.h xIrcMsgDispatchEntry.h \
 xIrcMsgDispatch.h xIrcMsgFrame.h xIrcMsgQuery.h \
 xIrcNickCombo.h xIrcNickListEntry.h xIrcNickList.h \
 xIrcNotifyQuery.h xIrcNotifyTable.h xIrcPeopleEntry.h \
-xIrcPeopleList.h xIrcPeopleTable.h xIrcServerEntry.h \
-xIrcServerList.h xIrcServerQuery.h xIrcSocket.h
+xIrcPeopleList.h xIrcPeopleTable.h \
+xIrcServerQuery.h xIrcSocket.h
 
 
 INTERFACES += servereditdialog.ui \

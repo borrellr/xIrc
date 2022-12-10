@@ -236,22 +236,21 @@
     <tabstop>buttonCancel</tabstop>
 </tabstops>
 <includes>
-    <include location="local" impldecl="in declaration">xIrcServerEntry.h</include>
     <include location="global" impldecl="in declaration">qlineedit.h</include>
     <include location="global" impldecl="in declaration">qstringlist.h</include>
+    <include location="global" impldecl="in declaration">qstring.h</include>
     <include location="local" impldecl="in implementation">serverconnectdialog.ui.h</include>
 </includes>
 <variables>
-    <variable access="private">xIrcServerEntry *pEntry;</variable>
-    <variable access="private">QLineEdit *portLine;</variable>
     <variable access="private">QStringList listItems;</variable>
+    <variable access="private">QLineEdit *portLine;</variable>
 </variables>
 <slots>
     <slot access="private">appendLine()</slot>
 </slots>
 <functions>
-    <function>initEntry( xIrcServerEntry * entry )</function>
-    <function returnType="xIrcServerEntry *">getEntry()</function>
+    <function>initEntry( const QString &amp; entry )</function>
+    <function returnType="const QString &amp;">getEntry()</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

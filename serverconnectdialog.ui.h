@@ -10,31 +10,44 @@
 ** destructor.
 *****************************************************************************/
 
-void xIrcConnectDialog::initEntry( xIrcServerEntry *entry )
+enum { Group, Country, State, City, Server, Ports, Max };
+
+void xIrcConnectDialog::initEntry(const QString &entry)
 {
+   QStringList tmpList = QStringList::split(":", entry);
    QString tmpStr;
 
-   tmpStr = entry->group();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[Group];
+   if (tmpStr.isEmpty())
+      groupEdit->clear();
+   else
       groupEdit->setText(tmpStr);
    
-   tmpStr = entry->country();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[Country];
+   if (tmpStr.isEmpty())
+      countryEdit->clear();
+   else
       countryEdit->setText(tmpStr);
 
-   tmpStr = entry->state();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[State];
+   if (tmpStr.isEmpty())
+      stateEdit->clear();
+   else
       stateEdit->setText(tmpStr);
 
-   tmpStr = entry->city();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[City];
+   if (tmpStr.isEmpty())
+      cityEdit->clear();
+   else
       cityEdit->setText(tmpStr);
 
-   tmpStr = entry->server();
-   if (!tmpStr.isEmpty())
+   tmpStr = tmpList[Server];
+   if (tmpStr.isEmpty())
+      serverEdit->clear();
+   else
       serverEdit->setText(tmpStr);
 
-   tmpStr = entry->ports();
+   tmpStr = tmpList[Ports];
    if (!tmpStr.isEmpty())
    {
       QStringList portList = QStringList::split(",", tmpStr);
@@ -43,18 +56,20 @@ void xIrcConnectDialog::initEntry( xIrcServerEntry *entry )
 }
 
 
-xIrcServerEntry * xIrcConnectDialog::getEntry()
+const QString &xIrcConnectDialog::getEntry()
 {
-   xIrcServerEntry *entry = new xIrcServerEntry();
+   QStringList tmpList;
+   QString *tmpStr = new QString();
 
-   entry->setGroup(groupEdit->text().latin1());
-   entry->setCountry(countryEdit->text().latin1());
-   entry->setState(stateEdit->text().latin1());
-   entry->setCity(cityEdit->text().latin1());
-   entry->setServer(serverEdit->text().latin1());
-   entry->setPorts(portComboBox->currentText().latin1());
+   tmpList.append(groupEdit->text());
+   tmpList.append(countryEdit->text());
+   tmpList.append(stateEdit->text());
+   tmpList.append(cityEdit->text());
+   tmpList.append(serverEdit->text());
+   tmpList.append(portComboBox->currentText());
+   *tmpStr = tmpList.join(":");
 
-   return entry;
+   return *tmpStr;
 }
 
 
