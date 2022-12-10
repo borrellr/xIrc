@@ -35,3 +35,5 @@ channickbox.cpp
 channickbox.h
 invitebox.cpp
 invitebox.h
+xservquery.cpp
+xservquery.h
