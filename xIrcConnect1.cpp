@@ -42,7 +42,7 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
-#include "xIrcServerQuery.h"
+#include "xservquery.h"
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
@@ -54,7 +54,7 @@ static bool dbg = false;
 extern xDefaults Defaults;
 extern nickNameDialog *NickQuery;
 extern xChannelQuery *ChanQuery;
-extern xServerQuery *ServQuery;
+extern xServQuery *ServQuery;
 extern xIrcQuitDialog *QuitQuery;
 extern xIrcCommands ircResponses;
 extern QPixmap *AppPixMap;
@@ -351,7 +351,7 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.4.1d \n"
+                  "Version: 2.4.2 \n"
                   "License: GPL\n"
                   "Copyright: 1997-2022\n\n"
                   "Maintained by Robert Borrell\n"
@@ -567,8 +567,8 @@ void xIrcConnect::newServer()
    if (dbg) fflush(stdout);
    if ((btn = ServQuery->exec()) != QDialog::Rejected)
    {
-      if (pSocket != NULL && (btn == xServerQuery::Disconnect ||
-                                      btn == xServerQuery::Accepted))
+      if (pSocket != NULL && (btn == xServQuery::Disconnect ||
+                                      btn == xServQuery::Accepted))
       {
          if (dbg) {
              fprintf(stderr, "xIrcConnect::newServer():Disconnecting from Current Socket\n");
@@ -599,7 +599,7 @@ void xIrcConnect::newServer()
          if (dbg) fprintf(stderr, "xIrcConnect::newServer():Disconnection done\n");
          if (dbg) fflush(stderr);
       }
-      if (btn == xServerQuery::Accepted)
+      if (btn == xServQuery::Accepted)
       {
          if (dbg) {
             printf("xIrcConnect::newServer():Creating new socket\n");

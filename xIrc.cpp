@@ -49,7 +49,7 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcNickCombo.h"
 #include "xIrcLineEditQuery.h"
-#include "xIrcServerQuery.h"
+#include "xservquery.h"
 #include "channeldialog.h"
 #include "quitform.h"
 #include "kickmsgdialog.h"
@@ -65,7 +65,7 @@ xChannelQuery *ChanQuery = NULL;
 nickNameDialog *NickQuery = NULL;
 xIrcKickDialog *KickQuery = NULL;
 xIrcQuitDialog *QuitQuery = NULL;
-xServerQuery *ServQuery = NULL;
+xServQuery *ServQuery = NULL;
 xWidgetResInfo appRes(NULL, QString("xirc"), QString("XIRC"));
 QPixmap *AppPixMap;
 
@@ -287,8 +287,8 @@ static void InitializeWindows()
 {
    if (dbg) fprintf(stdout, "main():ServQuery\n");   
    if (dbg) fflush(stdout);
-//   ServQuery = new xServerQuery(&appRes, NULL, "Server Selection");
-   ServQuery = new xServerQuery(NULL, "Server Selection");
+//   ServQuery = new xServQuery(&appRes, NULL, "Server Selection");
+   ServQuery = new xServQuery(NULL, "Server Selection");
 
    if (dbg) fprintf(stdout, "main():Opening channel Query\n");   
    if (dbg) fflush(stdout);

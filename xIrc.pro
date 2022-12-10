@@ -7,7 +7,7 @@ xIrcMsgFrame1.cpp xIrcMsgFrame2.cpp xIrcMsgQuery.cpp \
 xIrcNickCombo.cpp xIrcNickList.cpp xIrcNickListEntry.cpp \
 xIrcNotifyQuery.cpp xIrcNotifyTable.cpp xIrcPeopleEntry.cpp \
 xIrcPeopleList.cpp xIrcPeopleTable.cpp \
-xIrcServerQuery.cpp xIrcSocket.cpp
+xIrcSocket.cpp
 
 
 HEADERS += ircreply.h xIrcChannelQuery.h \
@@ -18,11 +18,12 @@ xIrcMsgDispatch.h xIrcMsgFrame.h xIrcMsgQuery.h \
 xIrcNickCombo.h xIrcNickListEntry.h xIrcNickList.h \
 xIrcNotifyQuery.h xIrcNotifyTable.h xIrcPeopleEntry.h \
 xIrcPeopleList.h xIrcPeopleTable.h \
-xIrcServerQuery.h xIrcSocket.h
+xIrcSocket.h
 
 
 INTERFACES += servereditdialog.ui \
            serverconnectdialog.ui \
+           xservquery.ui \
            quitform.ui \
            kickmsgdialog.ui \
            nicknameform.ui \
