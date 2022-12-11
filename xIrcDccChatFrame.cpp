@@ -234,6 +234,7 @@ int xIrcDccChatFrame::acceptdcc()
    {
       if (dbg) fprintf(stdout, "xIrcDccChatFrame::accept():pSocket->accept() exited ok\n");
       addr = pSocket->socketName();
+#if 0
       if (dbg) 
       {
          fprintf(stdout, "xIrcDccChatFrame::accept():got socket name (%s) %ld:%d\n",
@@ -242,6 +243,7 @@ int xIrcDccChatFrame::acceptdcc()
                                 addr.sin_port);
          fflush(stdout);
       }
+#endif
       sprintf(buf1, "%s:%d", inet_ntoa(addr.sin_addr), addr.sin_port);
       sprintf(buf, "Waiting connection on socket: %s\n", buf1);
       pMsgFrame->pWin->putString(buf);

@@ -216,6 +216,7 @@ int xIrcDccFile::accept(int _fd)
       if (dbg) fprintf(stdout, "xIrcDccFile::accept():pSocket->accept() exited ok\n");
       struct sockaddr_in addr = pSocket->socketName();
       sprintf(buf1, "%s:%d", inet_ntoa(addr.sin_addr), addr.sin_port);
+#if 0
       if (dbg) 
       {
          fprintf(stdout, "xIrcDccFile::accept():got socket name (%s) %ld:%d\n",
@@ -224,6 +225,7 @@ int xIrcDccFile::accept(int _fd)
                                 addr.sin_port);
          fflush(stdout);
       }
+#endif
       sprintf(buf, "Waiting connection on socket: %s\n", buf1);
       pMsgFrame->pWin->putString(buf);
       emit initiateDCCFile(this);
@@ -356,17 +358,21 @@ void xIrcDccFile::socketIn(xSocketBuffer sb)
       {
          dataAckTmp = dataAckTmp * 256;
          dataAckTmp += *sb.buf;
+#if 0
          if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn(): dataAckTmp = 0x%x, BCnt = %d, sb = 0x%x, sizof(long) = %d\n",
                               dataAckTmp, dataAckBCnt, *sb.buf, sizeof(long));
          if (dbg > 3) fflush(stdout);
+#endif
          sb.buf++;
          if (++dataAckBCnt == 4)
          {
+#if 0
             if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn(): ntohl:dataAckTmp = 0x%lx, BCnt = %d, dataAckCnt = 0x%x\n",
                                  ntohl(dataAckTmp), dataAckBCnt, dataAckCnt);
             if (dbg > 3) fflush(stdout);
             if (dbg > 3) fprintf(stdout, "xIrcDccFile::socketIn():Got an Ack!\n");
             if (dbg > 3) fflush(stdout);
+#endif
             dataAckTmp = 0;
             dataAckBCnt = 0;
          }

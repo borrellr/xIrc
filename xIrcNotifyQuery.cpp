@@ -28,7 +28,7 @@
 #include "xIrcConnect.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcNotifyQuery.h"
-#include "xIrcPeopleEdit.h"
+#include "peopleedit.h"
 
 static bool dbg = false;
                     
@@ -246,8 +246,10 @@ void xIrcNotifyQuery::saveList()
 void xIrcNotifyQuery::newEntry()
 {
    xIrcPeopleEntry e("", "", "", 1);
+   QString n("Notify Entry Edit");
 
-   xIrcPeopleEdit editDlg(wdtRes, NULL, "Notify Entry Edit", &e);
+   xIrcPeopleEdit editDlg;
+   editDlg.initEntry(&e, n);
    if (editDlg.exec() == QDialog::Accepted)
       pTable->add(e);
    pTable->showRows(pTable->currentRow());
@@ -257,7 +259,9 @@ void xIrcNotifyQuery::editEntry(int entry)
 {
    if (pTable->entry(entry) != NULL)
    {
-      xIrcPeopleEdit editDlg(wdtRes, NULL, "Notify Entry Edit", pTable->entry(entry));
+      QString n("Notify Entry Edit");
+      xIrcPeopleEdit editDlg;
+      editDlg.initEntry(pTable->entry(entry), n);
       editDlg.exec();
       pTable->showRows(pTable->currentRow());
    }
@@ -269,8 +273,9 @@ void xIrcNotifyQuery::editEntry()
 {
    if (pTable->entry(pTable->selectedRow()) != NULL)
    {
-      xIrcPeopleEdit editDlg(wdtRes, NULL, "Notify", 
-                             pTable->entry(pTable->selectedRow()));
+      QString n("Notify");
+      xIrcPeopleEdit editDlg;
+      editDlg.initEntry(pTable->entry(pTable->selectedRow()), n);
       editDlg.exec();
       pTable->showRows(pTable->currentRow());
    }
@@ -444,10 +449,12 @@ bool xIrcNotifyQuery::gotNotification(xIrcMessage *pMsg)
                (const char *)pEntry->mask().latin1());
             if (pEntry->message() != NULL && !pEntry->message().isEmpty())
             {
+#if 0
                if (dbg) fprintf(stdout, "xIrcNotifyQuery::gotNotification():Sending Message %d:|%s|\n",
                                     (int)((const char *)pEntry->message().latin1()),
                                     (const char *)pEntry->message().latin1());
                if (dbg) fflush(stdout);
+#endif
                msg.rspCode = ircResponses.code("PRIVMSG");
                msg.dstStr = getNick(pMsg);
                msg.msgStr = pEntry->message();

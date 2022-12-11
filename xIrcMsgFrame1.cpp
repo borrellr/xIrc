@@ -188,7 +188,8 @@ xIrcMessageFrame::xIrcMessageFrame(xWidgetResInfo *pPRes, QWidget *pParent,
    {
       if (dbg) fprintf(stdout, "xIrcmessageFrame::xIrcMessageFrame():Creating Channel nick box\n");
       if (dbg) fflush(stdout);
-      pNicks = new xIrcChanNickBox(wdtRes, NULL, pName);
+      pNicks = new xIrcChanNickBox(this);
+      pNicks->setChanName(pName);
       pNicks->show();
       connect(pNicks, SIGNAL(buttonPressed(int)), this, SLOT(nickButtonPressed(int)));
       connect(pNicks, SIGNAL(nickSelected(const char*)), this, SLOT(haveNickSelected(const char*)));
@@ -318,7 +319,8 @@ void xIrcMessageFrame::newName(const char *pName)
    {
       if (pNicks)
          delete pNicks;
-      pNicks = new xIrcChanNickBox(wdtRes, NULL, pName);
+      pNicks = new xIrcChanNickBox(this);
+      pNicks->setChanName(pName);
       pNicks->show();
       pNickUpdateTimer->start(NICK_UPDATE_TIME);
       pNickPurgeTimer->start(NICK_PURGE_TIME);
@@ -513,7 +515,7 @@ void xIrcMessageFrame::putString(const char *pStr)
 bool xIrcMessageFrame::procServerMsg(xIrcMessage *pMsg)
 {
    QString tmpDst, tmpSrc, tmpNick, tmpName;
-   const char *cp;
+//   const char *cp;
    bool rv = FALSE, b = FALSE;
    
    if (dbg) fprintf(stdout, "xIrcMessageFrame::ProcServerMsg(%s):Enter\n", name());

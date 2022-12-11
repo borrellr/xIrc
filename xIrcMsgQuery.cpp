@@ -150,9 +150,11 @@ void xIrcMsgQuery::add(xIrcMessage *pmsg)
 
 xIrcMsgQuery::~xIrcMsgQuery()
 {
+#if 0
    if (dbg) fprintf(stdout, "xIrcMsgQuery::~xIrcMsgQuery(0x%x):Enter\n",
                             (unsigned int)this);
    if (dbg) fflush(stdout);
+#endif
    if (pMsg)
       delete pMsg;
    if (pButtons)
@@ -168,14 +170,18 @@ xIrcMsgQuery *xIrcMsgQueryList::find(xIrcMessage *pMsg)
    if (dbg) fflush(stdout);
    for (p = first(); p != NULL; p = next())
    {
+#if 0
       if (dbg) fprintf(stdout, "xIrcMsgQueryList::find():Testing 0x%x\n",
                        (unsigned int)p);
       if (dbg) fflush(stdout);
+#endif
       if (p->is(pMsg))
          break;
    }
+#if 0
    if (dbg) fprintf(stdout, "xIrcMsgQueryList::find():Exit(0x%x)\n",
                     (unsigned int)p);
+#endif
    return(p);
 };
 

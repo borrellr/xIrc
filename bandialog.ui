@@ -1,0 +1,252 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>xIrcBanDialog</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>xIrcBanDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>376</width>
+            <height>238</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Ban</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>10</y>
+                <width>316</width>
+                <height>220</height>
+            </rect>
+        </property>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout1</cstring>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLabel" row="3" column="0">
+                        <property name="name">
+                            <cstring>messLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Message:&lt;/p&gt;</string>
+                        </property>
+                        <property name="buddy" stdset="0">
+                            <cstring>lineEdit2_4</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>chanLabel</cstring>
+                        </property>
+                        <property name="frameShape">
+                            <enum>NoFrame</enum>
+                        </property>
+                        <property name="frameShadow">
+                            <enum>Plain</enum>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Channel:&lt;/p&gt;</string>
+                        </property>
+                        <property name="buddy" stdset="0">
+                            <cstring>lineEdit2_2</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="0">
+                        <property name="name">
+                            <cstring>maskLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Mask:&lt;/p&gt;</string>
+                        </property>
+                        <property name="buddy" stdset="0">
+                            <cstring>lineEdit2_3</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="0" column="1">
+                        <property name="name">
+                            <cstring>nickEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="3" column="1">
+                        <property name="name">
+                            <cstring>messEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="2" column="1">
+                        <property name="name">
+                            <cstring>maskEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="0">
+                        <property name="name">
+                            <cstring>nickLabel</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Nick:&lt;/p&gt;</string>
+                        </property>
+                        <property name="buddy" stdset="0">
+                            <cstring>lineEdit2</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="1" column="1">
+                        <property name="name">
+                            <cstring>chanEdit</cstring>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout2</cstring>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QPushButton" row="0" column="1">
+                        <property name="name">
+                            <cstring>kickButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Kick</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="0">
+                        <property name="name">
+                            <cstring>banButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Ban</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="1">
+                        <property name="name">
+                            <cstring>defaultButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Default</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="0" column="2">
+                        <property name="name">
+                            <cstring>unbanButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>unBan</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="2">
+                        <property name="name">
+                            <cstring>cancelButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Cancel</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton" row="1" column="0">
+                        <property name="name">
+                            <cstring>clearButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Clear</string>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcBanDialog</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>clearButton</sender>
+        <signal>clicked()</signal>
+        <receiver>nickEdit</receiver>
+        <slot>clear()</slot>
+    </connection>
+    <connection>
+        <sender>banButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcBanDialog</receiver>
+        <slot>banSlot()</slot>
+    </connection>
+    <connection>
+        <sender>kickButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcBanDialog</receiver>
+        <slot>kickSlot()</slot>
+    </connection>
+    <connection>
+        <sender>defaultButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcBanDialog</receiver>
+        <slot>defaultSlot()</slot>
+    </connection>
+    <connection>
+        <sender>unbanButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcBanDialog</receiver>
+        <slot>unbanSlot()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>nickEdit</tabstop>
+    <tabstop>chanEdit</tabstop>
+    <tabstop>maskEdit</tabstop>
+    <tabstop>messEdit</tabstop>
+    <tabstop>banButton</tabstop>
+    <tabstop>kickButton</tabstop>
+    <tabstop>unbanButton</tabstop>
+    <tabstop>clearButton</tabstop>
+    <tabstop>defaultButton</tabstop>
+    <tabstop>cancelButton</tabstop>
+</tabstops>
+<includes>
+    <include location="global" impldecl="in declaration">qstring.h</include>
+    <include location="global" impldecl="in declaration">qlineedit.h</include>
+    <include location="local" impldecl="in implementation">bandialog.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">QString defaultMsg;</variable>
+    <variable access="public">enum QryResults { Rejected, Accepted, Kick, UnBan, Default, Clear };</variable>
+</variables>
+<slots>
+    <slot access="private">banSlot()</slot>
+    <slot access="private">kickSlot()</slot>
+    <slot access="private">unbanSlot()</slot>
+    <slot access="private">defaultSlot()</slot>
+</slots>
+<functions>
+    <function returnType="const char *">nick()</function>
+    <function returnType="const char *">chan()</function>
+    <function returnType="const char *">mask()</function>
+    <function returnType="const char *">text()</function>
+    <function>setNick( const QString &amp; str )</function>
+    <function>setText( const QString &amp; str )</function>
+    <function>setChan( const QString &amp; str )</function>
+    <function>setMask( const QString &amp; str )</function>
+    <function>setDefaultMsg( const QString &amp; str )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

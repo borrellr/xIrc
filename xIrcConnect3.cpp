@@ -39,7 +39,7 @@
 #include "xIrcCommands.h"
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
-#include "xIrcPeopleEdit.h"
+#include "peopleedit.h"
 #include "xIrcPeopleEntry.h"
 #include "kickmsgdialog.h"
 #include "xDefaults.h"
@@ -314,7 +314,7 @@ void xIrcConnect::nickActionHandler(xMultiLineTextSelection txtSel)
                      else
                      {
                         char buf[256];
-                        sprintf("Error making connection:%s", strerror(err));
+                        sprintf(buf, "Error making connection:%s", strerror(err));
                         QMessageBox::warning(this, "Error", buf);
                         delete pDccFileFrame;
                      }
@@ -381,9 +381,11 @@ void xIrcConnect::doIgnoreResp(xIrcMessage *pMsg)
    if (dbg) fflush(stdout);
    if (pMsg->rspCode == 352)
    {
+      QString n("Ignore Entry Edit");
       ignoreFlag = FALSE;
       xIrcPeopleEntry e(pMsg);
-      xIrcPeopleEdit editDlg(wdtRes, NULL, "Ignore Entry Edit", &e);
+      xIrcPeopleEdit editDlg;
+      editDlg.initEntry(&e, n);
       if (editDlg.exec() == Accepted)
          pIgnore->add(e);
    }
@@ -395,9 +397,11 @@ void xIrcConnect::doNotifyResp(xIrcMessage *pMsg)
    if (dbg) fflush(stdout);
    if (pMsg->rspCode == 352)
    {
+      QString n("Notify Entry Edit");
       notifyQueryFlag = FALSE;
       xIrcPeopleEntry e(pMsg);
-      xIrcPeopleEdit editDlg(wdtRes, NULL, "Notify Entry Edit", &e);
+      xIrcPeopleEdit editDlg;
+      editDlg.initEntry(&e, n);
       if (editDlg.exec() == Accepted)
          pNotify->add(e);
    }

@@ -1,0 +1,175 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>xIrcPeopleEdit</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>xIrcPeopleEdit</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>320</width>
+            <height>270</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>PeopleEdit</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout4</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>20</y>
+                <width>280</width>
+                <height>230</height>
+            </rect>
+        </property>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout1</cstring>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>textLabel2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Address Mask:&lt;/p&gt;</string>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="0" column="1">
+                        <property name="name">
+                            <cstring>nickEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="2" column="1">
+                        <property name="name">
+                            <cstring>messageEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="1" column="1">
+                        <property name="name">
+                            <cstring>addressEdit</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="0">
+                        <property name="name">
+                            <cstring>textLabel3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Message:&lt;/p&gt;</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="0">
+                        <property name="name">
+                            <cstring>textLabel1</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;p align="right"&gt;Nick:&lt;/p&gt;</string>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout2</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QCheckBox">
+                        <property name="name">
+                            <cstring>addrCheckBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>By Address</string>
+                        </property>
+                    </widget>
+                    <widget class="QCheckBox">
+                        <property name="name">
+                            <cstring>nameCheckBox</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Dynamic</string>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout3</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>okButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>OK</string>
+                        </property>
+                    </widget>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>cancelButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Cancel</string>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcPeopleEdit</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xIrcPeopleEdit</receiver>
+        <slot>updateEntry()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>nickEdit</tabstop>
+    <tabstop>addressEdit</tabstop>
+    <tabstop>messageEdit</tabstop>
+    <tabstop>addrCheckBox</tabstop>
+    <tabstop>nameCheckBox</tabstop>
+    <tabstop>okButton</tabstop>
+    <tabstop>cancelButton</tabstop>
+</tabstops>
+<includes>
+    <include location="local" impldecl="in declaration">xIrcPeopleEntry.h</include>
+    <include location="local" impldecl="in implementation">peopleedit.ui.h</include>
+</includes>
+<variables>
+    <variable access="private">xIrcPeopleEntry *pEntry;</variable>
+</variables>
+<slots>
+    <slot>updateEntry()</slot>
+</slots>
+<functions>
+    <function>initEntry( xIrcPeopleEntry * entry, const QString &amp; name )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

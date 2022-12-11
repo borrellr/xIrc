@@ -1,3 +1,21 @@
+xIrc-2.4.2 - Robert Borerll <robert.borrell@gmail.com>
+==========
+In this release included the following:
+   - Created peopleedit.ui and peopleedit.ui.h to replace xIrcPeopleEdit.h
+     and xIrcPeopleEdit.cpp.
+   - Created nickaction.ui and nickaction.ui.h to replace xIrcNickActionQuery.h
+     and xIrcNickActionQuery.cpp.
+   - Created bandialog.ui and bandialog.ui.h to replace xIrcBanDialog.h and
+     xIrcBanDialog.cpp.
+   - Created channickbox.ui and channickbox.ui.h to replace xIrcChanNickBox.h
+     and xIrcChanNickBox.cpp.
+   - Created invitebox.ui and invitebox.ui.h to replace xIrcInviteBox.h and
+     xIrcInviteBox.cpp.
+   - Created xservquery.ui and xservquery.ui.h to replace xIrcServeQuery.h
+     and xIrcServerQuery.cpp.  Eliminated the xIrcServerEntry.h,
+     xIrcServerEntry.cpp, xIrcServerList.h, and xIrcServerList.cpp. The
+     xServQuery class is the main new class for Server Queries.
+
 xIrc-2.4.1 - Robert Borrell <robert.borrell@gmail.com>
 ==========
 In this enhancement, added the following:

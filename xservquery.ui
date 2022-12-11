@@ -1,0 +1,294 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>xServQuery</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>xServQuery</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>580</width>
+            <height>520</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Server Query</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout8</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>20</x>
+                <y>20</y>
+                <width>540</width>
+                <height>480</height>
+            </rect>
+        </property>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QTable">
+                <column>
+                    <property name="text">
+                        <string>Group</string>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>Country</string>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>State</string>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>City</string>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>Server</string>
+                    </property>
+                </column>
+                <property name="name">
+                    <cstring>pTable</cstring>
+                </property>
+                <property name="paletteBackgroundColor">
+                    <color>
+                        <red>194</red>
+                        <green>194</green>
+                        <blue>194</blue>
+                    </color>
+                </property>
+                <property name="focusPolicy">
+                    <enum>StrongFocus</enum>
+                </property>
+                <property name="numRows">
+                    <number>20</number>
+                </property>
+                <property name="numCols">
+                    <number>5</number>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+                <property name="sorting">
+                    <bool>false</bool>
+                </property>
+                <property name="selectionMode">
+                    <enum>SingleRow</enum>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout7</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer7</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>41</width>
+                                <height>31</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>connButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Connect</string>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer8</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>121</width>
+                                <height>31</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>disconButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Disconnect</string>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer9</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>71</width>
+                                <height>30</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>cancelButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Cancel</string>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer10</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>61</width>
+                                <height>31</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </hbox>
+            </widget>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>cancelButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xServQuery</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>connButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xServQuery</receiver>
+        <slot>connectServer()</slot>
+    </connection>
+    <connection>
+        <sender>disconButton</sender>
+        <signal>clicked()</signal>
+        <receiver>xServQuery</receiver>
+        <slot>disconnectServer()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in implementation">qaction.h</include>
+    <include location="global" impldecl="in implementation">qpopupmenu.h</include>
+    <include location="global" impldecl="in implementation">qmenubar.h</include>
+    <include location="global" impldecl="in implementation">qstring.h</include>
+    <include location="global" impldecl="in implementation">qfile.h</include>
+    <include location="global" impldecl="in implementation">qstringlist.h</include>
+    <include location="global" impldecl="in implementation">qtextstream.h</include>
+    <include location="global" impldecl="in implementation">qtable.h</include>
+    <include location="global" impldecl="in implementation">qfiledialog.h</include>
+    <include location="global" impldecl="in implementation">stdlib.h</include>
+    <include location="local" impldecl="in implementation">servereditdialog.h</include>
+    <include location="local" impldecl="in implementation">serverconnectdialog.h</include>
+    <include location="global" impldecl="in implementation">qmemarray.h</include>
+    <include location="local" impldecl="in implementation">xservquery.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QMenuBar;</forward>
+    <forward>class QPopupMenu;</forward>
+    <forward>class QAction;</forward>
+    <forward>class QString;</forward>
+    <forward>class QTable;</forward>
+    <forward>class QStringList;</forward>
+</forwards>
+<variables>
+    <variable access="private">QAction *deleteEntryAct;</variable>
+    <variable access="private">QAction *editEntryAct;</variable>
+    <variable access="private">QAction *newEntryAct;</variable>
+    <variable access="private">QAction *disconnectServerAct;</variable>
+    <variable access="private">QAction *connectServerAct;</variable>
+    <variable access="private">QPopupMenu *pServerMenu;</variable>
+    <variable access="private">QAction *saveListAct;</variable>
+    <variable access="private">QPopupMenu *pFileMenu;</variable>
+    <variable access="private">QAction *doneAct;</variable>
+    <variable access="private">QMenuBar *pMenuBar;</variable>
+    <variable access="private">QAction *newListAct;</variable>
+    <variable access="private">QAction *loadListAct;</variable>
+    <variable access="private">QAction *importListAct;</variable>
+    <variable access="private">int curNumRows;</variable>
+    <variable access="private">QString connServer;</variable>
+    <variable access="private">QString connPort;</variable>
+    <variable access="public">enum { Reject, Accepted, Disconnect };</variable>
+    <variable access="private">QStringList serverList;</variable>
+</variables>
+<signals>
+    <signal>msgToSocket(const char *pBuf);</signal>
+</signals>
+<slots>
+    <slot access="private">newList()</slot>
+    <slot access="private">importList()</slot>
+    <slot access="private">saveList()</slot>
+    <slot access="private">newEntry()</slot>
+    <slot access="private">editEntry()</slot>
+    <slot access="private">deleteEntry()</slot>
+    <slot access="private">loadList()</slot>
+    <slot access="private">connectServer()</slot>
+    <slot access="private">disconnectServer()</slot>
+</slots>
+<functions>
+    <function access="private">init()</function>
+    <function returnType="const char *">server()</function>
+    <function returnType="const char *">port()</function>
+    <function access="private">initClass()</function>
+    <function access="private">initActions()</function>
+    <function access="private">initMenus()</function>
+    <function access="private">initLoadData()</function>
+    <function access="private">loadTable()</function>
+    <function access="private">clearTable()</function>
+    <function access="private" returnType="const QString &amp;">getRowData( int row )</function>
+    <function access="private">addEntry( const QString &amp; entry )</function>
+    <function access="private">setCurNumRows( int rows )</function>
+    <function returnType="int">getCurNumRows()</function>
+    <function access="private">incCurNumRows()</function>
+    <function access="private">decCurNumRows()</function>
+    <function access="private">replaceEntry( int row, const QString &amp; modEntry )</function>
+    <function access="private">initTable()</function>
+    <function access="private" returnType="bool">readTableFile( const QString &amp; file )</function>
+    <function access="private" returnType="bool">writeFile( const QString &amp; file )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

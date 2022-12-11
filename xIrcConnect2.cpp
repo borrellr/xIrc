@@ -46,8 +46,7 @@
 #include "channeldialog.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
-#include "xIrcServerQuery.h"
-#include "xIrcInviteBox.h"
+#include "invitebox.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 
@@ -99,10 +98,11 @@ void xIrcConnect::initiateDCCFile(xIrcDccFile *fFrame)
    msg.dstStr = fFrame->name();
    msg.msgStr = buf;
    emit msgOut(&msg);
-
+#if 0
    if (dbg) fprintf(stdout, "xIrcConnect::initiateDCCFile():File name: |%s|, %d\n",
                            (const char*)fName, strlen(fName));
    if (dbg) fflush(stdout);
+#endif
    for (cp = fName + strlen(fName) - 1; cp != (const char*)fName && *cp != '/'; cp--);
    {
       if (dbg) fprintf(stdout, "xIrcConnect::initiateDCCFile():Backing over: |%c|\n", *cp);
@@ -223,11 +223,11 @@ void xIrcConnect::dccChatHandler(xIrcMessage *pMsg)
          int fd;
          const char *cp;
          QString file;
-         const char *pDir;
+//         const char *pDir;
 
          if (dbg) fprintf(stdout, "xIrcConnect::dccChatHandler():Have file send request\n");
          if (dbg) fflush(stdout);
-         pDir = Resources->get(wdtRes, "dcc.dir", "DCC.Dir");
+//         pDir = Resources->get(wdtRes, "dcc.dir", "DCC.Dir");
          for (cp = pMsg->msgStr.latin1(); *(++cp) != ' ';)
             file += *cp;
          if (pSaveDialog->exec() == QDialog::Accepted)
@@ -270,7 +270,7 @@ void xIrcConnect::msgQryHandler(xIrcMsgQuery *pMsgQuery)
 {
    xIrcMessageFrame *pMsgFrame;
    xIrcMessageList *pMsgList;
-   xIrcMessage *pMsg, *pMsg1;
+   xIrcMessage *pMsg; //*pMsg1;
    
    if (dbg) fprintf(stdout, "xIrcConnect::msgQryHandler():got response from query\n");
    if (dbg) fflush(stdout);
@@ -285,7 +285,7 @@ void xIrcConnect::msgQryHandler(xIrcMsgQuery *pMsgQuery)
       if (dbg) fprintf(stdout, "xIrcConnect::msgQryHandler():Creating new message frame\n");
       if (dbg) fflush(stdout);
       pMsg = pMsgList->first();
-      pMsg1 = pMsg;
+//      pMsg1 = pMsg;
       if ((pMsgFrame = makeNewMsgFrame(NULL, pMsg->srcNick.latin1())) != NULL)
       {
          if (dbg) fprintf(stdout, "xIrcConnect::msgQryHandler():Showing message frame\n");
@@ -374,9 +374,8 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
    {
       if (dbg) fprintf(stdout, "xIrcConnect::gotResponse():Got invitation!\n");
       if (dbg) fflush(stdout);
-      xIrcInviteBox *pIB = new xIrcInviteBox(wdtPrv, NULL, "Invite", this, 
-                                             SLOT(acceptInvite(QString)),
-                                             pMsg);
+      xIrcInviteBox *pIB = new xIrcInviteBox(this);
+      pIB->initInviteBox(this, SLOT(acceptInvite(QString)), pMsg);
       pIB->show();
       return;
    }
@@ -414,9 +413,9 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
       if (dbg) fflush(stdout);
    }
    
-   if (x == 0 & dbg) fprintf(stdout, "xIrcConnect::gotResponse():Testing if new PRIVMSG\n");
+   if ((x == 0) && dbg) fprintf(stdout, "xIrcConnect::gotResponse():Testing if new PRIVMSG\n");
    if (dbg) fflush(stdout);
-   if (x == 0 && ((!isMsg(pMsg->rspCode, "PRIVMSG") && 
+   if ((x == 0) && ((!isMsg(pMsg->rspCode, "PRIVMSG") && 
                    !isMsg(pMsg->rspCode, "NOTICE")) ||
                   pMsg->srcNick.isEmpty()))
    {
@@ -466,7 +465,7 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
 
 xIrcMessageFrame *xIrcConnect::findMsgFrame(const char *pName)
 {
-   int x;
+//   int x;
    xIrcMessageFrame *rv;
    QString nameTmp1, nameTmp2;
    char name[20];
@@ -475,7 +474,7 @@ xIrcMessageFrame *xIrcConnect::findMsgFrame(const char *pName)
    nameTmp1.upper();
    if (dbg) fprintf(stdout, "xIrcConnect::findMsgFrame():Looking for %s\n", (const char *)nameTmp1.latin1());
    if (dbg) fflush(stdout);
-   for (x = 0, rv = pIrcMsgFrames; rv != NULL; rv = rv->next())
+   for (rv = pIrcMsgFrames; rv != NULL; rv = rv->next())
    {
       nameTmp2 = rv->name();
       nameTmp2.upper();
@@ -489,8 +488,8 @@ xIrcMessageFrame *xIrcConnect::findMsgFrame(const char *pName)
          break;
       }
    }
-   if (dbg) fprintf(stdout, "xIrcConnect::findMsgFrame():Exit(%d)\n", (int)rv);
-   if (dbg) fflush(stdout);
+//   if (dbg) fprintf(stdout, "xIrcConnect::findMsgFrame():Exit(%d)\n", (int)rv);
+//   if (dbg) fflush(stdout);
    return(rv);
 }
 
@@ -831,8 +830,8 @@ xIrcMessageFrame *xIrcConnect::makeNewMsgFrame(QWidget *pParent, const char *pNa
    {
       if (pIrcMsgFrames != NULL)
       {
-         if (dbg) fprintf(stdout, "xIrcConnect::makeNewMsgFrame():New Message Frame at %d\n", (int)rv);
-         if (dbg) fflush(stdout);
+//         if (dbg) fprintf(stdout, "xIrcConnect::makeNewMsgFrame():New Message Frame at %d\n", (int)rv);
+//         if (dbg) fflush(stdout);
          for (pMsg = pIrcMsgFrames; pMsg->next() != NULL; pMsg = pMsg->next());
          pMsg->link(rv);
       }
@@ -854,8 +853,8 @@ xIrcMessageFrame *xIrcConnect::makeNewMsgFrame(QWidget *pParent, const char *pNa
    else if (rv == NULL)
       fprintf(stderr, "Cannot allocate IRC Message Frame!\n");      
       
-   if (dbg) fprintf(stdout, "xIrcConnect::makeNewMsgFrame():Exit(%d)\n", (int)rv);
-   if (dbg) fflush(stdout);
+//   if (dbg) fprintf(stdout, "xIrcConnect::makeNewMsgFrame():Exit(%d)\n", (int)rv);
+//   if (dbg) fflush(stdout);
    return(rv);
 }
 

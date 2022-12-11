@@ -40,8 +40,8 @@
 #include "xIrcMsgQuery.h"
 #include "xIrcDccChatFrame.h"
 #include "xIrcDccFile.h"
-#include "xIrcNickActionQuery.h"
-#include "xIrcBanDialog.h"
+#include "nickaction.h"
+#include "bandialog.h"
 
 class xIrcConnect : public xDialog
 {
@@ -158,7 +158,7 @@ private:
    int                  resizeCnt;   
    xWidgetResInfo       *wdtRes;
    xWidgetResInfo       *wdtPrv;
-   bool  isMsg(int cmd, char *pStr);
+   bool  isMsg(int cmd, const char *pStr);
    void InitializeMenu();
    void joinChannel(const char *);
    void initializeActions();
@@ -172,6 +172,7 @@ private:
    QAction *newChannelAct;
    QAction *quitIrcAct;
    QAction *aboutAct;
+   QAction *aboutQtAct;
 };
 
 #endif

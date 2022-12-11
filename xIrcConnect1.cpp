@@ -42,8 +42,7 @@
 #include "xIrcLineEditQuery.h"
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
-#include "xIrcServerQuery.h"
-#include "xIrcInviteBox.h"
+#include "xservquery.h"
 #include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
@@ -55,7 +54,7 @@ static bool dbg = false;
 extern xDefaults Defaults;
 extern nickNameDialog *NickQuery;
 extern xChannelQuery *ChanQuery;
-extern xServerQuery *ServQuery;
+extern xServQuery *ServQuery;
 extern xIrcQuitDialog *QuitQuery;
 extern xIrcCommands ircResponses;
 extern QPixmap *AppPixMap;
@@ -125,11 +124,13 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
 
    if (dbg) fprintf(stdout, "xIrcConnect::xIrcConnect():Creating BanBox\n");
    if (dbg) fflush(stdout);
-   pBanBox = new xIrcBanDialog(wdtPrv);
+   pBanBox = new xIrcBanDialog(this);
+   QString str(Defaults.get("BANNED"));
+   pBanBox->setDefaultMsg(str);
    if (dbg) fprintf(stdout, "xIrcConnect::xIrcConnect():Creating NickAction\n");
    if (dbg) fflush(stdout);
    pNickAction = NULL;
-   pNickAction = new xIrcNickActionQuery(wdtPrv);
+   pNickAction = new xIrcNickActionQuery(this);
 
    pIgnore = new xIrcIgnoreQuery(wdtPrv);
    pNotify = new xIrcNotifyQuery(wdtPrv);
@@ -350,7 +351,7 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.4.1 \n"
+                  "Version: 2.4.2 \n"
                   "License: GPL\n"
                   "Copyright: 1997-2022\n\n"
                   "Maintained by Robert Borrell\n"
@@ -448,10 +449,11 @@ void xIrcConnect::goodConnection(int sock)
    xIrcMessageFrame *pMsgFrame;
    QString strTmp;
    char buf[256];
-   int x;
+//   int x;
 
    if (dbg) fprintf(stdout, "xIrcConnect::goodConnection():Success!!!\n");
    if (dbg) fflush(stdout);
+#if 0
    if (dbg)
    {
       struct sockaddr_in addr;
@@ -461,6 +463,7 @@ void xIrcConnect::goodConnection(int sock)
                       inet_ntoa(addr.sin_addr), 
                       htonl(addr.sin_addr.s_addr), addr.sin_port);
    }
+#endif
    pSocketBox->connected(QString("Connected: Waiting Response from Host").latin1());
 // pMainWin->pWin->putString("Connected!!!\n");
 
@@ -495,7 +498,7 @@ void xIrcConnect::goodConnection(int sock)
                                       ServQuery->server(), pRealName);
    sendMsgToSocket(buf);
 
-   for (x = 0, pMsgFrame = pIrcMsgFrames; pMsgFrame != NULL; pMsgFrame = pMsgFrame->next())
+   for (pMsgFrame = pIrcMsgFrames; pMsgFrame != NULL; pMsgFrame = pMsgFrame->next())
    {
       cp = (char *)pMsgFrame->name();
       if (strlen(cp) > 0 && *cp == '#')
@@ -564,8 +567,8 @@ void xIrcConnect::newServer()
    if (dbg) fflush(stdout);
    if ((btn = ServQuery->exec()) != QDialog::Rejected)
    {
-      if (pSocket != NULL && (btn == xServerQuery::Disconnect ||
-                                      btn == xServerQuery::Accepted))
+      if (pSocket != NULL && (btn == xServQuery::Disconnect ||
+                                      btn == xServQuery::Accepted))
       {
          if (dbg) {
              fprintf(stderr, "xIrcConnect::newServer():Disconnecting from Current Socket\n");
@@ -596,7 +599,7 @@ void xIrcConnect::newServer()
          if (dbg) fprintf(stderr, "xIrcConnect::newServer():Disconnection done\n");
          if (dbg) fflush(stderr);
       }
-      if (btn == xServerQuery::Accepted)
+      if (btn == xServQuery::Accepted)
       {
          if (dbg) {
             printf("xIrcConnect::newServer():Creating new socket\n");
@@ -867,7 +870,7 @@ void xIrcConnect::newChannel()
    ChanQuery->show();
 }
 
-bool xIrcConnect::isMsg(int cmd, char *pStr)
+bool xIrcConnect::isMsg(int cmd, const char *pStr)
 {
    return(ircResponses.is(cmd, pStr));
 }
@@ -980,8 +983,8 @@ void xIrcConnect::showResponse(xIrcMessage *pMsg)
 void xIrcConnect::showError(xIrcMessage *pMsg)
 {
    int rspCode = pMsg->rspCode;
-   if (dbg) fprintf(stdout, "xIrcConnect::showError():Enter:pMsg = %d\n", (int)pMsg);
-   if (dbg) fflush(stdout);
+//   if (dbg) fprintf(stdout, "xIrcConnect::showError():Enter:pMsg = %d\n", (int)pMsg);
+//   if (dbg) fflush(stdout);
    if (rspCode == 431 || rspCode == 432 || rspCode == 433)
       gotErrorAck(rspCode);
    else

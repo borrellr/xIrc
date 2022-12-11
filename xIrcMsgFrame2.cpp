@@ -46,7 +46,7 @@ extern nickNameDialog  *NickQuery;
 extern xIrcKickDialog *KickQuery;
 extern xIrcMsgDispatch Dispatcher;
 
-bool xIrcMessageFrame::isMsg(int cmd, char *pStr)
+bool xIrcMessageFrame::isMsg(int cmd, const char *pStr)
 { 
    return(ircResponses.is(cmd, pStr));
 }
@@ -202,7 +202,7 @@ void xIrcMessageFrame::ircRespMessageIn(xIrcMessage *pMsg)
          sprintf(str, "[B]*** %s has been kicked by %s!!! (%s)\n",
                  tmpStr, (const char *)pMsg->srcNick.latin1(), cp1);
          pMsgFrame->pWin->putString(str);
-         for (cp = str, cp1 = pMsg->msgStr.latin1(); *cp1 && !isspace(*cp1); cp1++, cp)
+         for (cp = str, cp1 = pMsg->msgStr.latin1(); *cp1 && !isspace(*cp1); cp1++)
          {
             *(cp++) = *cp1;
             *cp = '\0';
@@ -716,7 +716,8 @@ void xIrcMessageFrame::nickButtonPressed(int iBtn)
       if (dbg) fflush(stdout);
       pNicks->hide();
    }
-   if (strlen(pNicks->text()) == 0 && (pEntry = pNicks->selected()) != NULL)
+
+   if (strlen(pNicks->text()) == 0 )
    {
       if (dbg) fprintf(stdout, "xIrcMessageFrame::nickButtonPressed():Found Selected Nick\n");
       if (dbg) fflush(stdout);
