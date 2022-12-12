@@ -210,6 +210,12 @@
         <receiver>xServQuery</receiver>
         <slot>disconnectServer()</slot>
     </connection>
+    <connection>
+        <sender>pTable</sender>
+        <signal>doubleClicked(int,int,int,const QPoint&amp;)</signal>
+        <receiver>xServQuery</receiver>
+        <slot>connectServer()</slot>
+    </connection>
 </connections>
 <includes>
     <include location="global" impldecl="in implementation">qaction.h</include>
