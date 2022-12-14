@@ -24,7 +24,7 @@
 #include <qt.h>
 #include <qregexp.h>
 #include <stdio.h>
-#include "xIrcConnect.h"
+#include "xIrcCommands.h"
 #include "xIrcPeopleEntry.h"
 
 static bool dbg = false;
