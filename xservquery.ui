@@ -288,7 +288,7 @@
     <function access="private" returnType="const QString &amp;">getRowData( int row )</function>
     <function access="private">addEntry( const QString &amp; entry )</function>
     <function access="private">setCurNumRows( int rows )</function>
-    <function returnType="int">getCurNumRows()</function>
+    <function access="private" returnType="int">getCurNumRows()</function>
     <function access="private">incCurNumRows()</function>
     <function access="private">decCurNumRows()</function>
     <function access="private">replaceEntry( int row, const QString &amp; modEntry )</function>
