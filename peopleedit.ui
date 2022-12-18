@@ -163,13 +163,18 @@
     <include location="local" impldecl="in implementation">peopleedit.ui.h</include>
 </includes>
 <variables>
+    <variable access="private">QString realNick;</variable>
     <variable access="private">xIrcPeopleEntry *pEntry;</variable>
+    <variable access="private">QString retEntry;</variable>
 </variables>
 <slots>
     <slot>updateEntry()</slot>
 </slots>
 <functions>
     <function>initEntry( xIrcPeopleEntry * entry, const QString &amp; name )</function>
+    <function>initEntry( const QString &amp; entry, const QString &amp; name )</function>
+    <function>newDataEntry()</function>
+    <function returnType="const QString &amp;">getEntry()</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

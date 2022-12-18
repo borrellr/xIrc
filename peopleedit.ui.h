@@ -12,7 +12,7 @@
 #include <qstring.h>
 #include <qcheckbox.h>
 #include <qlineedit.h>
-
+#include <qstringlist.h>
 
 void xIrcPeopleEdit::updateEntry()
 {
@@ -37,6 +37,47 @@ void xIrcPeopleEdit::initEntry( xIrcPeopleEntry *entry, const QString &name )
      messageEdit->setText(entry->message());
      if (entry->flag())
         nameCheckBox->setChecked(TRUE);
-     if (entry->flag() > 0)
+     if (entry->state() > 0)
         addrCheckBox->setChecked(TRUE);
+}
+
+void xIrcPeopleEdit::initEntry( const QString &entry, const QString & name )
+{
+     enum {Nick, RealNick, Mask, Message, Flag, State};
+
+     QStringList entryList = QStringList::split(":", entry);
+     setCaption(name);
+     nickEdit->setText(entryList[Nick]);
+     realNick = entryList[RealNick];
+     addressEdit->setText(entryList[Mask]);
+     messageEdit->setText(entryList[Message]);
+     if (entryList[Flag] == "true")
+        nameCheckBox->setChecked(TRUE);
+     if (entryList[State].toInt() > 0)
+        addrCheckBox->setChecked(TRUE);
+}
+
+
+void xIrcPeopleEdit::newDataEntry()
+{
+     QStringList strList; 
+     QString state;
+
+     strList.append(nickEdit->text());
+     strList.append(realNick);
+     strList.append(addressEdit->text());
+     strList.append(messageEdit->text());
+     if (nameCheckBox->isChecked())
+        strList.append("true");
+     else
+        strList.append("false");
+     state = (nameCheckBox->isChecked() == FALSE) ? "0" : (addrCheckBox->isChecked() == TRUE) ? "1" : "-1";
+     strList.append(state);
+     retEntry = strList.join(":");
+}
+
+
+const QString & xIrcPeopleEdit::getEntry()
+{
+     return retEntry;
 }
