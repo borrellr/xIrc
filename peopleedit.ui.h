@@ -16,29 +16,20 @@
 
 void xIrcPeopleEdit::updateEntry()
 {
-     int f;
+     QStringList strList; 
+     QString state;
 
-     pEntry->setNick(nickEdit->text().latin1());
-     pEntry->setMask(addressEdit->text().latin1());
-     pEntry->setMessage(messageEdit->text().latin1());
-     f = (nameCheckBox->isChecked() == FALSE) ? 0 : (addrCheckBox->isChecked() == TRUE) ? 1 : -1;
-     pEntry->setFlag(f);
-     done(Accepted);
-}
-
-
-void xIrcPeopleEdit::initEntry( xIrcPeopleEntry *entry, const QString &name )
-{
-     setCaption(name);
-     nameCheckBox->setText(name);
-     pEntry = entry;
-     nickEdit->setText(entry->nick());
-     addressEdit->setText(entry->mask());
-     messageEdit->setText(entry->message());
-     if (entry->flag())
-        nameCheckBox->setChecked(TRUE);
-     if (entry->state() > 0)
-        addrCheckBox->setChecked(TRUE);
+     strList.append(nickEdit->text());
+     strList.append(realNick);
+     strList.append(addressEdit->text());
+     strList.append(messageEdit->text());
+     if (nameCheckBox->isChecked())
+        strList.append("true");
+     else
+        strList.append("false");
+     state = (nameCheckBox->isChecked() == FALSE) ? "0" : (addrCheckBox->isChecked() == TRUE) ? "1" : "-1";
+     strList.append(state);
+     retEntry = strList.join(":");
 }
 
 void xIrcPeopleEdit::initEntry( const QString &entry, const QString & name )
@@ -55,25 +46,6 @@ void xIrcPeopleEdit::initEntry( const QString &entry, const QString & name )
         nameCheckBox->setChecked(TRUE);
      if (entryList[State].toInt() > 0)
         addrCheckBox->setChecked(TRUE);
-}
-
-
-void xIrcPeopleEdit::newDataEntry()
-{
-     QStringList strList; 
-     QString state;
-
-     strList.append(nickEdit->text());
-     strList.append(realNick);
-     strList.append(addressEdit->text());
-     strList.append(messageEdit->text());
-     if (nameCheckBox->isChecked())
-        strList.append("true");
-     else
-        strList.append("false");
-     state = (nameCheckBox->isChecked() == FALSE) ? "0" : (addrCheckBox->isChecked() == TRUE) ? "1" : "-1";
-     strList.append(state);
-     retEntry = strList.join(":");
 }
 
 
