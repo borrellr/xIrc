@@ -33,7 +33,7 @@
 #include <xSocketDialog.h>
 #include "xIrcSocket.h"
 #include "xIrcMsgFrame.h"
-#include "xIrcIgnoreQuery.h"
+#include "peopledialog.h"
 #include "xIrcNotifyQuery.h"
 #include "xIrcNotifyTable.h"
 #include "xIrcCommands.h"
@@ -127,7 +127,7 @@ private:
    QMenuBar             *pMenu;
 
    QLabel               *pLabel;
-   xIrcIgnoreQuery      *pIgnore;
+   peopleDialog         *pIgnore;
    xIrcNotifyQuery      *pNotify;
    xIrcNotifyTable      *pNotifyList;
    xIrcNickActionQuery  *pNickAction;
