@@ -101,7 +101,10 @@
                             <cstring>nameCheckBox</cstring>
                         </property>
                         <property name="text">
-                            <string>Dynamic</string>
+                            <string>By Name</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
                         </property>
                     </widget>
                 </hbox>
@@ -148,6 +151,12 @@
         <receiver>xIrcPeopleEdit</receiver>
         <slot>updateEntry()</slot>
     </connection>
+    <connection>
+        <sender>addrCheckBox</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>xIrcPeopleEdit</receiver>
+        <slot>updateState()</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>nickEdit</tabstop>
@@ -159,18 +168,18 @@
     <tabstop>cancelButton</tabstop>
 </tabstops>
 <includes>
+    <include location="local" impldecl="in declaration">xIrcPeopleEntry.h</include>
     <include location="local" impldecl="in implementation">peopleedit.ui.h</include>
 </includes>
 <variables>
-    <variable access="private">QString realNick;</variable>
-    <variable access="private">QString retEntry;</variable>
+    <variable access="private">xIrcPeopleEntry *pEntry;</variable>
 </variables>
 <slots>
     <slot>updateEntry()</slot>
+    <slot access="private">updateState()</slot>
 </slots>
 <functions>
-    <function>initEntry( const QString &amp; entry, const QString &amp; name )</function>
-    <function returnType="const QString &amp;">getEntry()</function>
+    <function>initEntry( xIrcPeopleEntry * entry, const QString &amp; name )</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

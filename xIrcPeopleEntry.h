@@ -29,9 +29,11 @@
 class xIrcPeopleEntry
 {
 public:
+   xIrcPeopleEntry();
    xIrcPeopleEntry(xIrcMessage *pMsg, bool atAround=TRUE);
    xIrcPeopleEntry(const char *pNick, const char *pMask, const char *pMsg, int flag);
    xIrcPeopleEntry(xIrcPeopleEntry &e);
+   xIrcPeopleEntry(const xIrcPeopleEntry &e);
    
    QString nick() { return(Nick); };
    QString realNick() { return(RealNick); };
@@ -59,4 +61,5 @@ private:
    int         State;
 };
 
+int operator==(const xIrcPeopleEntry &e1, const xIrcPeopleEntry &e2);
 #endif

@@ -12,44 +12,37 @@
 #include <qstring.h>
 #include <qcheckbox.h>
 #include <qlineedit.h>
-#include <qstringlist.h>
+
 
 void xIrcPeopleEdit::updateEntry()
 {
-     QStringList strList; 
-     QString state;
+     int f;
 
-     strList.append(nickEdit->text());
-     strList.append(realNick);
-     strList.append(addressEdit->text());
-     strList.append(messageEdit->text());
-     if (nameCheckBox->isChecked())
-        strList.append("true");
-     else
-        strList.append("false");
-     state = (nameCheckBox->isChecked() == FALSE) ? "0" : (addrCheckBox->isChecked() == TRUE) ? "1" : "-1";
-     strList.append(state);
-     retEntry = strList.join(":");
+     pEntry->setNick(nickEdit->text().latin1());
+     pEntry->setMask(addressEdit->text().latin1());
+     pEntry->setMessage(messageEdit->text().latin1());
+     f = (nameCheckBox->isChecked()) ? 1 : (addrCheckBox->isChecked()) ? -1 : 0;
+     pEntry->setFlag(f);
+     done(Accepted);
 }
 
-void xIrcPeopleEdit::initEntry( const QString &entry, const QString & name )
-{
-     enum {Nick, RealNick, Mask, Message, Flag, State};
 
-     QStringList entryList = QStringList::split(":", entry);
+void xIrcPeopleEdit::initEntry( xIrcPeopleEntry *entry, const QString &name )
+{
      setCaption(name);
-     nickEdit->setText(entryList[Nick]);
-     realNick = entryList[RealNick];
-     addressEdit->setText(entryList[Mask]);
-     messageEdit->setText(entryList[Message]);
-     if (entryList[Flag] == "true")
+     pEntry = entry;
+     nickEdit->setText(entry->nick());
+     addressEdit->setText(entry->mask());
+     messageEdit->setText(entry->message());
+     if (entry->flag() > 0)
         nameCheckBox->setChecked(TRUE);
-     if (entryList[State].toInt() > 0)
+     if (entry->flag() < 0)
         addrCheckBox->setChecked(TRUE);
 }
 
 
-const QString & xIrcPeopleEdit::getEntry()
+void xIrcPeopleEdit::updateState()
 {
-     return retEntry;
+    if (nameCheckBox->isChecked())
+       nameCheckBox->setChecked(false);
 }
