@@ -137,26 +137,26 @@
     </connection>
 </connections>
 <includes>
-    <include location="global" impldecl="in declaration">vector</include>
     <include location="global" impldecl="in implementation">qaction.h</include>
     <include location="global" impldecl="in implementation">qpopupmenu.h</include>
     <include location="global" impldecl="in implementation">qmenubar.h</include>
-    <include location="local" impldecl="in implementation">xIrcPeopleEntry.h</include>
     <include location="local" impldecl="in implementation">peopleedit.h</include>
-    <include location="global" impldecl="in implementation">qtable.h</include>
     <include location="global" impldecl="in implementation">algorithm</include>
-    <include location="global" impldecl="in implementation">qfile.h</include>
     <include location="global" impldecl="in implementation">qstringlist.h</include>
     <include location="global" impldecl="in implementation">qtextstream.h</include>
     <include location="global" impldecl="in implementation">qfiledialog.h</include>
     <include location="global" impldecl="in implementation">qmemarray.h</include>
+    <include location="global" impldecl="in declaration">vector</include>
+    <include location="global" impldecl="in declaration">qtable.h</include>
+    <include location="global" impldecl="in declaration">qfile.h</include>
+    <include location="global" impldecl="in declaration">qdir.h</include>
+    <include location="local" impldecl="in declaration">xIrcPeopleEntry.h</include>
     <include location="local" impldecl="in implementation">peopledialog.ui.h</include>
 </includes>
 <forwards>
     <forward>class QAction;</forward>
     <forward>class QPopupMenu;</forward>
     <forward>class QMenuBar;</forward>
-    <forward>class xIrcPeopleEntry;</forward>
 </forwards>
 <variables>
     <variable access="private">QString dlgName;</variable>
@@ -192,6 +192,9 @@
     <function access="private">readPeopleData( const QString &amp; fileName )</function>
     <function access="private">initData()</function>
     <function access="private">initTable()</function>
+    <function returnType="bool">matches( xIrcMessage * msg )</function>
+    <function returnType="xIrcPeopleEntry *">entry( xIrcMessage * pMsg )</function>
+    <function>add( xIrcPeopleEntry &amp; e )</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

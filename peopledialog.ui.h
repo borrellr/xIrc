@@ -37,8 +37,8 @@ void peopleDialog::initClass( const QString &name )
      QString tmpStr(name);
      dlgName = name;
      tmpStr.append(" List");
-     setCaption(tr(tmpStr));
-     peopleTable->horizontalHeader()->setLabel(2, tr(name));
+     setCaption(tmpStr);
+     peopleTable->horizontalHeader()->setLabel(2, name);
     
      initData();
 }
@@ -414,4 +414,40 @@ void peopleDialog::initTable()
      peopleTable->adjustColumn(0);
      peopleTable->adjustColumn(1);
      peopleTable->adjustColumn(4);
+}
+
+
+bool peopleDialog::matches( xIrcMessage *msg )
+{
+     xIrcPeopleEntry e; 
+     std::vector<xIrcPeopleEntry>::iterator it;
+     
+     for (it = peopleList.end(); it != peopleList.end(); ++it) {
+          e = *it;
+          if (e.is(msg, e.flag()))
+              return true;
+     }
+     return false;
+}
+
+
+xIrcPeopleEntry * peopleDialog::entry( xIrcMessage *pMsg )
+{
+     xIrcPeopleEntry *e = new xIrcPeopleEntry; 
+     std::vector<xIrcPeopleEntry>::iterator it;
+
+     for (it = peopleList.begin(); it != peopleList.end(); ++it) {
+          *e = *it;
+          if (e->is(pMsg, e->flag()))
+              return e;
+     }
+     delete e;
+     return 0;    
+}
+
+
+void peopleDialog::add( xIrcPeopleEntry &e )
+{
+    peopleList.push_back(e);
+    initTable();
 }
