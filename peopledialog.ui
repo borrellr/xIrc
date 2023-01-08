@@ -151,6 +151,7 @@
     <include location="global" impldecl="in declaration">qfile.h</include>
     <include location="global" impldecl="in declaration">qdir.h</include>
     <include location="local" impldecl="in declaration">xIrcPeopleEntry.h</include>
+    <include location="global" impldecl="in declaration">qtimer.h</include>
     <include location="local" impldecl="in implementation">peopledialog.ui.h</include>
 </includes>
 <forwards>
@@ -171,6 +172,7 @@
     <variable access="private">QAction *saveListAct;</variable>
     <variable access="private">QAction *loadListAct;</variable>
     <variable access="private">QAction *newListAct;</variable>
+    <variable access="private">QTimer *pTimer;</variable>
 </variables>
 <slots>
     <slot access="private">newList()</slot>
@@ -179,6 +181,7 @@
     <slot access="private">newEntry()</slot>
     <slot access="private">editEntry()</slot>
     <slot access="private">delEntry()</slot>
+    <slot access="private">pollList()</slot>
 </slots>
 <functions>
     <function access="private" specifier="non virtual">init()</function>
@@ -195,6 +198,8 @@
     <function returnType="bool">matches( xIrcMessage * msg )</function>
     <function returnType="xIrcPeopleEntry *">entry( xIrcMessage * pMsg )</function>
     <function>add( xIrcPeopleEntry &amp; e )</function>
+    <function>shutDown()</function>
+    <function>startUp()</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

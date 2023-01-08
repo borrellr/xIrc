@@ -41,6 +41,10 @@ void peopleDialog::initClass( const QString &name )
      peopleTable->horizontalHeader()->setLabel(2, name);
     
      initData();
+     if (name == "Notify") {
+        pTimer = new QTimer(this, NULL);
+        connect(pTimer, SIGNAL(timeout()), this, SLOT(pollList()));
+     }
 }
 
 
@@ -450,4 +454,168 @@ void peopleDialog::add( xIrcPeopleEntry &e )
 {
     peopleList.push_back(e);
     initTable();
+}
+
+
+void peopleDialog::shutDown()
+{
+   pTimer->stop();
+}
+
+
+void peopleDialog::startUp()
+{
+   pTimer->start(500, TRUE);
+}
+
+
+void peopleDialog::pollList()
+{
+    gotNotification();
+}
+
+bool peopleDialog::gotNotification( xIrcMessage *pMsg = NULL )
+{
+   xIrcPeopleEntry *pEntry;
+   xIrcMessage msg;
+   const char *cp;
+   bool rv = FALSE;
+
+   if (pMsg != NULL)
+   {
+      rv = TRUE;
+      QString str;
+
+      cp = pMsg->dstStr.latin1();
+      if (pMsg->rspCode == 352)
+      {
+         if (*cp != '#')
+         {
+            str = pMsg->dstStr;
+            cp = pMsg->msgStr.latin1();
+         }
+         else
+         {
+            for (cp = pMsg->msgStr.latin1(); *cp != ' '; cp++)
+               str += *cp;
+            for (cp = pMsg->msgStr.latin1(); *cp == ' '; cp++);
+         }
+         str += "@";
+         for (cp = pMsg->msgStr.latin1(); *cp != ' '; cp++)
+            str += *cp;
+         pEntry = pTable->entry(pMsg);
+         if (pEntry != NULL)
+         {
+            QString realNick(getNick(pMsg));
+            pEntry->setRealNick(realNick);
+         }
+         if (pEntry != NULL && pEntry->state() == 1)
+         {
+            char buf[256];
+            sprintf(buf, "\x02%s (%s) Has Arrived!!\n",
+               (const char *)pEntry->realNick().latin1(),
+               (const char *)pEntry->mask().latin1());
+            if (pEntry->message() != NULL && !pEntry->message().isEmpty())
+            {
+               msg.rspCode = ircResponses.code("PRIVMSG");
+               msg.dstStr = getNick(pMsg);
+               msg.msgStr = pEntry->message();
+               pTWindow->sendMessage(&msg);
+            }
+            pEntry->setState(3);
+            emit updateList(pTable->list());
+         }
+         else if (pEntry != NULL && pEntry->state() == 2)
+         {
+            pEntry->setState(3);
+         }
+      }
+      else if (pMsg->rspCode == 315 || (pMsg->rspCode >= 400 && pMsg->rspCode < 600))
+      {
+         pEntry = pTable->entry(pMsg);
+         if (pEntry != NULL && pEntry->state() == 3)
+         {
+            pEntry->setState(2);
+         }
+         else if (pEntry != NULL && (pEntry->state() == 1 || pEntry->state() == 2))
+         {
+            if (pEntry->state() == 2)
+            {
+               char buf[256];
+               sprintf(buf, "\x02%s (%s) Has Left!!\n",
+                       (const char *)pEntry->realNick().latin1(),
+                       (const char *)pEntry->mask().latin1());
+               pTWindow->putWindow(buf);
+            }
+            pEntry->setState(0);
+            emit updateList(pTable->list());
+         }
+         pTimer->start(2500, TRUE);
+         whoSent = FALSE;
+         ++(*pPeople);
+      }
+   }
+   else if (pPeople != NULL && pPeople->count() > 0)
+   {
+      QString strNick, strTmp;
+      char ch;
+      rv = TRUE;
+      if (pPeople->current() == NULL)
+      {
+         delete pPeople;
+         pPeople = NULL;
+         if (pTable->list()->count() > 0)
+         {
+            pPeople = new xIrcPeopleListIterator(*pTable->list());
+            pPeople->toFirst();
+            pTimer->start(5000, TRUE);
+         }
+      }
+      else
+      {
+         while (pPeople->current() != NULL && pPeople->current()->flag() == 0)
+            ++(*pPeople);
+         if (pPeople->current() != NULL)
+         {
+            if (pPeople->current()->state() == 0)
+               pPeople->current()->setState(1);
+            if (pPeople->current()->flag() < 0)
+               strNick = pPeople->current()->nick();
+            else if (pPeople->current()->flag() > 0)
+            {
+               strTmp = pPeople->current()->mask();
+               for (ch = ' ', cp = strTmp.latin1(); *cp != '\0'; cp++)
+               {
+                  if (ch == '@')
+                     strNick += *cp;
+                  else if (*cp == '@')
+                     ch = '@';
+               }
+            }
+            msg.rspCode = ircResponses.code("WHO");
+            msg.dstStr = strNick;
+            msg.msgStr = "";
+            Dispatcher.dispatchMsg(this, SLOT(messageIn(xIrcMessage*)), &msg);
+            whoSent = TRUE;
+         }
+      }
+   }
+   else if (pPeople != NULL)
+   {
+      rv = TRUE;
+      delete pPeople;
+      pPeople = NULL;
+      whoSent = FALSE;
+      pTimer->start(2500, TRUE);
+   }
+   else
+   {
+      if (pTable->list()->count() > 0)
+      {
+         pPeople = new xIrcPeopleListIterator(*pTable->list());
+         pPeople->toFirst();
+      }
+      pTimer->start(2500, TRUE);
+   }
+   return(rv);
 }
