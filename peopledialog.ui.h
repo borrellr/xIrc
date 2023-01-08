@@ -471,10 +471,10 @@ void peopleDialog::startUp()
 
 void peopleDialog::pollList()
 {
-    gotNotification();
+    gotNotification(NULL);
 }
 
-bool peopleDialog::gotNotification( xIrcMessage *pMsg = NULL )
+bool peopleDialog::gotNotification( xIrcMessage *pMsg)
 {
    xIrcPeopleEntry *pEntry;
    xIrcMessage msg;

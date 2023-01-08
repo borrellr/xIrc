@@ -200,6 +200,7 @@
     <function>add( xIrcPeopleEntry &amp; e )</function>
     <function>shutDown()</function>
     <function>startUp()</function>
+    <function returnType="bool">gotNotification( xIrcMessage * pMsg )</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>
