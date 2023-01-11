@@ -476,10 +476,11 @@ void peopleDialog::pollList()
 
 bool peopleDialog::gotNotification( xIrcMessage *pMsg)
 {
+   bool rv = FALSE;
+#if 0
    xIrcPeopleEntry *pEntry;
    xIrcMessage msg;
    const char *cp;
-   bool rv = FALSE;
 
    if (pMsg != NULL)
    {
@@ -617,5 +618,6 @@ bool peopleDialog::gotNotification( xIrcMessage *pMsg)
       }
       pTimer->start(2500, TRUE);
    }
+#endif
    return(rv);
 }
