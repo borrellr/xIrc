@@ -1,3 +1,11 @@
+xIrc-2.4.3 - Robert Borrell <robert.borrell@gmail.com>
+==========
+In this release included the following:
+   - Created peopledialog.ui and peopledialog.ui.h to replace the
+     xIrcIgnoreQuery.h and xIrcIgnoreQuery.cpp.
+   - Revised the peopleedit.ui file.
+   - In the xservquery.ui added double-click row to initiate a connection.
+
 xIrc-2.4.2 - Robert Borerll <robert.borrell@gmail.com>
 ==========
 In this release included the following:
