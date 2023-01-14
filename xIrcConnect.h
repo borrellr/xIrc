@@ -28,12 +28,11 @@
 #include <qpopupmenu.h>
 #include <qstring.h>
 #include <qfiledialog.h>
+#include "peopledialog.h"
 #include <xMultiLineFrame.h>
 #include <xPshBtnFrame.h>
-#include <xSocketDialog.h>
-#include "xIrcSocket.h"
 #include "xIrcMsgFrame.h"
-#include "xIrcIgnoreQuery.h"
+#include "peopledialog.h"
 #include "xIrcNotifyQuery.h"
 #include "xIrcNotifyTable.h"
 #include "xIrcCommands.h"
@@ -42,6 +41,8 @@
 #include "xIrcDccFile.h"
 #include "nickaction.h"
 #include "bandialog.h"
+#include <xSocketDialog.h>
+#include "xIrcSocket.h"
 
 class xIrcConnect : public xDialog
 {
@@ -127,7 +128,7 @@ private:
    QMenuBar             *pMenu;
 
    QLabel               *pLabel;
-   xIrcIgnoreQuery      *pIgnore;
+   peopleDialog         *pIgnore;
    xIrcNotifyQuery      *pNotify;
    xIrcNotifyTable      *pNotifyList;
    xIrcNickActionQuery  *pNickAction;

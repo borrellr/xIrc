@@ -43,11 +43,11 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
 #include "xservquery.h"
-#include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 #include "quitform.h"
 #include "nicknameform.h"
+#include "peopledialog.h"
 
 static bool dbg = false;
 
@@ -132,7 +132,8 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
    pNickAction = NULL;
    pNickAction = new xIrcNickActionQuery(this);
 
-   pIgnore = new xIrcIgnoreQuery(wdtPrv);
+   pIgnore = new peopleDialog(this);
+   pIgnore->initClass("Ignore");
    pNotify = new xIrcNotifyQuery(wdtPrv);
    pNotify->shutDown();
    pNotifyList = new xIrcNotifyTable(wdtPrv);

@@ -21,15 +21,19 @@
 **
  ***************************************************************************/
 #include <ctype.h>
+#include <stdio.h>
 #include <qt.h>
 #include <qregexp.h>
-#include <stdio.h>
-#include "xIrcConnect.h"
+#include "xIrcCommands.h"
 #include "xIrcPeopleEntry.h"
 
 static bool dbg = false;
 
 extern xIrcCommands ircResponses;
+
+xIrcPeopleEntry::xIrcPeopleEntry()
+{
+}
 
 xIrcPeopleEntry::xIrcPeopleEntry(xIrcMessage *pMsg, bool atAround)
 {
@@ -133,6 +137,15 @@ xIrcPeopleEntry::xIrcPeopleEntry(xIrcPeopleEntry &e)
                              (const char *)Nick.latin1());
    if (dbg) fprintf(stdout, "xIrcPeopleEntry::xIrcPeopleEntry():Mask = |%s|\n",
                              (const char *)Mask.latin1());
+}
+
+xIrcPeopleEntry::xIrcPeopleEntry(const xIrcPeopleEntry &e)
+{
+  Mask = e.Mask;
+  Nick = e.Nick;
+  Message = e.Message;
+  Flag = e.Flag;
+  State = e.State;
 }
 
 int xIrcPeopleEntry::compare(xIrcPeopleEntry *e)
@@ -352,3 +365,9 @@ QString xIrcPeopleEntry::buildMask(xIrcMessage *pMsg, bool atAround)
    return(rv);
 }
 
+int operator==(const xIrcPeopleEntry &e1, const xIrcPeopleEntry &e2)
+{
+    QString nickStr1 = e1.nick();
+    QString nickStr2 = e2.nick();
+    return (nickStr1 == nickStr2);
+}

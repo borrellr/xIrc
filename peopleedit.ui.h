@@ -21,7 +21,7 @@ void xIrcPeopleEdit::updateEntry()
      pEntry->setNick(nickEdit->text().latin1());
      pEntry->setMask(addressEdit->text().latin1());
      pEntry->setMessage(messageEdit->text().latin1());
-     f = (nameCheckBox->isChecked() == FALSE) ? 0 : (addrCheckBox->isChecked() == TRUE) ? 1 : -1;
+     f = (nameCheckBox->isChecked()) ? 1 : (addrCheckBox->isChecked()) ? -1 : 0;
      pEntry->setFlag(f);
      done(Accepted);
 }
@@ -30,13 +30,19 @@ void xIrcPeopleEdit::updateEntry()
 void xIrcPeopleEdit::initEntry( xIrcPeopleEntry *entry, const QString &name )
 {
      setCaption(name);
-     nameCheckBox->setText(name);
      pEntry = entry;
      nickEdit->setText(entry->nick());
      addressEdit->setText(entry->mask());
      messageEdit->setText(entry->message());
-     if (entry->flag())
-        nameCheckBox->setChecked(TRUE);
      if (entry->flag() > 0)
+        nameCheckBox->setChecked(TRUE);
+     if (entry->flag() < 0)
         addrCheckBox->setChecked(TRUE);
+}
+
+
+void xIrcPeopleEdit::updateState()
+{
+    if (nameCheckBox->isChecked())
+       nameCheckBox->setChecked(false);
 }

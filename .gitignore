@@ -37,3 +37,5 @@ invitebox.cpp
 invitebox.h
 xservquery.cpp
 xservquery.h
+peopledialog.cpp
+peopledialog.h

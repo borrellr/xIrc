@@ -380,10 +380,10 @@ void xIrcConnect::gotResponse(xIrcMessage *pMsg)
       return;
    }
 
-   if (pIgnore->list()->matches(pMsg))
+   if (pIgnore->matches(pMsg))
    {
       xIrcPeopleEntry *p;
-      if ((p = pIgnore->list()->entry(pMsg)) != NULL)
+      if ((p = pIgnore->entry(pMsg)) != NULL)
       {
          if (p->flag() != 0)
          {
