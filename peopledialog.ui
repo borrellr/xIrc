@@ -1,0 +1,365 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>peopleDialog</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>peopleDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>596</width>
+            <height>497</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>People Dialog</string>
+    </property>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>30</x>
+                <y>20</y>
+                <width>536</width>
+                <height>439</height>
+            </rect>
+        </property>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QTable">
+                <column>
+                    <property name="text">
+                        <string>Nick</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>Mask</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>By Addr</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>Tmp</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </column>
+                <column>
+                    <property name="text">
+                        <string>Message</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </column>
+                <row>
+                    <property name="text">
+                        <string>1</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>2</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>3</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>4</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>5</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>6</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>7</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>8</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>9</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>10</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>11</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>12</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>13</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>14</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>15</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>16</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>17</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <row>
+                    <property name="text">
+                        <string>18</string>
+                    </property>
+                    <property name="pixmap">
+                        <pixmap></pixmap>
+                    </property>
+                </row>
+                <property name="name">
+                    <cstring>peopleTable</cstring>
+                </property>
+                <property name="numRows">
+                    <number>18</number>
+                </property>
+                <property name="numCols">
+                    <number>5</number>
+                </property>
+                <property name="readOnly">
+                    <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                    <enum>SingleRow</enum>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout1</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer1</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>221</width>
+                                <height>41</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>doneButton</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Done</string>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer2</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>181</width>
+                                <height>41</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </hbox>
+            </widget>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>doneButton</sender>
+        <signal>clicked()</signal>
+        <receiver>peopleDialog</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in implementation">qaction.h</include>
+    <include location="global" impldecl="in implementation">qpopupmenu.h</include>
+    <include location="global" impldecl="in implementation">qmenubar.h</include>
+    <include location="local" impldecl="in implementation">peopleedit.h</include>
+    <include location="global" impldecl="in implementation">algorithm</include>
+    <include location="global" impldecl="in implementation">qstringlist.h</include>
+    <include location="global" impldecl="in implementation">qtextstream.h</include>
+    <include location="global" impldecl="in implementation">qfiledialog.h</include>
+    <include location="global" impldecl="in implementation">qmemarray.h</include>
+    <include location="global" impldecl="in declaration">vector</include>
+    <include location="global" impldecl="in declaration">qtable.h</include>
+    <include location="global" impldecl="in declaration">qfile.h</include>
+    <include location="global" impldecl="in declaration">qdir.h</include>
+    <include location="local" impldecl="in declaration">xIrcPeopleEntry.h</include>
+    <include location="global" impldecl="in declaration">qtimer.h</include>
+    <include location="local" impldecl="in implementation">peopledialog.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QAction;</forward>
+    <forward>class QPopupMenu;</forward>
+    <forward>class QMenuBar;</forward>
+</forwards>
+<variables>
+    <variable access="private">QString dlgName;</variable>
+    <variable access="private">std::vector&lt;xIrcPeopleEntry&gt; peopleList;</variable>
+    <variable access="private">QMenuBar *pMenu;</variable>
+    <variable access="private">QPopupMenu *pEntryMenu;</variable>
+    <variable access="private">QPopupMenu *pFileMenu;</variable>
+    <variable access="private">QAction *delEntryAct;</variable>
+    <variable access="private">QAction *editEntryAct;</variable>
+    <variable access="private">QAction *newEntryAct;</variable>
+    <variable access="private">QAction *doneAct;</variable>
+    <variable access="private">QAction *saveListAct;</variable>
+    <variable access="private">QAction *loadListAct;</variable>
+    <variable access="private">QAction *newListAct;</variable>
+    <variable access="private">QTimer *pTimer;</variable>
+</variables>
+<slots>
+    <slot access="private">newList()</slot>
+    <slot access="private">loadList()</slot>
+    <slot access="private">saveList()</slot>
+    <slot access="private">newEntry()</slot>
+    <slot access="private">editEntry()</slot>
+    <slot access="private">delEntry()</slot>
+    <slot access="private">pollList()</slot>
+</slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+    <function access="private">initCols()</function>
+    <function>initClass( const QString &amp; name )</function>
+    <function access="private">initMenus()</function>
+    <function access="private">initActions()</function>
+    <function access="private">clearTable()</function>
+    <function access="private">addEntryToTable( xIrcPeopleEntry &amp; entry )</function>
+    <function access="private">savePeopleData( const QString &amp; fileName )</function>
+    <function access="private">readPeopleData( const QString &amp; fileName )</function>
+    <function access="private">initData()</function>
+    <function access="private">initTable()</function>
+    <function returnType="bool">matches( xIrcMessage * msg )</function>
+    <function returnType="xIrcPeopleEntry *">entry( xIrcMessage * pMsg )</function>
+    <function>add( xIrcPeopleEntry &amp; e )</function>
+    <function>shutDown()</function>
+    <function>startUp()</function>
+    <function returnType="bool">gotNotification( xIrcMessage * pMsg )</function>
+</functions>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

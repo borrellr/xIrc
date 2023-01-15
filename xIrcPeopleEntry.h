@@ -29,9 +29,11 @@
 class xIrcPeopleEntry
 {
 public:
+   xIrcPeopleEntry();
    xIrcPeopleEntry(xIrcMessage *pMsg, bool atAround=TRUE);
    xIrcPeopleEntry(const char *pNick, const char *pMask, const char *pMsg, int flag);
    xIrcPeopleEntry(xIrcPeopleEntry &e);
+   xIrcPeopleEntry(const xIrcPeopleEntry &e);
    
    QString nick() { return(Nick); };
    QString realNick() { return(RealNick); };
@@ -41,10 +43,10 @@ public:
    int state() { return(State); };
    void setFlag(int f) { Flag = f; };
    void setState(int f) { State = f; };
-   void setMessage(const char *m) { Message = m; };
-   void setNick(const char *m) { Nick = m; };
-   void setRealNick(const char *m) { RealNick = ""; RealNick = m; };
-   void setMask(const char *m) { Mask = m; };
+   void setMessage(const QString &m) { Message = m; };
+   void setNick(const QString &m) { Nick = m; };
+   void setRealNick(const QString &m) { RealNick = ""; RealNick = m; };
+   void setMask(const QString &m) { Mask = m; };
 
    bool is(xIrcMessage *pMsg, int byAddr);
    int compare(xIrcPeopleEntry *e);
@@ -59,4 +61,5 @@ private:
    int         State;
 };
 
+int operator==(const xIrcPeopleEntry &e1, const xIrcPeopleEntry &e2);
 #endif

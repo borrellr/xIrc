@@ -210,6 +210,12 @@
         <receiver>xServQuery</receiver>
         <slot>disconnectServer()</slot>
     </connection>
+    <connection>
+        <sender>pTable</sender>
+        <signal>doubleClicked(int,int,int,const QPoint&amp;)</signal>
+        <receiver>xServQuery</receiver>
+        <slot>connectServer()</slot>
+    </connection>
 </connections>
 <includes>
     <include location="global" impldecl="in implementation">qaction.h</include>
@@ -282,7 +288,7 @@
     <function access="private" returnType="const QString &amp;">getRowData( int row )</function>
     <function access="private">addEntry( const QString &amp; entry )</function>
     <function access="private">setCurNumRows( int rows )</function>
-    <function returnType="int">getCurNumRows()</function>
+    <function access="private" returnType="int">getCurNumRows()</function>
     <function access="private">incCurNumRows()</function>
     <function access="private">decCurNumRows()</function>
     <function access="private">replaceEntry( int row, const QString &amp; modEntry )</function>

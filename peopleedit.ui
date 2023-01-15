@@ -95,13 +95,19 @@
                         <property name="text">
                             <string>By Address</string>
                         </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
                     </widget>
                     <widget class="QCheckBox">
                         <property name="name">
                             <cstring>nameCheckBox</cstring>
                         </property>
                         <property name="text">
-                            <string>Dynamic</string>
+                            <string>By Name</string>
+                        </property>
+                        <property name="checked">
+                            <bool>false</bool>
                         </property>
                     </widget>
                 </hbox>
@@ -148,6 +154,12 @@
         <receiver>xIrcPeopleEdit</receiver>
         <slot>updateEntry()</slot>
     </connection>
+    <connection>
+        <sender>nameCheckBox</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>xIrcPeopleEdit</receiver>
+        <slot>updateState()</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>nickEdit</tabstop>
@@ -167,6 +179,7 @@
 </variables>
 <slots>
     <slot>updateEntry()</slot>
+    <slot access="private">updateState()</slot>
 </slots>
 <functions>
     <function>initEntry( xIrcPeopleEntry * entry, const QString &amp; name )</function>

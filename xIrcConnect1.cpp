@@ -43,11 +43,11 @@
 #include "xIrcMsgDispatch.h"
 #include "xIrcDccQuery.h"
 #include "xservquery.h"
-#include "xIrcIgnoreQuery.h"
 #include "xDefaults.h"
 #include "xIrcConnect.h"
 #include "quitform.h"
 #include "nicknameform.h"
+#include "peopledialog.h"
 
 static bool dbg = false;
 
@@ -132,7 +132,8 @@ xIrcConnect::xIrcConnect(xWidgetResInfo *pPRes, QWidget *parent,
    pNickAction = NULL;
    pNickAction = new xIrcNickActionQuery(this);
 
-   pIgnore = new xIrcIgnoreQuery(wdtPrv);
+   pIgnore = new peopleDialog(this);
+   pIgnore->initClass("Ignore");
    pNotify = new xIrcNotifyQuery(wdtPrv);
    pNotify->shutDown();
    pNotifyList = new xIrcNotifyTable(wdtPrv);
@@ -351,9 +352,9 @@ void xIrcConnect::InitializeMenu()
 void xIrcConnect::about()
 {
    QMessageBox::about(this, "About xIrc",
-                  "Version: 2.4.2 \n"
+                  "Version: 2.4.3 \n"
                   "License: GPL\n"
-                  "Copyright: 1997-2022\n\n"
+                  "Copyright: 1997-2023\n\n"
                   "Maintained by Robert Borrell\n"
                   "Developed by Joe Croft");
 }
