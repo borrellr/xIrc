@@ -38,7 +38,7 @@ void peopleDialog::initClass( const QString &name )
      dlgName = name;
      tmpStr.append(" List");
      setCaption(tmpStr);
-     peopleTable->horizontalHeader()->setLabel(2, name);
+     peopleTable->horizontalHeader()->setLabel(3, name);
     
      initData();
      if (name == "Notify") {
@@ -177,11 +177,11 @@ void peopleDialog::editEntry()
      chkbox1 = (QCheckTableItem *) peopleTable->item(row, 3);
      
      if (chkbox != 0) 
-        byName = chkbox->isChecked();
+        byAddr = chkbox->isChecked();
      if (chkbox1 != 0)
-        byAddr = chkbox1->isChecked();
+        byName = chkbox1->isChecked();
      
-     flag = byName ? 1 : (byAddr ? -1 : 0);
+     flag = byAddr ? 1 : (byName ? -1 : 0);
      e.setFlag(flag);
      it = std::find(peopleList.begin(), peopleList.end(), e);
      editDlg.initEntry(&e, n);
@@ -190,9 +190,9 @@ void peopleDialog::editEntry()
          peopleTable->setText(row, 1, e.mask());
          peopleTable->setText(row, 4, e.message());
          if (chkbox == 0)
-             chkbox = new QCheckTableItem(peopleTable, "By Name");
+             chkbox = new QCheckTableItem(peopleTable, "By Addr");
          if (chkbox1 == 0)
-              chkbox1 = new QCheckTableItem(peopleTable, "By Addr");
+              chkbox1 = new QCheckTableItem(peopleTable, "By Name");
          flag = e.flag();
          if (flag > 0) {
              chkbox->setChecked(true);
@@ -219,9 +219,9 @@ void peopleDialog::delEntry()
     e.setNick(peopleTable->text(row, 0));
     e.setMask(peopleTable->text(row, 1));
     e.setMessage(peopleTable->text(row, 4));
-    QCheckTableItem *byName = (QCheckTableItem *)peopleTable->item(row, 2);
-    QCheckTableItem *byAddr = (QCheckTableItem *)peopleTable->item(row, 3);
-    flag = (!byName->isChecked()) ? 0 : (byAddr->isChecked()) ? 1 : -1;
+    QCheckTableItem *byAddr = (QCheckTableItem *)peopleTable->item(row, 2);
+    QCheckTableItem *byName = (QCheckTableItem *)peopleTable->item(row, 3);
+    flag = (!byAddr->isChecked()) ? 1 : (byName->isChecked()) ? -1 : 0;
     e.setFlag(flag);
     e.setState(0);
     
@@ -394,10 +394,10 @@ void peopleDialog::initTable()
            flag = e.flag();
            chkbox = (QCheckTableItem *) peopleTable->item(row, 2);
            if (chkbox == 0)
-               chkbox = new QCheckTableItem(peopleTable, tr("By Name"));
+               chkbox = new QCheckTableItem(peopleTable, tr("By Addr"));
            chkbox1 = (QCheckTableItem *) peopleTable->item(row, 3);
            if (chkbox1 == 0)
-               chkbox1 = new QCheckTableItem(peopleTable, tr("By Addr"));
+               chkbox1 = new QCheckTableItem(peopleTable, tr("By Name"));
 
            Q_CHECK_PTR(chkbox);
            Q_CHECK_PTR(chkbox1);

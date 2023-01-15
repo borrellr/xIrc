@@ -95,6 +95,9 @@
                         <property name="text">
                             <string>By Address</string>
                         </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
                     </widget>
                     <widget class="QCheckBox">
                         <property name="name">
@@ -104,7 +107,7 @@
                             <string>By Name</string>
                         </property>
                         <property name="checked">
-                            <bool>true</bool>
+                            <bool>false</bool>
                         </property>
                     </widget>
                 </hbox>
@@ -152,7 +155,7 @@
         <slot>updateEntry()</slot>
     </connection>
     <connection>
-        <sender>addrCheckBox</sender>
+        <sender>nameCheckBox</sender>
         <signal>toggled(bool)</signal>
         <receiver>xIrcPeopleEdit</receiver>
         <slot>updateState()</slot>
