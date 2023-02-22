@@ -504,7 +504,7 @@ bool peopleDialog::gotNotification( xIrcMessage *pMsg)
          str += "@";
          for (cp = pMsg->msgStr.latin1(); *cp != ' '; cp++)
             str += *cp;
-         pEntry = pTable->entry(pMsg);
+         pEntry = peopleListEntry(pMsg);
          if (pEntry != NULL)
          {
             QString realNick(getNick(pMsg));
@@ -516,6 +516,7 @@ bool peopleDialog::gotNotification( xIrcMessage *pMsg)
             sprintf(buf, "\x02%s (%s) Has Arrived!!\n",
                (const char *)pEntry->realNick().latin1(),
                (const char *)pEntry->mask().latin1());
+            pTWindow->putWindow(buf);
             if (pEntry->message() != NULL && !pEntry->message().isEmpty())
             {
                msg.rspCode = ircResponses.code("PRIVMSG");
@@ -533,7 +534,7 @@ bool peopleDialog::gotNotification( xIrcMessage *pMsg)
       }
       else if (pMsg->rspCode == 315 || (pMsg->rspCode >= 400 && pMsg->rspCode < 600))
       {
-         pEntry = pTable->entry(pMsg);
+         pEntry = peopleListEntry(pMsg);
          if (pEntry != NULL && pEntry->state() == 3)
          {
             pEntry->setState(2);
@@ -620,4 +621,42 @@ bool peopleDialog::gotNotification( xIrcMessage *pMsg)
    }
 #endif
    return(rv);
+}
+
+
+xIrcPeopleEntry * peopleDialog::peopleListEntry( xIrcMessage *pMsg )
+{
+   std::vector<xIrcPeopleEntry>::iterator it;
+   xIrcPeopleEntry *e = new xIrcPeopleEntry;
+
+   for (it = peopleList.begin(); it != peopleList.end(); ++it) {
+       *e = *it;
+       if (e->is(pMsg, e->flag()))
+          return e;
+   }
+   return NULL;
+}
+
+
+QString peopleDialog::getNick( xIrcMessage *pMsg )
+{
+   QString nickStr;
+   const char *cp, *cp1;
+
+   cp = pMsg->msgStr.latin1();
+   cp1 = pMsg->dstStr.latin1();
+
+   if (*cp1 == '#')
+      for (; *cp != ' '; cp++);
+
+   for (; *cp == ' '; cp++);
+   for (; *cp != ' '; cp++);
+   for (; *cp == ' '; cp++);
+   for (; *cp != ' '; cp++);
+   for (; *cp == ' '; cp++);
+   // ** Assume that the 4th field is the nick
+   for (; *cp != ' '; cp++)
+      nickStr += *cp;
+
+   return(nickStr);
 }

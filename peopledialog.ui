@@ -201,6 +201,8 @@
     <function>shutDown()</function>
     <function>startUp()</function>
     <function returnType="bool">gotNotification( xIrcMessage * pMsg )</function>
+    <function access="private" returnType="xIrcPeopleEntry *">peopleListEntry(xIrcMessage *pMsg)</function>
+    <function access="private" returnType="QString">getNick(xIrcMessage *pMsg)</function>
 </functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>
