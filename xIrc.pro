@@ -34,6 +34,6 @@ INTERFACES += servereditdialog.ui \
 INCLUDEPATH += /usr/local/include/libX
 LIBS += -lX++ -L/usr/local/lib/xIrc
 DEFINES += QT2 QT3 QT_NO_ASCII_CAST
-CONFIG += qt warn_on release
+CONFIG += qt warn_on release thread
 QMAKE_CXXFLAGS += -fpermissive -Wwrite-strings
 TARGET += xIrc
